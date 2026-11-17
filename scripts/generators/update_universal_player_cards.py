@@ -421,13 +421,13 @@ def generate_all_canonical_cards():
                 else:
                     draw_card_slot(ax, to_x(dmg_centers[i]), dmg_y_hull, is_inactive=True)
 
-            # 6. CREW STATUS & CREW QUALITY (COMPACTED TO LEFT: 5 COLUMNS x 2 ROWS)
+            # 6. CREW STATUS & CREW QUALITY (SHIFTED 1 COLUMN LEFT: 5 COLUMNS x 2 ROWS)
             cols9 = np.linspace(28.0, 156.0, 9)
-            crew_centers = cols9[:5]
+            crew_centers = [10.0] + list(cols9[:4])  # [10.0, 28.0, 44.0, 60.0, 76.0]
             crew_y1 = to_y(119.5)
             crew_y2 = to_y(136.5)
 
-            draw_section_header_plaque(ax, to_x(20.5), to_y(109.5), "CREW STATUS & QUALITY", width=79.0*BROTHER_COMP, h=2.5*BROTHER_COMP)
+            draw_section_header_plaque(ax, to_x(2.5), to_y(109.5), "CREW STATUS & QUALITY", width=81.0*BROTHER_COMP, h=2.5*BROTHER_COMP)
 
             draw_card_slot(ax, to_x(crew_centers[0]), crew_y1, label="Captain", bg='#F8F9FA', border='#334155', text_color='#0F172A')
             draw_card_slot(ax, to_x(crew_centers[1]), crew_y1, label="Engineer", bg='#F8F9FA', border='#334155', text_color='#0F172A')
@@ -447,8 +447,8 @@ def generate_all_canonical_cards():
             draw_card_slot(ax, to_x(crew_centers[4]), crew_y2, label="Crew\nQuality", bg='#FAF2E1', border='#C08420', text_color='#784B05')
 
             # 7. SYSTEMS STATUS (MOVED UP BESIDE CREW STATUS: 4 COLUMNS x 2 ROWS)
-            sys_centers = cols9[5:]
-            draw_section_header_plaque(ax, to_x(101.5), to_y(109.5), "⚙ SYSTEMS STATUS", width=62.0*BROTHER_COMP, h=2.5*BROTHER_COMP)
+            sys_centers = cols9[5:]  # [108.0, 124.0, 140.0, 156.0]
+            draw_section_header_plaque(ax, to_x(100.5), to_y(109.5), "⚙ SYSTEMS STATUS", width=63.0*BROTHER_COMP, h=2.5*BROTHER_COMP)
 
             sys_list_all = arm_cfg.get('sys', [None]*10)
             # Pick the 8 most critical systems for this submarine

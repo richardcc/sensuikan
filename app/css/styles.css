@@ -1682,3 +1682,37 @@
     .chit-card.highlighted.flipped .chit-inner {
       transform: translateY(-2px) rotateY(180deg);
     }
+
+    /* PATROL INTERACTIVE TABLES (A4, A2, TARGETS) */
+    .patrol-interactive-row {
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+    .patrol-interactive-row:hover {
+      background-color: rgba(56, 189, 248, 0.22) !important;
+      outline: 1px solid rgba(56, 189, 248, 0.5);
+    }
+    .patrol-interactive-row:active {
+      transform: scale(0.99);
+    }
+    .patrol-interactive-row.row-selected-success {
+      background-color: rgba(34, 197, 94, 0.30) !important;
+      outline: 2px solid #22c55e !important;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+    }
+    .patrol-interactive-row.row-selected-warning {
+      background-color: rgba(245, 158, 11, 0.30) !important;
+      outline: 2px solid #f59e0b !important;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+    }
+    .patrol-interactive-row.row-selected-danger {
+      background-color: rgba(239, 68, 68, 0.30) !important;
+      outline: 2px solid #ef4444 !important;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.45);
+    }
+    .patrol-interactive-row.row-selected-info {
+      background-color: rgba(56, 189, 248, 0.30) !important;
+      outline: 2px solid #38bdf8 !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
