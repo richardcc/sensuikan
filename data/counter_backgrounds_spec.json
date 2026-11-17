@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "project": "Sensuikan PDF Master Cards",
+    "version": "1.0",
+    "description": "Especificacion tecnica de iconos en marca de agua para fondos de cajetines",
+    "recommended_opacity": 0.15,
+    "min_opacity": 0.12,
+    "max_opacity": 0.18,
+    "text_halo": {
+      "enabled": true,
+      "stroke_width_mm": 0.4,
+      "color": "#FFFFFF"
+    }
+  },
+  "sections": {
+    "crew": {
+      "tint_color": "#8C7355",
+      "boxes": {
+        "Captain": { "icon": "anchor_sakura", "description": "Ancla naval imperial con flor de cerezo o gorra de oficial" },
+        "Engineer": { "icon": "gear_wrench", "description": "Engranaje con llave inglesa o manometro de presion" },
+        "XO": { "icon": "ship_wheel", "description": "Timon naval clasico o estrellas de rango" },
+        "Nav.": { "icon": "sextant", "description": "Sextante naval o rosa de los vientos" },
+        "Medic": { "icon": "medical_cross_anchor", "description": "Cruz medica naval" },
+        "Crew": { "icon": "sailors_trio", "description": "Tres marineros en fila con gorra IJN" },
+        "Crew Quality": { "icon": "chevrons", "description": "Tres galones militares en V superpuestos" }
+      }
+    },
+    "weapons": {
+      "tint_color": "#3A5F7D",
+      "boxes": {
+        "T-1..T-8": { "icon": "torpedo_long_lance", "description": "Silueta horizontal de torpedo Type 95 o boca de tubo circular" },
+        "Rld Fwd / Rld Aft": { "icon": "twin_torpedoes_rack", "description": "Dos torpedos en paralelo estibados en cuna" },
+        "Mines": { "icon": "contact_mine", "description": "Mina esferica de contacto con pernos de plomo" },
+        "Mine Door / Doors": { "icon": "watertight_hatch", "description": "Compuerta estanca con volante circular" },
+        "Main Gun": { "icon": "deck_gun_140mm", "description": "Canon naval de cubierta a 45 grados sobre afuste" },
+        "Ammo": { "icon": "artillery_shell", "description": "Cartucho y ojiva de artilleria naval" },
+        "AA 1 / AA 2": { "icon": "aa_gun_25mm", "description": "Canon antiaereo Type 96 apuntando al cielo" },
+        "Avion": { "icon": "floatplane_topview", "description": "Silueta cenital de hidroavion con dos flotadores" }
+      }
+    },
+    "systems": {
+      "tint_color": "#4A4A4A",
+      "boxes": {
+        "Eng 1 / Eng 2": { "icon": "diesel_engine_pistons", "description": "Bloque de cilindros diesel o piston con biela" },
+        "Mtr 1 / Mtr 2": { "icon": "electric_motor_rotor", "description": "Rotor de dinamo con rayo electrico sutil" },
+        "Batt": { "icon": "battery_cells", "description": "Banco de acumuladores con bornes positivo y negativo" },
+        "Fuel": { "icon": "fuel_drop_tank", "description": "Gota de petroleo o tanque con nivel" },
+        "Radio": { "icon": "radio_antenna_waves", "description": "Mastil emitiendo ondas concentricas o telegrafo" },
+        "Hydro": { "icon": "hydrophone_sonar_cone", "description": "Auriculares de escucha o haz sonar" },
+        "Perisc": { "icon": "periscope_crosshair", "description": "Reticula circular con cruz filar graduada" },
+        "Dive Planes": { "icon": "dive_planes_arrows", "description": "Aleta horizontal con flechas de inmersion y emersion" }
+      }
+    },
+    "logistics_and_events": {
+      "tint_color": "#A06820",
+      "boxes": {
+        "EVT 1 / EVT 2": { "icon": "tactical_question_shield", "description": "Interrogacion tactica militar o campana de alarma" },
+        "Supplies": { "icon": "supply_crates", "description": "Cajas de madera flejadas con cuerdas" },
+        "Base / Port": { "icon": "anchored_anchor", "description": "Ancla de fondeo con cadena" },
+        "Mission": { "icon": "tactical_target_grid", "description": "Diana con coordenadas sobre mapa marino" },
+        "Transit / On Stat": { "icon": "submarine_wake", "description": "Submarino navegando dejando estela en el agua" }
+      }
+    }
+  }
+}

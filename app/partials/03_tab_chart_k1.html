@@ -1,0 +1,252 @@
+<div id="tab-chart-k1" class="tab-pane">
+      <div class="k1-board-container">
+        
+        <!-- Mat Header Bar -->
+        <div class="k1-header-bar">
+          <div id="k1-mat-title" class="k1-title-text">TABLA K1: ESTADO DE HABILIDADES DEL CAPITÁN Y TRIPULACIÓN</div>
+          <div class="k1-logo-badge">
+            <span>SENSUIKAN</span>
+            <span style="font-size:0.86rem; color:#fde047;">海軍潜水艦</span>
+          </div>
+        </div>
+
+        <!-- Mat Main Grid -->
+        <div class="k1-grid">
+
+          <!-- Left Column: Optional Ability & Midget Sub Skills & Air Crew Skills #1 -->
+          <div class="counter-col">
+            <div id="k1-sec-command" class="section-label">Habilidad de Mando</div>
+            <div id="token-optional" class="wargame-token token-orange inactive" onclick="toggleToken('optional')">
+              <span class="badge-icon">⭐</span>
+              <span>Habilidad Opcional</span>
+            </div>
+
+            <div id="k1-sec-midget" class="section-label" style="margin-top:10px;">Habilidades de Minisubmarinos</div>
+            <div id="token-midget-torp" class="wargame-token token-blue inactive" onclick="toggleToken('midget-torp')">
+              <span>Tiro Torpedero Minisub</span>
+            </div>
+            <div id="token-midget-boat" class="wargame-token token-blue inactive" onclick="toggleToken('midget-boat')">
+              <span>Maniobra Redes / Barca</span>
+            </div>
+            <div id="token-midget-comms" class="wargame-token token-blue inactive" onclick="toggleToken('midget-comms')">
+              <span>Comunicaciones Superiores</span>
+            </div>
+
+            <div id="k1-sec-air1" class="section-label" style="margin-top:10px;">Dotación Aérea (Seiran #1)</div>
+            <div id="token-air1-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air1-weap')">
+              <span>Experto en Armas</span>
+            </div>
+            <div id="token-air1-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air1-maint')">
+              <span>Mantenimiento Avión</span>
+            </div>
+            <div id="token-air1-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air1-acm')">
+              <span>Maniobra Aérea (ACM)</span>
+            </div>
+            <div id="token-air1-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air1-nav')">
+              <span>Navegación Aérea</span>
+            </div>
+          </div>
+
+          <!-- Center Column: Captain Portrait & Torso Medals -->
+          <div class="captain-area">
+            <div id="k1-sec-captain" class="section-label" style="text-align:center; width:100%;">Habilidades Clave del Capitán</div>
+            
+            <div class="captain-top-skills">
+              <div id="token-cap-shibumi" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-shibumi')">
+                <span>Shibumi</span>
+                <span style="font-size:0.80rem; color:#666;">(Sigilo)</span>
+              </div>
+              <div id="token-cap-leadership" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-leadership')">
+                <span>Liderazgo</span>
+                <span style="font-size:0.80rem; color:#666;">(Moral)</span>
+              </div>
+              <div id="token-cap-torp" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-torp')">
+                <span>Tácticas Torpedos</span>
+                <span style="font-size:0.80rem; color:#666;">(+1 Impacto)</span>
+              </div>
+            </div>
+
+            <div class="portrait-wrap" style="cursor:pointer;" onclick="cycleCommanderPortrait()" title="Clic para cambiar rostro / Click to cycle portrait">
+              <img id="k1-captain-img" src="assets/commanders/cmdr_1.jpg" alt="IJN Commander Portrait">
+            </div>
+
+            <div class="uniform-chest">
+              <div class="chest-row">
+                <div id="k1-lbl-rank" style="font-size:0.80rem; font-weight:800; color:#fff; margin-right:8px;">RANGO:</div>
+                <div id="token-rank" class="wargame-token token-yellow active rank-slot" onclick="cycleRank()">
+                  <span id="rank-text" style="font-size:0.90rem;">LT Cdr (少佐)</span>
+                  <span id="k1-lbl-cycle" style="font-size:0.80rem; color:#555;">[Clic para Cambiar]</span>
+                </div>
+              </div>
+
+              <div class="chest-row">
+                <div id="token-medal-gk4" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gk4')">
+                  <span>Milano de Oro (4.ª)</span>
+                </div>
+                <div id="token-medal-rising" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-rising')">
+                  <span>Sol Naciente</span>
+                </div>
+                <div id="token-medal-wound" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-wound')">
+                  <span>Insignia de Herido</span>
+                </div>
+                <div id="token-medal-gea" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gea')">
+                  <span>Medalla Gran Asia</span>
+                </div>
+              </div>
+
+              <div class="chest-row">
+                <div id="token-medal-gk5" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gk5')">
+                  <span>Milano de Oro (5.ª)</span>
+                </div>
+                <div id="token-medal-sub" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-sub')">
+                  <span>Insignia de Sumergible</span>
+                </div>
+                <div id="token-medal-sacred" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-sacred')">
+                  <span>Tesoro Sagrado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Status & Air Crew Skills #2 & #3 -->
+          <div class="counter-col">
+            <div id="k1-sec-status" class="section-label">Marcadores de Sumergible y Estado</div>
+            <div id="token-sub-upgrades" class="wargame-token token-grey inactive" onclick="toggleToken('sub-upgrades')">
+              <span>Mejoras de Sumergible</span>
+            </div>
+            <div id="token-penalty-promo" class="wargame-token token-grey inactive" onclick="toggleToken('penalty-promo')">
+              <span>-2 a la Promoción</span>
+            </div>
+            <div id="token-maneki-neko" class="wargame-token token-gold inactive" onclick="toggleToken('maneki-neko')">
+              <span>🐱 Maneki Neko (Amuleto)</span>
+            </div>
+            <div id="token-at-port" class="wargame-token token-grey inactive" onclick="toggleToken('at-port')">
+              <span>En Puerto</span>
+            </div>
+
+            <div id="k1-sec-air2" class="section-label" style="margin-top:10px;">Dotación Aérea (Aichi #2)</div>
+            <div id="token-air2-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air2-weap')">
+              <span>Experto en Armas</span>
+            </div>
+            <div id="token-air2-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air2-maint')">
+              <span>Mantenimiento Avión</span>
+            </div>
+            <div id="token-air2-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air2-acm')">
+              <span>Maniobra Aérea (ACM)</span>
+            </div>
+            <div id="token-air2-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air2-nav')">
+              <span>Navegación Aérea</span>
+            </div>
+
+            <div id="k1-sec-air3" class="section-label" style="margin-top:10px;">Dotación Aérea (Aichi #3)</div>
+            <div id="token-air3-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air3-weap')">
+              <span>Experto en Armas</span>
+            </div>
+            <div id="token-air3-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air3-maint')">
+              <span>Mantenimiento Avión</span>
+            </div>
+            <div id="token-air3-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air3-acm')">
+              <span>Maniobra Aérea (ACM)</span>
+            </div>
+            <div id="token-air3-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air3-nav')">
+              <span>Navegación Aérea</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Submarine Crew Skills Strip -->
+        <div class="sub-crew-strip">
+          <div id="k1-sec-subcrew" class="section-label" style="text-align:center; font-size:0.95rem; margin-bottom:12px;">Habilidades de la Tripulación</div>
+          <div class="crew-roles-grid">
+            <div class="crew-role-card">
+              <h4 id="k1-role-xo">Segundo Oficial (XO)</h4>
+              <div class="crew-tokens-stack">
+                <div id="token-xo-expert" class="wargame-token token-grey inactive" onclick="toggleToken('xo-expert')"><span>Experto</span></div>
+                <div id="token-xo-vigilant" class="wargame-token token-green inactive" onclick="toggleToken('xo-vigilant')"><span>Vigilante</span></div>
+                <div id="token-xo-deckgun" class="wargame-token token-green inactive" onclick="toggleToken('xo-deckgun')"><span>Experto Cañón Cubierta</span></div>
+                <div id="token-xo-aagun" class="wargame-token token-green inactive" onclick="toggleToken('xo-aagun')"><span>Experto Artillería AA</span></div>
+              </div>
+            </div>
+
+            <div class="crew-role-card">
+              <h4 id="k1-role-eng">Jefe de Máquinas</h4>
+              <div class="crew-tokens-stack">
+                <div id="token-eng-expert" class="wargame-token token-grey inactive" onclick="toggleToken('eng-expert')"><span>Experto</span></div>
+                <div id="token-eng-mech" class="wargame-token token-green inactive" onclick="toggleToken('eng-mech')"><span>Genio Mecánico</span></div>
+                <div id="token-eng-keen" class="wargame-token token-green inactive" onclick="toggleToken('eng-keen')"><span>Juicio Certero</span></div>
+              </div>
+            </div>
+
+            <div class="crew-role-card">
+              <h4 id="k1-role-nav">Navegante</h4>
+              <div class="crew-tokens-stack">
+                <div id="token-nav-expert" class="wargame-token token-grey inactive" onclick="toggleToken('nav-expert')"><span>Experto</span></div>
+              </div>
+            </div>
+
+            <div class="crew-role-card">
+              <h4 id="k1-role-med">Médico</h4>
+              <div class="crew-tokens-stack">
+                <div id="token-med-expert" class="wargame-token token-grey inactive" onclick="toggleToken('med-expert')"><span>Experto</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kaiten Suicide Torpedo Pilots & Spiritual Benefits (Escuela F4 Otsujima) -->
+        <div id="k1-kaiten-strip" class="sub-crew-strip" style="margin-top:16px; border:1px solid rgba(239, 68, 68, 0.45); background:rgba(239, 68, 68, 0.05); border-radius:8px; padding:12px 14px;">
+          <div id="k1-sec-kaiten" class="section-label" style="text-align:center; font-size:0.95rem; margin-bottom:12px; color:#f87171; border-color:#ef4444; display:flex; justify-content:center; align-items:center; gap:8px;">
+            <span>🚀</span>
+            <span id="k1-kaiten-title">Pilotos de Torpedos Suicidas Kaiten • Beneficios Espirituales [Escuela F4 Otsujima]</span>
+          </div>
+          <div id="k1-kaiten-grid" class="crew-roles-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:10px;">
+            <div id="k1-kaiten-card-1" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #1</h4>
+              <div id="token-kaiten-1" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(1)">
+                <span id="lbl-kaiten-benefit-1">Sin Asignar</span>
+              </div>
+            </div>
+            <div id="k1-kaiten-card-2" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #2</h4>
+              <div id="token-kaiten-2" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(2)">
+                <span id="lbl-kaiten-benefit-2">Sin Asignar</span>
+              </div>
+            </div>
+            <div id="k1-kaiten-card-3" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #3</h4>
+              <div id="token-kaiten-3" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(3)">
+                <span id="lbl-kaiten-benefit-3">Sin Asignar</span>
+              </div>
+            </div>
+            <div id="k1-kaiten-card-4" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #4</h4>
+              <div id="token-kaiten-4" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(4)">
+                <span id="lbl-kaiten-benefit-4">Sin Asignar</span>
+              </div>
+            </div>
+            <div id="k1-kaiten-card-5" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #5</h4>
+              <div id="token-kaiten-5" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(5)">
+                <span id="lbl-kaiten-benefit-5">Sin Asignar</span>
+              </div>
+            </div>
+            <div id="k1-kaiten-card-6" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
+              <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #6</h4>
+              <div id="token-kaiten-6" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(6)">
+                <span id="lbl-kaiten-benefit-6">Sin Asignar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 2: SENSUIKAN ROGU BUKKU (46-MONTH HISTORICAL LOG SHEET)
+         ==================================================================== -->
+    <!-- ====================================================================
+         TAB 2: SENSUIKAN ROGU BUKKU (46-MONTH OFFICIAL PATROL LOG SHEET)
+         ==================================================================== -->
+    

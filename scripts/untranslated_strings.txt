@@ -1,0 +1,971 @@
+&lt; 5.000 t (Sobrevivió)
+(-1 DRM a todas las tiradas de cañón de cubierta).
+(3 a 6 daños).
+(Aproximación naval)
+(Cañón de cubierta) y
+(Modificadores: -1 si ganó el Milano de Oro, -1 si hundió ≥5 buques en el año, +1 por cada patrulla fallida). Cada ascenso otorga 1 mejora
+(Roll Low). A Larga Distancia se necesita una tirada de
+(Submarinos de Flota Japoneses 1941–45)
+(en vez de 1).
+(evita el daño de casco en la 1.ª superación de profundidad por patrulla).
+(gato de la suerte a bordo).
+(inmune al 1.er daño de profundidad en patrulla).
+(inmune al 1.er daño de test depth).
+(más difícil), incluyendo contención de inundación.
+(máximo 1 por patrulla).
+(repite 1 fallo de torpedo por patrulla).
+(repite 1 fallo por patrulla).
+(sin daño). 2-6 = Explota normal.
+(supera con éxito automático 1 tirada de dado por patrulla).
+(tiradas cañón a -1 DRM permanente).
+), se adquiere una nueva habilidad para el Capitán/Oficiales en Chart K1 o se asciende la calidad de la dotación (Trained ➔ Crack ➔ Elite).
+* Tipos A y B únicamente. ** Submarinos sin hidroavión vuelven a tirar.
++1 DRM a la detección de escoltas. Si ambas están destruidas, debe emerger.
++1 Detección
++1 Mes
++1 a Detección en [B4] y +1 impacto en [B5].
++1 a la detección
++1 en B5 de inmediato.
++1 en tiradas de detección de escoltas. También -1 a tiradas en Chart A4.
++1 en tiradas de detección enemiga (Chart B4). -1 a tiradas de evasión en Chart A4.
++1 impacto adicional
++1 impacto en [B5] y
++1 impacto en [B5].
++1 mes
++1 mes por 1-3 casillas de daño en casco | +2 meses por 4-6 casillas | +3 meses por 7-8 casillas.
++1 mes si hay 3 o más sistemas INOP.
++1 si el Comandante posee la habilidad
++1 si el ataque es diurno en aguas poco profundas. -1 si es de noche.
++2 Tránsitos (Zona Lejana)
++2 en B5.
++2 meses
++2 puntos de daño adicional
++3 impactos adicionales
++4 al rescate si se barrena. -1 a recuperación de Ko-Hyoteki.
+, el Capitán Kenjiro Takahashi ingresó en la Academia Naval de Etajima fascinado por las profundidades del mar.
+, hija de un sacerdote sintoísta local, le inculcó un sentido inquebrantable de disciplina y devoción.
+, le transmitió un profundo dominio de las corrientes oceánicas del Pacífico. Su madre,
+, pasa la red. Si no, atrapado y destruido.
+, tira 2d6 en [A4]: -1 DRM por Radar aéreo, +1 DRM de noche. 10+: Evasión perfecta. 6-9: 1 Ataque aéreo. 2-5: 2 Ataques aéreos.
+-1 Superficie, +1 Cmdte KIA/SW, -1 Minisub torpedo, +1/+2 Tipo 92 a Media/Larga, +1 Fast Capital Ship, +1 Novatos, +2 Escolta/DD/DE.
+-1 permanente a detección enemiga [B4] (no acumulable con 5.ª).
+-1 permanente a todas las tiradas de detección enemiga [B4].
+-2 a la 1.ª tirada de Ascenso
+-2 a tu primer intento de ascenso
+-3 DRM Arrecifes o -1 Detección de escoltas.
+. -1 si el submarino nodriza está bajo ataque aéreo o de superficie.
+. 3 puntos de daño a cualquiera de los aviones lo destruye. Si sigue volando al término de la 3ª ronda, el hidroavión evade y escapa.
+. El submarino zarpa del puerto donde está atracado (comienza en Yokosuka [4.7.1], y se reasigna automáticamente si la misión lo exige, como a Paramushiro en Aleutianas [4.7.2]). La tirada con 2d6 en la Tabla [A1] determina la zona de destino.
+0 a 2 sistemas INOP (+0 meses)
+0 casillas dañadas (+0 meses)
+1 = 5 impactos
+1 Buque Capital, 1 Buque Guerra
+1 Buque Capital, 2 Buques Guerra
+1 Buque Guerra, 1 Mercante
+1 Buque Guerra, 2 Mercantes
+1 Buque Guerra, 3 Mercantes
+1 Daño
+1 Daño:
+1 Daño: Tira 1d6 en Tabla M9.
+1 Diésel KO:
+1 Diésel averiado: abortar tras combate y tirar doble encuentro por casilla. 2 Diésel averiados: barrenar si está a >1 casilla de base. Motor eléctrico averiado: +1/+2 en ataques de escolta (B5).
+1 Eléctrico KO:
+1 Impacto
+1 Mes ("R")
+1 a 3 casillas (+1 mes)
+1 de los 2 tripulantes herido o KIA.
+1 impacto
+1 impacto MENOS
+1 mejora gratis de submarino (
+1 motor fuera: +1 ataque de escoltas; 2 motores fuera:
+1 solo punto de daño
+1-3 = +1 Mes | 4-6 = +2 Meses | 7-8 = +3 Meses
+1-3: Perdido / Tripulación capturada.
+1-4: Inundación Contenida | 5-6: Inundación Adicional (+1 casilla). Si se llenan todas, emerger y barrenar.
+1. Adiestramiento de Torpedos:
+1. Asignación del Cuaderno de Bitácora (Rogu Bukku)
+1. Caza ataca primero • 2. Hidroavión responde con ametralladora
+1. Control de Daños e Inundación (Chart B7) [8.5.2]
+1. Control de Inundaciones
+1. Cálculo del Periodo de Puesta a Punto (Meses "R")
+1. Determinación de Blancos (Tablas T1 a T5)
+1. Elección del Mes Operativo
+1. Progreso de Casillas de Navegación
+1. Ruta Dinámica de Casillas
+1. Selección de Submarino
+1. Senninbari (Cinturón de 1.000 puntadas):
+1.ª Patrulla
+10 Buques Oficiales
+12 Meses
+17 (Tipo 95 Oxígeno)
+1d6 Gravedad
+1–2 = Impacto, 3–6 = Fallo
+2 = 7 impactos
+2 Capturado (Seppuku), 3 Capturado por ASV, 4-12 Cruza con éxito.
+2 Daños
+2 Daños:
+2 Daños: Tira 2 veces en Tabla M9.
+2 Diésel KO:
+2 Eléctricos KO:
+2 Encallar, 4 Superficie accidental, 5-6 Avería/Fuga, 9 Cartas superiores (+1 M7), 10 Maniobra perfecta, 12 ASV cercano.
+2 Impactos
+2 Torpedos (Salva Reducida)
+2 a 6 (&le; 6 en 2d6)
+2 bajas automáticas en dotación
+2 impactos
+2 impactos de 3 tiradas
+2 tiradas en Recuperación [M7]. Si no hay fallo ➔ gana
+2 tiradas en Sub Recovery [M7]. Si no hay fallo &rarr;
+2. Aproximación y Salva de Torpedos
+2. Ascensos de Rango, Calidad de Dotación y Medallas [8.7 - 8.9]
+2. Astillero y Reparación Mayor (Refit)
+2. Avance de Casilla en Casilla
+2. Bajas en Tripulación (Crew Injury) y Aborto
+2. Base de Salida
+2. Ficha de Hoja de Servicio (Chart K1)
+2. Hachimaki (Cinta tradicional de combate):
+2. Hachimaki (Repetir Tirada)
+2. Picado de Emergencia (2)
+2. Reparaciones de Emergencia en el Mar
+2. Tirada de Encuentros en Tabla [A3]
+20 Buques Oficiales
+24 Meses
+2d6 &ge; Daño (D)
+2d6 &ge; Daño:
+2d6 &lt; Daño (D)
+2d6 &lt; Daño:
+3 Buques Capitales
+3 Daños
+3 Daños:
+3 Daños: Tira 3 veces en Tabla M9.
+3 Impactos
+3 impactos
+3 o más sistemas INOP (+1 mes)
+3 tiradas a larga distancia en [B1].
+3 tiradas en Redes [M5]. Si ninguna es 2&ndash;4 &rarr;
+3 tiradas en Tabla [B1] a Larga Distancia (&le; 6 / 2 a 6). Si logra &ge; 2 impactos ➔ gana la habilidad
+3 tiradas en Tabla [B1] a Larga Distancia. Si logra &ge; 2 impactos ➔ gana
+3 tiradas en Tabla de Redes [M5]. Si ninguna es 2–4 ➔ gana
+3 tiradas en [B1] a Larga Distancia. Si &ge; 2 impactos ➔ gana la ficha
+3. Ashes (Impacto Automático)
+3. Ashes of a Classmate (Cenizas de un compañero):
+3. Asignación de Área (Tabla A1)
+3. Asistencia Médica a Bajas
+3. Casilla de Misión y Eventos
+3. Chequeo de Duds y Daño Infligido
+3. Escuelas Navales de Adiestramiento (Opcional)
+3. Evaluación de Condecoraciones y Ascensos
+3. Gosei (Meditación)
+3. Maniobra en Redes y Barca:
+3. Tirada de Encuentros (Tabla A3)
+4 Daños
+4 Daños:
+4 Impactos
+4 Torpedos (Salva Estándar)
+4 a 6 casillas (+2 meses)
+4 impactos
+4-6: Recuperado con éxito por Submarino Nodriza.
+4. Gran Evento Histórico y Misión Especial [7.0]
+4. Navegación de Retorno a Base
+4. Paso a la Siguiente Patrulla
+4. Reacción y Detección de Escoltas
+5 Impactos
+5 impactos
+5 pts para hundir
+5. Resolución de Averías en el Submarino (Chart B6)
+5–7 Daños:
+6 Buques Oficiales
+6 Torpedos (Salva Completa Proa)
+6 pts para hundir
+6. En Tijera (6)
+6. OPERACIONES ESPECIALES KAITEN (CHARTS F4, K5, K6 &amp; COMBATE)
+7 a 8 casillas (+3 meses)
+7 pts para hundir
+7. OPERACIONES DE HIDROAVIÓN EMBARCADO (CHARTS P3, P4, P5, P6 &amp; REGLA 7.17)
+7–12 Fallo
+8 Casillas de Daño
+8–12 Fallo
+9–12 Fallo
+: repite cualquier tirada (1d6 o 2d6). Se puede acumular entre patrullas.
+: ¡Recuperación nocturna con éxito!
+; requiere astillero (Fase 5: Refit).
+= 7 impactos
+= Fallo / Inerte
+= Impactos al hidroavión |
+= ¡Evasión exitosa! Termina el encuentro.
+AS LEGENDARIO DE LA FLOTA (LEGENDARY FLEET ACE)
+ASCENSOS Y CONDECORACIONES IMPERIALES [8.7 - 8.9]
+AVERÍAS, CONTROL DE DAÑOS Y RETORNO
+AYUDA TÁCTICA IJN
+Abortar patrulla. Doble tirada de encuentros por zona.
+Acorazados (BB), Portaaviones de Flota (CV), CVL y CVE por año
+Acreditación oficial de comandante de sumergible.
+Actividades de Ocio y Tradición (Elegir 1 beneficio):
+Acumular ≥ 15,000 toneladas o completar 3 patrullas exitosas.
+Acumular ≥ 20,000 toneladas totales de buques enemigos hundidos.
+Adiestramiento de Torpedos (Torpedo Training):
+Adquisición de Habilidades:
+Al concluir el combate o en cada ronda de inundación, resuelve las tiradas según Chart B7:
+Al finalizar el combate tira 1d6:
+Al ser esencialmente un torpedo Tipo 93 Long Lance modificado,
+Al ser misiones kamikaze sin retorno, todos los operadores perecen tras el ataque. Por ello, se eligen o tiran
+Alcance Medio (Medium Range) [Seguro, sin tiro previo escolta]
+Alcance de Fuego:
+Alcanzar 12 meses de servicio activo en campaña (Regla 8.8.4).
+Alcanzar 24 meses de servicio activo en campaña (Regla 8.8.3).
+Amuleto de protección cosido a mano. Otorga
+Amuleto del gato de la suerte. Ganas la ficha
+Artillería AA (AA Guns) [1-2 Fixed / 3-6 INOP]
+Artillería Cubierta:
+Ascenso Anual de Rango:
+Ascenso a Capitán (Kaigun Taisa):
+Asigna el nombre del Comandante tirando en la Tabla H2 (Apellido y Nombre en kanji y romaji), determina su rango de inicio (Normalmente Kaigun-Chūsa / Comandante) y registra los torpedos asignados a los tubos de proa y popa.
+Asignación de Beneficio por Piloto (Kaiten #1 a #6):
+Asignación de Área de Patrulla [Tabla A1]:
+Ataque Aéreo Especial FIDO (desde 5/44)
+Ataque de aviación
+Ataque en Inmersión (Submerged Torpedo)
+Ataque impacta automáticamente (sin tirar dado).
+Ataque nocturno en superficie
+Ataque nocturno en superficie (1.er turno)
+Ataques normales con 1d6 (1–5); Especial con 6 a partir de 5/44.
+Avanza el calendario operativo e inicia la siguiente misión en Fase 1.
+Avería Sufrida
+Aviación (Aircraft)
+Avión destruido.
+Avión enemigo lanza torpedo acústico guiado FIDO. Tirar 1d6:
+Año
+BANDEJA DE FICHAS DE DESTINOS Y MISIONES ESPECIALES [DOBLE CARA]
+BASES NAVALES [4.7], REFIT [8.5.11] E INCURSIONES AÉREAS [4.7.6]
+BUQUE HUNDIDO (5,700 tons)
+Baja Dotación (Herido/KIA)
+Baja Dotación x2
+Baja Tripulación (Crew)
+Baja Tripulación x2
+Baja de Dotación:
+Barrenado si >1 zona de base, o remolcado si dista 1 zona.
+Barrenar y Rescate [8.6.3]:
+Base Naval de Inicio [Regla 4.7.1]:
+Base avanzada clave de la 6ª Flota. Cesa de operar en 3/44 (rebase a Yokosuka; si está en Refit en 3/44 el buque se considera perdido).
+Base naval mayor. Todos los buques de inicio comienzan aquí.
+Base septentrional para patrullas en Aleutianas. Una vez asignado aquí, todas las patrullas subsiguientes serán a Aleutianas hasta 7/43 (momento en que es reasignado a Truk). Inmune a bombardeos [4.7.6].
+Base: 1 mes de descanso/mantenimiento obligatorio.
+Baterías
+Baterías (Batteries) [1-4 Fixed / 5-6 INOP]
+Baterías (Batteries): 🎲 1d6
+Baterías dañadas
+Baterías defectuosas: Velocidad reducida (-1 al franqueo de redes).
+Batteries (Baterías): 1d6
+Bendición imperial: Durante el resto de esta patrulla y la siguiente, puedes utilizar cualquier habilidad que aún no hayas ganado.
+Beneficio de Mando y Reglas
+Biografía e Historial de Mando
+Boat Handling (resultado 4 = Atraviesa la Red)
+Bombardeo aéreo con +1. Ametralladora defensiva trasera a -1 para impactar.
+Buque / Contacto Generado:
+Buque Capital
+Buque Capital (Acorazado / CV)
+Buque Capital Rápido (Fast Capital)
+Buque de Guerra
+Buques de 1,000 t o menos
+Buques de 1,001–5,000 t
+Buques de 10,000+ t
+Buques de 5,001–9,999 t
+Búsqueda Aérea: pierde el +1 en Chart A4. Búsqueda Superficie: no hay 2ª tirada en A3.
+CASILLAS DE DAÑO AL SUBMARINO (d66)
+CHART A3: ENCOUNTER CHART (2d6 - 10 ZONAS, TRÁNSITO, MISIÓN ESPECIAL Y MINAS)
+CHART A3: PATROL AREA ENCOUNTERS (ENCUENTROS EN ÁREA - 2d6)
+CHART B2: TORPEDOS INERTES (DUDS - 1d6)
+CHART B3: ATTACK DAMAGE & PUNTOS PARA HUNDIR
+CHART B4: DETECCIÓN DE ESCOLTAS (2d6)
+CHART B5: ATAQUE DE ESCOLTA O AVIACIÓN (2d6)
+CHART B6: TABLA DE AVERÍAS (d66 = 1d6 Rojo + 1d6 Blanco)
+CHART B7: SUBMARINE DAMAGE LISTINGS & CREW INJURY (TABLA B7 OFICIAL)
+CHART B7: SUBMARINE DAMAGE LISTINGS (AVERÍAS Y REPARACIONES)
+CHART H3: REFIT DURATION, PUERTO Y CONDECORACIONES IMPERIALES
+CHART H3: REGLAS OFICIALES DE REFIT [8.5.11]
+CHART P4: AIR TO AIR COMBAT (Combate Aéreo)
+CONTROL DE AVERÍAS, REPARACIONES EN EL MAR Y BAJAS (REGLAS OFICIALES 8.5 Y 8.6)
+Cada impacto enemigo contra tu submarino genera una tirada d66 (1d6 rojo + 1d6 blanco) en Chart B6, registrando averías en baterías, vías de agua, casco o bajas de la tripulación.
+Campaña guardada automáticamente.
+Canal de Panamá:
+Capacidad: 8 Inundación / 8 Casco
+Capitán (Torpedo Training):
+Captain (Capitán de Navío / 大佐)
+Carga Torpedos:
+Carta de Secuencia
+Casco (Hull) [No reparable en el mar]
+Casco al límite: si se marcan todas las casillas de casco, el submarino se hunde.
+Casilla de Misión:
+Casillas de Casco Dañadas:
+Causa +1 impacto adicional en [B5].
+Causa 1 impacto MENOS de lo obtenido en [B5].
+Causa 1 impacto MENOS en [B5].
+Cañón / AA:
+Cañón AA
+Cañón Antiaéreo
+Cañón Cubierta
+Cañón Cubierta / Kaiten
+Cañón de Cubierta
+Cañón de Cubierta (Deck Gun) [1-2 Fixed / 3-6 INOP]
+Cañón de Cubierta (Deck Gun):
+Cañón de Cubierta (Surfaced Gun Action - Sin escoltas)
+Cañón de cubierta de 127 mm
+Centro de Mando Táctico • Acceso Restringido
+Cesa en 3/44; si está en refit se pierde [4.7.3].
+Chart A2: Tránsito (Transit Encounters):
+Chart A4: Ataque Aéreo e Inmersión de Emergencia:
+Chart B5: Tabla de Ataque de Escolta (2d6):
+Chart B6: Averías del Submarino (d66 = 1d6 Rojo + 1d6 Blanco):
+Chart M7: Recuperación (1d6)
+Chequeo de promoción en diciembre de cada año según tonelaje acumulado y condecoraciones activas.
+Choca contra obstáculo sumergido y se pierde el Kaiten.
+Ciego bajo el agua (+2 a todas las tiradas de tiro).
+Cinta con mensaje inspirador. Permite
+Cinta con mensaje marcial. Permite
+Cinta de Defensa Naval
+Cinta de Mención Naval
+Cirugía de urgencia a bordo. Tira 1d6: 1-3= Éxito (Médico se vuelve Experto), 4-5= Sobrevive, 6= Fallece (pierde rango Experto si lo tenía).
+Clase de Submarino:
+Clave de Acceso (Password):
+Colisión con patrullera portuaria: Minisubmarino destruido.
+Comandante Muerto (KIA) o Grave (SW)
+Completar la primera patrulla de guerra (éxito o fracaso).
+Comprueba si el Comandante o el submarino cumplen los requisitos de condecoraciones (Submarine Badge, Wound Badge, Orden del Milano de Oro) o ascensos a Capitán (Taisa).
+Compuertas Torpedos (Torpedo Doors) [1-2 Fixed / 3-6 INOP]
+Compuertas atascadas; los tubos afectados (proa par/impar o popa) no pueden disparar.
+Compuertas atascadas; los tubos afectados no pueden disparar.
+Compuertas de Torpedos (F.T. Doors): 🎲 1d6
+Con
+Concluye las casillas de retorno para volver a puerto seguro.
+Condecoraciones y Medallas Oficiales de la Armada Imperial (Regla 8.8)
+Condecoración
+Condecoración (勲章)
+Condecoración Imperial Máxima
+Consulta directa durante las tiradas de adiestramiento
+Corta Distancia (Close Range) [Requiere infiltración 2d6
+Crew Injury (Bajas en Tripulación - 2d6 Puesto, 1d6 Gravedad)
+Criterio de Concesión
+Criterios de Aborto Obligatorio [Regla 8.6]:
+Crujido o Golpe de Casco (Bump or Groan)
+Cálculo de Meses de Refit ('R') [Chart H3]:
+Cálculo oficial de permanencia en astillero, incursiones aéreas enemigas (1944+) y condecoraciones del Emperador.
+Círculo de Objetivo (2d6)
+Círculo de Tránsito (2d6)
+Círculo del Objetivo / Puerto (2d6)
+DESAPARECIDO EN COMBATE (LOST IN ACTION)
+DISPARO DE TORPEDOS Y CAÑÓN DE CUBIERTA (IMPACTO)
+DRMs: +1 Tanques combustible rotos, +1 Hidrófonos rotos, +1 Baterías, +1/+2 Motores eléc., +1 Ataque nocturno superficie 1.er turno, +1 por tirada 11+ en detección, +2 Ataque aéreo.
+DRMs: +1 Tanques rotos, +1 Planos rotos, +1 Buque Capital, +1 Día con vapor, +1 Detección previa, +1 Corta Dist., -1 Larga Dist., -1 Profundidad límite, +1 en 1943, +2 en 1944, +3 en 1945.
+Damage (Dañado)
+Daño en ataque aéreo. Añadir
+Daño estructural severo en fuselaje o alas.
+Daño necesario para HUNDIR:
+Daño severo en ataque aéreo. Añadir
+Daños en el Casco (Hull):
+Descifrado alerta al enemigo: cualquier Buque Capital se considera sin contacto.
+Descripción histórica y reglas...
+Desorientación: Tira 1d6: 1-3= no halla blancos, agota combustible y se pierde; 4-6= recobra rumbo.
+Destructores (DD), Fragatas (DE), Corbetas y Submarinos de Guerra Aliados (1-100)
+Detalles de Salva / Notas:
+Detección previa en el turno
+Detectado (+1 ataque escolta)
+Detectado por patrulla ASV. Tirar de nuevo con DRM -1.
+Detectado ➔ Sufre ataque inmediato en Tabla [B5].
+Detector de campo magnético activado: Búsqueda activa de patrulleras.
+Direct hit; ¡Hidroavión destruido en el aire!
+Disparo a Escolta / Destructor / DE
+Disparo simultáneo proa + popa (1.er turno)
+Distinción de herido de guerra en acto de servicio.
+Distinción de veterano de guerra de campaña.
+Dive Planes (Planos de Inmersión): 1d6
+Doble Ascenso Póstumo de Rango
+Dos Heridas Leves se convierten en Herida Grave (2x LW = SW). Dos Heridas Graves se convierten en Muerte en Combate (2x SW = KIA). Si el Comandante está KIA o SW, aplica +1 DRM a todas las tiradas de ataque de torpedos.
+Dotación Novata (Green Crew)
+Durante Refit en cualquier puerto excepto Paramushiro:
+Dutch East Indies (DEI) [4.7.5] (Océano Índico)
+Día (Day) [Tirada 1-3]
+EXPEDIENTE DE SERVICIO DEL COMANDANTE (職歴・軍歴) • IJN DOSSIER
+Efecto
+Efecto / Detalles
+Efecto Oficial en Campaña
+Efecto Táctico / Procedimiento
+Efecto en Juego
+Efecto v. Avión
+Efectos Operativos (SW / KIA):
+Efectos tácticos de averías, probabilidades de reparación en el mar (1d6) y tabla completa de bajas de tripulación.
+El Jefe de Máquinas y la dotación técnica intentan reparar periscopios, motores diésel, motores eléctricos, timones e hidrófonos con tiradas de 1d6 en Chart B7.
+El Segundo toma el mando. +1 Detección, +1 To-Hit.
+El combate no es simultáneo y dura un máximo de
+El daño en el casco NO es reparable en el mar
+El daño estructural al casco no se puede reparar en el mar. Si todas las casillas de casco están marcadas, el submarino se hunde.
+El jugador elige o tira su rumbo evasivo (1d6) antes de que la escolta lance su contraataque (1d6):
+El piloto porta las cenizas de un compañero caído. Para honrar su memoria, su ataque
+El plan de navegación se divide en Casillas de Tránsito de Ida, Casilla de Misión Especial (si aplica), Casillas en Estación y Casillas de Retorno según la distancia y autonomía del sumergible.
+El primer daño recibido en combate se reduce en 1 punto.
+El sistema asienta automáticamente la patrulla en la cuadrícula oficial de 46 meses con la fecha, el código de área, las bajas enemigas y el tonelaje total hundido.
+El sistema verifica automáticamente si en esa fecha y área tuvo lugar una operación de flota (Pearl Harbor, Midway, Guadalcanal, Golfo de Leyte, Operación Ten-Gō) o misión Kaiten/Minisubmarinos. Si la hay, se programa una Casilla de Misión Especial.
+El submarino debe abortar si el Capitán ya era baja.
+El submarino sufre
+Elige 1 beneficio por cada piloto Kaiten embarcado (Regla Oficial 7.18):
+Elige distancia de disparo (Close, Medium, Long) y condición (Sumergido o Superficie nocturno). Selecciona qué tubos disparar y lanza 2d6 en Chart B1 aplicando los modificadores oficiales.
+Elige exactamente 2 habilidades para tu dotación aérea:
+Elige maniobra del hidroavión y pulsa «🎲 Asalto Caza (1d6)».
+Elige tu sumergible en el Dique Seco entre las 16 clases históricas de la Armada Imperial Japonesa (Kaidai, Junsen, Tipos A/B/C, Sen-Toku, Sen-Taka, Kirai-sen). Configura su numeral oficial de casco.
+Elite (Élite)
+Emergencia involuntaria a superficie: Tira detección 2d6; con 10+, destruido por baterías costeras.
+En Combate
+En Sensuikan
+En cada Refit desde 1/44, chequear daño aéreo en cualquier puerto
+En cada casilla de estación (y en tránsitos a partir de agosto de 1942), lanza 2d6 en la columna correspondiente al teatro naval. Los resultados van desde calma chicha (--) hasta mercantes solitarios, convoyes protegidos o poderosas task forces con portaaviones y acorazados.
+En diciembre de cada año, con ≥3 patrullas o tonelaje distinguido, tira 1d6: con 1-3 el Comandante asciende a Capitán de Navío.
+En el Océano Índico
+Encallado en arrecife desconocido. Sufre 3 daños en el casco. Si esto hunde el buque, se barrena y tira rescate. (Ignorado si Navegante es Experto).
+Encuentro en Zona
+Engines & Motors (Motores Diésel / Eléctricos): 1d6
+Escoltas no han atacado todavía.
+Escuela de Kure [F1] • Minisubmarinos [F2] • Escuela Aérea Kasumigaura [F3] • Escuela Kaiten Otsujima [F4] • Tablas Activas: [B1], [B6], [M5], [M7], [K5], [K6]
+Esta secuencia oficial del tapete es la base directa de la ruta operativa de cada patrulla en el Workflow de Campaña.
+Estado
+Estado:
+Estudio Técnico Extra:
+Europa (Misión Yanagi):
+Evalúa si la escolta te detecta acústicamente (Chart B4) y resuelve las cargas de profundidad (B5 & B6):
+Exceder profundidad de test (Test Depth)
+Excepción:
+Experto en Armamento (Weapons Expert):
+FANMADE NO OFICIAL
+Fallo (Miss)
+Fallo de 1 motor diésel (regreso con 2 tiradas de encuentro por casilla). Si fallan ambos: remolcado si dista 1 zona, o barrenado.
+Fallo de Mandos (Control Failure)
+Fallo de girocompás: Desorientado; añade +1 casilla de tránsito.
+Fallo de gobierno o timón: Aplica 1 casilla de avería aleatoria inmediata.
+Fallo de gobierno. 1d6: 1= inmersión incontrolada y pérdida del Kaiten; 2-6= recupera control.
+Fallo normal (Normal Miss). Pasa de largo.
+Flooding (Inundación): 1d6
+Franqueada con éxito:
+Fuego disperso, sin daños al aparato.
+Fuel Tanks (Tanques de Combustible): 1d6
+Fuga de Combustible (Oil Leak)
+Fuga de combustible. Durante combate: +1 Detección Y +1 en Chart B5. Si no se repara, aborto obligatorio de misión.
+Fuga de combustible. Tira 1d6: 6= incendio y Kaiten destruido; 1-5= controla fuga y sigue.
+Fuga de combustible: +1 detección (B4) y +1 en ataques de escolta (B5). Si no se repara, ¡el submarino DEBE ABORTAR!
+Gana la ficha
+Ganas el marcador
+Generic Crew (Dotación)
+Gobierno difícil: -1 DRM a cruzar arrecifes. Si no ataca el fondeadero de Ulithi, ignora.
+Graduación en Kure:
+Graduación en la Escuela de Submarinos de Kure [F1].
+Graduado con honores. Inicias con
+Graduarse en la Escuela de Kure [F1] o 1 patrulla exitosa.
+Gran Cordón de la Orden del Sol Naciente
+Gravedad (1d6):
+Grieta estructural grave. Si acumula 2 daños de casco, se hunde.
+Grúa Catapulta
+Grúa Hidroavión (Crane) [1-2 Fixed / 3-6 INOP]
+Grúa:
+Guía Completa: Las 20 Misiones Especiales de Sensuikan (Reglas 7.1 a 7.18)
+Hangar / Grúa
+Hangar Hidroavión
+Hangar Hidroavión [1-2 Fixed / 3-6 INOP]
+Hasta Julio 1942: Las casillas de tránsito no tienen encuentros ordinarios (solo un 12 natural activa Evento B11). Desde Agosto 1942 se aplican encuentros ordinarios de columna Transit.
+Haz clic en "Avanzar Casilla" o usa el Stepper horizontal interactivo para recorrer la patrulla casilla a casilla.
+Haz clic en cualquier ficha para voltearla
+Heavy Damage (Daño Severo)
+Hidroavión:
+Hidrófonos
+Hidrófonos (Hydrophones) [1-2 Fixed / 3-6 INOP]
+Hidrófonos (Hydrophones): 🎲 1d6
+Hidrófonos averiados
+Hidrófonos rotos: sin maniobra evasiva (+1 B5). Radio rota: +4 al chequeo de rescate si se barrena; -1 a recuperación de Ko-hyoteki (M7).
+Hidrófonos, Cañón y AA: 1d6
+Hidrófonos:
+Hundido en Acción
+Hundir 1 Buque Capital o 100.000 t acumuladas (Commander / Captain).
+Hundir 1 Buque Capital o lograr &gt;50.000 t en 1 patrulla (Lt. Cdr).
+Hundir un Buque Capital o lograr >20,000 t en una sola patrulla.
+Identifica qué fichas están disponibles en cada fecha y sus misiones especiales (Midget, Kaiten, Reconocimiento, Minado, etc.).
+Identificador del Buque (Nombre / Número):
+Impacto
+Impactos Sufridos
+Impactos, torpedos inertes, daño, detección por escoltas, contraataque de cargas y averías de submarino.
+Ineficaz (0 impactos)
+Inicia la campaña con el amuleto protector
+Iniciando con 3 daños de casco, excede Test Depth 3 veces.
+Inicias la partida con el amuleto de la buena suerte
+Insignia de Submarinos
+Intercepción Ultra (Ultra Intercept)
+Interceptación ULTRA: Defensas en máxima alerta. Ignora buques capitales.
+Interceptación aliada por radio desvía a los blancos. Tu próximo encuentro con Buque Capital se considera "Sin Contacto" (--).
+Intoxicación masiva de comida/agua. Todas las tiradas de ataque (torpedo, cañón, AA) sufren penalización de +1 durante la patrulla.
+Inundación
+Inundación (Flooding)
+Inundación adicional.
+Inundación x2
+Inundación:
+Inutilizado para el resto de la patrulla.
+Jefe de Máquinas (Engineer)
+Jefe de Máquinas / Engineer (Judgment Training):
+Jerarquía de Mando y Ascensos (Regla 8.9)
+KIA (Muerto en Combate)
+La misión especial fracasa de inmediato.
+La primera casilla que no es de tránsito activa la Misión Especial:
+La tirada de recuperación con el submarino recibe +1 drm.
+Lanza 2d6 en cada casilla de estación o tránsito:
+Lanza 2d6 en la columna de la fecha correspondiente de la Tabla A1 para recibir tu zona de patrulla oficial (o solicítala si tu comandante tiene suficiente rango militar según regla 7.14).
+Lanza 2d6 para determinar el área de operaciones según el período histórico (Regla 7.14).
+Larga Distancia (Long Range) [-2 a la puntería]
+Las 5 Bases Oficiales de Sensuikan [Regla 4.7]:
+Light Wound (LW - Sin efecto)
+Listo para tirar en esta casilla.
+Lleva las cenizas de un camarada caído. Su ataque
+Los ataques aéreos causan 1 herida automática a la tripulación.
+Los tubos correspondientes (pares o impares) quedan bloqueados hasta repararse.
+Lote de espoletas de torpedos de calidad superior. Todas las tiradas de torpedo inerte (dud) en [B2] reciben +1 por el resto de la patrulla.
+Lt Cdr (Teniente Comandante / 少佐)
+Lámina con Sello Imperial
+Mancha de combustible visible en el mar.
+Maniobra Hidroavión:
+Maniobras de Combate Aéreo (ACM):
+Mantenimiento Estándar:
+Marca 1 casilla de daño en el casco del Chart K1. Si se llenan todas, el submarino se hunde.
+Marca 1 casilla de inundación. Al concluir la ronda de combate, tira 1d6:
+Marcar 1 casilla. Si se llenan todas, emerger de emergencia y comprobar si se barrena. En cada ronda de inundación, tirar 1d6 por el Ingeniero:
+Marcar 1 casilla. Si se marcan todas las casillas de integridad de casco, el submarino se hunde.
+Medic (Médico)
+Meditación Gosei:
+Mercantes Grandes y Petroleros (T) (1-100) • 5-6 en tirada de buque en Chart [A3]
+Mercantes Pequeños (1-100) • 1-4 en tirada de buque en Chart [A3]
+Mes de Patrulla:
+Minisubmarino
+Minisubmarino echado a pique por su dotación. Tripulantes nadaron y fueron rescatados (+1 mes de refit).
+Minisubmarinos
+Misiones de Reconocimiento Aéreo (Recon) y Bombardeo (Canal de Panamá) para submarinos equipados con hangar y catapulta (Tipos A, B y Junsen).
+Misión Especial Kaiten
+Misión Operativa:
+Misión histórica Sen-Toku (I-400 / AM).
+Mismo rumbo pero distinto número:
+Mismo rumbo y NÚMERO EXACTO:
+Moderate Damage (Daño Moderado)
+Modificadores a la Detección (DRM):
+Modificadores a la Tirada de Impacto (DRM):
+Modificadores de Daño (DRM):
+Momento del Día (1-3 Día, 4-6 Noche):
+Motor Diésel 1
+Motor Diésel 1/2
+Motor Diésel 2
+Motor Eléctrico 1
+Motor Eléctrico 2
+Motor Eléctrico:
+Motores Diésel / Eléctricos [1-4 Fixed / 5-6 INOP]
+Motores Diésel 1 & 2: 🎲 1d6
+Motores Eléctricos 1 & 2: 🎲 1d6
+Motores eléctricos averiados
+Muerto en Combate (KIA - Killed in Action)
+Mérito militar distinguido al Emperador.
+Mérito por servicio prolongado de combate.
+NAVEGACIÓN Y TRAYECTO POR CASILLAS
+NIVELES DE VICTORIA DE CAMPAÑA (GRT HUNDIDO)
+NOMBRES DE PILA / FIRST NAMES
+Nacido en el seno de una familia de pescadores tradicionales de Maizuru
+Navegación Aérea (Aerial Navigation):
+Navegación impecable: avanza de inmediato al círculo que elijas, ignorando arrecifes.
+Navegante al mando como Capitán si cae herido grave o muerto.
+Nivel de Victoria de Campaña
+No puede maniobrar evasivamente (+1 en B5).
+No puede recuperar hidroavión.
+No se pueden realizar ataques en inmersión (requiere atacar en superficie nocturna o usar cañón).
+No: Patrulla Estándar de Interdicción
+Nombre del Buque:
+Nombre del Comandante (Capitán):
+Normal según tablas.
+Notas oficiales:
+Objetivo Bombardeo (Panamá)
+Oficial (Comandante, 2.º Oficial XO o Jefe de Máquinas)
+Oficial / Usuario:
+Oficial 4.7
+Oficial Compass Games
+Oficial IJN
+Oficial de guardia caído al mar. Tira 1d6 adicional: 1= Capitán (termina carrera), 2= Segundo (XO), 3= Jefe Máquinas, 4-6= Navegante.
+Ojiva superior: no requiere comprobación de torpedo inerte (dud) en esta misión.
+Ola gigante entra por la escotilla inundando la nave. Radar dañado (si equipado, tira reparación). Tira 1x baja en tripulación en [B7].
+Orden de traslado de base naval. Al finalizar la patrulla, reubica aleatoriamente el submarino en otra base activa disponible.
+PREPARACIÓN Y COMISIONADO DEL SUBMARINO
+PROMEDIO HISTÓRICO (HISTORICAL AVERAGE)
+Paramushiro [4.7.2] (Base Pacífico Norte / Kuriles)
+Paramushiro [4.7.2] (Kuriles / Base Pacífico Norte)
+Pasa la red sin sufrir percance ni ser detectado.
+Paso 1: Identificación y Momento del Día [8.1.3 - 8.1.10]
+Paso 2: Selección de Alcance [8.2.1]
+Paso 3: Modalidad de Ataque [8.2.2]
+Paso 4: Asignación y Disparo de Torpedos [8.2.3 - 8.2.7]
+Pearl Harbor / Hawaii (Operación Z)
+Penalizaciones por Bajas en Puestos Clave (SW o KIA):
+Permite repetir 1 tirada de avería o percance del hidroavión por misión.
+Permite repetir cualquier tirada en [K5] o [K6].
+Período Activo: 1941
+Pilotos Suicidas de 1 Solo Uso:
+Planos Inmersión
+Planos de Inmersión
+Planos de Inmersión (Dive Planes) [1-2 Fixed / 3-6 INOP]
+Planos de Inmersión (Diveplanes): 🎲 1d6
+Planos de inmersión averiados
+Por cada 3 patrullas exitosas (o cada 2 si el Capitán posee la habilidad
+Por defecto: Usuario:
+Por detección con 11+
+Presencia de Buque Capital
+Primer Oficial toma el mando; Detección +1, To-Hit +1.
+Problemas de Gobierno (Control Problems)
+Profundidad Test:
+Puesto (2d6):
+Puesto Afectado
+Pulsa «🎲 Tirar [P5]» para resolver el fuego antiaéreo enemigo.
+Pulsa «🎲 Tirar [P6]» para lanzar las bombas en el objetivo.
+Puntos para Hundir Buques:
+Pérdida de control de profundidad.
+Pérdida de propulsión de superficie y velocidad de carga de baterías.
+Pérdida de propulsión principal (-2 nudos).
+REFIT, REGISTRO EN ROGU BUKKU Y CARRERA
+REGLAS &amp; TABLAS ACTIVAS
+REGLAS DE DAÑO, DETECCIÓN Y ATAQUE KAITEN
+REGLAS OPCIONALES
+Rabaul y Shortland. Activas durante toda la contienda.
+Radar fuera: sin alerta temprana en superficie. Radio fuera: penalizador a rescates y órdenes de flota.
+Radar roto: se pierde el +1 en A4 y la segunda tirada en A3. Hangar averiado: hidroavión destruido. Grúa rota: no se puede recuperar hidroavión.
+Radar, Hangar & Grúa: 1d6
+Radio, Grúa y Hangar: 1d6
+Rango inicial estándar sin habilidades especiales de mando.
+Reasignación de Comandante:
+Reconocimiento Aéreo (Tablas P1-P6)
+Recordar en esta tablet
+Recuperación con daños leves en amarre: Minisubmarino recuperado a bordo con éxito.
+Recuperación impecable: Minisubmarino y tripulación intactos.
+Reduce en 1 el primer daño recibido en combate aéreo defensivo.
+Registra el estado de salud del Comandante y la tripulación (Heridas Leves, Graves o Bajas en Combate).
+Regla 4.7
+Regla 4.7.1:
+Regla 4.7:
+Regla 7.14
+Regla 7.18
+Regla 8.1.8:
+Regla 8.1.8: Se activa con el 1.er resultado de 12 natural obtenido en tirada de encuentro
+Regla Acumulativa:
+Regla Escuela:
+Regla F1
+Regla Oficial 4.8
+Regla Oficial 7.17
+Regla acumulativa: 2x LW = SW, 2x SW = KIA
+Reglas 4.0 & 5.0 (Compass Games)
+Reglas 6.0 Paso 1, 7.0 & Tabla A1
+Reglas 6.0 Paso 2, 8.1 & Tabla A3
+Reglas 6.0 Paso 3, 8.2 & Tablas B1 a B6
+Reglas 6.0 Paso 4, 8.5, 8.6 & Chart B7
+Reglas 6.0 Paso 5, 7.13, 9.0 & Rogu Bukku
+Reglas Oficiales 8.8 (Condecoraciones) y 8.9 (Ascensos de Rango y Beneficios de Mando)
+Reglas de Combate Aéreo:
+Repara todos los puntos de daño en el casco, recarga la dotación completa de torpedos y suministros. El submarino pasa un período reglamentario en astillero ("R").
+Reparación (1d6):
+Reparación tras combate (1d6 por motor):
+Reparación tras combate (1d6):
+Repite cualquier fallo de Mishap/Malfunction 1 vez por misión.
+Requiere submarino con gran autonomía (Tipos A/B).
+Requisito Oficial de Concesión (Regla 8.8)
+Requisito de Buque:
+Resuelve inmediatamente las vías de agua activas tirando 1d6 por cada compartimento inundado. Con 1–4 la vía de agua se contiene con éxito; con 5–6 la inundación empeora.
+Resultado del Ataque (Código Oficial):
+Resultar herido grave (SW) en combate durante una patrulla.
+Ruido inquietante en el casco; causa estrés al piloto pero sin efecto negativo.
+Ruta Operativa Adaptativa según Destino y Submarino
+SECUENCIA DE COMBATE TÁCTICO Y TORPEDOS
+SUBMARINO HUNDIDO
+Sale a superficie. Recupera control, pero tira detección de escoltas de inmediato.
+Se coloca la insignia oficial de submarinista
+Se incorporó al naciente servicio de submarinos imperial a fines de la década de 1920. Durante la Segunda Guerra Sino-Japonesa (1937) sirvió como oficial de torpedos, adquiriendo una valiosa pericia en patrullas costeras y maniobras tácticas nocturnas.
+Se resolverá en la casilla de misión especial en ruta a estación.
+Se tira 1d6 cada 12 meses de servicio. Ascenso con
+Secuencia Oficial de Juego
+Segundo Oficial / XO (Deck Gun Training):
+Selecciona el mes histórico de salida entre diciembre de 1941 y julio de 1945. Verifica la disponibilidad del submarino y de las bases navales activas.
+Selecciona la fase de vuelo y pulsa «🎲 Tirar [P3]» para resolver el encuentro.
+Selecciona tu base naval oficial [Regla 4.7]: Yokosuka [4.7.1], Paramushiro [4.7.2] (Aleutianas, reasigna a Truk en 7/43), Truk [4.7.3] (cesa en 3/44), New Guinea [4.7.4] (Rabaul / Shortland) o Dutch East Indies (DEI) [4.7.5] (Singapur / Penang / Sabang).
+Si &ge; 2 impactos &rarr;
+Si el contacto es
+Si el convoy cuenta con escolta, tira 2d6 en Chart B4 con modificadores por tecnología enemiga, alcance y año. Si eres detectado, los destructores contraatacan con cargas de profundidad en Chart B5.
+Si está inoperativo,
+Si están fuera, los escoltas reciben
+Si están inoperativos, los escoltas reciben
+Si hay Kaiten a bordo, también resulta dañado.
+Si impacta, tirar 1d6 de nuevo:
+Si logras al menos 2 impactos, ganas
+Si ninguna resulta en "implosión", ganas
+Si obtienes una tirada de
+Si se llenan todas las casillas, el submarino debe emerger de inmediato.
+Si se marcan todas las casillas de inundación, emerger y barrenar. Al salir de combate, la inundación se elimina por completo si no hubo hundimiento.
+Si se sufre impacto en tripulación durante el combate, tira en la tabla de Bajas de Chart B7:
+Si todas las casillas genéricas están SW/KIA: +1 to-hit con torpedos.
+Si todas las casillas genéricas son SW/KIA, To-Hit torpedos +1.
+Si ya mandaba, el 3.er Oficial asume: +1 Detección, +1 To-Hit.
+Sin Daños: Cargas de profundidad lejanas.
+Sin efecto (No effect).
+Sin efecto inmediato. A partir de la siguiente ronda de combate (si la hay), +1 en ataques de escolta (B5).
+Sin efecto inmediato. A partir de la siguiente ronda de combate: +1 en Chart B5.
+Sin escape posible. ¡Grito de Banzai al Emperador y Seppuku!
+Sin novedad (No event): Navegación encubierta perfecta.
+Sin rastro del minisubmarino. Tripulación declarada MIA / Desaparecida en acción.
+Singapur, Penang y Sabang para patrullas en el Océano Índico.
+Sistema Afectado:
+Solicitar con 1–2 en 1d6
+Sub vs Escolta
+Submarino Activo
+Submarino a vapor / de día
+Submarino destruido en incursión aérea. 1 mes de viaje a Yokosuka para recibir nuevo submarino.
+Submarino destruido. 1 mes para transferirse a nuevo buque en Yokosuka.
+Suma +1 drm a la tirada de recuperación del hidroavión por el submarino nodriza.
+Superar profundidad de prueba 3 veces consecutivas comenzando con 3 daños de casco. Si no hay implosión ➔ gana
+Superior Comms (+1 drm en recuperación)
+Sí: Ataque a Pearl Harbor (Dic-41) [Midget / Recon / Patrol]
+Sí: Ataque a Sydney (May-42) [Midget 2 / Recon]
+Sí: Batalla de Midway (Jun-42) [Vigilancia]
+Sí: Guadalcanal / Islas Salomón (Ago-42)
+Sí: Madagascar / Diego Suárez (May-42) [Midget 3]
+Sí: Misión de Torpedos Suicidas Kaiten (Nov-44+)
+T3: Buques Guerra EE.UU.
+T4: Buques Capitales
+T5: Buques Commonwealth
+TABLA DE BAJAS DE TRIPULACIÓN (CREW INJURY: 2d6 + 1d6 GRAVEDAD)
+TABLA DE BAJAS Y HERIDAS DE TRIPULACIÓN (REGLA 8.6)
+TABLA [B10]: RETORNO CIRCULAR DE TORPEDO (CIRCULAR RUN)
+TABLA [B12]: MANIOBRAS EVASIVAS EN COMBATE (1d6 vs 1d6)
+TABLA [B1]
+TABLA [B2]
+TABLA [B3]: DAÑOS AL BLANCO
+TABLA [B4]: DETECCIÓN POR ESCOLTAS
+TABLA [B5]: ATAQUE DE ESCOLTAS
+TABLA [B6]
+TABLA [B8]: CALIDAD VARIABLE DE ESCOLTAS (1d6)
+TABLA [B9]: CALIDAD VARIABLE DE AVIACIÓN (1d6)
+TABLA [F1]: ESCUELA DE SUBMARINOS DE KURE (OBLIGATORIA)
+TABLA [F2]: ESCUELA DE MINISUBMARINOS KO-HYOTEKI
+TABLA [F3]: ESCUELA NAVAL DE AVIACIÓN DE KASUMIGAURA
+TABLA [F3]: ESCUELA NAVAL DE AVIACIÓN DE KASUMIGAURA (Elegir 2)
+TABLA [F4]: ESCUELA DE ADIESTRAMIENTO KAITEN (OTSUJIMA)
+TABLA [K5]: ENCUENTROS DE KAITEN (2d6)
+TABLA [K6]: EVENTOS HISTÓRICOS DE KAITEN (2d6)
+TABLA [M5]: CONTACTOS Y REDES DEFENSIVAS DE MINISUBMARINOS
+TABLA [M6]: EVENTOS DE MINISUBMARINOS
+TABLA [M7]: RECUPERACIÓN EN PUNTO DE ENCUENTRO
+TABLA [M8]: ATAQUE DE ESCOLTAS A MINISUBMARINO
+TABLA [M9]: CASILLAS DE DAÑO DEL MINISUBMARINO
+TABLAS B8 A B12: CALIDAD VARIABLE, GIRO CIRCULAR Y EVASIÓN
+TABLAS DE COMBATE Y DAÑOS: B1 A B6 (TRANSCRIPCIÓN DIGITAL OFICIAL)
+TABLAS F1, F2 Y F3: ESCUELAS NAVALES Y ADIESTRAMIENTO (OFICIAL COMPASS GAMES)
+TABLAS M5, M6, M7: CONTACTOS, EVENTOS Y RECUPERACIÓN DE MINISUBMARINOS
+TABLAS M8 Y M9: ATAQUES DE ESCOLTA Y DAÑOS A MINISUBMARINOS
+TABLAS OFICIALES DE BLANCOS [CHARTS T1 - T5]
+TABLAS OFICIALES DE COMBATE TÁCTICO [CHARTS B1 - B6]
+TABLAS QUE PARTICIPAN EN EL ADIESTRAMIENTO (OFICIAL SENSUiKAN)
+TORPEDOS INERTES (DUDS)
+TOTAL MESES EN DIQUE SECO (REFIT):
+Tabla [M5] Redes Portuarias (2d6):
+Tabla [M7] Recuperación de Submarino:
+Tabla oficial de contactos por zona de operaciones. Lanza 2d6 al entrar en cada casilla de patrulla o tránsito.
+Tanque de Combustible (Fuel Tank):
+Tanques combustible dañados
+Tanques de Combustible
+Tanques de combustible INOP / con fugas.
+Tanques de combustible dañados
+Tapete Oficial: 5 Estaciones
+Timón / Planos:
+Tipo de Buque:
+Tira 1d100 para determinar la identidad exacta, nombre histórico y tonelaje del mercante o buque de guerra avistado.
+Tira 1d6 daños. Si sobrevive, supera la red.
+Tira 2d6 o selecciona tu destino en el desplegable:
+Tira en la Escuela de Submarinos de Kure (Chart F1) para el Comandante (Tácticas de Torpedos), Oficial Ejecutivo XO (Cañón de Cubierta) y Jefe de Máquinas (Test Depth). Si llevas minisubmarinos tira en Chart F2; si llevas hidroavión Seiran/Glen tira en Chart F3 Kasumigaura.
+Tirada 1: ¿Quién recibe la baja? (1d6)
+Tirada 1d6
+Tirada 1d6: 1–2 Reparado, 3–6 Inoperativo.
+Tirada 1d6: 1–2 Reparados, 3–6 Inoperativos.
+Tirada 2: Severidad de la Herida (1d6)
+Tirada 2d6
+Tirada 2d6 Requerida
+Tirada BAJA impacta
+Tirada Final
+Tirada al llegar al Círculo de Objetivo o por evento "Broached":
+Tirada de Ascenso (8.9.2):
+Tirada de reparación 1d6: 1–2 Reparado, 3–6 Inoperativo.
+Tirada de rescate 2d6 (2-10 salvados, 11-12 perdidos; +4 si la Radio está rota).
+Tirada tras 12 meses
+Tirada tras 24 meses
+Tiradas de reparación a
+Tiradas de reparación e inundación reciben +1 MTD.
+Tirar 1d6 + 1d6 para Apellido (Surname) y luego 1d6 + 1d6 para Nombre (First Name). Puedes hacer clic directamente en cualquier celda para asignarlo.
+Tirar 1d6 por impacto:
+Tirar 3 veces en Tabla [B1] a Larga Distancia (2 a 6 en 2d6 / &le; 6).
+Todas las tablas tácticas, operacionales y de campaña de Sensuikan (Compass Games)
+Todos los modelos fallan o resultan inertes con una tirada de
+Todos los submarinos que comienzan la campaña se consideran iniciados en
+Todos los tripulantes con SW mueren (KIA) al cruzar cada zona con 4-6 en 1d6.
+Torpedo Doors (Compuertas de Torpedos): 1d6
+Torpedo T.95 de día a corta distancia
+Torpedo Tipo 97 de Minisubmarino
+Torpedo de Minisubmarino
+Torpedo en superficie nocturno
+Torpedos Tipo 89, Tipo 92 o Tipo 6
+Total Refit ≥ 5 meses = Nuevo submarino
+Tras el combate, la inundación se achica por completo.
+Tripulación / Especialistas de guardia
+Tripulantes SW mueren (KIA) tras cada zona de viaje con 1d6 &ge; 4.
+Tromba marina / Mar picado: Minisubmarino volcado y perdido.
+Truk [4.7.3] (Base Avanzada Pacífico Central)
+Tránsito (Transit)
+Tránsito Inicial 1 / 2
+Type 89 Steam (Estela de vapor, penaliza evasión)
+Título Ficha
+Un 12 natural activa un
+Un 12 natural en cualquier casilla activa un Evento Inesperado en la Tabla B11 (máximo 1 por patrulla).
+Un impacto contra un sistema no presente en el submarino "no tiene efecto", excepto que un impacto en Cañón de Cubierta cuenta siempre como impacto a Kaiten si estuviese instalado.
+Un impacto en Minisubmarino cuenta como impacto a Lancha Daihatsu si estuviese instalada.
+Un tifón gigante obliga al submarino a permanecer sumergido. No se realiza ninguna acción en esta casilla ni en la siguiente.
+Utilizada en
+Utilizada en el adiestramiento del
+Utilizadas en
+VICTORIA DECISIVA (DECISIVE VICTORY)
+VICTORIA SUSTANCIAL (SUBSTANTIAL VICTORY)
+Varada en arrecife: Encallado temporalmente; tira 1d6 daños de casco.
+Ventajas para cada piloto suicida Kaiten [Reglas 4.8.4 &amp; 7.18]:
+Ver F4
+Ver Tablas B1-B6 Oficiales
+Ver Tablas Especiales de Mini-Submarino Ko-hyoteki [Charts M5, M6, M7]
+Verifica en Chart B2 (1d6) que el torpedo no sea inerte (falla con un 1). Para cada impacto exitoso, tira 1d6 en Chart B3 para calcular los puntos de daño y comprobar si el objetivo se hunde.
+Vía de Agua / Inundación (Flooding): 🎲 1d6
+Vía de agua severa en cámara de baterías.
+Vía de agua: Marca 1 casilla de inundación (no se extiende).
+Yokosuka [4.7.1] (Base Naval Principal de Inicio)
+ZARPE Y ASIGNACIÓN DE MISIÓN
+[4.7.6] Incursiones Aéreas en Puerto (desde enero de 1944 / 1/44 - 2d6):
+[Chart B7 • Reglas 8.5 y 8.6]
+[Regla 8.0 y Hoja H1 • Tablas B1-B6, T1-T5]
+[Regla Oficial 8.2.6].
+[Reglas 4.0 Setup, 4.8 Escuelas, Tabla H2]
+[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]
+[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]
+a detección de escoltas.
+a la tirada de detección de escoltas.
+a una tirada de cruce de arrecife o
+al disparar un torpedo en [B1], existe riesgo de que describa un círculo y regrese contra tu submarino:
+cuando tu submarino esté configurado para transportar torpedos suicidas
+de encuentro o de evento Kaiten.
+de encuentro o evento Kaiten ([K5]/[K6]).
+en 1d6 al inicio de patrulla, elige libremente su área de destino activa en Tabla [A1].
+en 1d6. De 2 a 6 detonan con normalidad.
+en B4 y
+en B5.
+en Chart B4.
+en Chart B5.
+en Chart [K1]. Permite superar automáticamente 1 tirada de dados por patrulla.
+en Tabla [A1], y
+en [B5].
+en el uniforme en Chart [K1].
+en los años 1943 / 1944 / 1945
+en puerto si son ≥ 3 meses.
+en submarinos convertidos como Tipo B, Tipo C o Kaidai, y asignado a una
+en tu submarino.
+en tu uniforme en Chart [K1].
+finales de 1944 / 1945
+impacta automáticamente
+la tirada baja impacta
+no se pueden realizar ataques de torpedos sumergido
+no se tira ningún dado para la base
+nuevos beneficios antes de cada patrulla Kaiten
+o haz clic fuera para cerrar esta ventana.
+para ganar la habilidad.
+recibido de escoltas lo destruye antes de atacar.
+reduce en -1 mes las reparaciones
+repetir cualquier tirada
+¡2 IMPACTOS! (Duds: 0)
+¡El daño de casco no es reparable en alta mar!
+¡Felicidades! Tú y tu tripulación os habéis graduado en la Escuela de Submarinos de Kure. Se otorga la insignia
+¡Giro Circular! Tira 2d6: 2-5 Impacto, ¡Hundido si no es inerte!
+¡HUNDIDO DIRECTAMENTE!
+¡Impacto! (Hit) |
+¡Implosión!
+¡SUBMARINO HUNDIDO!
+¡Superado!
+© Compass Games LLC • Diseñado por Gregory M. Smith
+¿CUÁNDO APLICA ESTA ESCUELA? [Reglas 4.8.4 &amp; 7.18]:
+Éxito extraordinario: Recuperación perfecta y condecoración a los tripulantes.
+únicamente
+• 1-3: LW (Herida Leve, sin efecto operativo)
+• 10–12: Evita la barrera defensiva
+• 11: Baterías | 12, 21, 31, 43, 44, 51: Inundación | 13: Radar
+• 14: Periscopio | 15: Planos de inmersión | 16, 22: Motor eléctrico 1/2
+• 1–4: Inundación Contenida (Halted)
+• 23, 25: Motor diésel 1/2 | 24: Hangar | 26: Grúa | 32: Minisubmarino
+• 2d6 con resultado
+• 2–4: Atrapado en red (Fallo)
+• 33, 35, 41, 45, 52, 55: Casco | 34, 53: Bajas en tripulación (x1 / x2)
+• 36, 56: Cañón de cubierta | 42: Radio | 46: Artillería AA
+• 54: Inundación x2 | 61: Hidrófonos | 62-64: Compuertas torpedos
+• 5–6: Inundación Adicional (Additional Flooding)
+• 5–9: Cruce con sigilo (Aprobado)
+• 65: Casco x2 | 66: Tanques de combustible
+• 6: KIA (Muerto en Acción)
+• Daño en [B3]: El Kaiten suma
+• Daño simulado
+• Tira 2d6 en cada prueba sucesiva:
+◆ NOMBRES DE PILA (FIRST NAMES) • 1d6 + 1d6
+★ Ataque Especial FIDO (5/44+): Avión lanza torpedo guiado: 1=Hundido, 2=7 impactos, 3-6=fallo/dud.
+★ Erizo (Hedgehog 5/44+): 1-2 impacto, si acierta: 1=5 hits, 2=7 hits, 3-6=hundido.
+★ Hasta julio de 1942: No hay encuentros ordinarios en casillas de tránsito (sólo un 12 natural activa un Evento Aleatorio). A partir de agosto 1942 se aplican encuentros.
+★ Infiltración a Corta Distancia: 2d6
+★ Regla 7.14: Un Comandante (中佐) puede solicitar su área con 1 en 1d6. Un Capitán (大佐) con 1-2 en 1d6. Puedes elegir el área en el desplegable o tirar en la tabla oficial.
+★ Regla 8.5.11.4: A partir de enero de 1944 se tira por Incursiones Aéreas en Puerto (2d6) [4.7.6] (excepto en Paramushiro). Si el refit total alcanza 5 o más meses, el comandante es reasignado a un nuevo submarino.
+★ Si el Jefe de Máquinas es SW o KIA, las tiradas de reparación e inundación reciben +1 MTD. Daños no reparados se voltean a "INOP".
+★ Si supera las 3 pruebas sin implosión ➔ Gana
+★ Tirada de "2" = Impacto Crítico (+3 daño si no es inerte).
+★ Tirada natural de "2" con torpedos = Impacto Crítico (si no es inerte): +3 daños adicionales.
+⚓ 1. Selección de Submarino Imperial
+⚓ 1. TABLAS DE PATRULLA Y ENCUENTROS (CHARTS A1 - A4)
+⚓ PERFIL OFICIAL IJN • ILUSTRACIÓN CANÓNICA
+⚓ Tablas M5 &amp; M7
+⚠️ Usuario o contraseña incorrectos.
+⚡ PROFUNDIDAD LÍMITE (EXCEED TEST DEPTH)
+⚪ Sin Hidroavión (No Aplica)
+➔ ¡Implosión y hundimiento!
+➔ ¡Superado sin daño!
+🌊 Inundación (Flooding - 1d6):
+🎓 Graduado Escuela Kure [F1]
+🎖️ Ases Históricos (Selección Rápida):
+🎯 2. COMBATE TÁCTICO, TORPEDOS Y ESCOLTAS (CHARTS B2, B4, B5, B6, B7, H1)
+🎯 En el Canal de Panamá, infligir daño moderado o severo completa la misión con honores navales.
+🎯 Registro de Blanco (Target Slot)
+🎯 TABLA [B1]: FIRING RANGE (DISTANCIA DE DISPARO)
+🎯 Tablas B1 &amp; B6
+🎲 2d6 (Tirada Baja)
+🎲 Tirar Test Cañón (3x)
+🎲 Tirar Test Torpedos (3x)
+🎲 Tirar al Azar (1d3)
+🎲 Tirar al Azar (2 Opciones)
+👁️ Detección de Escoltas (2d6):
+👁️ Ver B1
+👁️ Ver Regla F1
+👁️ Ver Tabla [B1]
+👁️ Ver Tablas en Pantalla ▼
+👤 2. Comandante y Dotación (Tabla H2)
+👤 3. COMANDANTE, TRIPULACIÓN Y EVENTOS HISTÓRICOS (H2, K1, B11)
+💡 Clic en cualquier celda de la columna activa para solicitar o fijar esa área (Regla 7.14).
+💥 Daño Kaiten (Kaiten Damage):
+💥 Un hidroavión con 3 puntos de daño acumulados se estrella en el mar.
+📊 Consultar Tabla Digital Chart B7
+📋 Guía de Fase
+📋 Ver Todas
+📚 COMPENDIO GENERAL DE TODAS LAS TABLAS OFICIALES
+📷 Ver Escaneo B1-B6
+📷 Ver Escaneo B7
+🔓 Acceder al Sistema de Mando
+🔧 Reparación de Sistema Averiado (1d6):
+🚀 TABLA [F4]: ESCUELA KAITEN (OTSUJIMA)
+🚀 🎓 COMISIONAR SUBMARINO Y ENVIAR DOTACIÓN A ESCUELAS (Regla 4.8) ➔
+🛠️ 4. REFIT EN PUERTO Y ESCALA DE VICTORIA DE CAMPAÑA
+🤿 TABLAS [M5] &amp; [M7]: MINISUBMARINOS
+🥋 Spare Time Activities (Elige 1 de las 3 actividades de tiempo libre del Capitán):
+🩺 Determinación de Baja (2d6 Puesto + 1d6 Gravedad):

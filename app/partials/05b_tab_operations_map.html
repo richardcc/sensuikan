@@ -1,0 +1,86 @@
+<!-- TAB PANE: OPERATIONS MAP (VASSAL OPERATINS MAP) -->
+<div id="tab-operations-map" class="tab-pane">
+  <div class="card" style="margin-bottom:14px; background:#0f172a; border:2px solid #38bdf8; border-radius:10px; padding:16px; box-shadow:0 8px 32px rgba(0,0,0,0.7);">
+    <!-- Header -->
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #38bdf8; padding-bottom:10px; margin-bottom:14px; flex-wrap:wrap; gap:12px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="background:#0284c7; color:#fff; font-size:0.86rem; font-weight:900; padding:4px 10px; border-radius:4px; letter-spacing:1px;">TEATRO DE OPERACIONES</span>
+        <div>
+          <h2 id="opmap-title" style="margin:0; font-family:'Cinzel', serif; font-size:1.35rem; color:#38bdf8; letter-spacing:1px; line-height:1.2;">
+            SENSUIKAN <span style="font-size:0.85rem; color:#94a3b8; font-weight:normal;">(Mapa Operativo del Pacífico 1941–45)</span>
+          </h2>
+          <div id="opmap-subtitle" style="font-size:0.84rem; color:#7dd3fc; font-weight:600; margin-top:2px;">
+            MAPA OFICIAL DE PATRULLAS Y DESTINOS DE MISIÓN (CHART A1)
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Status Badges -->
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <div style="background:#1e293b; border:1px solid #475569; border-radius:6px; padding:4px 10px; font-size:0.82rem;">
+          <span style="color:#94a3b8;" id="opmap-lbl-base">Base Actual:</span>
+          <strong id="opmap-status-base" style="color:#38bdf8; margin-left:4px;">Yokosuka</strong>
+        </div>
+        <div style="background:#1e293b; border:1px solid #475569; border-radius:6px; padding:4px 10px; font-size:0.82rem;">
+          <span style="color:#94a3b8;" id="opmap-lbl-dest">Destino Asignado:</span>
+          <strong id="opmap-status-dest" style="color:#fde047; margin-left:4px;">Pearl Harbor</strong>
+        </div>
+        <button type="button" class="action-btn" onclick="switchTab('workflow'); setWorkflowPhase(1);" style="padding:4px 10px; font-size:0.82rem; border-color:#0284c7; color:#38bdf8; display:flex; align-items:center; gap:6px;">
+          <span>🎲</span> <span id="opmap-btn-goto-a1">Cambiar / Tirar Destino [A1]</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Map Container -->
+    <div style="position:relative; width:100%; max-width:1267px; margin:0 auto; background:#071220; border:2px solid #334155; border-radius:8px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,0.8);">
+      <!-- Map Background Image -->
+      <img id="opmap-image" src="assets/maps/Operations_Map.jpg" alt="Sensuikan Operations Map" style="display:block; width:100%; height:auto;" />
+
+      <!-- Interactive Overlay Canvas / Elements (1267 x 992 coordinate system) -->
+      <svg id="opmap-svg-routes" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:4;">
+        <!-- Dynamic Line connecting current base to assigned destination -->
+        <line id="opmap-route-line" x1="0" y1="0" x2="0" y2="0" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6,4" opacity="0.85" />
+      </svg>
+
+      <!-- Clickable Box Hotspots -->
+      <div id="opmap-hotspots" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;"></div>
+
+      <!-- Active Destination Mission Chit (Positioned dynamically on the destination box) -->
+      <div id="opmap-counter-dest" style="position:absolute; width:5.5%; aspect-ratio:1/1; transform:translate(-50%, -50%); z-index:10; pointer-events:none; transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter:drop-shadow(0 4px 10px rgba(0,0,0,0.85));">
+        <img id="opmap-counter-img" src="assets/chits/Pearl Harbor 12-41.jpg" alt="Mission Chit" style="width:100%; height:100%; border-radius:4px; border:2px solid #fde047; box-sizing:border-box; object-fit:cover;" />
+        <div id="opmap-counter-label" style="position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); background:#0f172a; color:#fde047; font-weight:800; font-size:0.70rem; padding:1px 5px; border-radius:3px; border:1px solid #f59e0b; white-space:nowrap; letter-spacing:0.3px;">
+          DESTINO
+        </div>
+      </div>
+
+      <!-- Active Submarine Boat Chit (Positioned on the starting naval base) -->
+      <div id="opmap-counter-base" style="position:absolute; width:5.5%; aspect-ratio:1/1; transform:translate(-50%, -50%); z-index:9; pointer-events:none; transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter:drop-shadow(0 4px 8px rgba(0,0,0,0.7));">
+        <img id="opmap-base-img" src="assets/submarines_chits/Submarine - Type B.jpg" alt="Submarine Chit" style="width:100%; height:100%; border-radius:4px; border:2px solid #38bdf8; box-sizing:border-box; object-fit:cover;" />
+        <div id="opmap-base-label" style="position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); background:#0f172a; color:#38bdf8; font-weight:800; font-size:0.68rem; padding:1px 5px; border-radius:3px; border:1px solid #0284c7; white-space:nowrap;">
+          SUBMARINO
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Legend & Instructions -->
+    <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; padding:10px 14px; font-size:0.82rem; color:#cbd5e1; flex-wrap:wrap; gap:10px;">
+      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="display:inline-block; width:14px; height:14px; border:2px solid #38bdf8; background:#0284c7; border-radius:3px;"></span>
+          <span id="opmap-legend-base">Base Naval (⚓ Home Port)</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="display:inline-block; width:14px; height:14px; border:2px solid #fde047; background:#d97706; border-radius:3px;"></span>
+          <span id="opmap-legend-dest">Zona Operativa / Misión Asignada (Chart A1)</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="display:inline-block; width:22px; height:2px; border-top:2px dashed #f59e0b;"></span>
+          <span id="opmap-legend-route">Ruta Estratégica de Tránsito</span>
+        </div>
+      </div>
+      <div style="font-size:0.78rem; color:#94a3b8;" id="opmap-tip">
+        💡 <em>Haz clic sobre cualquier casilla del mapa para reasignar el destino manualmente de inmediato.</em>
+      </div>
+    </div>
+  </div>
+</div>

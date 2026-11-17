@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables & secrets
+.env
+.env.*
+secrets.json
+
+# IDE & editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific caches & test profiles
+edge_test_profile/
+scratch/
+
+# Large PDF backups and duplicates
+pdf/backup/
+pdf/* - copia.pdf
+
+# Root test / temporary images
+temp_scan.png
+blue_ink_mask.png
+ink_clean.png
+crop_*.jpg
+slice_*.jpg
+comp_*.jpg
+test_*.png
+detail_*.jpg
+note_part*.jpg
+paper_*.jpg
+rotated_user_note.jpg
+user_note_upright.jpg
+all_ink.jpg
+test_out.3mf

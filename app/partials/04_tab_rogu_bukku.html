@@ -1,0 +1,475 @@
+<div id="tab-rogu-bukku" class="tab-pane">
+      <div class="rogu-bukku-container">
+        
+        <!-- Official Header matching Sensuikan Patrol Log Sheet -->
+        <div class="rogu-official-header">
+          <!-- Left Submarine Silhouette -->
+          <div class="rogu-header-left" style="display:flex; align-items:center; gap:12px;">
+            <div id="rogu-sub-profile-container" style="background:#f4ecd8; border:1.5px solid var(--gold-500); border-radius:6px; padding:3px 8px; box-shadow:0 3px 10px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; min-width:180px; max-width:240px; height:42px; cursor:pointer;" onclick="switchTab('dock')" title="Hacer clic para ver especificaciones en Submarinos (Dock)">
+              <img id="rogu-sub-profile-img" src="assets/submarines_profiles/Type_B_Class.png" alt="Submarino Actual" style="height:36px; width:auto; max-width:100%; object-fit:contain; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.35)); transition:transform 0.2s ease;" onerror="this.style.display='none'; document.getElementById('rogu-sub-default-svg').style.display='block';">
+              <svg id="rogu-sub-default-svg" viewBox="0 0 280 50" class="sub-silhouette-svg" style="display:none; width:160px; height:32px; fill:var(--gold-400);">
+                <path d="M 5,28 Q 20,20 60,20 L 240,20 Q 265,22 275,26 Q 265,34 240,34 L 50,34 Q 20,34 5,28 Z" />
+                <path d="M 125,20 L 130,8 L 160,8 L 165,20 Z" />
+                <line x1="140" y1="8" x2="140" y2="1" stroke="var(--gold-400)" stroke-width="2" />
+                <line x1="148" y1="8" x2="148" y2="3" stroke="var(--gold-400)" stroke-width="2" />
+                <path d="M 105,20 L 112,15 L 116,15 L 114,20 Z" />
+                <line x1="114" y1="16" x2="98" y2="14" stroke="var(--gold-400)" stroke-width="2" />
+              </svg>
+            </div>
+            <div style="display:flex; flex-direction:column; justify-content:center;">
+              <span id="rogu-sub-name-badge" style="font-size:0.82rem; font-weight:800; color:var(--gold-300); font-family:'Cinzel', serif; letter-spacing:0.5px; line-height:1.2;">Type B Class</span>
+              <span id="rogu-sub-hull-badge" style="font-size:0.84rem; color:var(--slate-400); line-height:1.2;">Submarino Activo</span>
+            </div>
+          </div>
+
+          <!-- Center: Title & Official 4-Color Legend -->
+          <div class="rogu-header-center">
+            <div class="rogu-color-legend">
+              <span id="rogu-legend-capital" class="legend-chip legend-capital">● Capital Ship Sunk</span>
+              <span id="rogu-legend-damaged" class="legend-chip legend-damaged">● Damaged - Not Sunk</span>
+              <span id="rogu-legend-sunk" class="legend-chip legend-sunk">● Sunk</span>
+              <span id="rogu-legend-special" class="legend-chip legend-special">● Special Mission - Sunk</span>
+            </div>
+            <h1 id="rogu-sheet-title" class="rogu-sheet-title">SUBMARINE PATROL LOG</h1>
+          </div>
+
+          <!-- Right: IJN Rising Sun Ensign -->
+          <div class="rogu-header-right">
+            <svg viewBox="0 0 60 40" class="ijn-ensign-svg" style="width:52px; height:34px; border-radius:3px; box-shadow:0 2px 6px rgba(0,0,0,0.6);">
+              <rect width="60" height="40" fill="#ffffff" />
+              <g fill="#dc2626">
+                <polygon points="22.5,20 0,0 0,6" />
+                <polygon points="22.5,20 0,16 0,24" />
+                <polygon points="22.5,20 0,34 0,40" />
+                <polygon points="22.5,20 6,40 16,40" />
+                <polygon points="22.5,20 28,40 38,40" />
+                <polygon points="22.5,20 48,40 56,40" />
+                <polygon points="22.5,20 60,35 60,28" />
+                <polygon points="22.5,20 60,18 60,10" />
+                <polygon points="22.5,20 60,2 54,0" />
+                <polygon points="22.5,20 40,0 30,0" />
+                <polygon points="22.5,20 18,0 8,0" />
+                <circle cx="22.5" cy="20" r="9" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Boat & Captain Identification Bar -->
+        <div class="rogu-id-bar">
+          <div class="rogu-id-group">
+            <div class="id-field">
+              <label id="rogu-lbl-boat">BOAT:</label>
+              <input type="text" id="rogu-boat-input" class="rogu-id-input" value="I-19" placeholder="ej. I-19"
+                onchange="updateRoguBoat(this.value)">
+            </div>
+            <div class="id-field">
+              <label id="rogu-lbl-captain">CAPTAIN:</label>
+              <input type="text" id="rogu-captain-input" class="rogu-id-input" value="Kenjiro Takahashi" placeholder="ej. Kenjiro Takahashi"
+                onchange="updateRoguCaptain(this.value)">
+            </div>
+            <div class="id-field">
+              <label id="rogu-lbl-tier">CAREER TIER:</label>
+              <span id="kpi-victory-tier" style="font-weight:800; color:#38bdf8; font-size:0.85rem; padding:3px 8px; background:#1e293b; border-radius:4px;">CADET</span>
+            </div>
+          </div>
+
+          <div class="rogu-quick-actions">
+            <button type="button" id="rogu-btn-add-target" class="rogu-btn-action" onclick="openTargetEditor('', null)" title="Registrar blanco manualmente">
+              <span id="rogu-btn-add-target-label">➕ Añadir Blanco</span>
+            </button>
+            <button type="button" id="rogu-btn-recalc" class="rogu-btn-action" onclick="recalculateTotals(); showToast('Totales recalculados')" title="Recalcular">
+              <span id="rogu-btn-recalc-label">🔄 Recalcular</span>
+            </button>
+            <button type="button" id="rogu-btn-print" class="rogu-btn-action" onclick="window.print()" title="Imprimir hoja">
+              <span id="rogu-btn-print-label">🖨️ Imprimir</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- The 46-Month Grid Table matching the photo exactly -->
+        <div class="rogu-table-wrap">
+          <table class="rogu-official-table">
+            <thead>
+              <tr>
+                <th id="rogu-th-date" class="th-date">Date</th>
+                <th id="rogu-th-patrol" class="th-patrol">Patrol:</th>
+                <th id="rogu-th-targets" class="th-targets" colspan="8">Targets:</th>
+                <th id="rogu-th-tonnage" class="th-tonnage">Tonnage:</th>
+                <th id="rogu-th-milestone" class="th-milestone">Milestones & Notes</th>
+              </tr>
+              <tr class="th-slots-row">
+                <th colspan="2"></th>
+                <th class="th-slot">1</th>
+                <th class="th-slot">2</th>
+                <th class="th-slot">3</th>
+                <th class="th-slot">4</th>
+                <th class="th-slot">5</th>
+                <th class="th-slot">6</th>
+                <th class="th-slot">7</th>
+                <th class="th-slot">8</th>
+                <th colspan="2"></th>
+              </tr>
+            </thead>
+            <tbody id="patrol-log-tbody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+            <tfoot>
+              <tr class="rogu-footer-summary">
+                <td colspan="2" class="ft-patrols">
+                  <span id="rogu-ft-total-patrols" class="ft-label">TOTAL PATROLS:</span>
+                  <span id="kpi-total-patrols" class="ft-val">0</span>
+                </td>
+                <td colspan="4" class="ft-spcl">
+                  <span id="rogu-ft-spcl-missions" class="ft-label">SPCL MISSIONS:</span>
+                  <span id="kpi-spcl-missions" class="ft-val">0</span>
+                </td>
+                <td colspan="3" class="ft-sunk">
+                  <span id="rogu-ft-ships-sunk" class="ft-label">SHIPS SUNK:</span>
+                  <span id="kpi-ships-sunk" class="ft-val">0</span>
+                </td>
+                <td colspan="3" class="ft-tons">
+                  <span id="rogu-ft-total-tonnage" class="ft-label">TOTAL TONNAGE:</span>
+                  <span id="kpi-total-tonnage" class="ft-val">0 t</span>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Career Dossier Details below the sheet -->
+        <div class="bio-card" style="margin-top:16px; background:#0b1329; border:1px solid #1e3a5f; border-left:4px solid var(--gold-400); border-radius:10px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+          <!-- Header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid rgba(197,160,89,0.3); padding-bottom:12px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.4rem;">🎖️</span>
+              <div>
+                <h4 id="dossier-main-title" style="margin:0; color:var(--gold-400); font-size:1.05rem; font-weight:800; letter-spacing:0.5px;">
+                  EXPEDIENTE DE SERVICIO DEL COMANDANTE (職歴・軍歴) • IJN DOSSIER
+                </h4>
+                <div id="dossier-sub-title" style="font-size:0.86rem; color:var(--slate-400); margin-top:2px;">
+                  Reglas Oficiales 8.8 (Condecoraciones) y 8.9 (Ascensos de Rango y Beneficios de Mando)
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <span id="dossier-rank-pill" style="background:rgba(2,132,199,0.25); border:1px solid #0284c7; color:#38bdf8; font-size:0.86rem; font-weight:700; padding:4px 10px; border-radius:6px;">
+                ⚓ Rango: Lt. Cdr (少佐)
+              </span>
+              <span id="dossier-school-pill" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#34d399; font-size:0.86rem; font-weight:700; padding:4px 10px; border-radius:6px;">
+                🎓 Graduado Escuela Kure [F1]
+              </span>
+            </div>
+          </div>
+
+          <!-- Bio & Promotion Grid -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:18px; margin-bottom:18px;">
+            <!-- Left: Bio & Family -->
+            <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; border-radius:8px; padding:14px; font-size:0.83rem; line-height:1.55; color:var(--slate-300);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <h5 id="dossier-bio-title" style="color:#38bdf8; margin:0; font-size:0.90rem; display:flex; align-items:center; gap:6px;">
+                  <span>⚓</span> <span>Biografía e Historial de Mando</span>
+                </h5>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" onclick="cycleCommanderPortrait()" class="action-btn" style="padding:1px 6px; font-size:0.72rem; border-color:#0284c7; color:#38bdf8;">
+                    <span>🎨</span> <span>Cambiar Rostro</span>
+                  </button>
+                  <button type="button" onclick="regenerateCommanderBio(true)" class="action-btn" style="padding:1px 6px; font-size:0.72rem; border-color:var(--gold-500); color:var(--gold-300);">
+                    <span>🎲</span> <span>Re-generar</span>
+                  </button>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <!-- Commander Portrait Frame -->
+                <div style="width:85px; flex-shrink:0; text-align:center;">
+                  <div style="width:85px; height:105px; border-radius:6px; overflow:hidden; border:2px solid var(--gold-500); box-shadow:0 4px 10px rgba(0,0,0,0.6); background:#071220; cursor:pointer;" onclick="cycleCommanderPortrait()" title="Clic para cambiar de rostro">
+                    <img id="dossier-commander-img" src="assets/commanders/cmdr_1.jpg" alt="Commander Portrait" style="width:100%; height:100%; object-fit:cover; display:block;">
+                  </div>
+                </div>
+
+                <div style="flex:1;">
+                  <p id="dossier-bio-p1" style="margin:0 0 8px 0;"></p>
+                  <p id="dossier-bio-p2" style="margin:0 0 8px 0;"></p>
+                  <p id="dossier-bio-p3" style="margin:0; font-size:0.78rem; color:var(--slate-400); border-top:1px dashed #334155; padding-top:8px;"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Promotion Rules & System -->
+            <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; border-radius:8px; padding:14px; font-size:0.82rem; color:var(--slate-300);">
+              <h5 id="dossier-ranks-title" style="color:var(--gold-400); margin:0 0 8px 0; font-size:0.90rem; display:flex; align-items:center; gap:6px;">
+                <span>⭐</span> <span>Jerarquía de Mando y Ascensos (Regla 8.9)</span>
+              </h5>
+              <table style="width:100%; border-collapse:collapse; font-size:0.78rem; margin-bottom:8px;">
+                <thead>
+                  <tr style="background:#1e293b; color:var(--gold-300); text-align:left;">
+                    <th id="dossier-ranks-th1" style="padding:6px 8px; border:1px solid #334155;">Rango Militar (階級)</th>
+                    <th id="dossier-ranks-th2" style="padding:6px 8px; border:1px solid #334155;">Beneficio de Mando y Reglas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:rgba(2,132,199,0.15);">
+                    <td style="padding:6px 8px; border:1px solid #334155; font-weight:bold; color:#38bdf8;">
+                      Lt. Cdr / Shōsa (少佐)<br><span id="dossier-ranks-r1-sub" style="font-size:0.84rem; color:#94a3b8; font-weight:normal;">Rango Inicial (12/41)</span>
+                    </td>
+                    <td id="dossier-ranks-r1-desc" style="padding:6px 8px; border:1px solid #334155;">Rango inicial estándar sin habilidades especiales de mando.</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 8px; border:1px solid #334155; font-weight:bold; color:var(--gold-300);">
+                      Commander / Chūsa (中佐)<br><span id="dossier-ranks-r2-sub" style="font-size:0.84rem; color:#94a3b8; font-weight:normal;">Tirada tras 12 meses</span>
+                    </td>
+                    <td id="dossier-ranks-r2-desc" style="padding:6px 8px; border:1px solid #334155;"><strong>Solicitar Destino:</strong> Con <code>1</code> en 1d6 al inicio de patrulla, elige libremente su área de destino activa en Tabla [A1].</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 8px; border:1px solid #334155; font-weight:bold; color:var(--gold-300);">
+                      Captain / Taisa (大佐)<br><span id="dossier-ranks-r3-sub" style="font-size:0.84rem; color:#94a3b8; font-weight:normal;">Tirada tras 24 meses</span>
+                    </td>
+                    <td id="dossier-ranks-r3-desc" style="padding:6px 8px; border:1px solid #334155;"><strong>Solicitar con 1–2 en 1d6</strong> en Tabla [A1], y <strong>reduce en -1 mes las reparaciones</strong> en puerto si son ≥ 3 meses.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="dossier-ranks-footnote" style="font-size:0.84rem; color:var(--slate-400); line-height:1.4;">
+                🎲 <em>Tirada de Ascenso (8.9.2):</em> Se tira 1d6 cada 12 meses de servicio. Ascenso con <strong>1–4</strong> (Modificadores: -1 si ganó el Milano de Oro, -1 si hundió ≥5 buques en el año, +1 por cada patrulla fallida). Cada ascenso otorga 1 mejora <strong>Sub Upgrade</strong>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Medals & Awards Table -->
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; border-radius:8px; padding:14px;">
+            <h5 id="dossier-medals-title" style="color:var(--gold-400); margin:0 0 10px 0; font-size:0.90rem; display:flex; align-items:center; gap:6px;">
+              <span>🏅</span> <span>Condecoraciones y Medallas Oficiales de la Armada Imperial (Regla 8.8)</span>
+            </h5>
+            <div style="overflow-x:auto;">
+              <table style="width:100%; border-collapse:collapse; font-size:0.78rem;">
+                <thead>
+                  <tr style="background:#1e293b; color:var(--gold-300); text-align:left;">
+                    <th id="dossier-medals-th1" style="padding:6px 10px; border:1px solid #334155;">Condecoración (勲章)</th>
+                    <th id="dossier-medals-th2" style="padding:6px 10px; border:1px solid #334155;">Requisito Oficial de Concesión (Regla 8.8)</th>
+                    <th id="dossier-medals-th3" style="padding:6px 10px; border:1px solid #334155;">Efecto en Juego</th>
+                    <th id="dossier-medals-th4" style="padding:6px 10px; border:1px solid #334155; text-align:center;">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#f1f5f9;">
+                      Submarine Badge (潜水艦記章)
+                    </td>
+                    <td id="medal-req-1" style="padding:6px 10px; border:1px solid #334155;">Graduación en la Escuela de Submarinos de Kure [F1].</td>
+                    <td id="medal-eff-1" style="padding:6px 10px; border:1px solid #334155;">Acreditación oficial de comandante de sumergible.</td>
+                    <td id="medal-st-1" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#10b981; font-weight:bold;">✔ Otorgada</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#f1f5f9;">
+                      Greater East Asia War Medal (大東亜戦争従軍記章)
+                    </td>
+                    <td id="medal-req-2" style="padding:6px 10px; border:1px solid #334155;">Completar la primera patrulla de guerra (éxito o fracaso).</td>
+                    <td id="medal-eff-2" style="padding:6px 10px; border:1px solid #334155;">Distinción de veterano de guerra de campaña.</td>
+                    <td id="medal-st-2" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">1.ª Patrulla</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:var(--gold-300);">
+                      The Order of the Golden Kite, 5th Class (金鵄勲章 五等)
+                    </td>
+                    <td id="medal-req-3" style="padding:6px 10px; border:1px solid #334155;">Hundir 1 Buque Capital o lograr &gt;50.000 t en 1 patrulla (Lt. Cdr).</td>
+                    <td id="medal-eff-3" style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#38bdf8;">-1 permanente a todas las tiradas de detección enemiga [B4].</td>
+                    <td id="medal-st-3" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">Pendiente</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:var(--gold-300);">
+                      The Order of the Golden Kite, 4th Class (金鵄勲章 四等)
+                    </td>
+                    <td id="medal-req-4" style="padding:6px 10px; border:1px solid #334155;">Hundir 1 Buque Capital o 100.000 t acumuladas (Commander / Captain).</td>
+                    <td id="medal-eff-4" style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#38bdf8;">-1 permanente a detección enemiga [B4] (no acumulable con 5.ª).</td>
+                    <td id="medal-st-4" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">Pendiente</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#f1f5f9;">
+                      Order of the Sacred Treasure, 8th Class (瑞宝章 八等)
+                    </td>
+                    <td id="medal-req-5" style="padding:6px 10px; border:1px solid #334155;">Alcanzar 12 meses de servicio activo en campaña (Regla 8.8.4).</td>
+                    <td id="medal-eff-5" style="padding:6px 10px; border:1px solid #334155;">Mérito por servicio prolongado de combate.</td>
+                    <td id="medal-st-5" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">12 Meses</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#f1f5f9;">
+                      Order of the Rising Sun, 8th Class (旭日章 八等)
+                    </td>
+                    <td id="medal-req-6" style="padding:6px 10px; border:1px solid #334155;">Alcanzar 24 meses de servicio activo en campaña (Regla 8.8.3).</td>
+                    <td id="medal-eff-6" style="padding:6px 10px; border:1px solid #334155;">Mérito militar distinguido al Emperador.</td>
+                    <td id="medal-st-6" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">24 Meses</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 10px; border:1px solid #334155; font-weight:bold; color:#f87171;">
+                      The Wound Badge (傷痍軍人記章)
+                    </td>
+                    <td id="medal-req-7" style="padding:6px 10px; border:1px solid #334155;">Resultar herido grave (SW) en combate durante una patrulla.</td>
+                    <td id="medal-eff-7" style="padding:6px 10px; border:1px solid #334155;">Distinción de herido de guerra en acto de servicio.</td>
+                    <td id="medal-st-7" style="padding:6px 10px; border:1px solid #334155; text-align:center;"><span style="color:#94a3b8;">En Combate</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DIGITAL OCR VIEWER FOR PHASE GUIDES -->
+    <div id="modal-viewer" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
+      <div style="position:relative; max-width:1150px; width:100%; max-height:92vh; background:var(--navy-900); border:2px solid var(--gold-500); border-radius:12px; padding:16px; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,0.9);">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--navy-700); padding-bottom:10px; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+          <h3 id="modal-viewer-title" style="margin:0; color:var(--gold-300); font-size:1.15rem; display:flex; align-items:center; gap:8px;"><span>📖</span> <span>Guía de Fase</span></h3>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.86rem; color:var(--slate-400); background:rgba(0,0,0,0.3); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] para cerrar</span>
+            <button type="button" onclick="closeModalViewer()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5;">✕ Cerrar (Esc)</button>
+          </div>
+        </div>
+        <div style="flex:1; overflow-y:auto; padding:6px; background:#071220; border-radius:8px;">
+          <div id="modal-viewer-digital" style="display:block;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARGET EDITOR MODAL (Interactive Target Inspector) -->
+    <div id="modal-about" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:linear-gradient(135deg,rgba(2,6,23,0.94),rgba(15,23,42,0.88)); z-index:10000; justify-content:center; align-items:center; padding:18px; box-sizing:border-box;">
+      <div style="background:linear-gradient(160deg,#172554 0%,#0f172a 58%,#111827 100%); border:1px solid rgba(250,204,21,0.7); border-radius:18px; max-width:660px; width:100%; overflow:hidden; box-shadow:0 24px 70px rgba(0,0,0,0.75),0 0 0 1px rgba(56,189,248,0.16); color:#fff;">
+        <div style="position:relative; padding:22px 26px 18px; background:radial-gradient(circle at 88% 18%,rgba(250,204,21,0.22),transparent 30%),linear-gradient(115deg,#0f2d4a,#172554); border-bottom:1px solid rgba(148,163,184,0.24);">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding-right:36px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <img src="assets/branding/sensuikan-logo.jpg" alt="Sensuikan" style="width:170px; height:60px; object-fit:contain; object-position:center; border:1px solid rgba(250,204,21,0.7); border-radius:8px; background:#fff; box-shadow:0 0 0 4px rgba(250,204,21,0.1),0 6px 18px rgba(0,0,0,0.35);">
+              <div>
+                <div id="about-modal-kicker" style="color:#bae6fd; font-size:0.86rem; letter-spacing:1.2px; text-transform:uppercase; font-weight:700;">Companion App • Fan-Made • No Oficial</div>
+                <div style="font-size:0.84rem; color:#94a3b8; margin-top:2px;">WWII Imperial Japanese Submarine Warfare Aid</div>
+              </div>
+            </div>
+            <!-- Compass Games Logo Box with proper ratio & prominence -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0;">
+              <span style="font-size:0.80rem; color:#fde047; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">Juego Original Por</span>
+              <a href="https://www.compassgames.com/" target="_blank" rel="noopener noreferrer" title="Compass Games LLC" style="display:block; border:1px solid rgba(250,204,21,0.5); border-radius:8px; overflow:hidden; background:#050608; padding:6px 10px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transition:transform 0.2s, border-color 0.2s;">
+                <img src="assets/branding/compass-games-logo.jpg" alt="Compass Games LLC" style="width:160px; height:auto; aspect-ratio:495/100; object-fit:contain; display:block;">
+              </a>
+            </div>
+          </div>
+          <button type="button" onclick="closeAboutModal()" aria-label="Close" style="position:absolute; top:14px; right:16px; width:32px; height:32px; border:1px solid rgba(148,163,184,0.35); border-radius:50%; background:rgba(2,6,23,0.55); color:#cbd5e1; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+        </div>
+        <div style="padding:20px 26px 22px;">
+          <h3 id="about-modal-title" style="margin:0 0 12px; font-size:1.15rem; color:#fef08a;">ℹ️ Acerca de Sensuikan Companion</h3>
+          <div id="about-modal-content" style="font-size:0.84rem; line-height:1.6; color:#cbd5e1;">
+            <p><strong style="color:#fde047;">Sensuikan Companion</strong> es una companion app fan-made y no oficial para ayudar a organizar y consultar partidas.</p>
+            <p>No está afiliada, patrocinada ni respaldada por los titulares del juego. No sustituye el juego de mesa original, sus reglas, componentes ni materiales publicados.</p>
+            <p>El juego original, sus reglas, ilustraciones, nombres, marcas y demás materiales protegidos pertenecen a sus respectivos titulares de derechos. <strong>Compass Games LLC</strong> es el fabricante/editor del juego original; visita <a href="https://www.compassgames.com/" target="_blank" rel="noopener noreferrer" style="color:#38bdf8; text-decoration:underline;">compassgames.com</a>.</p>
+            <p>Esta aplicación no reclama propiedad sobre esos elementos. Consulta siempre el juego original y sus materiales licenciados para la experiencia completa y la versión válida de las reglas.</p>
+
+            <div style="margin-top:14px; background:rgba(15,23,42,0.8); border:1px solid rgba(250,204,21,0.4); border-radius:8px; padding:10px 12px;">
+              <div style="font-weight:800; color:#fde047; font-size:0.86rem; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.8px;">⌨️ Atajos de Teclado (Acceso Rápido)</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; font-size:0.80rem; color:#cbd5e1;">
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#fde047; font-weight:700;">1</kbd> .. <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#fde047; font-weight:700;">5</kbd> : Cambiar de Pestaña Principal</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">0</kbd> : Fase 0 (Comisionar Submarino)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">E</kbd> : Fase Escuelas Navales</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">F1</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">Z</kbd> : Fase 1 (Zarpe de Base)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">F2</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">T</kbd> : Fase 2 (Trayecto y Patrulla)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">F3</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">C</kbd> : Fase 3 (Combate Naval)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">F4</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">A</kbd> : Fase 4 (Averías y Daños)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">F5</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#38bdf8; font-weight:700;">R</kbd> : Fase 5 (Refit y Puerto)</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#f87171; font-weight:700;">ESC</kbd> : Cerrar Ventanas y Modales</div>
+                <div><kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#f87171; font-weight:700;">H</kbd> / <kbd style="background:#1e293b; border:1px solid #475569; padding:1px 5px; border-radius:3px; color:#f87171; font-weight:700;">?</kbd> : Ayuda / Atajos de Teclado</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:16px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2);">
+            <span id="about-modal-copyright" style="color:#94a3b8; font-size:0.86rem;">© Sensuikan Companion • Fan-made, no oficial</span>
+            <a id="about-manufacturer-link" href="https://www.compassgames.com/" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border:1px solid #38bdf8; border-radius:7px; background:rgba(14,165,233,0.15); color:#7dd3fc; font-size:0.78rem; font-weight:700; text-decoration:none;">
+              <span>🌐 Web Oficial Compass Games ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARGET EDITOR MODAL (Interactive Target Inspector) -->
+    <div id="modal-target-editor" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.78); z-index:9999; justify-content:center; align-items:center;">
+      <div style="background:#0f172a; border:2px solid #c5a059; border-radius:12px; max-width:480px; width:92%; padding:20px; box-shadow:0 12px 32px rgba(0,0,0,0.8); color:#fff;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+          <h3 id="target-editor-title" style="margin:0; font-size:1.05rem; color:#fde047; display:flex; align-items:center; gap:8px;">
+            🎯 Registro de Blanco (Target Slot)
+          </h3>
+          <button type="button" onclick="closeTargetEditor()" style="background:transparent; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        
+        <input type="hidden" id="tedit-month-id" value="">
+        <input type="hidden" id="tedit-slot-idx" value="">
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Mes de Patrulla:</label>
+              <select id="tedit-month-select" class="flow-select" style="width:100%; padding:5px; font-size:0.80rem;">
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Casilla / Slot (1 - 8):</label>
+              <select id="tedit-slot-select" class="flow-select" style="width:100%; padding:5px; font-size:0.80rem;">
+                <option value="0">Casilla #1</option>
+                <option value="1">Casilla #2</option>
+                <option value="2">Casilla #3</option>
+                <option value="3">Casilla #4</option>
+                <option value="4">Casilla #5</option>
+                <option value="5">Casilla #6</option>
+                <option value="6">Casilla #7</option>
+                <option value="7">Casilla #8</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Nombre del Buque:</label>
+            <input type="text" id="tedit-name" class="rogu-id-input" style="width:100%; box-sizing:border-box;" placeholder="ej. SS Steel Seafarer / BB Nevada">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Tonelaje (tons):</label>
+              <input type="number" id="tedit-tons" class="rogu-id-input" style="width:100%; box-sizing:border-box;" placeholder="5700">
+            </div>
+            <div>
+              <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Tipo de Buque:</label>
+              <select id="tedit-type" class="flow-select" style="width:100%; padding:5px; font-size:0.80rem;">
+                <option value="Freighter">Freighter (Mercante)</option>
+                <option value="Tanker">Tanker (Petrolero)</option>
+                <option value="Warship">Warship / Escort / DD</option>
+                <option value="Capital">Capital Ship (BB / CV / CA)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Resultado del Ataque (Código Oficial):</label>
+            <select id="tedit-status" class="flow-select" style="width:100%; padding:6px; font-size:0.82rem; font-weight:800;">
+              <option value="capital_sunk" style="color:#4ade80; background:#14532d;">🟩 Capital Ship Sunk (Verde)</option>
+              <option value="damaged" style="color:#60a5fa; background:#1e3a8a;">🟦 Damaged - Not Sunk (Azul)</option>
+              <option value="sunk" style="color:#f87171; background:#7f1d1d;" selected>🟥 Sunk - Hundido Regular (Rojo)</option>
+              <option value="special_sunk" style="color:#fb923c; background:#7c2d12;">🟧 Special Mission - Sunk (Naranja)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:0.86rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Detalles de Salva / Notas:</label>
+            <input type="text" id="tedit-notes" class="rogu-id-input" style="width:100%; box-sizing:border-box;" placeholder="ej. 2 torpedos de 4, 3 pts de daño">
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+            <button type="button" id="tedit-btn-delete" class="action-btn" onclick="deleteTargetFromEditor()" style="background:#7f1d1d; border-color:#ef4444; color:#fff; display:none;">
+              🗑️ Eliminar Blanco
+            </button>
+            <div style="display:flex; gap:8px; margin-left:auto;">
+              <button type="button" class="btn-step-prev" onclick="closeTargetEditor()">Cancelar</button>
+              <button type="button" class="btn-step-next" onclick="saveTargetFromEditor()" style="padding:8px 16px;">Guardar Blanco</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    

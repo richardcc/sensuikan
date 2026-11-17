@@ -1,0 +1,112 @@
+id="tab-dock" class="tab-pane">
+      <div class="dock-grid">
+        <div class="dock-sidebar">
+          <h3 data-i18n="ui.selectSubmarineClass" style="font-size:0.95rem; font-weight:800; color:var(--gold-400); margin-bottom:12px;">SELECT SUBMARINE CLASS</h3>
+          <div id="sub-buttons-list" style="display:flex; flex-direction:column; gap:4px; max-height:640px; overflow-y:auto; padding-right:4px;">
+            <!-- Generated from sub_db -->
+          </div>
+        </div>
+
+        <div class="sub-detail-panel">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <h2 id="sub-title" style="font-family:'Cinzel',serif; font-size:1.4rem; color:#fff;">Junsen Type B Class</h2>
+              <p id="sub-subtitle" style="font-size:0.85rem; color:var(--gold-400); font-weight:600;">Otsu-gata Sensuikan • Fleet Submarine</p>
+            </div>
+            <button class="action-btn" onclick="assignActiveSub()" style="border-color:var(--gold-500); background:var(--gold-500); color:#0f172a; font-weight:800;">
+              <span data-i18n="ui.assignActiveSubmarine">⚓ Asignar como Buque Activo</span>
+            </button>
+          </div>
+
+          <p id="sub-desc" data-i18n="ui.historicalNotes" style="font-size:0.88rem; line-height:1.5; color:var(--slate-300); margin-top:14px; background:rgba(0,0,0,0.25); padding:12px; border-radius:8px; border-left:3px solid var(--gold-500);">
+            Historical notes...
+          </p>
+
+          <div class="specs-grid">
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.displacement">Displacement</div>
+              <div id="spec-disp" class="val">2,584 tons</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.speedRange">Speed / Range</div>
+              <div id="spec-speed" class="val">23.6 kts / 14,000 nm</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.crewUnits">Crew / Units</div>
+              <div id="spec-crew" class="val">94 / 20 units</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.torpedoTubes">Torpedo Tubes</div>
+              <div id="spec-tubes" class="val">6 Fwd / 0 Aft (+11R)</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.deckGunAa">Deck Gun & AA</div>
+              <div id="spec-guns" class="val">140mm (80r) | 25mm AA</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.aircraftFitted">Aircraft Fitted</div>
+              <div id="spec-plane" class="val">Yes (E14Y Glen)</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.hullCapacity">Hull Hits Capacity</div>
+              <div id="spec-hull" class="val">8 Hits</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.floodingCapacity">Flooding Capacity</div>
+              <div id="spec-flood" class="val">8 Levels</div>
+            </div>
+            <div class="spec-card">
+              <div class="lbl" data-i18n="ui.kaitenCapability">Kaiten Capability</div>
+              <div id="spec-kaiten" class="val">Yes (1944+)</div>
+            </div>
+          </div>
+
+          <!-- OFFICIAL SUBMARINE MAT: PATROL TRACK & DAMAGE TRACKS -->
+          <div id="sub-mat-tracks-wrapper" style="margin-top:20px; background:#f4eedb; border:2px solid #b89f68; border-radius:10px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,0.6); color:#1e293b;">
+            <!-- Header bar for Patrol Track -->
+            <div style="background:#e4d8be; border:1px solid #c7b693; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.1rem;">⚓</span>
+                <strong data-i18n="ui.patrolTrack" style="font-family:'Cinzel',serif; font-size:0.92rem; color:#422006; letter-spacing:1px; text-transform:uppercase;">PATROL TRACK (TRANSIT & ON-STATION PHASES)</strong>
+              </div>
+              <span id="sub-mat-phases-summary" style="font-size:0.75rem; background:#422006; color:#fde047; padding:3px 8px; border-radius:4px; font-weight:700;">Tapete Oficial: 5 Estaciones</span>
+            </div>
+
+            <!-- Patrol Track Grid (At Port + 9 Slots) -->
+            <div id="sub-mat-patrol-track-row" style="display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px;">
+              <!-- Populated dynamically by JS -->
+            </div>
+
+            <!-- Header bar for Damage Tracks -->
+            <div style="background:#e4d8be; border:1px solid #c7b693; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.1rem;">💥</span>
+                <strong data-i18n="ui.damageTracks" style="font-family:'Cinzel',serif; font-size:0.92rem; color:#422006; letter-spacing:1px; text-transform:uppercase;">DAMAGE TRACKS (FLOODING & HULL DAMAGE)</strong>
+              </div>
+              <span id="sub-mat-damage-summary" style="font-size:0.75rem; background:#422006; color:#fde047; padding:3px 8px; border-radius:4px; font-weight:700;">Capacidad: 8 Inundación / 8 Casco</span>
+            </div>
+
+            <!-- Damage Track Rows -->
+            <div id="sub-mat-damage-track-row" style="display:flex; flex-direction:column; gap:8px;">
+              <!-- Populated dynamically by JS -->
+            </div>
+            
+            <div style="margin-top:12px; font-size:0.75rem; color:#78350f; font-weight:700; text-align:center; background:rgba(217,119,6,0.15); padding:6px; border-radius:4px; border:1px solid rgba(217,119,6,0.3);">
+              🧭 <span id="sub-mat-footnote-desc">Esta secuencia oficial del tapete es la base directa de la ruta operativa de cada patrulla en el Game Flow de Campaña.</span>
+            </div>
+          </div>
+
+          <!-- PERFIL ILUSTRADO DEL SUBMARINO CON SELLO ROJO -->
+          <div id="sub-profile-container" style="margin-top:20px; background:linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border:2px solid var(--gold-500); border-radius:10px; padding:12px; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-align:center;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(212,175,55,0.3);">
+              <span id="sub-profile-header-title" data-i18n="ui.officialProfile" style="font-family:'Cinzel', serif; font-size:0.85rem; font-weight:800; color:var(--gold-400); letter-spacing:1px;">⚓ PERFIL OFICIAL IJN</span>
+              <span id="sub-profile-label" data-i18n="ui.profileSeal" style="font-size:0.75rem; color:#94a3b8; font-weight:600;">Lámina con Sello Imperial</span>
+            </div>
+            <img id="sub-profile-img" src="assets/submarines_profiles/Kaidai_KD3_Class.png" alt="Perfil del Submarino" data-i18n-alt="ui.submarineProfileAlt" style="width:100%; max-height:220px; object-fit:contain; border-radius:6px; background:#f4ecd8; border:1px solid #c9b037;" onerror="this.style.display='none'" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- TAB 5: MASTER CHARTS COMPENDIUM (TODAS LAS TABLAS) -->
+    <div 
