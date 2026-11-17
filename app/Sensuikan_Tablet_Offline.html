@@ -1812,6 +1812,40 @@ document.addEventListener("DOMContentLoaded", function() {
       transform: translateY(-2px) rotateY(180deg);
     }
 
+    /* PATROL INTERACTIVE TABLES (A4, A2, TARGETS) */
+    .patrol-interactive-row {
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+    .patrol-interactive-row:hover {
+      background-color: rgba(56, 189, 248, 0.22) !important;
+      outline: 1px solid rgba(56, 189, 248, 0.5);
+    }
+    .patrol-interactive-row:active {
+      transform: scale(0.99);
+    }
+    .patrol-interactive-row.row-selected-success {
+      background-color: rgba(34, 197, 94, 0.30) !important;
+      outline: 2px solid #22c55e !important;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+    }
+    .patrol-interactive-row.row-selected-warning {
+      background-color: rgba(245, 158, 11, 0.30) !important;
+      outline: 2px solid #f59e0b !important;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+    }
+    .patrol-interactive-row.row-selected-danger {
+      background-color: rgba(239, 68, 68, 0.30) !important;
+      outline: 2px solid #ef4444 !important;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.45);
+    }
+    .patrol-interactive-row.row-selected-info {
+      background-color: rgba(56, 189, 248, 0.30) !important;
+      outline: 2px solid #38bdf8 !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+
 </style>
   <!-- PWA MANIFEST & ICONS -->
   <link rel="manifest" href="./manifest.json">
@@ -5439,26 +5473,26 @@ if (typeof module !== 'undefined' && module.exports) {
                       <th id="ppatrol-th-tgt-type" style="padding:4px; border:1px solid #334155;">Tipo & Escolta</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody id="ppatrol-tgt-tbody">
+                    <tr id="ppatrol-tgt-row-1" onclick="rollChartT1()" class="patrol-interactive-row" title="Click para generar Mercante T1">
                       <td id="ppatrol-td-tgt-t1-enc" style="border:1px solid #334155; font-weight:bold; color:#38bdf8;">Ship / Ship*</td>
                       <td style="border:1px solid #334155;">1 - 4</td>
                       <td id="ppatrol-td-tgt-t1-chart" style="border:1px solid #334155; font-weight:bold; color:#a7f3d0;">Tabla T1</td>
                       <td id="ppatrol-td-tgt-t1-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Mercante pequeño (Sin escolta)</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-tgt-row-2" onclick="rollChartT2()" class="patrol-interactive-row" title="Click para generar Escoltado T2">
                       <td id="ppatrol-td-tgt-t2-enc" style="border:1px solid #334155; font-weight:bold; color:#38bdf8;">Ship / Ship*</td>
                       <td style="border:1px solid #334155;">5 - 6</td>
                       <td id="ppatrol-td-tgt-t2-chart" style="border:1px solid #334155; font-weight:bold; color:#fde047;">Tabla T2</td>
                       <td id="ppatrol-td-tgt-t2-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Mercante grande / Petrolero (Con escolta)</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-tgt-row-3" onclick="rollChartT3()" class="patrol-interactive-row" title="Click para generar Buque de Guerra T3">
                       <td id="ppatrol-td-tgt-t3-enc" style="border:1px solid #334155; font-weight:bold; color:#f87171;">Buque de Guerra</td>
                       <td style="border:1px solid #334155;">1 - 6</td>
                       <td id="ppatrol-td-tgt-t3-chart" style="border:1px solid #334155; font-weight:bold; color:#fca5a5;">Tabla T3</td>
                       <td id="ppatrol-td-tgt-t3-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Destructor / Crucero (Con escolta)</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-tgt-row-4" onclick="rollChartT3()" class="patrol-interactive-row" title="Click para generar Buque Capital T4/T5">
                       <td id="ppatrol-td-tgt-t4-enc" style="border:1px solid #334155; font-weight:bold; color:#eab308;">Buque Capital</td>
                       <td style="border:1px solid #334155;">1 - 6</td>
                       <td id="ppatrol-td-tgt-t4-chart" style="border:1px solid #334155; font-weight:bold; color:#fde047;">Tabla T4 / T5</td>
@@ -5517,18 +5551,18 @@ if (typeof module !== 'undefined' && module.exports) {
                       <th id="ppatrol-th-a4-effect" style="padding:4px; border:1px solid #334155; text-align:left;">Efecto Operativo</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody id="ppatrol-a4-tbody">
+                    <tr id="ppatrol-a4-row-1" onclick="selectA4Row(1)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#ef4444;">&le; 1</td>
                       <td id="ppatrol-td-a4-r1-res" style="border:1px solid #334155; font-weight:bold; color:#ef4444;">2 x Ataques Aéreos</td>
                       <td id="ppatrol-td-a4-r1-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fca5a5;">2 pasadas con bombas + 1 herida automática de dotación</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a4-row-2" onclick="selectA4Row(2)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#f59e0b;">2 - 5</td>
                       <td id="ppatrol-td-a4-r2-res" style="border:1px solid #334155; font-weight:bold; color:#f59e0b;">1 x Ataque Aéreo</td>
                       <td id="ppatrol-td-a4-r2-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fde047;">1 pasada con bombas + 1 herida automática de dotación</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a4-row-3" onclick="selectA4Row(3)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#22c55e;">6 - 12</td>
                       <td id="ppatrol-td-a4-r3-res" style="border:1px solid #334155; font-weight:bold; color:#22c55e;">Inmersión Exitosa</td>
                       <td id="ppatrol-td-a4-r3-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#86efac;">Submarino sumergido a salvo. Sin daños sufridos.</td>
@@ -5574,18 +5608,18 @@ if (typeof module !== 'undefined' && module.exports) {
                       <th id="ppatrol-th-a2-conseq" style="padding:4px; border:1px solid #334155; text-align:left;">Consecuencia</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody id="ppatrol-a2-tbody">
+                    <tr id="ppatrol-a2-row-1" onclick="selectA2Row(1)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#f87171;">2 - 3</td>
                       <td id="ppatrol-td-a2-r1-eff" style="border:1px solid #334155; font-weight:bold; color:#f87171;">¡Avión Derribado!</td>
                       <td id="ppatrol-td-a2-r1-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#86efac;">Avión destruido antes de lanzar bombas. Victoria limpia.</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a2-row-2" onclick="selectA2Row(2)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">4 - 5</td>
                       <td id="ppatrol-td-a2-r2-eff" style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">Avión Dañado</td>
                       <td id="ppatrol-td-a2-r2-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fde047;">Ataque interrumpido. Avión se retira con averías.</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a2-row-3" onclick="selectA2Row(3)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; color:#94a3b8;">6 - 12</td>
                       <td id="ppatrol-td-a2-r3-eff" style="border:1px solid #334155; color:#94a3b8;">Fallo (Miss)</td>
                       <td id="ppatrol-td-a2-r3-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fca5a5;">El avión enemigo bombardea el submarino.</td>
@@ -13025,6 +13059,24 @@ if (typeof window !== 'undefined') {
           mSec.outerHTML = targetHtml;
         }
       }
+
+      // Toggle Kaiten Section 6 (Charts F4, K5, K6) dynamically
+      const kSec = document.querySelector('[data-comp-sec="kaiten"]');
+      if (kSec && typeof COMP_KAITEN_HTML !== 'undefined') {
+        const targetKaitenHtml = isEn ? COMP_KAITEN_HTML.en : COMP_KAITEN_HTML.es;
+        if (targetKaitenHtml) {
+          kSec.outerHTML = targetKaitenHtml;
+        }
+      }
+
+      // Toggle Floatplane Section 7 (Charts P3 to P6) dynamically
+      const fpSec = document.querySelector('[data-comp-sec="floatplane"]');
+      if (fpSec && typeof COMP_FLOATPLANE_HTML !== 'undefined') {
+        const targetFpHtml = isEn ? COMP_FLOATPLANE_HTML.en : COMP_FLOATPLANE_HTML.es;
+        if (targetFpHtml) {
+          fpSec.outerHTML = targetFpHtml;
+        }
+      }
     }
 
     function applyCompendiumCommanderLanguage(isEn) {
@@ -18716,6 +18768,50 @@ function recalculatePatrolTrack() {
       }
     }
 
+    function highlightA2Row(tierIndex) {
+      for (let i = 1; i <= 3; i++) {
+        const row = document.getElementById('ppatrol-a2-row-' + i);
+        if (row) {
+          row.classList.remove('row-selected-danger', 'row-selected-warning', 'row-selected-success');
+          if (i === tierIndex) {
+            if (i === 1) row.classList.add('row-selected-success');
+            else if (i === 2) row.classList.add('row-selected-warning');
+            else if (i === 3) row.classList.add('row-selected-danger');
+          }
+        }
+      }
+    }
+
+    function selectA2Row(tierIndex) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      highlightA2Row(tierIndex);
+
+      let outcome = "", col = "", rollText = "";
+      if (tierIndex === 1) {
+        outcome = isEn ? "💥 AIRCRAFT SHOT DOWN! Clean Victory!" : "💥 ¡AVIÓN DERRIBADO! Victoria limpia.";
+        col = "#86efac";
+        rollText = "2 - 3";
+      } else if (tierIndex === 2) {
+        outcome = isEn ? "⚠️ Aircraft Damaged (Attack aborted, retreats)" : "⚠️ Avión Dañado (Ataque interrumpido, se retira)";
+        col = "#fbbf24";
+        rollText = "4 - 5";
+      } else {
+        outcome = isEn ? "❌ Miss! Enemy aircraft bombs the submarine!" : "❌ Fallo. El avión enemigo bombardea el submarino.";
+        col = "#f87171";
+        rollText = "6 - 12";
+      }
+
+      const msg = isEn
+        ? `Anti-Aircraft Defense [Chart A2 Selected]: 2d6 = ${rollText} ➔ ${outcome}`
+        : `Defensa Antiaérea [Tabla A2 Seleccionada]: 2d6 = ${rollText} ➔ ${outcome}`;
+
+      showToast(msg);
+      const el = document.getElementById('res-interactive-a2');
+      if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
+      saveState();
+      return msg;
+    }
+
     function rollInteractiveA2(manualRoll) {
       const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
       let d1, d2, sum, isManual = false;
@@ -18744,12 +18840,15 @@ function recalculatePatrolTrack() {
       let outcome = isEn ? "Miss" : "Fallo (Miss)";
       let col = "#94a3b8";
       if (finalRoll <= 3) {
+        highlightA2Row(1);
         outcome = isEn ? "💥 AIRCRAFT SHOT DOWN! Clean Victory!" : "💥 ¡AVIÓN DERRIBADO! Victoria limpia.";
         col = "#86efac";
       } else if (finalRoll <= 5) {
+        highlightA2Row(2);
         outcome = isEn ? "⚠️ Aircraft Damaged (Attack aborted, retreats)" : "⚠️ Avión Dañado (Ataque interrumpido, se retira)";
         col = "#fbbf24";
       } else {
+        highlightA2Row(3);
         outcome = isEn ? "❌ Miss! Enemy aircraft bombs the submarine!" : "❌ Fallo. El avión enemigo bombardea el submarino.";
         col = "#f87171";
       }
@@ -18762,6 +18861,50 @@ function recalculatePatrolTrack() {
 
       showToast(msg);
       const el = document.getElementById('res-interactive-a2');
+      if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
+      saveState();
+      return msg;
+    }
+
+    function highlightA4Row(tierIndex) {
+      for (let i = 1; i <= 3; i++) {
+        const row = document.getElementById('ppatrol-a4-row-' + i);
+        if (row) {
+          row.classList.remove('row-selected-danger', 'row-selected-warning', 'row-selected-success');
+          if (i === tierIndex) {
+            if (i === 1) row.classList.add('row-selected-danger');
+            else if (i === 2) row.classList.add('row-selected-warning');
+            else if (i === 3) row.classList.add('row-selected-success');
+          }
+        }
+      }
+    }
+
+    function selectA4Row(tierIndex) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      highlightA4Row(tierIndex);
+
+      let outcome = "", col = "", rollText = "";
+      if (tierIndex === 1) {
+        outcome = isEn ? "💥 2 x ENEMY AIR ATTACKS! (2 bomb runs + 1 automatic crew injury)" : "💥 ¡2 x ATAQUES AÉREOS ENEMIGOS! (2 pasadas bombas + 1 herida automática)";
+        col = "#ef4444";
+        rollText = isEn ? "Final ≤ 1" : "Final ≤ 1";
+      } else if (tierIndex === 2) {
+        outcome = isEn ? "⚠️ 1 x ENEMY AIR ATTACK! (1 bomb run + 1 automatic crew injury)" : "⚠️ 1 x ATAQUE AÉREO ENEMIGO (1 pasada bombas + 1 herida automática)";
+        col = "#f59e0b";
+        rollText = isEn ? "Final 2 - 5" : "Final 2 - 5";
+      } else {
+        outcome = isEn ? "🛡️ Emergency Crash Dive Successful! (Submerged safely)" : "🛡️ Inmersión de Emergencia con Éxito (Sumergido a salvo)";
+        col = "#22c55e";
+        rollText = isEn ? "Final 6 - 12" : "Final 6 - 12";
+      }
+
+      const msg = isEn
+        ? `Aircraft Encounter [Chart A4 Selected]: ${rollText} ➔ ${outcome}`
+        : `Encuentro Aéreo [Tabla A4 Seleccionada]: ${rollText} ➔ ${outcome}`;
+
+      showToast(msg);
+      const el = document.getElementById('res-interactive-a4');
       if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
       saveState();
       return msg;
@@ -18807,11 +18950,15 @@ function recalculatePatrolTrack() {
       let outcome = isEn ? "Emergency Crash Dive Successful! (Submerged safely)" : "Inmersión de Emergencia con Éxito (Sumergido a salvo)";
       let col = "#22c55e";
       if (finalRoll <= 1) {
+        highlightA4Row(1);
         outcome = isEn ? "💥 2 x ENEMY AIR ATTACKS! (2 bomb runs + 1 automatic crew injury)" : "💥 ¡2 x ATAQUES AÉREOS ENEMIGOS! (2 pasadas bombas + 1 herida automática)";
         col = "#ef4444";
       } else if (finalRoll <= 5) {
+        highlightA4Row(2);
         outcome = isEn ? "⚠️ 1 x ENEMY AIR ATTACK! (1 bomb run + 1 automatic crew injury)" : "⚠️ 1 x ATAQUE AÉREO ENEMIGO (1 pasada bombas + 1 herida automática)";
         col = "#f59e0b";
+      } else {
+        highlightA4Row(3);
       }
 
       const drmSign = totalDrm >= 0 ? '+' : '';
@@ -18992,6 +19139,11 @@ window.addEventListener('DOMContentLoaded', () => {
         if (detEl) detEl.innerText = isEn ? "Roll on T1, T2, or T3 to allocate the ship to the tactical slot." : "Tira en T1, T2 o T3 para asignar el buque a la ranura táctica.";
       }
     }
+
+    window.selectA4Row = selectA4Row;
+    window.selectA2Row = selectA2Row;
+    window.highlightA4Row = highlightA4Row;
+    window.highlightA2Row = highlightA2Row;
 
 </script>
   <script>

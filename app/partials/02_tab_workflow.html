@@ -1298,25 +1298,25 @@
                     </tr>
                   </thead>
                   <tbody id="ppatrol-tgt-tbody">
-                    <tr id="ppatrol-tgt-row-1" onclick="rollTargetT1()" class="patrol-interactive-row" title="Click para generar Mercante T1">
+                    <tr id="ppatrol-tgt-row-1" onclick="rollChartT1()" class="patrol-interactive-row" title="Click para generar Mercante T1">
                       <td id="ppatrol-td-tgt-t1-enc" style="border:1px solid #334155; font-weight:bold; color:#38bdf8;">Ship / Ship*</td>
                       <td style="border:1px solid #334155;">1 - 4</td>
                       <td id="ppatrol-td-tgt-t1-chart" style="border:1px solid #334155; font-weight:bold; color:#a7f3d0;">Tabla T1</td>
                       <td id="ppatrol-td-tgt-t1-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Mercante pequeño (Sin escolta)</td>
                     </tr>
-                    <tr id="ppatrol-tgt-row-2" onclick="rollTargetT2()" class="patrol-interactive-row" title="Click para generar Escoltado T2">
+                    <tr id="ppatrol-tgt-row-2" onclick="rollChartT2()" class="patrol-interactive-row" title="Click para generar Escoltado T2">
                       <td id="ppatrol-td-tgt-t2-enc" style="border:1px solid #334155; font-weight:bold; color:#38bdf8;">Ship / Ship*</td>
                       <td style="border:1px solid #334155;">5 - 6</td>
                       <td id="ppatrol-td-tgt-t2-chart" style="border:1px solid #334155; font-weight:bold; color:#fde047;">Tabla T2</td>
                       <td id="ppatrol-td-tgt-t2-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Mercante grande / Petrolero (Con escolta)</td>
                     </tr>
-                    <tr id="ppatrol-tgt-row-3" onclick="rollTargetT3()" class="patrol-interactive-row" title="Click para generar Buque de Guerra T3">
+                    <tr id="ppatrol-tgt-row-3" onclick="rollChartT3()" class="patrol-interactive-row" title="Click para generar Buque de Guerra T3">
                       <td id="ppatrol-td-tgt-t3-enc" style="border:1px solid #334155; font-weight:bold; color:#f87171;">Buque de Guerra</td>
                       <td style="border:1px solid #334155;">1 - 6</td>
                       <td id="ppatrol-td-tgt-t3-chart" style="border:1px solid #334155; font-weight:bold; color:#fca5a5;">Tabla T3</td>
                       <td id="ppatrol-td-tgt-t3-desc" style="border:1px solid #334155; text-align:left; padding-left:6px;">Destructor / Crucero (Con escolta)</td>
                     </tr>
-                    <tr id="ppatrol-tgt-row-4" onclick="rollTargetT3()" class="patrol-interactive-row" title="Click para generar Buque Capital T4/T5">
+                    <tr id="ppatrol-tgt-row-4" onclick="rollChartT3()" class="patrol-interactive-row" title="Click para generar Buque Capital T4/T5">
                       <td id="ppatrol-td-tgt-t4-enc" style="border:1px solid #334155; font-weight:bold; color:#eab308;">Buque Capital</td>
                       <td style="border:1px solid #334155;">1 - 6</td>
                       <td id="ppatrol-td-tgt-t4-chart" style="border:1px solid #334155; font-weight:bold; color:#fde047;">Tabla T4 / T5</td>
@@ -1432,18 +1432,18 @@
                       <th id="ppatrol-th-a2-conseq" style="padding:4px; border:1px solid #334155; text-align:left;">Consecuencia</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody id="ppatrol-a2-tbody">
+                    <tr id="ppatrol-a2-row-1" onclick="selectA2Row(1)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#f87171;">2 - 3</td>
                       <td id="ppatrol-td-a2-r1-eff" style="border:1px solid #334155; font-weight:bold; color:#f87171;">¡Avión Derribado!</td>
                       <td id="ppatrol-td-a2-r1-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#86efac;">Avión destruido antes de lanzar bombas. Victoria limpia.</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a2-row-2" onclick="selectA2Row(2)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">4 - 5</td>
                       <td id="ppatrol-td-a2-r2-eff" style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">Avión Dañado</td>
                       <td id="ppatrol-td-a2-r2-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fde047;">Ataque interrumpido. Avión se retira con averías.</td>
                     </tr>
-                    <tr>
+                    <tr id="ppatrol-a2-row-3" onclick="selectA2Row(3)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
                       <td style="border:1px solid #334155; color:#94a3b8;">6 - 12</td>
                       <td id="ppatrol-td-a2-r3-eff" style="border:1px solid #334155; color:#94a3b8;">Fallo (Miss)</td>
                       <td id="ppatrol-td-a2-r3-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fca5a5;">El avión enemigo bombardea el submarino.</td>

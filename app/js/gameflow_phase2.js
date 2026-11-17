@@ -681,6 +681,50 @@ function recalculatePatrolTrack() {
       }
     }
 
+    function highlightA2Row(tierIndex) {
+      for (let i = 1; i <= 3; i++) {
+        const row = document.getElementById('ppatrol-a2-row-' + i);
+        if (row) {
+          row.classList.remove('row-selected-danger', 'row-selected-warning', 'row-selected-success');
+          if (i === tierIndex) {
+            if (i === 1) row.classList.add('row-selected-success');
+            else if (i === 2) row.classList.add('row-selected-warning');
+            else if (i === 3) row.classList.add('row-selected-danger');
+          }
+        }
+      }
+    }
+
+    function selectA2Row(tierIndex) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      highlightA2Row(tierIndex);
+
+      let outcome = "", col = "", rollText = "";
+      if (tierIndex === 1) {
+        outcome = isEn ? "💥 AIRCRAFT SHOT DOWN! Clean Victory!" : "💥 ¡AVIÓN DERRIBADO! Victoria limpia.";
+        col = "#86efac";
+        rollText = "2 - 3";
+      } else if (tierIndex === 2) {
+        outcome = isEn ? "⚠️ Aircraft Damaged (Attack aborted, retreats)" : "⚠️ Avión Dañado (Ataque interrumpido, se retira)";
+        col = "#fbbf24";
+        rollText = "4 - 5";
+      } else {
+        outcome = isEn ? "❌ Miss! Enemy aircraft bombs the submarine!" : "❌ Fallo. El avión enemigo bombardea el submarino.";
+        col = "#f87171";
+        rollText = "6 - 12";
+      }
+
+      const msg = isEn
+        ? `Anti-Aircraft Defense [Chart A2 Selected]: 2d6 = ${rollText} ➔ ${outcome}`
+        : `Defensa Antiaérea [Tabla A2 Seleccionada]: 2d6 = ${rollText} ➔ ${outcome}`;
+
+      showToast(msg);
+      const el = document.getElementById('res-interactive-a2');
+      if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
+      saveState();
+      return msg;
+    }
+
     function rollInteractiveA2(manualRoll) {
       const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
       let d1, d2, sum, isManual = false;
@@ -709,12 +753,15 @@ function recalculatePatrolTrack() {
       let outcome = isEn ? "Miss" : "Fallo (Miss)";
       let col = "#94a3b8";
       if (finalRoll <= 3) {
+        highlightA2Row(1);
         outcome = isEn ? "💥 AIRCRAFT SHOT DOWN! Clean Victory!" : "💥 ¡AVIÓN DERRIBADO! Victoria limpia.";
         col = "#86efac";
       } else if (finalRoll <= 5) {
+        highlightA2Row(2);
         outcome = isEn ? "⚠️ Aircraft Damaged (Attack aborted, retreats)" : "⚠️ Avión Dañado (Ataque interrumpido, se retira)";
         col = "#fbbf24";
       } else {
+        highlightA2Row(3);
         outcome = isEn ? "❌ Miss! Enemy aircraft bombs the submarine!" : "❌ Fallo. El avión enemigo bombardea el submarino.";
         col = "#f87171";
       }
@@ -727,6 +774,50 @@ function recalculatePatrolTrack() {
 
       showToast(msg);
       const el = document.getElementById('res-interactive-a2');
+      if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
+      saveState();
+      return msg;
+    }
+
+    function highlightA4Row(tierIndex) {
+      for (let i = 1; i <= 3; i++) {
+        const row = document.getElementById('ppatrol-a4-row-' + i);
+        if (row) {
+          row.classList.remove('row-selected-danger', 'row-selected-warning', 'row-selected-success');
+          if (i === tierIndex) {
+            if (i === 1) row.classList.add('row-selected-danger');
+            else if (i === 2) row.classList.add('row-selected-warning');
+            else if (i === 3) row.classList.add('row-selected-success');
+          }
+        }
+      }
+    }
+
+    function selectA4Row(tierIndex) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      highlightA4Row(tierIndex);
+
+      let outcome = "", col = "", rollText = "";
+      if (tierIndex === 1) {
+        outcome = isEn ? "💥 2 x ENEMY AIR ATTACKS! (2 bomb runs + 1 automatic crew injury)" : "💥 ¡2 x ATAQUES AÉREOS ENEMIGOS! (2 pasadas bombas + 1 herida automática)";
+        col = "#ef4444";
+        rollText = isEn ? "Final ≤ 1" : "Final ≤ 1";
+      } else if (tierIndex === 2) {
+        outcome = isEn ? "⚠️ 1 x ENEMY AIR ATTACK! (1 bomb run + 1 automatic crew injury)" : "⚠️ 1 x ATAQUE AÉREO ENEMIGO (1 pasada bombas + 1 herida automática)";
+        col = "#f59e0b";
+        rollText = isEn ? "Final 2 - 5" : "Final 2 - 5";
+      } else {
+        outcome = isEn ? "🛡️ Emergency Crash Dive Successful! (Submerged safely)" : "🛡️ Inmersión de Emergencia con Éxito (Sumergido a salvo)";
+        col = "#22c55e";
+        rollText = isEn ? "Final 6 - 12" : "Final 6 - 12";
+      }
+
+      const msg = isEn
+        ? `Aircraft Encounter [Chart A4 Selected]: ${rollText} ➔ ${outcome}`
+        : `Encuentro Aéreo [Tabla A4 Seleccionada]: ${rollText} ➔ ${outcome}`;
+
+      showToast(msg);
+      const el = document.getElementById('res-interactive-a4');
       if (el) el.innerHTML = `<span style="color:${col}; font-weight:700;">${msg}</span>`;
       saveState();
       return msg;
@@ -772,11 +863,15 @@ function recalculatePatrolTrack() {
       let outcome = isEn ? "Emergency Crash Dive Successful! (Submerged safely)" : "Inmersión de Emergencia con Éxito (Sumergido a salvo)";
       let col = "#22c55e";
       if (finalRoll <= 1) {
+        highlightA4Row(1);
         outcome = isEn ? "💥 2 x ENEMY AIR ATTACKS! (2 bomb runs + 1 automatic crew injury)" : "💥 ¡2 x ATAQUES AÉREOS ENEMIGOS! (2 pasadas bombas + 1 herida automática)";
         col = "#ef4444";
       } else if (finalRoll <= 5) {
+        highlightA4Row(2);
         outcome = isEn ? "⚠️ 1 x ENEMY AIR ATTACK! (1 bomb run + 1 automatic crew injury)" : "⚠️ 1 x ATAQUE AÉREO ENEMIGO (1 pasada bombas + 1 herida automática)";
         col = "#f59e0b";
+      } else {
+        highlightA4Row(3);
       }
 
       const drmSign = totalDrm >= 0 ? '+' : '';
@@ -957,3 +1052,8 @@ window.addEventListener('DOMContentLoaded', () => {
         if (detEl) detEl.innerText = isEn ? "Roll on T1, T2, or T3 to allocate the ship to the tactical slot." : "Tira en T1, T2 o T3 para asignar el buque a la ranura táctica.";
       }
     }
+
+    window.selectA4Row = selectA4Row;
+    window.selectA2Row = selectA2Row;
+    window.highlightA4Row = highlightA4Row;
+    window.highlightA2Row = highlightA2Row;

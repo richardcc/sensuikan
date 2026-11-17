@@ -208,14 +208,14 @@ def generate_canonical_stl_models():
         slots_list.append(make_clean_square_slot(x, to_bot_y(82.5)))
         slots_list.append(make_clean_square_slot(x, to_bot_y(99.5)))
         
-    # 4. Middle band: Crew Status (Cols 0..4 = 10 slots) + Systems Status (Cols 5..8 = 8 slots)
+    # 4. Middle band: Crew Status (Shifted 1 column left: 10.0 + Cols 0..3 = 10 slots) + Systems Status (Cols 5..8 = 8 slots)
     cols9 = np.linspace(28.0, 156.0, 9)
-    # Crew Status (Left: 5 columns x 2 rows)
-    for x in cols9[:5]:
+    crew_x = [10.0] + list(cols9[:4])  # [10.0, 28.0, 44.0, 60.0, 76.0]
+    for x in crew_x:
         slots_list.append(make_clean_square_slot(x, to_bot_y(119.5)))
         slots_list.append(make_clean_square_slot(x, to_bot_y(136.5)))
 
-    # Systems Status (Right: 4 columns x 2 rows)
+    # Systems Status (Right: 4 columns x 2 rows: Cols 5..8)
     for x in cols9[5:]:
         slots_list.append(make_clean_square_slot(x, to_bot_y(119.5)))
         slots_list.append(make_clean_square_slot(x, to_bot_y(136.5)))
@@ -312,7 +312,7 @@ def generate_canonical_stl_models():
     engraved_labels = [
         (ox_shift + 92.0, oy_shift + to_bot_y(54.5), "PATROL TRACK (TRANSIT & ON-STATION PHASES)"),
         (ox_shift + 92.0, oy_shift + to_bot_y(73.5), "DAMAGE TRACKS (FLOODING & HULL DAMAGE)"),
-        (ox_shift + 60.0, oy_shift + to_bot_y(109.5), "CREW STATUS & QUALITY"),
+        (ox_shift + 43.0, oy_shift + to_bot_y(109.5), "CREW STATUS & QUALITY"),
         (ox_shift + 132.0, oy_shift + to_bot_y(109.5), "⚙ SYSTEMS STATUS"),
         (ox_shift + 203.2, oy_shift + to_bot_y(3.5), "✈ AIRCRAFT & TACTICAL EVENT"),
         (ox_shift + 203.2, oy_shift + to_bot_y(23.2), "▲ FORWARD TORPEDO TUBES (1–8)"),

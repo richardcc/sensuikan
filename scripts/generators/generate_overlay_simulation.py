@@ -6,9 +6,9 @@ import pymupdf # fitz
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-pdf_path = os.path.join(repo_root, 'pdf', 'sensuikan_canonical_player_cards_universal_v2_18subs.pdf')
-if not os.path.exists(pdf_path):
-    pdf_path = os.path.join(repo_root, 'pdf', 'sensuikan_canonical_player_cards_universal_18subs.pdf')
+p1 = os.path.join(repo_root, 'pdf', 'sensuikan_canonical_player_cards_universal_18subs.pdf')
+p2 = os.path.join(repo_root, 'pdf', 'sensuikan_canonical_player_cards_universal_v2_18subs.pdf')
+pdf_path = p1 if not os.path.exists(p2) or os.path.getmtime(p1) >= os.path.getmtime(p2) else p2
 
 out_dir = r'C:\Users\Richard\.gemini\antigravity\brain\c08a1950-d03a-4ae3-aef2-f14946ddab17'
 os.makedirs(out_dir, exist_ok=True)
@@ -66,8 +66,8 @@ for x in cols9:
     add_slot(x, 82.5)
     add_slot(x, 99.5)
 
-# 4. Middle band: Crew Status (Left: cols 0..4 = 10 slots) + Systems Status (Right: cols 5..8 = 8 slots)
-for x in cols9[:5]:
+# 4. Middle band: Crew Status (Shifted 1 column left: 10.0 + cols 0..3) + Systems Status (cols 5..8)
+for x in [10.0] + list(cols9[:4]):
     add_slot(x, 119.5)
     add_slot(x, 136.5)
 
@@ -152,7 +152,7 @@ def draw_engraved_text(x_mm, y_top_mm, text, font, color=gold_col, align='center
 # Section Headers on 3D Plastic:
 draw_engraved_text(92.0, 54.5, "PATROL TRACK (TRANSIT & ON-STATION PHASES)", font_sec, gold_col)
 draw_engraved_text(92.0, 73.5, "DAMAGE TRACKS (FLOODING & HULL DAMAGE)", font_sec, gold_col)
-draw_engraved_text(60.0, 109.5, "CREW STATUS & QUALITY", font_sec, gold_col)
+draw_engraved_text(43.0, 109.5, "CREW STATUS & QUALITY", font_sec, gold_col)
 draw_engraved_text(132.0, 109.5, "⚙ SYSTEMS STATUS", font_sec, cyan_col)
 
 # Right Column Sections on 3D Plastic:
