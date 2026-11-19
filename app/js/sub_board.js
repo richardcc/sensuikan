@@ -1037,6 +1037,7 @@ function renderInteractiveSlots() {
 
     container.innerHTML = '';
     container.appendChild(fragment);
+    if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
   } else {
     container.innerHTML = '';
   }
