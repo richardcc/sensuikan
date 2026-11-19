@@ -35,6 +35,9 @@
       if (elNavRogu && d.navRoguBukku) elNavRogu.innerText = d.navRoguBukku;
       const elNavDock = document.getElementById('tab-nav-dock');
       if (elNavDock && d.navDock) elNavDock.innerText = d.navDock;
+      const elSubBoard = document.getElementById('tab-nav-subboard');
+      if (elSubBoard) elSubBoard.innerText = isEn ? "📋 Submarine Board" : "📋 Hoja de Submarino";
+      if (typeof onSubBoardLanguageChanged === 'function') onSubBoardLanguageChanged(isEn ? 'en' : 'es');
       const elComp = document.getElementById('tab-nav-compendium');
       if (elComp && d.navCompendium) elComp.innerText = d.navCompendium;
       const elNavOpMap = document.getElementById('tab-nav-opmap');
@@ -94,7 +97,9 @@
       if (elStep1 && d.step1) elStep1.innerText = d.step1;
       const elStep2 = document.getElementById('lbl-step2');
       if (elStep2 && d.step2) elStep2.innerText = d.step2;
-      applyPatrolLanguage(isEn);
+      const elStepPatrol = document.getElementById('lbl-steppatrol');
+      if (elStepPatrol && d.stepPatrol) elStepPatrol.innerText = d.stepPatrol;
+      if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
       const elStep3 = document.getElementById('lbl-step3');
       if (elStep3 && d.step3) elStep3.innerText = d.step3;
@@ -152,26 +157,42 @@
         if (el) el.innerText = label;
       });
 
-      // 4. Next Buttons
-      const elP1Btn = document.getElementById('p1-btn-next');
-      if (elP1Btn) elP1Btn.innerText = isEn ? "Sortie towards Phase 2: Navigation ➔" : "Zarpar hacia la Fase 2: Navegación ➔";
-      const elP2Btn = document.getElementById('p2-btn-next');
-      if (elP2Btn) elP2Btn.innerText = isEn ? "Proceed to Patrol: Contact Management ➔" : "Pasar a Patrulla: Gestión de Contactos ➔";
+      // 4. Stepper Navigation Action Buttons (Next & Prev)
+      const navButtons = {
+        'p0-btn-next': isEn ? "🚀 Commission Submarine & Proceed to Naval Schools (Rule 4.8) ➔" : "🚀 Comisionar Submarino y Enviar a Escuelas (Regla 4.8) ➔",
+        'pschool-btn-prev': isEn ? "Back to Submarine" : "Volver a Submarino",
+        'pschool-btn-next': isEn ? "Complete Training & Proceed to Sortie (Phase 1) ➔" : "Completar Adiestramiento y Pasar a Zarpe (Fase 1) ➔",
+        'p1-btn-prev': isEn ? "Back to Naval Schools" : "Volver a Escuelas",
+        'p1-btn-next': isEn ? "Sortie towards Phase 2: Navigation ➔" : "Zarpar hacia la Fase 2: Navegación ➔",
+        'p2-btn-prev': isEn ? "Back to Phase 1: Sortie" : "Volver a Fase 1: Zarpe",
+        'p2-btn-next': isEn ? "Proceed to Patrol: Contact Management ➔" : "Pasar a Patrulla: Gestión de Contactos ➔",
+        'ppatrol-btn-prev': isEn ? "Back to Phase 2: Transit" : "Volver a Fase 2: Trayecto",
+        'ppatrol-btn-next': isEn ? "Proceed to Phase 3: Tactical Combat ➔" : "Pasar a Fase 3: Combate Táctico ➔",
+        'p3-btn-prev-lbl': isEn ? "Back to Patrol" : "Volver a Patrulla",
+        'p4-btn-prev': isEn ? "Back to Phase 3: Combat" : "Volver a Fase 3: Combate",
+        'p4-btn-next': isEn ? "Return to Base: Phase 5 (Refit) ➔" : "Retornar a Base: Fase 5 (Refit) ➔",
+        'p5-btn-prev': isEn ? "Back to Phase 4: Damage" : "Volver a Fase 4: Averías",
+        'p5-btn-next': isEn ? "🔄 Start Next Patrol (Phase 1) ➔" : "🔄 Iniciar Siguiente Patrulla (Fase 1) ➔"
+      };
+      Object.entries(navButtons).forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+      });
+
       if (typeof updateTrayectoCompletionStatus === 'function') {
         updateTrayectoCompletionStatus();
       } else {
         const elP3Btn = document.getElementById('p3-btn-next');
         if (elP3Btn) elP3Btn.innerText = isEn ? "Proceed to Phase 4: Damage Control ➔" : "Pasar a Fase 4: Control de Averías ➔";
       }
-      const elP4Btn = document.getElementById('p4-btn-next');
-      if (elP4Btn) elP4Btn.innerText = isEn ? "Return to Base: Phase 5 (Refit) ➔" : "Retornar a Base: Fase 5 (Refit) ➔";
 
       // 5. Compendium Filter Buttons
       const filterKeys = {
         all: isEn ? "All" : "Todas",
         patrol: isEn ? "Patrol (A1-A4)" : "Patrulla (A1-A4)",
-        combat: isEn ? "Combat (B1-B7, H1)" : "Combate (B1-B7, H1)",
-        commander: isEn ? "Commander (H2, K1)" : "Comandante (H2, K1)",
+        combat: isEn ? "Combat (B1-B12)" : "Combate (B1-B12)",
+        targets: isEn ? "🎯 Targets (T1-T5)" : "🎯 Blancos (T1-T5)",
+        commander: isEn ? "Commander (H2, K1, F1-F3)" : "Comandante (H2, K1, F1-F3)",
         campaign: isEn ? "Campaign & Refit" : "Campaña y Refit",
         midget: isEn ? "Midget Subs [M5-M9]" : "Minisubmarinos [M5-M9]",
         kaiten: isEn ? "Kaiten [F4, K5, K6]" : "Kaiten [F4, K5, K6]",
@@ -186,13 +207,14 @@
       // 6. Compendium Section Titles
       const secTitles = {
         'comp-sec-patrol': isEn ? "1. PATROL & ENCOUNTER CHARTS (CHARTS A1 - A4)" : "1. TABLAS DE PATRULLA Y ENCUENTROS (CHARTS A1 - A4)",
-        'comp-sec-combat': isEn ? "2. TACTICAL COMBAT CHARTS (CHARTS B1 - B7, H1)" : "2. TABLAS TÁCTICAS DE COMBATE (CHARTS B1 - B7, H1)",
-        'comp-sec-commander': isEn ? "3. COMMANDER, CREW & TRAINING (CHARTS H2, K1, F1-F4)" : "3. COMANDANTE, TRIPULACIÓN Y ESCUELA (CHARTS H2, K1, F1-F4)",
-        'comp-sec-campaign': isEn ? "4. PORT REFIT & CAMPAIGN VICTORY LEVELS" : "4. REFIT EN PUERTO Y ESCALA DE VICTORIA DE CAMPAÑA",
-        'comp-sec-midget': isEn ? "5. KO-HYOTEKI MIDGET SUBMARINE SPECIAL OPERATIONS (CHARTS M5 TO M9)" : "5. OPERACIONES ESPECIALES DE MINISUBMARINOS KO-HYOTEKI (CHARTS M5 A M9)",
-        'comp-sec-kaiten': isEn ? "6. KAITEN SUICIDE TORPEDO SPECIAL OPERATIONS (CHARTS F4, K5, K6 & COMBAT)" : "6. OPERACIONES ESPECIALES KAITEN (CHARTS F4, K5, K6 & COMBATE)",
-        'comp-sec-floatplane': isEn ? "7. FLOAT-PLANE EMBARKED OPERATIONS (CHARTS P3, P4, P5, P6 & RULE 7.17)" : "7. OPERACIONES DE HIDROAVIÓN EMBARCADO (CHARTS P3, P4, P5, P6 & REGLA 7.17)",
-        'comp-sec-optional': isEn ? "8. OPTIONAL & ADVANCED CAMPAIGN RULES [RULES 11.0 & 8.2.9]" : "8. REGLAS OPCIONALES Y AVANZADAS DE CAMPAÑA [REGLAS 11.0 & 8.2.9]",
+        'comp-sec-combat': isEn ? "2. TACTICAL COMBAT CHARTS (CHARTS B1 - B12, H1)" : "2. TABLAS TÁCTICAS DE COMBATE (CHARTS B1 - B12, H1)",
+        'comp-sec-targets': isEn ? "3. TARGET SHIP DETERMINATION (CHARTS T1 - T5)" : "3. TABLAS DE DETERMINACIÓN DE BLANCOS (CHARTS T1 - T5)",
+        'comp-sec-commander': isEn ? "4. COMMANDER, CREW & TRAINING (CHARTS H2, K1, F1-F3)" : "4. COMANDANTE, TRIPULACIÓN Y ESCUELAS (CHARTS H2, K1, F1-F3)",
+        'comp-sec-campaign': isEn ? "5. PORT REFIT & CAMPAIGN VICTORY LEVELS" : "5. REFIT EN PUERTO Y ESCALA DE VICTORIA DE CAMPAÑA",
+        'comp-sec-midget': isEn ? "6. KO-HYOTEKI MIDGET SUBMARINE SPECIAL OPERATIONS (CHARTS M5 TO M9)" : "6. OPERACIONES ESPECIALES DE MINISUBMARINOS KO-HYOTEKI (CHARTS M5 A M9)",
+        'comp-sec-kaiten': isEn ? "7. KAITEN SUICIDE TORPEDO SPECIAL OPERATIONS (CHARTS F4, K5, K6 & COMBAT)" : "7. OPERACIONES ESPECIALES KAITEN (CHARTS F4, K5, K6 & COMBATE)",
+        'comp-sec-floatplane': isEn ? "8. FLOAT-PLANE EMBARKED OPERATIONS (CHARTS P3, P4, P5, P6 & RULE 7.17)" : "8. OPERACIONES DE HIDROAVIÓN EMBARCADO (CHARTS P3, P4, P5, P6 & REGLA 7.17)",
+        'comp-sec-optional': isEn ? "9. OPTIONAL & ADVANCED CAMPAIGN RULES [RULES 11.0 & 8.2.9]" : "9. REGLAS OPCIONALES Y AVANZADAS DE CAMPAÑA [REGLAS 11.0 & 8.2.9]",
         'comp-flow-title': isEn ? "🗺️ GAME FLOW SEQUENCE CARDS" : "🗺️ CARTAS DE SECUENCIA DEL GAME FLOW",
         'comp-flow-subtitle': isEn ? "These cards explain the historical game flow. Select one to enlarge it and open its related phase." : "Las cartas explican el flujo histórico de la partida. Pulsa una para ampliarla y abrir directamente la fase relacionada."
       };
@@ -408,8 +430,8 @@
       const elH2First = document.getElementById('comp-h2-title-firstnames');
       if (elH2First) elH2First.innerText = isEn ? "FIRST NAMES" : "NOMBRES DE PILA";
 
-      if (typeof renderSubmarinePatrolTrack === 'function' && typeof campaignState !== 'undefined') {
-        renderSubmarinePatrolTrack(campaignState.activeSubKey || 'Type_B_Class');
+      if (typeof renderSubmarinePatrolTrack === 'function' && typeof campaignState !== 'undefined' && campaignState.activeSubKey) {
+        renderSubmarinePatrolTrack(campaignState.activeSubKey);
       }
 
       if (typeof updateBoxDisplay === 'function') updateBoxDisplay();
@@ -419,14 +441,12 @@
 
       // 11. Workflow Phase 3 Tactical Combat Bilingual Updates
       applyPhase3Language(isEn);
-      applyPhase2Language(isEn);
-      applyPhase5AwardsLanguage(isEn);
-      applyPhase4DamageLanguage(isEn);
-      applyPatrolLanguage(isEn);
-      if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
+      applyCompendiumSection2Language(isEn);
       if (typeof updateAirRaidUI === 'function') updateAirRaidUI();
       if (typeof recalculateRefitTime === 'function') recalculateRefitTime();
       // 12. Workflow Training Schools (Phase 0 / School Tab) Bilingual Updates
+      if (typeof buildWorkflowSubClassSelect === 'function') buildWorkflowSubClassSelect();
+      if (typeof buildWorkflowMonthSelect === 'function') buildWorkflowMonthSelect();
       applySchoolLanguage(isEn);
       applyPhase1Language(isEn);
       // Apply the shared text catalog after dynamic chart sections have been refreshed.
@@ -439,12 +459,11 @@
       // 13. Submarines Fleet Dock Bilingual Updates
       applyDockLanguage(isEn);
       applyCompendiumLanguage(isEn);
-      // Reapply Phase 2 labels after the generic text pass so exact HTML
-      // translations are not altered by broad word substitutions.
+      // Ensure specific phase labels reflect exact authentic wargame terminology
       applyPhase2Language(isEn);
       applyPhase5AwardsLanguage(isEn);
       applyPhase4DamageLanguage(isEn);
-      applyPatrolLanguage(isEn);
+      if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
 
       function applyPhase2Language(isEn) {
@@ -496,9 +515,10 @@
       }
 
       function applyPatrolLanguage(isEn) {
+        if (typeof window !== 'undefined') window.applyPatrolLanguage = applyPatrolLanguage;
         const labels = {
-          'lbl-steppatrol': isEn ? "Patrol" : "Patrulla",
-          'ppatrol-title': isEn ? "REGULAR PATROL (SHIP / AIRCRAFT)" : "PATRULLA ORDINARIA (SHIP / AIRCRAFT)",
+          'lbl-steppatrol': isEn ? "Aircraft Encounter" : "Encuentro con Aviones",
+          'ppatrol-title': isEn ? "AIRCRAFT ENCOUNTER [RULE 8.3]" : "ENCUENTRO CON AVIONES [REGLA 8.3]",
           'ppatrol-btn-back-track': isEn ? "View Transit Track" : "Ver Ruta Trayecto",
           'ppatrol-rules-pill': isEn ? "[Rules 8.1 - 8.2 • Charts A2, A3, A4, T1-T5]" : "[Reglas 8.1 - 8.2 • Tablas A2, A3, A4, T1-T5]",
           'ppatrol-active-contact-label': isEn ? "Active Box Contact:" : "Contacto Detectado en Casilla:",
@@ -524,9 +544,19 @@
           'ppatrol-td-tgt-t4-enc': isEn ? "Capital Ship" : "Buque Capital",
           'ppatrol-td-tgt-t4-chart': isEn ? "Chart T4 / T5" : "Tabla T4 / T5",
           'ppatrol-td-tgt-t4-desc': isEn ? "Battleship / Aircraft Carrier (Heavy Escort)" : "Acorazado / Portaaviones (Alta escolta)",
-          'ppatrol-lbl-go-combat': isEn ? "Engage Tactical Combat with this Target (Phase 3)! ➔" : "¡Entablar Combate Táctico con este Blanco (Fase 3)! ➔",
+          'ppatrol-lbl-go-combat': isEn ? "Proceed to Phase 3: Ship Encounter! ➔" : "¡Ir a Fase 3: Encuentro con Barcos! ➔",
+          'ppatrol-ship-status-lbl': isEn ? "Active Surface Contact Status:" : "Estado del Contacto de Superficie:",
+          'ppatrol-btn-ship-workflow': isEn ? "Tactical Guide: Ship Attack [8.1 - 8.2]" : "Guía Táctica: Ataque Naval [8.1 - 8.2]",
+          'ppatrol-top-btn-ship-workflow': isEn ? "Tactical Guide: Ship Attack [8.1 - 8.2]" : "Guía Táctica: Ataque Naval [8.1 - 8.2]",
+          'ppatrol-btn-next': isEn ? "Proceed to Phase 3: Ship Encounter ➔" : "Pasar a Fase 3: Encuentro con Barcos ➔",
+          'ppatrol-btn-prev': isEn ? "Return to Phase 2: Transit Track" : "Volver a Fase 2: Trayecto",
+          'modal-ship-title': isEn ? "TACTICAL PROCEDURE: NAVAL ATTACK ON PATROL" : "PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA",
+          'modal-ship-rule-badge': isEn ? "OFFICIAL RULES 8.1 - 8.2" : "REGLAS OFICIALES 8.1 - 8.2",
+          'modal-ship-subtitle': isEn
+            ? "Full surface & submerged engagement protocol: Target Detection [A3/T1-T5], Mode & Range [8.1.3-8.1.10], Torpedo Solution [B1/B2/B3], Damage Resolution [B4] and Escort Counter-Attack [B5]."
+            : "Protocolo completo de combate de superficie y submarino: Detección [A3/T1-T5], Modo y Distancia [8.1.3-8.1.10], Solución de Torpedos [B1/B2/B3], Daño al Objetivo [B4] y Contraataque de Escoltas [B5].",
           'ppatrol-air-badge': isEn ? "Air" : "Aéreo",
-          'ppatrol-a4-table-title': isEn ? "CHART [A4]: AIRCRAFT ENCOUNTER & CRASH DIVE (2d6)" : "TABLA [A4]: ENCUENTRO AÉREO E INMERSIÓN DE EMERGENCIA (2d6)",
+          'ppatrol-a4-table-title': isEn ? "Step 1: Mandatory Emergency Crash Dive Roll [Rule 8.3.1 & Chart A4]" : "Paso 1: Tirada Obligatoria de Inmersión de Emergencia [Regla 8.3.1 & Tabla A4]",
           'ppatrol-btn-a4-label': isEn ? "Roll [A4]" : "Tirar [A4]",
           'ppatrol-lbl-manual-a4': isEn ? "Tabletop:" : "Mesa:",
           'ppatrol-btn-apply-a4': isEn ? "Apply" : "Aplicar",
@@ -539,9 +569,32 @@
           'ppatrol-td-a4-r2-eff': isEn ? "1 bomb run + 1 automatic crew injury" : "1 pasada con bombas + 1 herida automática de dotación",
           'ppatrol-td-a4-r3-res': isEn ? "Successful Crash Dive" : "Inmersión Exitosa",
           'ppatrol-td-a4-r3-eff': isEn ? "Submarine submerged safely. No damage sustained." : "Submarino sumergido a salvo. Sin daños sufridos.",
-          'ppatrol-a4-drm-year': isEn ? "★ Year Modifiers (DRM): 1941: +2 | 1942: +1 | 1943: 0 | 1944+: -1" : "★ Modificadores por Año (DRM): 1941: +2 | 1942: +1 | 1943: 0 | 1944+: -1",
-          'ppatrol-a4-drm-crew-title': isEn ? "★ Crew & Submarine Modifiers:" : "★ Modificadores de Tripulación y Buque:",
-          'ppatrol-a2-table-title': isEn ? "CHART [A2]: ANTI-AIRCRAFT DEFENSE (2d6)" : "TABLA [A2]: DEFENSA ANTIAÉREA (2d6)",
+          'ppatrol-lbl-a4-year-drm': isEn ? "Official Year Modifiers (DRM):" : "Modificadores Oficiales por Año (DRM):",
+          'ppatrol-lbl-a4-sit-drm': isEn ? "Crew & Vessel Modifiers:" : "Modificadores de Tripulación y Buque:",
+          'ppatrol-a4-m-elite': isEn ? "Elite Crew:" : "Dotación Élite:",
+          'ppatrol-a4-m-planes': isEn ? "Damaged dive planes:" : "Planos inmersión averiados:",
+          'ppatrol-a4-m-green': isEn ? "Green Crew:" : "Dotación Novata (Green):",
+          'ppatrol-a4-m-radar': isEn ? "Radar equipped & operational:" : "Radar instalado y operativo:",
+          'ppatrol-a4-m-kiasw': isEn ? "All Crew SW/KIA:" : "Toda tripulación herida (SW/KIA):",
+          'ppatrol-a4-m-night': isEn ? "Night / Special Mission:" : "Noche / Minado Especial:",
+          'ppatrol-fido-title': isEn ? "Step 2: Special Weapon Check: \"FIDO\" Acoustic Homing Torpedo [Rules 8.3.2 & 8.3.3]" : "Paso 2: Comprobación de Arma Especial: Torpedo Acústico \"FIDO\" [Regla 8.3.2 & 8.3.3]",
+          'ppatrol-a2-table-title': isEn ? "Step 3: Simultaneous Defensive Anti-Aircraft Fire [Rules 8.3.2, 8.3.5 & Chart A2]" : "Paso 3: Fuego Antiaéreo Defensivo Simultáneo [Reglas 8.3.2, 8.3.5 & Tabla A2]",
+          'ppatrol-btn-a2-label': isEn ? "Roll AA [A2]" : "Tirar AA [A2]",
+          'ppatrol-lbl-manual-a2': isEn ? "Tabletop:" : "Mesa:",
+          'ppatrol-btn-apply-a2': isEn ? "Apply" : "Aplicar",
+          'ppatrol-air-panel-title': isEn ? "Step 4: Air Attack Damage Resolution (Conventional or FIDO)" : "Paso 4: Resolución de Daños del Ataque Aéreo (Convencional o FIDO)",
+          'ppatrol-lbl-step-crew': isEn ? "4A.1 — Mandatory Crew Casualty (Chart B7 • 2d6 + 1d6)" : "4A.1 — Herida de Dotación Obligatoria (Tabla B7 • 2d6 Puesto + 1d6 Gravedad)",
+          'ppatrol-btn-air-crew-pos': isEn ? "1. Roll Station (2d6)" : "1. Tirar Puesto (2d6)",
+          'ppatrol-btn-air-crew-sev': isEn ? "2. Roll Severity (1d6)" : "2. Tirar Tipo de Baja (1d6)",
+          'ppatrol-btn-air-crew-roll-all': isEn ? "Roll Both" : "Tirar Ambos",
+          'ppatrol-btn-air-crew-roll': isEn ? "Roll Casualty (B7)" : "Tirar Baja (B7)",
+          'ppatrol-lbl-step-bombs': isEn ? "4A.2 — Bomb & Depth Charge Hits (Chart B5 with +2 Air DRM)" : "4A.2 — Impactos de Bombas y Cargas (Tabla B5 con +2 DRM Aéreo)",
+          'ppatrol-btn-air-bomb-roll': isEn ? "Roll Bombs (B5)" : "Tirar Bombas (B5)",
+          'ppatrol-hunted-title': isEn ? "Step 5: Air Harassment & Scuttling (\"Hunted to Exhaustion\") [Rule 8.3.4]" : "Paso 5: Acoso Aéreo y Barrenado (\"Hunted to Exhaustion\") [Regla 8.3.4]",
+          'ppatrol-btn-air-evaded': isEn ? "Aircraft Evaded: Advance Box" : "Avión Evadido: Avanzar Casilla",
+          'ppatrol-btn-air-damaged': isEn ? "Damage Sustained: Proceed to Repairs (Phase 4) ➔" : "Daño Sufrido: Ir a Averías (Fase 4) ➔",
+          'ppatrol-btn-air-evaded-inner': isEn ? "Continue Patrol Track" : "Continuar Patrulla",
+          'ppatrol-btn-air-damage-inner': isEn ? "Proceed to Damage Control (Phase 4) ➔" : "Ir a Control de Averías (Fase 4) ➔",
           'ppatrol-btn-a2-label': isEn ? "Roll AA [A2]" : "Tirar AA [A2]",
           'ppatrol-lbl-manual-a2': isEn ? "Tabletop:" : "Mesa:",
           'ppatrol-btn-apply-a2': isEn ? "Apply" : "Aplicar",
@@ -573,11 +626,11 @@
           : "Al obtener <strong>Ship</strong>, <strong>Warship</strong> o <strong>Capital Ship</strong> en la Tabla [A3], se genera el buque blanco según las tablas oficiales <strong>T1</strong> (Mercante), <strong>T2</strong> (Escoltado/Petrolero) o <strong>T3</strong> (Buque de Guerra).";
 
         const elPPatrolAirT = document.getElementById('ppatrol-air-title');
-        if (elPPatrolAirT) elPPatrolAirT.innerHTML = isEn ? "<span>✈️</span> <span>2. Air Threat (Aircraft Encounter)</span>" : "<span>✈️</span> <span>2. Amenaza Aérea (Encuentro Aéreo)</span>";
+        if (elPPatrolAirT) elPPatrolAirT.innerHTML = isEn ? "<span>✈️</span> <span>Tactical Sequence: Air Encounter [Official Rule 8.3]</span>" : "<span>✈️</span> <span>Secuencia Táctica de Encuentro Aéreo [Regla Oficial 8.3]</span>";
         const elPPatrolAirDesc = document.getElementById('ppatrol-air-desc');
         if (elPPatrolAirDesc) elPPatrolAirDesc.innerHTML = isEn
-          ? "Upon rolling <strong>Aircraft</strong> on Chart [A3], the submarine is spotted from the air. Choose immediately between <strong>Emergency Crash Dive</strong> (Chart A4) or defending on the surface with <strong>Anti-Aircraft Fire</strong> (Chart A2)."
-          : "Al obtener <strong>Aircraft</strong> en la Tabla [A3], el submarino es sorprendido desde el aire. Elige de inmediato entre <strong>Inmersión de Emergencia</strong> (Tabla A4) o defenderte en superficie con <strong>Fuego Antiaéreo</strong> (Tabla A2).";
+          ? "Upon rolling <strong>Aircraft</strong> on Chart [A3], an enemy patrol aircraft surprises the submarine. Follow the official 5-step tactical sequence:"
+          : "Al obtener <strong>Aircraft</strong> en la Tabla [A3], un avión enemigo en patrulla antisubmarina sorprende al buque. Sigue la secuencia reglamentaria en los siguientes 5 pasos:";
 
         const elPPatrolA4DrmCrewP1 = document.getElementById('ppatrol-a4-drm-crew-p1');
         if (elPPatrolA4DrmCrewP1) elPPatrolA4DrmCrewP1.innerHTML = isEn
@@ -644,6 +697,18 @@
           'p4-crew-roll-title': isEn ? '🩺 Casualty Determination (2d6 Station + 1d6 Severity):' : '🩺 Determinación de baja (2d6 puesto + 1d6 gravedad):',
           'p4-crew-button-label': isEn ? '🎲 Roll Crew Casualty (2d6 + 1d6)' : '🎲 Tirar Baja de Tripulación (2d6 + 1d6)',
           'p4-abort-title': isEn ? 'Mandatory Return to Port Criteria [Rule 8.6]:' : 'Criterios de regreso obligatorio a base [Regla 8.6]:',
+          'p4-th-abort-cond': isEn ? 'Condition / System' : 'Condición / Sistema',
+          'p4-th-abort-effect': isEn ? 'Operational Effect & Mandate [8.6]' : 'Efecto Operativo y Obligación [8.6]',
+          'p4-abort-fuel-title': isEn ? '⛽ Fuel Tanks' : '⛽ Tanques de Combustible',
+          'p4-abort-fuel-desc': isEn ? 'INOP or unrepaired leaks: mission must be aborted, return immediately to port.' : 'INOP o con fugas no reparadas: abortar misión y regresar inmediatamente a base.',
+          'p4-abort-diesel-title': isEn ? '⚙️ Diesel Engines' : '⚙️ Motores Diésel',
+          'p4-abort-diesel-desc': isEn ? '1 diesel fails: mandatory return to port (2 encounter rolls per zone). Both diesels fail: towed if 1 zone from base; scuttle if 2+ zones.' : 'Fallo de 1 motor: regreso obligatorio con 2 tiradas de encuentro por casilla. Fallo de ambos motores: remolcado si dista 1 zona; si está a 2+ zonas, barrenar el submarino.',
+          'p4-abort-officer-title': isEn ? '🎖️ Command / Navigator' : '🎖️ Mando / Navegante',
+          'p4-abort-officer-desc': isEn ? 'If Captain and XO are lost and Navigator assumes command: mandatory return to port.' : 'Si el Comandante y el Oficial Ejecutivo son baja y el Navegante asume como Capitán: regreso forzoso a base.',
+          'p4-abort-hull-title': isEn ? '💥 Structural Hull' : '💥 Casco Estructural',
+          'p4-abort-hull-desc': isEn ? 'If all hull damage boxes are filled: catastrophic loss, submarine sinks.' : 'Si se marcan todas las casillas de casco: pérdida estructural catastrófica, el submarino se hunde.',
+          'p4-abort-scuttle-title': isEn ? '🆘 Scuttle & Rescue [8.6.3]' : '🆘 Barrenar y Rescate [8.6.3]',
+          'p4-abort-scuttle-desc': isEn ? 'Rescue roll 2d6 (+4 DRM if radio is INOP): <strong>2–10</strong> Crew saved | <strong>11–12</strong> Crew lost.' : 'Tirada de rescate 2d6 (2-10 salvados, 11-12 perdidos; +4 DRM si la radio está rota / INOP).',
           'p4-rescue-title': isEn ? 'Scuttling & Rescue [8.6.3]:' : 'Barrenar y rescate [8.6.3]:',
           'p4-b7-title': isEn ? 'CHART B7: SUBMARINE DAMAGE LISTINGS & CREW INJURY (OFFICIAL B7 TABLE)' : 'TABLA B7: AVERÍAS DEL SUBMARINO Y BAJAS DE TRIPULACIÓN (TABLA OFICIAL B7)',
           'p4-b7-subtitle': isEn ? 'Tactical damage effects, at-sea repair chances (1d6), and the complete crew casualty table.' : 'Efectos tácticos de las averías, probabilidades de reparación en el mar (1d6) y tabla completa de bajas de tripulación.',
@@ -659,13 +724,22 @@
           'p4-role-11': isEn ? 'Navigator' : 'Navegante',
           'p4-role-12': isEn ? 'Pilot / Midget / Kaiten' : 'Piloto / Midget / Kaiten',
           'p4-crew-penalty-title': isEn ? 'Key Station Casualty Penalties (SW or KIA):' : 'Penalizaciones por bajas en puestos clave (SW o KIA):',
-          'p4-penalty-captain': isEn ? '<strong>Captain:</strong> The Executive Officer takes command. +1 Detection, +1 To-Hit.' : '<strong>Comandante:</strong> El segundo toma el mando. +1 a detección, +1 a impactar.',
-          'p4-penalty-exec': isEn ? '<strong>Executive Officer:</strong> If already in command, the 3rd Officer takes command: +1 Detection, +1 To-Hit.' : '<strong>Oficial ejecutivo:</strong> Si ya mandaba, el tercer oficial asume: +1 a detección, +1 a impactar.',
-          'p4-penalty-engineer': isEn ? '<strong>Engineer:</strong> Repair rolls receive <strong>+1 DRM</strong>, including flooding containment.' : '<strong>Ingeniero:</strong> Tiradas de reparación a <strong>+1 DRM</strong>, incluida la contención de inundación.',
-          'p4-penalty-navigator': isEn ? '<strong>Navigator:</strong> The submarine must return to port if the Captain is already a casualty.' : '<strong>Navegante:</strong> El submarino debe regresar a base si el capitán ya era baja.',
-          'p4-penalty-medic': isEn ? '<strong>Medic:</strong> All crew with SW become KIA when crossing each zone on a 4-6 on 1d6.' : '<strong>Médico:</strong> Todos los tripulantes con SW mueren (KIA) al cruzar cada zona con 4-6 en 1d6.',
-          'p4-penalty-crew': isEn ? '<strong>Crew:</strong> If all generic crew boxes are SW/KIA: +1 To-Hit with torpedoes.' : '<strong>Dotación:</strong> Si todas las casillas genéricas están SW/KIA: +1 a impactar con torpedos.',
-          'p4-penalty-pilot': isEn ? '<strong>Pilot / Midget / Kaiten:</strong> The special mission fails immediately.' : '<strong>Piloto / Midget / Kaiten:</strong> La misión especial fracasa de inmediato.'
+          'p4-th-pen-post': isEn ? 'Key Station' : 'Puesto Clave',
+          'p4-th-pen-eff': isEn ? 'Combat & Campaign Penalty' : 'Efecto en Combate y Campaña',
+          'p4-pen-title-captain': isEn ? 'Captain' : 'Comandante',
+          'p4-pen-title-exec': isEn ? 'Executive Officer' : 'Oficial ejecutivo',
+          'p4-pen-title-engineer': isEn ? 'Engineer' : 'Ingeniero',
+          'p4-pen-title-navigator': isEn ? 'Navigator' : 'Navegante',
+          'p4-pen-title-medic': isEn ? 'Medic' : 'Médico',
+          'p4-pen-title-crew': isEn ? 'Crew' : 'Dotación',
+          'p4-pen-title-pilot': isEn ? 'Pilot / Midget / Kaiten' : 'Piloto / Midget / Kaiten',
+          'p4-penalty-captain': isEn ? 'The Executive Officer takes command. +1 Detection, +1 To-Hit.' : 'El segundo toma el mando. +1 a detección, +1 a impactar.',
+          'p4-penalty-exec': isEn ? 'If already in command, the 3rd Officer takes command: +1 Detection, +1 To-Hit.' : 'Si ya mandaba, el tercer oficial asume: +1 a detección, +1 a impactar.',
+          'p4-penalty-engineer': isEn ? 'Repair rolls receive <strong>+1 DRM</strong>, including flooding containment.' : 'Tiradas de reparación a <strong>+1 DRM</strong> (más difícil), incluida la contención de inundación.',
+          'p4-penalty-navigator': isEn ? 'The submarine must return to port if the Captain is already a casualty.' : 'El submarino debe regresar a base si el capitán ya era baja.',
+          'p4-penalty-medic': isEn ? 'All crew with SW become KIA when crossing each zone on a 4-6 on 1d6.' : 'Todos los tripulantes con SW mueren (KIA) al cruzar cada zona con 4-6 en 1d6.',
+          'p4-penalty-crew': isEn ? 'If all generic crew boxes are SW/KIA: +1 To-Hit with torpedoes.' : 'Si todas las casillas genéricas están SW/KIA: +1 a impactar con torpedos.',
+          'p4-penalty-pilot': isEn ? 'The special mission fails immediately.' : 'La misión especial fracasa de inmediato.'
         };
         Object.entries(values).forEach(([id, text]) => {
           const el = document.getElementById(id);
@@ -697,6 +771,534 @@
         }
       }
 
+      function applyCompendiumSection2Language(isEn) {
+        const sec2Map = {
+          // Main Section Header
+          'comp-sec2-main-title': isEn 
+            ? "🎯 2. TACTICAL COMBAT, TORPEDOES & ESCORTS (CHARTS B2, B4, B5, B6, B7, H1)" 
+            : "🎯 2. COMBATE TÁCTICO, TORPEDOS Y ESCOLTAS (CHARTS B2, B4, B5, B6, B7, H1)",
+          'comp-sec2-badge-ijn': isEn ? "IJN TACTICAL AID" : "AYUDA TÁCTICA IJN",
+          'comp-sec2-game-title': isEn 
+            ? 'SENSUIKAN <span style="font-size:0.85rem; color:#94a3b8; font-weight:normal;">(Japanese Fleet Submarines 1941–45)</span>' 
+            : 'SENSUIKAN <span style="font-size:0.85rem; color:#94a3b8; font-weight:normal;">(Submarinos de Flota Japoneses 1941–45)</span>',
+          'comp-sec2-sub-title': isEn 
+            ? "COMBAT & DAMAGE TABLES: B1 TO B6 (OFFICIAL DIGITAL TRANSCRIPTION)" 
+            : "TABLAS DE COMBATE Y DAÑOS: B1 A B6 (TRANSCRIPCIÓN DIGITAL OFICIAL)",
+          'comp-sec2-compass-badge': isEn ? "Official Compass Games" : "Oficial Compass Games",
+
+          // Chart B1
+          'comp-b1-title': isEn 
+            ? "<span>CHART [B1]</span> <span>TORPEDO & DECK GUN ATTACK (TO-HIT)</span>" 
+            : "<span>TABLA [B1]</span> <span>DISPARO DE TORPEDOS Y CAÑÓN DE CUBIERTA (IMPACTO)</span>",
+          'comp-b1-dice': isEn ? "🎲 2d6 (Low Roll)" : "🎲 2d6 (Tirada Baja)",
+          'comp-b1-range-close': isEn 
+            ? `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Close</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">0 – 1,500 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–8 <span style="font-size:0.86rem; color:#a7f3d0;">Hit</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">9–12 Miss</div>`
+            : `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Corta</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">0 – 1,500 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–8 <span style="font-size:0.86rem; color:#a7f3d0;">Impacto</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">9–12 Fallo</div>`,
+          'comp-b1-range-med': isEn 
+            ? `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Medium</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">1,500 – 3,000 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–7 <span style="font-size:0.86rem; color:#a7f3d0;">Hit</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">8–12 Miss</div>`
+            : `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Media</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">1,500 – 3,000 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–7 <span style="font-size:0.86rem; color:#a7f3d0;">Impacto</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">8–12 Fallo</div>`,
+          'comp-b1-range-long': isEn 
+            ? `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Long ★</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">&gt; 3,000 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–6 <span style="font-size:0.86rem; color:#a7f3d0;">Hit</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">7–12 Miss</div>`
+            : `<div style="font-size:0.86rem; color:#7dd3fc; font-weight:bold;">Larga ★</div>
+               <div style="font-size:0.82rem; color:#94a3b8;">&gt; 3,000 m</div>
+               <div style="font-size:1.1rem; color:#4ade80; font-weight:900; margin:2px 0;">2–6 <span style="font-size:0.86rem; color:#a7f3d0;">Impacto</span></div>
+               <div style="font-size:0.84rem; color:#f87171;">7–12 Fallo</div>`,
+          'comp-b1-mods-title': isEn 
+            ? "To-Hit Die Roll Modifiers (DRM):" 
+            : "Modificadores a la Tirada de Impacto (DRM):",
+          'comp-b1-mods-grid': isEn 
+            ? `<div><strong style="color:#4ade80;">-1</strong> Night surface torpedo attack</div>
+               <div><strong style="color:#f87171;">+1</strong> Type 92 Torpedo at Medium Range</div>
+               <div><strong style="color:#f87171;">+1</strong> Commander Dead (KIA) or Seriously Wounded (SW)</div>
+               <div><strong style="color:#f87171;">+2</strong> Type 92 Torpedo at Long Range</div>
+               <div><strong style="color:#4ade80;">-1</strong> Midget submarine torpedo</div>
+               <div><strong style="color:#f87171;">+1</strong> Fast Capital Ship</div>
+               <div><strong style="color:#f87171;">+1</strong> Green Crew</div>
+               <div><strong style="color:#f87171;">+2</strong> Attack against Escort / Destroyer / DE</div>`
+            : `<div><strong style="color:#4ade80;">-1</strong> Torpedo en superficie nocturno</div>
+               <div><strong style="color:#f87171;">+1</strong> Torpedo Tipo 92 a Media Distancia</div>
+               <div><strong style="color:#f87171;">+1</strong> Comandante Muerto (KIA) o Grave (SW)</div>
+               <div><strong style="color:#f87171;">+2</strong> Torpedo Tipo 92 a Larga Distancia</div>
+               <div><strong style="color:#4ade80;">-1</strong> Torpedo de Minisubmarino</div>
+               <div><strong style="color:#f87171;">+1</strong> Buque Capital Rápido (Fast Capital)</div>
+               <div><strong style="color:#f87171;">+1</strong> Dotación Novata (Green Crew)</div>
+               <div><strong style="color:#f87171;">+2</strong> Disparo a Escolta / Destructor / DE</div>`,
+          'comp-b1-crit-note': isEn 
+            ? "★ Natural roll of \"2\" with torpedoes = Critical Hit (if not a dud): +3 additional Damage." 
+            : "★ Tirada natural de \"2\" con torpedos = Impacto Crítico (si no es inerte): +3 daños adicionales.",
+
+          // Chart B2
+          'comp-b2-title': isEn 
+            ? "<span>CHART [B2]</span> <span>TORPEDO DUDS</span>" 
+            : "<span>TABLA [B2]</span> <span>TORPEDOS INERTES (DUDS)</span>",
+          'comp-b2-desc': isEn 
+            ? "All torpedo types fail or are duds on a roll of <strong style=\"color:#ef4444; font-size:0.95rem;\">\"1\"</strong> on 1d6. On 2 to 6 they detonate normally." 
+            : "Todos los modelos fallan o resultan inertes con una tirada de <strong style=\"color:#ef4444; font-size:0.95rem;\">\"1\"</strong> en 1d6. De 2 a 6 detonan con normalidad.",
+          'comp-b2-fido-title': isEn 
+            ? "Special FIDO Air Attack (from 5/44)" 
+            : "Ataque Aéreo Especial FIDO (desde 5/44)",
+          'comp-b2-fido-desc': isEn 
+            ? "Enemy aircraft drops FIDO homing torpedo. Roll 1d6:" 
+            : "Avión enemigo lanza torpedo acústico guiado FIDO. Tirar 1d6:",
+          'comp-b2-fido-res': isEn 
+            ? `<span style="background:#450a0a; color:#f87171; padding:2px 6px; border-radius:4px;"><strong>1</strong> = Sunk</span>
+               <span style="background:#451a03; color:#fdba74; padding:2px 6px; border-radius:4px;"><strong>2</strong> = 7 Hits</span>
+               <span style="background:#0f172a; color:#94a3b8; padding:2px 6px; border-radius:4px; border:1px solid #334155;"><strong>3–6</strong> = Miss / Dud</span>`
+            : `<span style="background:#450a0a; color:#f87171; padding:2px 6px; border-radius:4px;"><strong>1</strong> = Hundido</span>
+               <span style="background:#451a03; color:#fdba74; padding:2px 6px; border-radius:4px;"><strong>2</strong> = 7 impactos</span>
+               <span style="background:#0f172a; color:#94a3b8; padding:2px 6px; border-radius:4px; border:1px solid #334155;"><strong>3–6</strong> = Fallo / Inerte</span>`,
+
+          // Chart B3
+          'comp-b3-title': isEn ? "CHART [B3]: TARGET DAMAGE" : "TABLA [B3]: DAÑOS AL BLANCO",
+          'comp-b3-headers': isEn 
+            ? `<th style="padding:4px; border:1px solid #334155;">1d6</th>
+               <th style="padding:4px; border:1px solid #334155;">Torpedo</th>
+               <th style="padding:4px; border:1px solid #334155;">Deck Gun</th>`
+            : `<th style="padding:4px; border:1px solid #334155;">1d6</th>
+               <th style="padding:4px; border:1px solid #334155;">Torpedo</th>
+               <th style="padding:4px; border:1px solid #334155;">Cañón Cubierta</th>`,
+          'comp-b3-tbody': isEn 
+            ? `<tr style="border-bottom:1px solid #334155;"><td><strong>1</strong></td><td style="color:#f87171; font-weight:bold;">4 Damage</td><td style="color:#fdba74; font-weight:bold;">3 Damage</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>2</strong></td><td style="color:#fdba74; font-weight:bold;">3 Damage</td><td style="color:#fde047;">2 Damage</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>3</strong></td><td style="color:#fdba74; font-weight:bold;">3 Damage</td><td style="color:#fde047;">2 Damage</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>4</strong></td><td style="color:#fde047;">2 Damage</td><td>1 Damage</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>5</strong></td><td>1 Damage</td><td>1 Damage</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>6</strong></td><td>1 Damage</td><td>1 Damage</td></tr>
+               <tr><td><strong>7+</strong></td><td>1 Damage</td><td>1 Damage</td></tr>`
+            : `<tr style="border-bottom:1px solid #334155;"><td><strong>1</strong></td><td style="color:#f87171; font-weight:bold;">4 Daños</td><td style="color:#fdba74; font-weight:bold;">3 Daños</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>2</strong></td><td style="color:#fdba74; font-weight:bold;">3 Daños</td><td style="color:#fde047;">2 Daños</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>3</strong></td><td style="color:#fdba74; font-weight:bold;">3 Daños</td><td style="color:#fde047;">2 Daños</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>4</strong></td><td style="color:#fde047;">2 Daños</td><td>1 Daño</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>5</strong></td><td>1 Daño</td><td>1 Daño</td></tr>
+               <tr style="border-bottom:1px solid #334155;"><td><strong>6</strong></td><td>1 Daño</td><td>1 Daño</td></tr>
+               <tr><td><strong>7+</strong></td><td>1 Daño</td><td>1 Daño</td></tr>`,
+          'comp-b3-mods-title': isEn ? "Damage Modifiers (DRM):" : "Modificadores de Daño (DRM):",
+          'comp-b3-mods-list': isEn 
+            ? `• <strong style="color:#4ade80;">+1</strong> 127mm Deck Gun<br>
+               • <strong style="color:#4ade80;">+1</strong> Type 89, Type 92 or Type 6 Torpedoes<br>
+               • <strong style="color:#f87171;">-1</strong> Type 97 Torpedo of Midget Submarine`
+            : `• <strong style="color:#4ade80;">+1</strong> Cañón de cubierta de 127 mm<br>
+               • <strong style="color:#4ade80;">+1</strong> Torpedos Tipo 89, Tipo 92 o Tipo 6<br>
+               • <strong style="color:#f87171;">-1</strong> Torpedo Tipo 97 de Minisubmarino`,
+          'comp-b3-sink-title': isEn ? "Damage required to SINK:" : "Daño necesario para HUNDIR:",
+          'comp-b3-sink-list': isEn 
+            ? `<strong>5–7 Damage:</strong> Capital Ship (Battleship / CV)<br>
+               <strong>4 Damage:</strong> Ships 10,000+ t<br>
+               <strong>3 Damage:</strong> Ships 5,001–9,999 t<br>
+               <strong>2 Damage:</strong> Ships 1,001–5,000 t<br>
+               <strong>1 Damage:</strong> Ships 1,000 t or less`
+            : `<strong>5–7 Daños:</strong> Buque Capital (Acorazado / CV)<br>
+               <strong>4 Daños:</strong> Buques de 10,000+ t<br>
+               <strong>3 Daños:</strong> Buques de 5,001–9,999 t<br>
+               <strong>2 Daños:</strong> Buques de 1,001–5,000 t<br>
+               <strong>1 Daño:</strong> Buques de 1,000 t o menos`,
+
+          // Chart B4
+          'comp-b4-title': isEn ? "CHART [B4]: ESCORT DETECTION" : "TABLA [B4]: DETECCIÓN POR ESCOLTAS",
+          'comp-b4-res-grid': isEn 
+            ? `<div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#4ade80; font-weight:bold;">2–8</div>
+                 <div style="font-size:0.80rem; color:#94a3b8;">Not Detected</div>
+               </div>
+               <div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#fbbf24; font-weight:bold;">9–10</div>
+                 <div style="font-size:0.80rem; color:#94a3b8;">Detected</div>
+               </div>
+               <div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#f87171; font-weight:bold;">11+</div>
+                 <div style="font-size:0.80rem; color:#fca5a5;">Detected (+1 Attack)</div>
+               </div>`
+            : `<div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#4ade80; font-weight:bold;">2–8</div>
+                 <div style="font-size:0.80rem; color:#94a3b8;">No Detectado</div>
+               </div>
+               <div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#fbbf24; font-weight:bold;">9–10</div>
+                 <div style="font-size:0.80rem; color:#94a3b8;">Detectado</div>
+               </div>
+               <div style="background:#0f172a; border:1px solid #334155; border-radius:4px; padding:4px;">
+                 <div style="font-size:0.95rem; color:#f87171; font-weight:bold;">11+</div>
+                 <div style="font-size:0.80rem; color:#fca5a5;">Detectado (+1 Ataque)</div>
+               </div>`,
+          'comp-b4-mods-title': isEn ? "Detection Modifiers (DRM):" : "Modificadores a la Detección (DRM):",
+          'comp-b4-mods-list': isEn 
+            ? `<strong style="color:#f87171;">+1</strong> Fuel tanks damaged<br>
+               <strong style="color:#f87171;">+1</strong> Dive planes damaged<br>
+               <strong style="color:#f87171;">+1</strong> Capital ship present<br>
+               <strong style="color:#f87171;">+1</strong> Daylight / Steam submarine<br>
+               <strong style="color:#f87171;">+1</strong> Daytime Type 95 at Close Range<br>
+               <strong style="color:#f87171;">+1</strong> Previous detection in round<br>
+               <strong style="color:#f87171;">+1</strong> Close Range<br>
+               <strong style="color:#4ade80;">-1</strong> Long Range<br>
+               <strong style="color:#f87171;">+1</strong> Night surface attack<br>
+               <strong style="color:#f87171;">+1</strong> Simultaneous Bow + Stern firing (1st round)<br>
+               <strong style="color:#4ade80;">-1</strong> Exceeding test depth (Test Depth)<br>
+               <strong style="color:#4ade80;">-1</strong> In the Indian Ocean<br>
+               <strong style="color:#f87171;">+1 / +2 / +3</strong> in years 1943 / 1944 / 1945`
+            : `<strong style="color:#f87171;">+1</strong> Tanques de combustible dañados<br>
+               <strong style="color:#f87171;">+1</strong> Planos de inmersión averiados<br>
+               <strong style="color:#f87171;">+1</strong> Presencia de Buque Capital<br>
+               <strong style="color:#f87171;">+1</strong> Submarino a vapor / de día<br>
+               <strong style="color:#f87171;">+1</strong> Torpedo T.95 de día a corta distancia<br>
+               <strong style="color:#f87171;">+1</strong> Detección previa en el turno<br>
+               <strong style="color:#f87171;">+1</strong> A corta distancia<br>
+               <strong style="color:#4ade80;">-1</strong> A larga distancia<br>
+               <strong style="color:#f87171;">+1</strong> Ataque nocturno en superficie<br>
+               <strong style="color:#f87171;">+1</strong> Disparo simultáneo proa + popa (1.er turno)<br>
+               <strong style="color:#4ade80;">-1</strong> Exceder profundidad de test (Test Depth)<br>
+               <strong style="color:#4ade80;">-1</strong> En el Océano Índico<br>
+               <strong style="color:#f87171;">+1 / +2 / +3</strong> en los años 1943 / 1944 / 1945`,
+          'comp-b4-note': isEn 
+            ? "Standard attacks with 1d6 (1–5); Special with 6 starting 5/44." 
+            : "Ataques normales con 1d6 (1–5); Especial con 6 a partir de 5/44.",
+
+          // Chart B5
+          'comp-b5-title': isEn ? "CHART [B5]: ESCORT ATTACK" : "TABLA [B5]: ATAQUE DE ESCOLTAS",
+          'comp-b5-table': isEn 
+            ? `<tr style="border-bottom:1px solid #1e293b;"><td>2–3</td><td style="color:#4ade80;">No Effect</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>4–6</td><td style="color:#fde047;">1 Hit</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>7–8</td><td style="color:#fdba74;">2 Hits</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>9–10</td><td style="color:#f87171;">3 Hits</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>11</td><td style="color:#ef4444; font-weight:bold;">4 Hits</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>12</td><td style="color:#dc2626; font-weight:bold;">5 Hits</td></tr>
+               <tr><td>13+</td><td style="background:#450a0a; color:#f87171; font-weight:bold;">Sunk</td></tr>`
+            : `<tr style="border-bottom:1px solid #1e293b;"><td>2–3</td><td style="color:#4ade80;">Ineficaz</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>4–6</td><td style="color:#fde047;">1 impacto</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>7–8</td><td style="color:#fdba74;">2 impactos</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>9–10</td><td style="color:#f87171;">3 impactos</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>11</td><td style="color:#ef4444; font-weight:bold;">4 impactos</td></tr>
+               <tr style="border-bottom:1px solid #1e293b;"><td>12</td><td style="color:#dc2626; font-weight:bold;">5 impactos</td></tr>
+               <tr><td>13+</td><td style="background:#450a0a; color:#f87171; font-weight:bold;">Hundido</td></tr>`,
+          'comp-b5-mods-title': isEn ? "Attack Modifiers (DRM):" : "Modificadores al Ataque (DRM):",
+          'comp-b5-mods-list': isEn 
+            ? `<strong style="color:#f87171;">+1</strong> Fuel tanks damaged<br>
+               <strong style="color:#f87171;">+1</strong> Hydrophones damaged<br>
+               <strong style="color:#f87171;">+1</strong> Batteries damaged<br>
+               <strong style="color:#f87171;">+1/+2</strong> Electric motors damaged<br>
+               <strong style="color:#f87171;">+1</strong> Night surface attack (1st round)<br>
+               <strong style="color:#f87171;">+1</strong> Detection on 11+<br>
+               <strong style="color:#f87171;">+2</strong> Aviation attack`
+            : `<strong style="color:#f87171;">+1</strong> Tanques combustible dañados<br>
+               <strong style="color:#f87171;">+1</strong> Hidrófonos averiados<br>
+               <strong style="color:#f87171;">+1</strong> Baterías dañadas<br>
+               <strong style="color:#f87171;">+1/+2</strong> Motores eléctricos averiados<br>
+               <strong style="color:#f87171;">+1</strong> Ataque nocturno en superficie (1.er turno)<br>
+               <strong style="color:#f87171;">+1</strong> Por detección con 11+<br>
+               <strong style="color:#f87171;">+2</strong> Ataque de aviación`,
+          'comp-b5-hedge-title': isEn 
+            ? "Special: HEDGEHOG Projector (from 5/44)" 
+            : "Especial: Lanzador HEDGEHOG (desde 5/44)",
+          'comp-b5-hedge-desc': isEn 
+            ? `<strong>1–2 = Hit, 3–6 = Miss</strong><br>
+               If hit, roll 1d6 again:<br>
+               <span style="color:#fdba74;">1 = 5 Hits</span> | <span style="color:#f87171;">2 = 7 Hits</span> | <span style="color:#ef4444; font-weight:bold;">3–6 = Sunk</span>`
+            : `<strong>1–2 = Impacto, 3–6 = Fallo</strong><br>
+               Si impacta, tirar 1d6 de nuevo:<br>
+               <span style="color:#fdba74;">1 = 5 impactos</span> | <span style="color:#f87171;">2 = 7 impactos</span> | <span style="color:#ef4444; font-weight:bold;">3–6 = Hundido</span>`,
+
+          // Chart B7
+          'comp-b7-flood-title': isEn ? "Flooding: 1d6" : "Inundación: 1d6",
+          'comp-b7-flood-desc': isEn
+            ? "Mark 1 box. If all boxes fill, emergency surface and check for scuttling. In each flooding round, roll 1d6 for Engineer:<br><strong>1-4:</strong> Contained | <strong>5-6:</strong> Additional flooding.<br><em>After combat, flooding is completely pumped out.</em>"
+            : "Marcar 1 casilla. Si se llenan todas, emerger de emergencia y comprobar si se barrena. En cada ronda de inundación, tirar 1d6 por el Ingeniero:<br><strong>1-4:</strong> Contenida | <strong>5-6:</strong> Inundación adicional.<br><em>Tras el combate, la inundación se achica por completo.</em>",
+          'comp-b7-hull-title': isEn ? "Hull Integrity" : "Casco Estructural",
+          'comp-b7-hull-desc': isEn
+            ? "Mark 1 box. If all hull integrity boxes are marked, submarine sinks.<br><strong>Hull damage is NOT repairable at sea!</strong>"
+            : "Marcar 1 casilla. Si se marcan todas las casillas de integridad de casco, el submarino se hunde.<br><strong>¡El daño de casco no es reparable en alta mar!</strong>",
+          'comp-b7-engines-title': isEn ? "Diesel & Electric Engines: 1d6" : "Motores Diésel y Eléctricos: 1d6",
+          'comp-b7-engines-desc': isEn
+            ? "<strong>1 Diesel KO:</strong> Mandatory return to base. Double encounter rolls per zone. <strong>2 Diesels KO:</strong> Scuttled if >1 zone from base, or towed if 1 zone away.<br><strong>1 Electric KO:</strong> +1 on B5 immediately. <strong>2 Electrics KO:</strong> +2 on B5.<br>Repair after combat (1d6 per engine): <strong>1-4:</strong> Repaired | <strong>5-6:</strong> INOP."
+            : "<strong>1 Diésel KO:</strong> Regreso obligatorio a base. Doble tirada de encuentros por zona. <strong>2 Diésel KO:</strong> Barrenado si >1 zona de base, o remolcado si dista 1 zona.<br><strong>1 Eléctrico KO:</strong> +1 en B5 de inmediato. <strong>2 Eléctricos KO:</strong> +2 en B5.<br>Reparación tras combate (1d6 por motor): <strong>1-4:</strong> Reparado | <strong>5-6:</strong> INOP.",
+          'comp-b7-fuel-title': isEn ? "Fuel Tanks: 1d6" : "Tanques de Combustible: 1d6",
+          'comp-b7-fuel-desc': isEn
+            ? "Fuel leak. During combat: +1 Detection AND +1 on Chart B5. If unrepaired, mandatory return to base.<br>Repair after combat (1d6): <strong>1-3:</strong> Repaired | <strong>4-6:</strong> INOP."
+            : "Fuga de combustible. Durante combate: +1 Detección Y +1 en Tabla B5. Si no se repara, regreso obligatorio a base.<br>Reparación tras combate (1d6): <strong>1-3:</strong> Reparado | <strong>4-6:</strong> INOP.",
+          'comp-b7-batteries-title': isEn ? "Batteries: 1d6" : "Baterías: 1d6",
+          'comp-b7-batteries-desc': isEn
+            ? "No immediate effect. Starting next combat round: +1 on Chart B5.<br>Repair after combat (1d6): <strong>1-4:</strong> Repaired | <strong>5-6:</strong> INOP."
+            : "Sin efecto inmediato. A partir de la siguiente ronda de combate: +1 en Tabla B5.<br>Reparación tras combate (1d6): <strong>1-4:</strong> Reparado | <strong>5-6:</strong> INOP.",
+          'comp-b7-periscope-title': isEn ? "Periscope: 1d6" : "Periscopio: 1d6",
+          'comp-b7-periscope-desc': isEn
+            ? "No submerged attacks allowed.<br>Repair after combat (1d6): <strong>1-2:</strong> Repaired | <strong>3-6:</strong> INOP."
+            : "No se pueden realizar ataques sumergidos.<br>Reparación tras combate (1d6): <strong>1-2:</strong> Reparado | <strong>3-6:</strong> INOP.",
+          'comp-b7-diveplanes-title': isEn ? "Dive Planes: 1d6" : "Planos de Inmersión: 1d6",
+          'comp-b7-diveplanes-desc': isEn
+            ? "+1 on escort detection rolls. Also -1 to rolls on Chart A4.<br>Repair after combat (1d6): <strong>1-2:</strong> Repaired | <strong>3-6:</strong> INOP."
+            : "+1 en tiradas de detección de escoltas. También -1 a tiradas en Tabla A4.<br>Reparación tras combate (1d6): <strong>1-2:</strong> Reparado | <strong>3-6:</strong> INOP.",
+          'comp-b7-doors-title': isEn ? "Torpedo Doors: 1d6" : "Compuertas de Torpedos: 1d6",
+          'comp-b7-doors-desc': isEn
+            ? "Jammed doors; affected tubes cannot fire.<br>Repair after combat (1d6): <strong>1-2:</strong> Repaired | <strong>3-6:</strong> INOP."
+            : "Compuertas atascadas; los tubos afectados no pueden disparar.<br>Reparación tras combate (1d6): <strong>1-2:</strong> Reparado | <strong>3-6:</strong> INOP.",
+          'comp-b7-radar-title': isEn ? "Radar: 1d6" : "Radar: 1d6",
+          'comp-b7-radar-desc': isEn
+            ? "Air Search: loses +1 on Chart A4. Surface Search: no 2nd roll on Chart A3.<br>Repair after combat (1d6): <strong>1-3:</strong> Repaired | <strong>4-6:</strong> INOP."
+            : "Búsqueda Aérea: pierde el +1 en Tabla A4. Búsqueda Superficie: no hay 2ª tirada en Tabla A3.<br>Reparación tras combate (1d6): <strong>1-3:</strong> Reparado | <strong>4-6:</strong> INOP.",
+          'comp-b7-guns-title': isEn ? "Hydrophones, Deck Gun & AA: 1d6" : "Hidrófonos, Cañón y AA: 1d6",
+          'comp-b7-guns-desc': isEn
+            ? "<strong>Hydrophones:</strong> Cannot take evasive action (+1 on B5).<br><strong>Deck Gun / AA:</strong> Disabled.<br>Repair (1d6): <strong>1-2:</strong> Repaired | <strong>3-6:</strong> INOP."
+            : "<strong>Hidrófonos:</strong> No puede maniobrar evasivamente (+1 en B5).<br><strong>Cañón / AA:</strong> Inutilizados.<br>Reparación (1d6): <strong>1-2:</strong> Reparado | <strong>3-6:</strong> INOP.",
+          'comp-b7-hangar-title': isEn ? "Radio, Crane & Hangar: 1d6" : "Radio, Grúa y Hangar: 1d6",
+          'comp-b7-hangar-desc': isEn
+            ? "<strong>Radio:</strong> +4 to rescue if scuttled. -1 to Ko-Hyoteki recovery.<br><strong>Crane:</strong> Cannot recover floatplane.<br><strong>Hangar:</strong> Floatplane destroyed.<br>Repair (1d6): <strong>1-2:</strong> Repaired | <strong>3-6:</strong> INOP."
+            : "<strong>Radio:</strong> +4 al rescate si se barrena. -1 a recuperación de Ko-Hyoteki.<br><strong>Grúa:</strong> No puede recuperar hidroavión.<br><strong>Hangar:</strong> Hidroavión destruido.<br>Reparación (1d6): <strong>1-2:</strong> Reparado | <strong>3-6:</strong> INOP.",
+          'comp-b7-crew-injury-title': isEn
+            ? "Crew Casualties (2d6 Station, 1d6 Severity) [Rule 8.6]"
+            : "Bajas en la Dotación (2d6 Puesto, 1d6 Gravedad) [Regla 8.6]",
+          'comp-b7-crew-station': isEn
+            ? `<div style="border:1px solid rgba(239,68,68,0.3); border-radius:6px; overflow:hidden; background:rgba(15,23,42,0.7);">
+  <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
+    <thead>
+      <tr style="background:rgba(239,68,68,0.25); color:#fca5a5; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px;">
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:45px; text-align:center;">2d6</th>
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:155px;">Station Affected</th>
+        <th style="padding:5px 8px;">Operational Effects (SW / KIA)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">2</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#fca5a5; border-right:1px solid rgba(239,68,68,0.2);">Captain (Commander)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">XO takes command; <strong style="color:#f87171;">Detection +1</strong>, <strong style="color:#f87171;">Torpedo To-Hit +1</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">3</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#93c5fd; border-right:1px solid rgba(239,68,68,0.2);">Chief Engineer</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Repair and flooding recovery rolls receive <strong style="color:#f87171;">+1 DRM</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">4</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#93c5fd; border-right:1px solid rgba(239,68,68,0.2);">Executive Officer (XO)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">If acting as commander, next officer assumes command.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">5</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#f472b6; border-right:1px solid rgba(239,68,68,0.2);">Medical Officer</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Seriously Wounded (SW) die (KIA) after each transit box on <strong style="color:#f87171;">1d6 &ge; 4</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">6–10</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#e2e8f0; border-right:1px solid rgba(239,68,68,0.2);">Generic Crew (#1 to #5)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">If all generic crew boxes are SW/KIA: <strong style="color:#f87171;">Torpedo To-Hit +1</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">11</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#67e8f9; border-right:1px solid rgba(239,68,68,0.2);">Navigator</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Mandatory abort and return to base if acting as commander.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">12</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#c084fc; border-right:1px solid rgba(239,68,68,0.2);">Pilot (Plane/Midget/Kaiten)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Special craft or mission inoperable if all pilots become casualties.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`
+            : `<div style="border:1px solid rgba(239,68,68,0.3); border-radius:6px; overflow:hidden; background:rgba(15,23,42,0.7);">
+  <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
+    <thead>
+      <tr style="background:rgba(239,68,68,0.25); color:#fca5a5; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px;">
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:45px; text-align:center;">2d6</th>
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:155px;">Puesto Afectado</th>
+        <th style="padding:5px 8px;">Efectos Operativos (HG / KIA)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">2</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#fca5a5; border-right:1px solid rgba(239,68,68,0.2);">Comandante (Capitán)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Primer Oficial asume mando; <strong style="color:#f87171;">Detección +1</strong>, <strong style="color:#f87171;">Impacto torpedo +1</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">3</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#93c5fd; border-right:1px solid rgba(239,68,68,0.2);">Jefe Máquinas (Ingeniero)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Tiradas de reparación e inundación reciben <strong style="color:#f87171;">+1 MTD</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">4</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#93c5fd; border-right:1px solid rgba(239,68,68,0.2);">Primer Oficial (Segundo)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Si ejercía el mando, el 3.er oficial asume la jefatura.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">5</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#f472b6; border-right:1px solid rgba(239,68,68,0.2);">Oficial Médico</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Heridos graves mueren (KIA) tras cada casilla de viaje con <strong style="color:#f87171;">1d6 &ge; 4</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">6–10</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#e2e8f0; border-right:1px solid rgba(239,68,68,0.2);">Dotación General (#1 a #5)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Si todas las casillas son HG/KIA: <strong style="color:#f87171;">Impacto torpedo +1</strong>.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(30,41,59,0.35);">
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">11</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#67e8f9; border-right:1px solid rgba(239,68,68,0.2);">Navegante</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Aborto obligatorio y regreso a base si ejercía de capitán.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">12</td>
+        <td style="padding:4px 8px; font-weight:bold; color:#c084fc; border-right:1px solid rgba(239,68,68,0.2);">Piloto (Avión/Minisub/Kaiten)</td>
+        <td style="padding:4px 8px; color:#cbd5e1;">Misión especial o vehículo inutilizado si todos son baja.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
+          'comp-b7-crew-severity': isEn
+            ? `<div style="border:1px solid rgba(239,68,68,0.3); border-radius:6px; overflow:hidden; background:rgba(15,23,42,0.7); display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+  <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
+    <thead>
+      <tr style="background:rgba(239,68,68,0.25); color:#fca5a5; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px;">
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:40px; text-align:center;">1d6</th>
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:135px;">Severity</th>
+        <th style="padding:5px 8px;">Operational Effect</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(56,189,248,0.08);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">1–3</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#38bdf8; border-right:1px solid rgba(239,68,68,0.2);">LW (Light Wound)</td>
+        <td style="padding:5px 8px; color:#93c5fd;">No operational combat penalty.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(245,158,11,0.10);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">4–5</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#fbbf24; border-right:1px solid rgba(239,68,68,0.2);">SW (Serious Wound)</td>
+        <td style="padding:5px 8px; color:#fde047;">Incapacitated for duty.</td>
+      </tr>
+      <tr style="background:rgba(239,68,68,0.15);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">6</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#ef4444; border-right:1px solid rgba(239,68,68,0.2);">KIA (Killed)</td>
+        <td style="padding:5px 8px; color:#fca5a5;">Permanent combat casualty.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="padding:8px 10px; font-size:0.73rem; color:#fecaca; background:rgba(239,68,68,0.18); border-top:1px solid rgba(239,68,68,0.3); line-height:1.4;">
+    ⚠️ <strong>Cumulative rule:</strong> 2x LW = SW &bull; 2x SW = KIA
+  </div>
+</div>`
+            : `<div style="border:1px solid rgba(239,68,68,0.3); border-radius:6px; overflow:hidden; background:rgba(15,23,42,0.7); display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+  <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
+    <thead>
+      <tr style="background:rgba(239,68,68,0.25); color:#fca5a5; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px;">
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:40px; text-align:center;">1d6</th>
+        <th style="padding:5px 8px; border-right:1px solid rgba(239,68,68,0.3); width:135px;">Gravedad</th>
+        <th style="padding:5px 8px;">Efecto Operativo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(56,189,248,0.08);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">1–3</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#38bdf8; border-right:1px solid rgba(239,68,68,0.2);">HL (Herida Leve)</td>
+        <td style="padding:5px 8px; color:#93c5fd;">Sin efecto operativo de combate.</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(239,68,68,0.15); background:rgba(245,158,11,0.10);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">4–5</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#fbbf24; border-right:1px solid rgba(239,68,68,0.2);">HG (Herida Grave)</td>
+        <td style="padding:5px 8px; color:#fde047;">Incapacitado para el servicio.</td>
+      </tr>
+      <tr style="background:rgba(239,68,68,0.15);">
+        <td style="padding:5px 8px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid rgba(239,68,68,0.2);">6</td>
+        <td style="padding:5px 8px; font-weight:bold; color:#ef4444; border-right:1px solid rgba(239,68,68,0.2);">KIA (Muerto)</td>
+        <td style="padding:5px 8px; color:#fca5a5;">Baja mortal permanente definitiva.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="padding:8px 10px; font-size:0.73rem; color:#fecaca; background:rgba(239,68,68,0.18); border-top:1px solid rgba(239,68,68,0.3); line-height:1.4;">
+    ⚠️ <strong>Regla acumulativa:</strong> 2x HL = HG &bull; 2x HG = KIA
+  </div>
+</div>`,
+          'comp-b7-crew-effects': '',
+
+          // Target Charts T1 - T3
+          'comp-t1-title': isEn ? "CHART [T1]: SMALL FREIGHTER TARGETS (1d100)" : "TABLA [T1]: OBJETIVOS MERCANTES PEQUEÑOS (1d100)",
+          'comp-t1-subtitle': isEn ? "Small Freighters (1–100) • 1–4 on target roll in Chart [A3]" : "Mercantes Pequeños (1–100) • 1–4 en tirada de buque en Tabla [A3]",
+          'comp-t1-btn': isEn ? "🎲 Roll 1d100 [T1]" : "🎲 Tirar 1d100 [T1]",
+          'comp-t2-title': isEn ? "CHART [T2]: LARGE FREIGHTER & TANKER TARGETS (1d100)" : "TABLA [T2]: OBJETIVOS MERCANTES GRANDES Y PETROLEROS (1d100)",
+          'comp-t2-subtitle': isEn ? "Large Freighters & Tankers (T) (1–100) • 5–6 on target roll in Chart [A3]" : "Mercantes Grandes y Petroleros (T) (1–100) • 5–6 en tirada de buque en Tabla [A3]",
+          'comp-t2-btn': isEn ? "🎲 Roll 1d100 [T2]" : "🎲 Tirar 1d100 [T2]",
+          'comp-t3-title': isEn ? "CHART [T3]: WARSHIP TARGETS (1d100)" : "TABLA [T3]: OBJETIVOS BUQUES DE GUERRA (1d100)",
+          'comp-t3-subtitle': isEn ? "Destroyers (DD), Frigates (DE), Corvettes & Allied Submarines (1–100)" : "Destructores (DD), Fragatas (DE), Corbetas y Submarinos Aliados (1–100)",
+          'comp-t3-btn': isEn ? "🎲 Roll 1d100 [T3]" : "🎲 Tirar 1d100 [T3]",
+
+          // Target Charts T4 - T5
+          'comp-t4-title': isEn ? "CHART [T4]: CAPITAL SHIP TARGETS" : "TABLA [T4]: OBJETIVOS BUQUES CAPITALES",
+          'comp-t4-subtitle': isEn 
+            ? "Battleships (BB), Fleet Aircraft Carriers (CV), CVL & CVE by year" 
+            : "Acorazados (BB), Portaaviones de Flota (CV), CVL y CVE por año",
+          'comp-t4-leg-nopoint': isEn 
+            ? "● No dot: <strong>5 pts to sink</strong>" 
+            : "● Sin puntos: <strong>5 pts para hundir</strong>",
+          'comp-t4-leg-1point': isEn 
+            ? "● 1 dot: <strong>6 pts to sink</strong>" 
+            : "● 1 punto: <strong>6 pts para hundir</strong>",
+          'comp-t4-leg-2point': isEn 
+            ? "● 2 dots: <strong>7 pts to sink</strong>" 
+            : "● 2 puntos: <strong>7 pts para hundir</strong>",
+          'comp-t4-leg-arrow': isEn 
+            ? "➡ White Arrow: <strong>Fast Capital Ship</strong>" 
+            : "➡ Flecha Blanca: <strong>Buque Capital Rápido</strong>",
+          'comp-t4-tab-all': isEn ? "📋 View All" : "📋 Ver Todas",
+          'comp-t5-title': isEn ? "CHART [T5]: CW WARSHIPS" : "TABLA [T5]: BUQUES DE LA COMMONWEALTH",
+          'comp-t5-subtitle': isEn ? "Commonwealth (1d20)" : "Commonwealth (1d20)"
+        };
+
+        Object.entries(sec2Map).forEach(([id, text]) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = text;
+        });
+
+        // Update Chart T4 Table column headers across all eras
+        document.querySelectorAll('#comp-t4-tables-container table thead tr').forEach(tr => {
+          tr.innerHTML = isEn
+            ? `<th style="padding:4px 6px; text-align:center; width:30px;">Die</th>
+               <th style="padding:4px 6px; text-align:center; width:48px;">Type</th>
+               <th style="padding:4px 6px;">Capital Ship</th>
+               <th style="padding:4px 6px; text-align:right; width:75px;">Tonnage</th>
+               <th style="padding:4px 6px; text-align:center; width:55px;">Sink</th>
+               <th style="padding:4px 6px; text-align:center; width:55px;">Speed</th>`
+            : `<th style="padding:4px 6px; text-align:center; width:30px;">Dado</th>
+               <th style="padding:4px 6px; text-align:center; width:48px;">Tipo</th>
+               <th style="padding:4px 6px;">Buque Capital</th>
+               <th style="padding:4px 6px; text-align:right; width:75px;">Tonelaje</th>
+               <th style="padding:4px 6px; text-align:center; width:55px;">Hundir</th>
+               <th style="padding:4px 6px; text-align:center; width:55px;">Veloc.</th>`;
+        });
+
+        // Update Chart T4 era block titles and ship counts
+        const t4Titles = {
+          't4-block-1941_US': { title: '⚓ 1941 U.S. Navy Capital Ships (1d10)', count: isEn ? '10 Official Ships' : '10 Buques Oficiales' },
+          't4-block-1941_UK': { title: '⚓ 1941 Royal Navy Capital Ships (1d6)', count: isEn ? '6 Official Ships' : '6 Buques Oficiales' },
+          't4-block-1942_US': { title: '⚓ 1942 U.S. Navy Capital Ships (1d10)', count: isEn ? '10 Official Ships' : '10 Buques Oficiales' },
+          't4-block-1942_UK': { title: '⚓ 1942 Royal Navy Capital Ships (1d6)', count: isEn ? '6 Official Ships' : '6 Buques Oficiales' },
+          't4-block-1943_45_US': { title: '⚓ 1943–45 U.S. Navy Capital Ships (1d20)', count: isEn ? '20 Official Ships' : '20 Buques Oficiales' }
+        };
+        Object.entries(t4Titles).forEach(([blockId, info]) => {
+          const block = document.getElementById(blockId);
+          if (block) {
+            const headerDiv = block.querySelector('div:first-child');
+            if (headerDiv) {
+              const spans = headerDiv.querySelectorAll('span');
+              if (spans.length >= 2) {
+                spans[0].innerText = info.title;
+                spans[1].innerText = info.count;
+              }
+            }
+          }
+        });
+      }
+
       function applyPhase1Language(isEn) {
         const labels = {
           'p1-guide-label': isEn ? '📋 Phase Guide' : '📋 Guía de Fase',
@@ -707,6 +1309,8 @@
           'p1-lbl-roll': isEn ? 'Patrol Area Assignment [Chart A1]:' : 'Asignación de Área de Patrulla [Tabla A1]:',
           'p1-roll-help': isEn ? 'Roll 2d6 or select your destination from the dropdown:' : 'Tira 2d6 o selecciona tu destino en el desplegable:',
           'p1-roll-btn-label': isEn ? 'Roll [A1]' : 'Tirar [A1]',
+          'p1-lbl-manual-a1': isEn ? 'Tabletop:' : 'Mesa:',
+          'p1-btn-apply-a1': isEn ? 'Apply' : 'Aplicar',
           'p1-help-request': isEn ? '★ Rule 7.14: A Commander (中佐) may request an area on 1 on 1d6. A Captain (大佐) on 1–2 on 1d6. Select an area from the dropdown or roll on Chart A1.' : '★ Regla 7.14: Un Comandante (中佐) puede solicitar su área con 1 en 1d6. Un Capitán (大佐) con 1–2 en 1d6. Puedes elegir el área en el desplegable o tirar en la Tabla A1.',
           'p1-c2-title': isEn ? '2. Major Historical Event & Special Mission [7.0]' : '2. Gran Evento Histórico y Misión Especial [7.0]',
           'p1-lbl-me': isEn ? 'Major Event in the Area?' : '¿Gran Evento en el Área?',
@@ -859,13 +1463,30 @@
     function applyPhase3Language(isEn) {
       // Header banner
       const elP3T = document.getElementById('p3-title');
-      if (elP3T) elP3T.innerText = isEn ? "PHASE 3: TACTICAL NAVAL & AIR COMBAT SEQUENCE" : "FASE 3: SECUENCIA TÁCTICA DE COMBATE NAVAL Y AÉREO";
+      if (elP3T) elP3T.innerText = isEn ? "PHASE 3: SHIP ENCOUNTER & NAVAL COMBAT [RULES 8.1 - 8.2]" : "FASE 3: ENCUENTRO CON BARCOS Y COMBATE NAVAL [REGLAS 8.1 - 8.2]";
+      const elTopBtnShip = document.getElementById('p3-top-btn-ship-workflow');
+      if (elTopBtnShip) elTopBtnShip.innerText = isEn ? "View Ship Combat Workflow [8.1 - 8.2]" : "Ver Workflow Completo de Barcos [8.1 - 8.2]";
+      const elCardBtnShip = document.getElementById('p3-card-btn-ship-workflow');
+      if (elCardBtnShip) elCardBtnShip.innerText = isEn ? "View Ship Combat Workflow [8.1 - 8.2]" : "Ver Workflow Completo de Barcos [8.1 - 8.2]";
+      const elQuickBarT = document.getElementById('p3-quickbar-title');
+      if (elQuickBarT) elQuickBarT.innerText = isEn ? "Official Naval Combat Sequence [Rules 8.1 - 8.2]" : "Secuencia Oficial de Combate Naval [Reglas 8.1 - 8.2]";
+      const elQuickBarSub = document.getElementById('p3-quickbar-sub');
+      if (elQuickBarSub) elQuickBarSub.innerText = isEn ? "Step-by-step protocol: Targets T1-T5, Attack B1-B3, Hits B4, and Escorts B5" : "Protocolo paso a paso: Blancos T1-T5, Ataque B1-B3, Impactos B4 y Escoltas B5";
       const elP3B1B6 = document.getElementById('p3-btn-b1b6');
-      if (elP3B1B6) elP3B1B6.innerText = isEn ? "View B1-B6 Charts" : "Ver Tablas B1-B6";
+      if (elP3B1B6) elP3B1B6.innerText = isEn ? "View B1-B6 Charts" : "Ver Tablas B1-B6 Oficiales";
       const elP3Seq = document.getElementById('p3-btn-seq');
       if (elP3Seq) elP3Seq.innerText = isEn ? "Sequence of Play Card" : "Carta de Secuencia";
       const elP3Rules = document.getElementById('p3-rules-pill');
-      if (elP3Rules) elP3Rules.innerText = isEn ? "[Rule 8.0 & Sheet H1 • Charts B1-B6, T1-T5]" : "[Regla 8.0 y Hoja H1 • Tablas B1-B6, T1-T5]";
+      if (elP3Rules) elP3Rules.innerText = isEn ? "[Rules 8.1 - 8.2 • Sheet H1 • Charts T1-T5, B1-B6]" : "[Reglas 8.1 - 8.2 • Hoja H1 • Tablas T1-T5, B1-B6]";
+
+      // Step 0: Encounter Type
+      const elS0T = document.getElementById('p3-step0-title');
+      if (elS0T) elS0T.innerText = isEn ? "Step 0: Encounter Type Rolled [Rule 8.1.1 & Chart A3]" : "Paso 0: Tipo de Encuentro Ocurrido [Regla 8.1.1 & Tabla A3]";
+      const elEncLbl = document.getElementById('p3-lbl-enc-type');
+      if (elEncLbl) elEncLbl.innerText = isEn ? "Contact in Sector:" : "Contacto en Casilla:";
+      const elChgLbl = document.getElementById('p3-lbl-change-to');
+      if (elChgLbl) elChgLbl.innerText = isEn ? "Change to:" : "Cambiar a:";
+      if (typeof updatePhase3EncounterUI === 'function') updatePhase3EncounterUI();
 
       // Step 1: Target Identification
       const elS1T = document.getElementById('p3-step1-title');
@@ -874,6 +1495,10 @@
       if (elTgtLbl) elTgtLbl.innerText = isEn ? "Ship / Contact Generated:" : "Buque / Contacto Generado:";
       const elBtnGen = document.getElementById('p3-btn-gen-target');
       if (elBtnGen) elBtnGen.innerText = isEn ? "🎯 Generate Target by Contact [T1-T5]" : "🎯 Generar Blanco Según Contacto [T1-T5]";
+      const elBtnRollSize = document.getElementById('p3-btn-roll-size-lbl');
+      if (elBtnRollSize) elBtnRollSize.innerText = isEn ? "Roll 1d6 Ship Size [1-4: T1 • 5-6: T2]" : "Tirar 1d6 Tamaño [1-4: T1 • 5-6: T2]";
+      const elManSizeLbl = document.getElementById('p3-lbl-manual-size');
+      if (elManSizeLbl) elManSizeLbl.innerText = isEn ? "Tabletop (1d6 Size):" : "Mesa (1d6 Tamaño):";
 
       const elQk1 = document.getElementById('p3-quick-t1');
       if (elQk1) { elQk1.innerText = isEn ? "T1 Small" : "T1 Peq"; elQk1.title = isEn ? "Small Freighters (1d100)" : "Cargueros Pequeños (1d100)"; }
@@ -885,6 +1510,19 @@
       if (elQk4) { elQk4.innerText = isEn ? "T4 Capital" : "T4 Capital"; elQk4.title = isEn ? "Capital Ships (Battleships / Carriers)" : "Buques Capitales (Acorazados / Portaaviones)"; }
       const elQk5 = document.getElementById('p3-quick-t5');
       if (elQk5) { elQk5.innerText = isEn ? "T5 CW" : "T5 CW"; elQk5.title = isEn ? "Commonwealth Ships (1d20)" : "Buques Commonwealth (1d20)"; }
+
+      const elP3ManLbl = document.getElementById('p3-lbl-manual-t');
+      if (elP3ManLbl) elP3ManLbl.innerText = isEn ? "Tabletop (1d100):" : "Mesa (1d100):";
+      const elP3TgtTblTitle = document.getElementById('p3-tgt-table-title');
+      if (elP3TgtTblTitle) elP3TgtTblTitle.innerText = isEn ? "📋 TARGET DETERMINATION SUMMARY (RULE 8.1.2)" : "📋 RESUMEN DE DETERMINACIÓN DE BLANCOS (REGLA 8.1.2)";
+      const elP3ThEnc = document.getElementById('p3-th-tgt-enc');
+      if (elP3ThEnc) elP3ThEnc.innerText = isEn ? "Encounter [A3]" : "Encuentro [A3]";
+      const elP3ThDie = document.getElementById('p3-th-tgt-die');
+      if (elP3ThDie) elP3ThDie.innerText = isEn ? "1d6 Die" : "1d6";
+      const elP3ThChart = document.getElementById('p3-th-tgt-chart');
+      if (elP3ThChart) elP3ThChart.innerText = isEn ? "Chart" : "Tabla";
+      const elP3ThType = document.getElementById('p3-th-tgt-type');
+      if (elP3ThType) elP3ThType.innerText = isEn ? "Type & Escort" : "Tipo & Escolta";
 
       const elTodLbl = document.getElementById('p3-tod-lbl');
       if (elTodLbl) elTodLbl.innerText = isEn ? "Time of Day (1-3 Day, 4-6 Night):" : "Momento del Día (1-3 Día, 4-6 Noche):";
@@ -1135,8 +1773,13 @@
       if (elT5Btn) elT5Btn.innerText = isEn ? "T5: Commonwealth Ships" : "T5: Buques Commonwealth";
 
       // Navigation
-      const elPrev = document.getElementById('p3-btn-prev');
-      if (elPrev) elPrev.innerText = isEn ? "◀ Back to Phase 2" : "◀ Volver a Fase 2";
+      const elPrevLbl = document.getElementById('p3-btn-prev-lbl');
+      if (elPrevLbl) {
+        elPrevLbl.innerText = isEn ? "Back to Patrol" : "Volver a Patrulla";
+      } else {
+        const elPrev = document.getElementById('p3-btn-prev');
+        if (elPrev) elPrev.innerText = isEn ? "◀ Back to Patrol" : "◀ Volver a Patrulla";
+      }
       if (typeof updateTrayectoCompletionStatus === 'function') {
         updateTrayectoCompletionStatus();
       } else {
@@ -1436,9 +2079,9 @@
       if (elProfT) elProfT.innerText = isEn ? "⚓ IJN PROFILE" : "⚓ PERFIL IJN";
 
       // Submarine historical description
-      const activeKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) ? campaignState.activeSubKey : 'Type_B_Class';
+      const activeKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) ? campaignState.activeSubKey : null;
       const descEl = document.getElementById('sub-desc');
-      if (descEl && typeof SUB_DESCRIPTIONS !== 'undefined' && SUB_DESCRIPTIONS[activeKey]) {
+      if (descEl && activeKey && typeof SUB_DESCRIPTIONS !== 'undefined' && SUB_DESCRIPTIONS[activeKey]) {
         descEl.innerText = isEn ? SUB_DESCRIPTIONS[activeKey].en : SUB_DESCRIPTIONS[activeKey].es;
       }
 
@@ -1446,10 +2089,11 @@
       if (typeof buildSubmarineList === 'function') buildSubmarineList();
 
       // Re-render active submarine details and tracks in target language
+      const subToSelect = activeKey || (typeof currentPreviewSubKey !== 'undefined' && currentPreviewSubKey ? currentPreviewSubKey : 'Type_B_Class');
       if (typeof selectSubmarine === 'function') {
-        selectSubmarine(activeKey);
-      } else if (typeof renderSubmarinePatrolTrack === 'function') {
-        renderSubmarinePatrolTrack(activeKey);
+        selectSubmarine(subToSelect);
+      } else if (subToSelect && typeof renderSubmarinePatrolTrack === 'function') {
+        renderSubmarinePatrolTrack(subToSelect);
       }
     }
 
@@ -1911,7 +2555,7 @@
 
 if (typeof window !== 'undefined') {
   window.applyLanguage = applyLanguage;
-  window.applyPatrolLanguage = applyPatrolLanguage;
-  window.applyCompendiumLanguage = applyCompendiumLanguage;
-  window.applyCompendiumOptionalLanguage = applyCompendiumOptionalLanguage;
+  if (typeof applyPatrolLanguage !== 'undefined') window.applyPatrolLanguage = applyPatrolLanguage;
+  if (typeof applyCompendiumLanguage !== 'undefined') window.applyCompendiumLanguage = applyCompendiumLanguage;
+  if (typeof applyCompendiumOptionalLanguage !== 'undefined') window.applyCompendiumOptionalLanguage = applyCompendiumOptionalLanguage;
 }

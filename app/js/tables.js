@@ -190,19 +190,50 @@ function getA1PeriodForDate(monthStr) {
 
       // Ajustar al área actualmente asignada
       const currentArea = campaignState.workflow.assignedArea || "Pearl Harbor";
-      for (let opt of select.options) {
-        if (opt.value === currentArea || opt.value.toLowerCase() === currentArea.toLowerCase() || currentArea.toLowerCase().includes(opt.value.toLowerCase())) {
-          select.value = opt.value;
-          break;
+      syncAreaSelectDropdown(currentArea);
+    }
+
+    function syncAreaSelectDropdown(area) {
+      const areaSelect = document.getElementById('wf-area-select');
+      if (!areaSelect || !area) return;
+      const cleanTarget = String(area).toLowerCase().replace(/[*]/g, '').trim();
+      
+      // Pass 1: Exact matches
+      for (let i = 0; i < areaSelect.options.length; i++) {
+        const opt = areaSelect.options[i];
+        const cleanOpt = opt.value.toLowerCase().replace(/[*]/g, '').trim();
+        if (opt.value === area || cleanOpt === cleanTarget) {
+          opt.selected = true;
+          areaSelect.selectedIndex = i;
+          areaSelect.value = opt.value;
+          return;
+        }
+      }
+      // Pass 2: Word/inclusion match
+      for (let i = 0; i < areaSelect.options.length; i++) {
+        const opt = areaSelect.options[i];
+        const cleanOpt = opt.value.toLowerCase().replace(/[*]/g, '').trim();
+        if (cleanOpt.includes(cleanTarget) || cleanTarget.includes(cleanOpt)) {
+          opt.selected = true;
+          areaSelect.selectedIndex = i;
+          areaSelect.value = opt.value;
+          return;
         }
       }
     }
+    window.syncAreaSelectDropdown = syncAreaSelectDropdown;
 
     function onManualAreaSelected(area) {
       if (!area) return;
 
       campaignState.workflow.assignedArea = area;
+      if (typeof subBoardState !== 'undefined') {
+        subBoardState.assignedArea = area;
+        if (typeof saveSubBoardState === 'function') saveSubBoardState();
+      }
       const isEn = window.currentLang === 'en';
+
+      syncAreaSelectDropdown(area);
 
       const period = getA1PeriodForDate(campaignState.workflow.selectedMonth || "1941-12");
 
@@ -235,71 +266,43 @@ function getA1PeriodForDate(monthStr) {
       renderMissionChits();
       recalculatePatrolTrack();
       if (typeof updateOperationsMap === 'function') updateOperationsMap();
+      if (typeof window.onSensuikanDestinationChanged === 'function') window.onSensuikanDestinationChanged(area);
       saveState();
       showToast(isEn ? "Area set manually: " + area : "Área establecida manualmente: " + area);
     }
+    window.onManualAreaSelected = onManualAreaSelected;
 
-    function rollPatrolAssignment() {
+    function rollPatrolAssignment(manualRoll) {
       const selectedMonth = campaignState.workflow.selectedMonth || "1941-12";
       const isEn = window.currentLang === 'en';
       const period = getA1PeriodForDate(selectedMonth);
-      const d1 = Math.floor(Math.random() * 6) + 1;
-      const d2 = Math.floor(Math.random() * 6) + 1;
-      const sum = d1 + d2;
+      let d1, d2, sum, isManual = false;
+      if (typeof manualRoll === 'number' && manualRoll >= 2 && manualRoll <= 12) {
+        sum = manualRoll;
+        d1 = Math.floor(sum / 2);
+        d2 = sum - d1;
+        isManual = true;
+      } else {
+        d1 = Math.floor(Math.random() * 6) + 1;
+        d2 = Math.floor(Math.random() * 6) + 1;
+        sum = d1 + d2;
+      }
 
       const colData = CHART_A1_DATA[period] || CHART_A1_DATA["1941"];
       let area = colData[sum] || "Pearl Harbor";
+      campaignState.workflow.lastA1Roll = sum;
 
-      // Regla 4.7.2: Con base en Paramushiro, todas las patrullas subsiguientes están asignadas a las Aleutianas hasta 7/43
-      const curBase = normalizeBaseName(campaignState.workflow.startingBase || "Yokosuka");
       let note = "";
-      if (curBase === "Paramushiro" && selectedMonth < "1943-07") {
-        area = "Aleutians";
-        note = isEn
-          ? " [⚓ Rule 4.7.2: Based at Paramushiro - Patrol fixed to Aleutians until 7/43]"
-          : " [⚓ Regla 4.7.2: Estacionado en Paramushiro - Patrulla fijada a Aleutianas hasta 7/43]";
-      } else {
-        if (area.includes("Europe*")) note = isEn ? " (★ Type A and B submarines only; others reroll)" : " (★ Tipos A y B únicamente; otros vuelven a tirar)";
-        if (area.includes("Panama**")) note = isEn ? " (★★ Floatplane submarines only; others reroll)" : " (★★ Solo subs con hidroavión; otros vuelven a tirar)";
-      }
+      if (area.includes("Europe*")) note = isEn ? " (★ Type A and B submarines only; others reroll)" : " (★ Tipos A y B únicamente; otros vuelven a tirar)";
+      if (area.includes("Panama**")) note = isEn ? " (★★ Floatplane submarines only; others reroll)" : " (★★ Solo subs con hidroavión; otros vuelven a tirar)";
 
       campaignState.workflow.assignedArea = area;
       campaignState.workflow.firstTwelveRolled = false;
 
       // Sincronizar el desplegable de área manual
-      const areaSelect = document.getElementById('wf-area-select');
-      if (areaSelect) {
-        for (let opt of areaSelect.options) {
-          if (opt.value === area || opt.value.toLowerCase() === area.toLowerCase() || area.toLowerCase().includes(opt.value.toLowerCase())) {
-            areaSelect.value = opt.value;
-            break;
-          }
-        }
-      }
+      syncAreaSelectDropdown(area);
 
       document.getElementById('wf-patrol-area-res').innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 ${isEn ? '2d6 Roll' : 'Dados 2d6'}: [${d1} + ${d2} = ${sum}]</span> ➔ <strong>${area}${note}</strong> <span style="font-size:0.75rem; color:#94a3b8;">[${isEn ? 'Chart A1' : 'Tabla A1'} (${period})]</span>`;
-
-      // Regla 4.7.2: Si es asignado a las Aleutianas y no está en Paramushiro, se traslada automáticamente la base
-      if (area.toLowerCase().includes("aleutians") && campaignState.workflow.startingBase !== "Paramushiro") {
-        handleBaseChange("Paramushiro");
-        showToast("⚓ Regla 4.7.2: Misión a las Aleutianas. Submarino trasladado automáticamente a Paramushiro.");
-      }
-
-      syncCurrentPatrolToLog();
-      buildPatrolTable();
-      updateSpecialEventsForMonthArea(); renderMissionChits();
-      recalculatePatrolTrack();
-      if (typeof updateOperationsMap === 'function') updateOperationsMap();
-      showToast(isEn ? "Area assigned (Chart A1): " + area : "Área asignada (Tabla A1): " + area);
-      saveState();
-    }
-
-    function selectA1AreaManual(area, roll) {
-      const isEn = window.currentLang === 'en';
-      campaignState.workflow.assignedArea = area;
-      campaignState.workflow.lastA1Roll = roll;
-      const period = getA1PeriodForDate(campaignState.workflow.selectedMonth || "1941-12");
-      document.getElementById('wf-patrol-area-res').innerText = `${area} [${isEn ? 'Chart A1' : 'Tabla A1'} (${period}) - ${isEn ? 'Selected' : 'Seleccionada'} (2d6=${roll})]`;
 
       // Regla 4.7.2: Si es asignado a las Aleutianas y no está en Paramushiro, se traslada automáticamente la base
       if (area.toLowerCase().includes("aleutians") && campaignState.workflow.startingBase !== "Paramushiro") {
@@ -312,9 +315,38 @@ function getA1PeriodForDate(monthStr) {
       updatePhase1TableHighlight();
       updateSpecialEventsForMonthArea(); renderMissionChits();
       recalculatePatrolTrack();
+      if (typeof updateOperationsMap === 'function') updateOperationsMap();
+      if (typeof window.onSensuikanDestinationChanged === 'function') window.onSensuikanDestinationChanged(area);
+      showToast(isEn ? "Area assigned (Chart A1): " + area : "Área asignada (Tabla A1): " + area);
+      saveState();
+    }
+
+    function selectA1AreaManual(area, roll) {
+      const isEn = window.currentLang === 'en';
+      campaignState.workflow.assignedArea = area;
+      campaignState.workflow.lastA1Roll = roll;
+      const period = getA1PeriodForDate(campaignState.workflow.selectedMonth || "1941-12");
+      document.getElementById('wf-patrol-area-res').innerText = `${area} [${isEn ? 'Chart A1' : 'Tabla A1'} (${period}) - ${isEn ? 'Selected' : 'Seleccionada'} (2d6=${roll})]`;
+
+      syncAreaSelectDropdown(area);
+
+      // Regla 4.7.2: Si es asignado a las Aleutianas y no está en Paramushiro, se traslada automáticamente la base
+      if (area.toLowerCase().includes("aleutians") && campaignState.workflow.startingBase !== "Paramushiro") {
+        handleBaseChange("Paramushiro");
+        showToast("⚓ Regla 4.7.2: Misión a las Aleutianas. Submarino trasladado automáticamente a Paramushiro.");
+      }
+
+      syncCurrentPatrolToLog();
+      buildPatrolTable();
+      updatePhase1TableHighlight();
+      updateSpecialEventsForMonthArea(); renderMissionChits();
+      recalculatePatrolTrack();
+      if (typeof updateOperationsMap === 'function') updateOperationsMap();
+      if (typeof window.onSensuikanDestinationChanged === 'function') window.onSensuikanDestinationChanged(area);
       saveState();
       showToast("Área seleccionada (Tabla A1): " + area);
     }
+    window.selectA1AreaManual = selectA1AreaManual;
 
 
         // =========================================================================
@@ -614,7 +646,7 @@ function rollChartB8Interactive() {
 
     // COMPENDIUM & PHASE-SPECIFIC TABLES LOGIC
     function filterCompendium(category) {
-      const secs = ['patrol', 'combat', 'commander', 'campaign', 'midget', 'kaiten', 'floatplane', 'optional'];
+      const secs = ['patrol', 'combat', 'targets', 'commander', 'campaign', 'midget', 'kaiten', 'floatplane', 'optional'];
       secs.forEach(s => {
         const el = document.getElementById('comp-sec-' + s);
         if (el) {
@@ -1162,8 +1194,9 @@ function rollChartB8Interactive() {
           typeBadge = '<span style="background:#312e81; color:#c7d2fe; font-weight:bold; padding:1px 5px; border-radius:3px; font-size:0.65rem;">CVE</span>';
         }
 
+        const isEn = (window.currentLang === 'en');
         const fastBadge = item.fast 
-          ? '<span style="color:#38bdf8; font-weight:bold; font-size:0.68rem;" title="Fast Capital Ship">➡ Fast</span>' 
+          ? `<span style="color:#38bdf8; font-weight:bold; font-size:0.68rem;" title="${isEn ? 'Fast Capital Ship' : 'Buque Capital Rápido'}">➡ ${isEn ? 'Fast' : 'Rápido'}</span>` 
           : '<span style="color:#64748b; font-size:0.65rem;">—</span>';
 
         const pts = item.pts_to_sink || 6;
@@ -1183,21 +1216,22 @@ function rollChartB8Interactive() {
         `;
       });
 
+      const isEn = (window.currentLang === 'en');
       return `
         <div id="t4-block-${key}" class="t4-era-block" style="background:#0f172a; border:1px solid #4c1d95; border-radius:6px; overflow:hidden; margin-bottom:12px;">
           <div style="background:linear-gradient(90deg, #581c87, #3b0764); padding:5px 10px; font-weight:bold; color:#e9d5ff; font-size:0.75rem; display:flex; justify-content:space-between; align-items:center;">
             <span>⚓ ${title}</span>
-            <span style="font-size:0.68rem; color:#d8b4fe;">${keys.length} Buques Oficiales</span>
+            <span style="font-size:0.68rem; color:#d8b4fe;">${keys.length} ${isEn ? 'Official Ships' : 'Buques Oficiales'}</span>
           </div>
           <table style="width:100%; border-collapse:collapse; font-size:0.72rem; text-align:left;">
             <thead>
               <tr style="background:#1e293b; color:#94a3b8; font-size:0.67rem; border-bottom:2px solid #334155;">
-                <th style="padding:4px 6px; text-align:center; width:30px;">Dado</th>
-                <th style="padding:4px 6px; text-align:center; width:48px;">Tipo</th>
-                <th style="padding:4px 6px;">Buque Capital</th>
-                <th style="padding:4px 6px; text-align:right; width:75px;">Tonelaje</th>
-                <th style="padding:4px 6px; text-align:center; width:55px;">Hundir</th>
-                <th style="padding:4px 6px; text-align:center; width:55px;">Veloc.</th>
+                <th style="padding:4px 6px; text-align:center; width:30px;">${isEn ? 'Die' : 'Dado'}</th>
+                <th style="padding:4px 6px; text-align:center; width:48px;">${isEn ? 'Type' : 'Tipo'}</th>
+                <th style="padding:4px 6px;">${isEn ? 'Capital Ship' : 'Buque Capital'}</th>
+                <th style="padding:4px 6px; text-align:right; width:75px;">${isEn ? 'Tonnage' : 'Tonelaje'}</th>
+                <th style="padding:4px 6px; text-align:center; width:55px;">${isEn ? 'Sink' : 'Hundir'}</th>
+                <th style="padding:4px 6px; text-align:center; width:55px;">${isEn ? 'Speed' : 'Veloc.'}</th>
               </tr>
             </thead>
             <tbody>
@@ -1319,8 +1353,172 @@ function rollChartB8Interactive() {
       return res;
     }
 
+    function onEncounterTypeChange(encType, triggerGen) {
+      if (!encType) encType = "Ship";
+      const isEn = (window.currentLang === 'en');
+      campaignState.workflow.currentEncounter = encType;
+      campaignState.workflow.encounterType = encType;
+
+      const selEl = document.getElementById('p3-encounter-type-select');
+      if (selEl && selEl.value !== encType) {
+        selEl.value = encType;
+      }
+
+      const banner = document.getElementById('p3-encounter-type-banner');
+      const textEl = document.getElementById('p3-encounter-desc-text');
+      const actionBtn = document.getElementById('p3-encounter-action-btn');
+
+      if (banner && textEl) {
+        if (encType === "Ship*") {
+          banner.style.background = "rgba(2, 132, 199, 0.25)";
+          banner.style.borderColor = "#38bdf8";
+          banner.style.color = "#bae6fd";
+          textEl.innerHTML = isEn
+            ? "🚢* <strong>Ship*:</strong> Single escorted freighter detected. Close escort screen present. Roll 1d6 for size: 1–4 Small [T1] or 5–6 Large [T2]."
+            : "🚢* <strong>Ship*:</strong> 1 Mercante detectado con escolta cercana garantizada. Tira 1d6 para determinar tamaño: 1–4 Mercante Pequeño [Tabla T1] o 5–6 Mercante Grande [Tabla T2].";
+          if (actionBtn) actionBtn.style.display = "none";
+        } else if (encType === "Two Ships") {
+          banner.style.background = "rgba(30, 58, 138, 0.35)";
+          banner.style.borderColor = "#3b82f6";
+          banner.style.color = "#dbeafe";
+          textEl.innerHTML = isEn
+            ? "🚢🚢 <strong>Two Ships:</strong> 2 Freighters detected in formation. Escort present. Roll for both targets and choose your primary target."
+            : "🚢🚢 <strong>Two Ships:</strong> 2 Mercantes detectados navegando juntos. Escolta presente. Tira para ambos blancos y elige tu objetivo principal.";
+          if (actionBtn) actionBtn.style.display = "none";
+        } else if (encType === "Ship Group") {
+          banner.style.background = "rgba(180, 83, 9, 0.3)";
+          banner.style.borderColor = "#f59e0b";
+          banner.style.color = "#fef08a";
+          textEl.innerHTML = isEn
+            ? "🚢🚢🚢 <strong>Ship Group:</strong> Merchant convoy formation. Multiple escorted targets [T1/T2] with active ASW screen."
+            : "🚢🚢🚢 <strong>Ship Group:</strong> Formación / Convoy de mercantes. Múltiples blancos potenciales escoltados [T1/T2] con pantalla ASW.";
+          if (actionBtn) actionBtn.style.display = "none";
+        } else if (encType === "Warship") {
+          banner.style.background = "rgba(220, 38, 38, 0.25)";
+          banner.style.borderColor = "#ef4444";
+          banner.style.color = "#fecaca";
+          textEl.innerHTML = isEn
+            ? "⚔️ <strong>Warship:</strong> Enemy combatant vessel [Chart T3: Destroyer / Cruiser]. Armed and equipped with depth charges and sonar."
+            : "⚔️ <strong>Warship:</strong> Buque de combate enemigo [Tabla T3: Destructor / Crucero]. Armado y equipado con cargas de profundidad y sonar.";
+          if (actionBtn) actionBtn.style.display = "none";
+        } else if (encType === "Capital Ship") {
+          banner.style.background = "rgba(124, 58, 237, 0.25)";
+          banner.style.borderColor = "#c084fc";
+          banner.style.color = "#f3e8ff";
+          textEl.innerHTML = isEn
+            ? "⚓ <strong>Capital Ship:</strong> Capital warship [Chart T4/T5: Battleship / Carrier]. Prime strategic target protected by heavy escort screen."
+            : "⚓ <strong>Capital Ship:</strong> Buque capital de combate [Tabla T4/T5: Acorazado / Portaaviones]. Blanco de máximo valor con fuerte escolta.";
+          if (actionBtn) actionBtn.style.display = "none";
+        } else {
+          // Default: Ship
+          banner.style.background = "rgba(2, 132, 199, 0.2)";
+          banner.style.borderColor = "#0284c7";
+          banner.style.color = "#bae6fd";
+          textEl.innerHTML = isEn
+            ? "🚢 <strong>Ship:</strong> Single freighter detected. Roll 1d6 for size: 1–4 Small Freighter [Chart T1, no escort] or 5–6 Large Freighter [Chart T2, escorted]."
+            : "🚢 <strong>Ship:</strong> 1 Mercante en solitario. Tira 1d6 para determinar tamaño: 1–4 Mercante Pequeño [Tabla T1, sin escolta] o 5–6 Mercante Grande [Tabla T2, escoltado].";
+          if (actionBtn) actionBtn.style.display = "none";
+        }
+      }
+
+      if (triggerGen === 'manual_change') {
+        campaignState.workflow.currentTarget = null;
+        renderTargetUI(null);
+      } else if (triggerGen === true) {
+        if (encType.includes("Capital Ship")) {
+          rollChartT4();
+        } else if (encType.includes("Warship")) {
+          rollChartT3();
+        } else if (encType === "Ship" || encType === "Ship*") {
+          rollShipSizeD6();
+        } else if (encType === "Two Ships" || encType === "Ship Group") {
+          rollChartT2();
+        }
+      }
+      saveState();
+    }
+
+    function setEncounterTypeQuick(encType) {
+      onEncounterTypeChange(encType, true);
+      const isEn = (window.currentLang === 'en');
+      showToast(isEn ? `Encounter Type set to: ${encType}` : `Tipo de encuentro cambiado a: ${encType}`);
+    }
+
+    function rollTableA3Encounter(manualVal) {
+      const isEn = (window.currentLang === 'en');
+      let d1, d2, sum;
+      if (typeof manualVal === 'number' && manualVal >= 2 && manualVal <= 12) {
+        sum = manualVal;
+        d1 = Math.floor(sum / 2);
+        d2 = sum - d1;
+      } else {
+        d1 = Math.floor(Math.random() * 6) + 1;
+        d2 = Math.floor(Math.random() * 6) + 1;
+        sum = d1 + d2;
+      }
+      
+      const assignedArea = (campaignState.workflow && campaignState.workflow.assignedArea) ? campaignState.workflow.assignedArea : "Pearl Harbor";
+      const targetZone = (typeof mapA1ToA3Zone === 'function') ? mapA1ToA3Zone(assignedArea) : "Transit";
+      const zoneRow = (typeof CHART_A3_DATA !== 'undefined' && CHART_A3_DATA[targetZone]) ? CHART_A3_DATA[targetZone] : (typeof CHART_A3_DATA !== 'undefined' ? CHART_A3_DATA["Transit"] : {});
+      let rawEncounter = zoneRow[sum] || "Ship";
+      
+      let normalized = "Ship";
+      if (rawEncounter.includes("Capital Ship")) normalized = "Capital Ship";
+      else if (rawEncounter.includes("Warship")) normalized = "Warship";
+      else if (rawEncounter.includes("Two Ships")) normalized = "Two Ships";
+      else if (rawEncounter.includes("Convoy") || rawEncounter.includes("Ship Group")) normalized = "Ship Group";
+      else if (rawEncounter.includes("Ship*")) normalized = "Ship*";
+      else if (rawEncounter.includes("Aircraft")) {
+        showToast(isEn ? `🎲 Table [A3]: [${sum}] = Aircraft! Resolved in Air tab.` : `🎲 Tabla [A3]: [${sum}] = ¡Avión! Se resuelve en pestaña de Aviones.`);
+        normalized = "Ship";
+      } else if (rawEncounter === "--" || rawEncounter.includes("None")) {
+        showToast(isEn ? `🎲 Table [A3]: [${sum}] = No Contact. Defaulting to Ship.` : `🎲 Tabla [A3]: [${sum}] = Sin Contacto. Seleccionando Ship.`);
+        normalized = "Ship";
+      } else {
+        normalized = "Ship";
+      }
+
+      onEncounterTypeChange(normalized, true);
+
+      // Update visible die result badge and tabletop input
+      const a3Badge = document.getElementById('p3-a3-dice-result');
+      if (a3Badge) {
+        a3Badge.style.display = 'inline-flex';
+        a3Badge.innerHTML = `🎲 <strong>2d6: [${d1}+${d2} = ${sum}]</strong>`;
+      }
+      const a3Input = document.getElementById('p3-manual-a3-val');
+      if (a3Input) {
+        a3Input.value = sum;
+      }
+
+      showToast(isEn ? `🎲 Table [A3]: 2d6 = [${d1}+${d2} = ${sum}] ➔ ${normalized}` : `🎲 Tabla [A3]: 2d6 = [${d1}+${d2} = ${sum}] ➔ ${normalized}`);
+    }
+
+    function rollEncounterFromPhase3() {
+      rollTableA3Encounter();
+    }
+
+    function updatePhase3EncounterUI() {
+      if (campaignState.workflow && campaignState.workflow.currentTarget) {
+        if (campaignState.workflow.currentTarget.name === "SS Steel Seafarer" && !campaignState.workflow.currentTarget.chart) {
+          campaignState.workflow.currentTarget = null;
+        }
+      }
+      const current = (campaignState.workflow && (campaignState.workflow.currentEncounter || campaignState.workflow.encounterType)) || "Ship";
+      onEncounterTypeChange(current, false);
+      if (typeof renderTargetUI === 'function') {
+        renderTargetUI(campaignState.workflow && campaignState.workflow.currentTarget);
+      }
+      if (typeof syncPhase3TorpedoOptions === 'function') {
+        syncPhase3TorpedoOptions();
+      }
+      if (typeof updateCombatChits === 'function') {
+        updateCombatChits();
+      }
+    }
+
     function rollTargetGeneration() {
-      const enc = campaignState.workflow.currentEncounter || "";
+      const enc = (campaignState.workflow && (campaignState.workflow.currentEncounter || campaignState.workflow.encounterType)) || "";
       const area = campaignState.workflow.assignedArea || "";
       const isUKArea = area.includes("Indian Ocean") || area.includes("Malaya") || area.includes("Australia");
 
@@ -1340,20 +1538,356 @@ function rollChartB8Interactive() {
       }
     }
 
-    function applyTargetToWorkflow(t) {
+    function isCommonwealthTheater(area) {
+      if (!area && typeof campaignState !== 'undefined' && campaignState.workflow) {
+        area = campaignState.workflow.assignedArea || "";
+      }
+      const s = (area || "").toLowerCase();
+      return s.includes("indian") || s.includes("malaya") || s.includes("australia") || s.includes("ceylon") || s.includes("colombo") || s.includes("trincomalee") || s.includes("fremantle") || s.includes("singapore") || s.includes("bay of bengal") || s.includes("uk");
+    }
+
+    function getTheaterEscortTableInfo() {
       const isEn = (window.currentLang === 'en');
+      const area = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.assignedArea) ? campaignState.workflow.assignedArea : "Pearl Harbor";
+      const isCW = isCommonwealthTheater(area);
+      const chart = isCW ? "T5" : "T3";
+      const navy = isCW ? (isEn ? "Royal Navy / Commonwealth (1d20)" : "Royal Navy / Commonwealth (1d20)") : (isEn ? "U.S. Navy (1d100)" : "U.S. Navy (1d100)");
+      return { area, isCW, chart, navy };
+    }
+
+    // PASO 1.1: TIRADA INDEPENDIENTE DE TAMAÑO (1d6) - NO TIRA EL BUQUE AÚN
+    function rollShipSizeD6(manualVal) {
+      const isEn = (window.currentLang === 'en');
+      let d6;
+      if (typeof manualVal === 'number' && manualVal >= 1 && manualVal <= 6) {
+        d6 = manualVal;
+      } else {
+        d6 = Math.floor(Math.random() * 6) + 1;
+      }
+
+      const isT1 = (d6 <= 4);
+      const chartKey = isT1 ? "T1" : "T2";
+
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.shipSizeD6 = d6;
+      campaignState.workflow.determinedSize = chartKey;
+
+      // Update banner
+      const banner = document.getElementById('p3-size-d6-result-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        banner.style.background = isT1 ? 'rgba(30, 58, 138, 0.45)' : 'rgba(180, 83, 9, 0.45)';
+        banner.style.border = isT1 ? '1px solid #38bdf8' : '1px solid #f59e0b';
+        banner.style.color = isT1 ? '#bae6fd' : '#fef08a';
+        const typeDesc = isT1
+          ? (isEn ? "Tabla T1: Mercante Pequeño (Sin Escolta)" : "Tabla T1: Mercante Pequeño (Sin Escolta)")
+          : (isEn ? "Tabla T2: Mercante Grande / Petrolero (¡Escoltado!)" : "Tabla T2: Mercante Grande / Petrolero (¡Escoltado!)");
+        banner.innerHTML = `🎲 <strong>${isEn ? 'Size Roll 1d6' : 'Tirada de Tamaño 1d6'}: [${d6}]</strong> ➔ <span style="font-weight:700;">${typeDesc}</span> &bull; <em>${isEn ? 'Now roll 1d100 in Step 2' : 'Ahora tira el dado para el barco en el Paso 2'}</em>`;
+      }
+
+      // Update merchant button text
+      const btnMerchant = document.getElementById('p3-btn-roll-merchant');
+      if (btnMerchant) {
+        btnMerchant.innerText = isT1
+          ? (isEn ? "🚢 2. Roll Merchant [Chart T1 (1d100)]" : "🚢 2. Tirar Buque [Tabla T1 (1d100)]")
+          : (isEn ? "🚢 2. Roll Merchant [Chart T2 (1d100)]" : "🚢 2. Tirar Buque [Tabla T2 (1d100)]");
+      }
+
+      // Sync select dropdown if it exists
+      const selEl = document.getElementById('p3-manual-size-d6');
+      if (selEl) selEl.value = String(d6);
+
+      // Update theater tag in Step 3
+      const escortTag = document.getElementById('p3-escort-theater-tag');
+      if (escortTag) {
+        const info = getTheaterEscortTableInfo();
+        escortTag.innerText = `${isEn ? 'Site' : 'Sitio'}: ${info.area} ➔ Tabla ${info.chart} (${info.navy})`;
+      }
+
+      const toastMsg = isEn
+        ? `🎲 Size 1d6 = [${d6}] ➔ ${chartKey}: ${isT1 ? 'Small Freighter (Chart T1)' : 'Large Freighter / Tanker (Chart T2)'}`
+        : `🎲 Tamaño 1d6 = [${d6}] ➔ ${chartKey}: ${isT1 ? 'Mercante Pequeño (Tabla T1)' : 'Mercante Grande / Petrolero (Tabla T2)'}`;
+      showToast(toastMsg);
+      saveState();
+      return { d6, chart: chartKey };
+    }
+
+    // PASO 1.2: TIRADA INDEPENDIENTE DEL BUQUE MERCANTE EN T1 O T2 (1d100)
+    function rollMerchantShip(manualD100, forcedChart) {
+      const isEn = (window.currentLang === 'en');
+      let chartKey = forcedChart || (campaignState.workflow && campaignState.workflow.determinedSize) || "T1";
+      
+      let res;
+      if (chartKey === "T2") {
+        res = rollChartT2(manualD100);
+      } else {
+        res = rollChartT1(manualD100);
+      }
+
+      if (campaignState.workflow && campaignState.workflow.shipSizeD6) {
+        res.d6 = campaignState.workflow.shipSizeD6;
+      }
+
+      // Update Escort Tag in Step 3
+      const escortTag = document.getElementById('p3-escort-theater-tag');
+      if (escortTag) {
+        const info = getTheaterEscortTableInfo();
+        escortTag.innerText = `${isEn ? 'Site' : 'Sitio'}: ${info.area} ➔ Tabla ${info.chart} (${info.navy})`;
+      }
+
+      saveState();
+      return res;
+    }
+
+    // PASO 1.3: TIRADA INDEPENDIENTE DE ESCOLTA EN T3 O T5 SEGÚN EL SITIO
+    function rollEscortShip(manualVal, forcedChart) {
+      const isEn = (window.currentLang === 'en');
+      const info = getTheaterEscortTableInfo();
+      const chartKey = forcedChart || info.chart;
+
+      let escortObj;
+      if (chartKey === "T5") {
+        const d20 = (typeof manualVal === 'number' && manualVal >= 1 && manualVal <= 20)
+          ? manualVal
+          : (Math.floor(Math.random() * 20) + 1);
+        const target = CHART_T5_DATA[d20] || CHART_T5_DATA[1];
+        escortObj = {
+          chart: "T5",
+          roll: d20,
+          name: target.name,
+          tons: target.tonnage,
+          type: target.is_sub ? (isEn ? "Commonwealth Submarine" : "Submarino Commonwealth") : (isEn ? "Commonwealth Destroyer / Escort" : "Destructor / Escolta Commonwealth"),
+          isSub: target.is_sub,
+          theater: info.area
+        };
+      } else {
+        // T3: US Warships / Escorts
+        const d100 = (typeof manualVal === 'number' && manualVal >= 1 && manualVal <= 100)
+          ? manualVal
+          : (Math.floor(Math.random() * 100) + 1);
+        const target = CHART_T3_DATA[d100] || CHART_T3_DATA[String(d100)] || { name: "Destroyer", tonnage: 1800, is_sub: false };
+        escortObj = {
+          chart: "T3",
+          roll: d100,
+          roll100: d100,
+          name: target.name,
+          tons: target.tonnage,
+          type: target.is_sub ? (isEn ? "U.S. Submarine" : "Submarino EE.UU.") : (isEn ? "U.S. Destroyer / Escort" : "Destructor / Escolta EE.UU."),
+          isSub: target.is_sub,
+          theater: info.area
+        };
+      }
+
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.currentEscort = escortObj;
+      if (campaignState.workflow.currentTarget) {
+        campaignState.workflow.currentTarget.escortShip = escortObj;
+        campaignState.workflow.currentTarget.escort = true;
+        renderTargetUI(campaignState.workflow.currentTarget);
+      }
+
+      // Update Escort Result Banner
+      const escortBanner = document.getElementById('p3-escort-result-banner');
+      if (escortBanner) {
+        escortBanner.style.display = 'block';
+        const numStr = (escortObj.roll100 || escortObj.roll) ? `(#${escortObj.roll100 || escortObj.roll})` : '';
+        escortBanner.innerHTML = `🛡️ <strong>${isEn ? 'Escort Ship Identified' : 'Buque Escolta Identificado'}:</strong> [${escortObj.chart}] <strong>${escortObj.name}</strong> ${numStr} &bull; ${(escortObj.tons || 0).toLocaleString()} t &bull; ${escortObj.type} &bull; <em>${isEn ? 'Site' : 'Sitio'}: ${info.area}</em>`;
+      }
+
+      // Update Paso 5 Escort description if present
+      const escortDesc = document.getElementById('p3-escort-desc');
+      if (escortDesc) {
+        escortDesc.innerHTML = isEn
+          ? `Contact is protected by escort <strong>[${escortObj.chart}] ${escortObj.name}</strong> (${(escortObj.tons || 0).toLocaleString()} t). Resolve acoustic detection (Chart B4) and depth charge counterattack (Charts B5 & B6):`
+          : `El blanco está protegido por la escolta <strong>[${escortObj.chart}] ${escortObj.name}</strong> (${(escortObj.tons || 0).toLocaleString()} t). Resuelve la detección acústica (Tabla B4) y el contraataque de cargas de profundidad (Tablas B5 & B6):`;
+      }
+
+      saveState();
+      showToast(isEn ? `Escort generated: [${escortObj.chart}] ${escortObj.name}` : `Escolta generada: [${escortObj.chart}] ${escortObj.name}`);
+      return escortObj;
+    }
+
+    // HELPER: Map target ship to authentic counter chit
+    function getTargetChitPath(t) {
+      if (!t || !t.name) return null;
+      const name = t.name.toLowerCase();
+
+      // 1. Battleships (BB)
+      if (name.includes('california')) return 'assets/chits/California BB.jpg';
+      if (name.includes('maryland')) return 'assets/chits/Maryland BB.jpg';
+      if (name.includes('oklahoma') || name.includes('oaklahoma')) return 'assets/chits/Oaklahoma BB.jpg';
+      if (name.includes('tennessee')) return 'assets/chits/Tennessee BB.jpg';
+      if (name.includes('west virginia') || name.includes('w virginia')) return 'assets/chits/W Virginia BB.jpg';
+      if (name.includes('arizona')) return 'assets/chits/Arizona BB.jpg';
+      if (name.includes('nevada')) return 'assets/chits/Nevada BB.jpg';
+      if (name.includes('pennsylvania')) return 'assets/chits/Pennsylvania BB.jpg';
+      if (name.includes('colorado') || name.includes('colorodo')) return 'assets/chits/Colorodo BB.jpg';
+      if (name.includes('north carolina') || name.includes('n carolina')) return 'assets/chits/N Carolina BB.jpg';
+      if (name.includes('washington')) return 'assets/chits/Washington BB.jpg';
+      if (name.includes('south dakota') || name.includes('s dakota')) return 'assets/chits/S Dakota BB.jpg';
+      if (name.includes('indiana')) return 'assets/chits/Indiana BB.jpg';
+      if (name.includes('massachusetts')) return 'assets/chits/Massachusetts BB.jpg';
+      if (name.includes('alabama')) return 'assets/chits/Alabama BB.jpg';
+      if (name.includes('iowa')) return 'assets/chits/Iowa BB.jpg';
+      if (name.includes('new jersey')) return 'assets/chits/New Jersey BB.jpg';
+      if (name.includes('missouri')) return 'assets/chits/Missouri BB.jpg';
+      if (name.includes('new mexico')) return 'assets/chits/New Mexico BB.jpg';
+      if (name.includes('prince of wales')) return 'assets/chits/Prince of Wales BB.jpg';
+      if (name.includes('warspite')) return 'assets/chits/Warspite BB.jpg';
+      if (name.includes('ramillies')) return 'assets/chits/Ramillies BB.jpg';
+      if (name.includes('resolution')) return 'assets/chits/Resolution BB.jpg';
+      if (name.includes('revenge')) return 'assets/chits/Revenge BB.jpg';
+      if (name.includes('royal sovereign')) return 'assets/chits/Royal Sovereign BB.jpg';
+
+      // 2. Aircraft Carriers (CV / CVL / CVE)
+      if (name.includes('enterprise')) return 'assets/chits/Enterprise CV.jpg';
+      if (name.includes('yorktown')) return 'assets/chits/Yorktown CV.jpg';
+      if (name.includes('hornet')) return 'assets/chits/Hornet CV.jpg';
+      if (name.includes('lexington')) return 'assets/chits/Lexington CV.jpg';
+      if (name.includes('saratoga')) return 'assets/chits/Saratoga CV.jpg';
+      if (name.includes('wasp')) return 'assets/chits/Wasp CV.jpg';
+      if (name.includes('essex')) return 'assets/chits/Essex CV.jpg';
+      if (name.includes('independence')) return 'assets/chits/Independence CVL.jpg';
+      if (name.includes('princeton')) return 'assets/chits/Princeton CVL.jpg';
+      if (name.includes('liscome bay')) return 'assets/chits/Liscome Bay CVE.jpg';
+      if (name.includes('santee')) return 'assets/chits/Santee CVE.jpg';
+      if (name.includes('hermes')) return 'assets/chits/Hermes CV.jpg';
+
+      // 3. Merged types / Generics
+      if (t.isTanker || (t.type && t.type.toLowerCase().includes('tanker')) || name.includes('tanker')) {
+        return 'assets/chits/Tanker.jpg';
+      }
+      if ((t.type && (t.type.toLowerCase().includes('transport') || t.type.toLowerCase().includes('troop'))) || name.includes('transport')) {
+        return 'assets/chits/Transport.jpg';
+      }
+      if (t.chart === 'T1' || (t.type && t.type.toLowerCase().includes('small'))) {
+        return 'assets/chits/Small Freighter.jpg';
+      }
+      if (t.chart === 'T2' || (t.type && t.type.toLowerCase().includes('large'))) {
+        return 'assets/chits/Large Freighter.jpg';
+      }
+      if (t.chart === 'T3' || t.chart === 'T5' || (t.type && (t.type.toLowerCase().includes('destroyer') || t.type.toLowerCase().includes('escort') || t.type.toLowerCase().includes('cruiser') || t.type.toLowerCase().includes('warship')))) {
+        return 'assets/chits/Escort.jpg';
+      }
+
+      return 'assets/chits/Large Freighter.jpg';
+    }
+
+    function updateCombatChits() {
+      // 1. Momento del Día (Day / Night)
+      const todSel = document.getElementById('wf-tod-select');
+      const todImg = document.getElementById('wf-tod-chit-img');
+      if (todSel && todImg) {
+        todImg.src = (todSel.value === 'night') ? 'assets/chits/Night.jpg' : 'assets/chits/Day.jpg';
+      }
+
+      // 2. Alcance (Range: Close / Medium / Long)
+      const rangeSel = document.getElementById('wf-range-select');
+      const rangeImg = document.getElementById('wf-range-chit-img');
+      if (rangeSel && rangeImg) {
+        if (rangeSel.value === 'close') {
+          rangeImg.src = 'assets/chits/Range Close.jpg';
+        } else if (rangeSel.value === 'long') {
+          rangeImg.src = 'assets/chits/Range Long.jpg';
+        } else {
+          rangeImg.src = 'assets/chits/Range Medium.jpg';
+        }
+      }
+
+      // 3. Modalidad (Submerged / Surfaced)
+      const modeSel = document.getElementById('wf-attack-mode-select');
+      const modeImg = document.getElementById('wf-mode-chit-img');
+      if (modeSel && modeImg) {
+        modeImg.src = (modeSel.value === 'submerged') ? 'assets/chits/Submerged.jpg' : 'assets/chits/Surfaced.jpg';
+      }
+
+      // 4. Escolta
+      const target = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.currentTarget) ? campaignState.workflow.currentTarget : null;
+      const escortBox = document.getElementById('wf-escort-chit-box');
+      if (escortBox) {
+        const hasEscort = !!(target && target.escort);
+        escortBox.style.opacity = hasEscort ? '1.0' : '0.35';
+        escortBox.style.filter = hasEscort ? 'none' : 'grayscale(100%)';
+        escortBox.title = hasEscort ? 'Escolta Enemiga ACTIVA' : 'Sin Escolta Detectada';
+      }
+    }
+
+    function renderTargetUI(t) {
+      const isEn = (window.currentLang === 'en');
+      const nameEl = document.getElementById('wf-target-name');
+      const subEl = document.getElementById('wf-target-sub');
+      const banner = document.getElementById('p3-size-d6-result-banner');
+      const escortBanner = document.getElementById('p3-escort-result-banner');
+      const chitImg = document.getElementById('wf-target-chit-img');
+      const chitPlaceholder = document.getElementById('wf-target-chit-placeholder');
+      if (!nameEl || !subEl) return;
+
+      if (t && t.name && (t.chart || t.roll100 || t.roll || t.d6 || t.pts_to_sink)) {
+        nameEl.style.color = '#fff';
+        nameEl.style.fontStyle = 'normal';
+        nameEl.style.fontWeight = '800';
+        const rollNum = (t.roll100 != null && !isNaN(t.roll100)) ? t.roll100 : ((t.roll != null && !isNaN(t.roll)) ? t.roll : '');
+        const numStr = rollNum ? `(#${rollNum})` : '';
+        nameEl.innerHTML = `<span style="color:var(--gold-400);">[${t.chart || 'T'}]</span> ${t.name} ${numStr ? `<span style="font-size:0.75rem; color:#94a3b8;">${numStr}</span>` : ''}`;
+        const tankerBadge = t.isTanker ? (isEn ? ' <span class="badge" style="background:#dc2626; color:#fff; font-size:0.65rem; padding:1px 5px; border-radius:3px;">TANKER (T)</span>' : ' <span class="badge" style="background:#dc2626; color:#fff; font-size:0.65rem; padding:1px 5px; border-radius:3px;">PETROLERO (T)</span>') : '';
+        
+        const escortObj = t.escortShip || (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.currentEscort);
+        let escortLabel = '';
+        if (escortObj) {
+          escortLabel = `<span style="color:#fde047; font-weight:bold;">🛡️ ${isEn ? 'Escort:' : 'Escolta:'} [${escortObj.chart}] ${escortObj.name}</span>`;
+        } else if (t.escort) {
+          escortLabel = `<span style="color:#f87171; font-weight:bold;">🛡️ ${isEn ? 'Escort Required (Step 3)' : 'Escolta Requerida (Paso 1.3)'}</span>`;
+        } else {
+          escortLabel = isEn ? 'No Escort' : 'Sin escolta';
+        }
+
+        const rollLabel = t.d6
+          ? ` • 🎲 ${isEn ? 'Size 1d6' : 'Tamaño 1d6'}: [${t.d6}] (➔ ${t.chart}) • Tirada ${t.chart}: [${rollNum}]`
+          : (rollNum ? ` • Tirada ${t.chart}: [${rollNum}]` : '');
+        subEl.style.color = 'var(--gold-400)';
+        subEl.innerHTML = `${(t.tons || 0).toLocaleString()} tons • ${t.type || 'Vessel'}${tankerBadge} • ${escortLabel}${rollLabel}`;
+
+        if (escortBanner) {
+          if (escortObj) {
+            escortBanner.style.display = 'block';
+            const escortRoll = (escortObj.roll100 || escortObj.roll) ? `(#${escortObj.roll100 || escortObj.roll})` : '';
+            escortBanner.innerHTML = `🛡️ <strong>${isEn ? 'Escort Ship Identified' : 'Buque Escolta Identificado'}:</strong> [${escortObj.chart}] <strong>${escortObj.name}</strong> ${escortRoll} &bull; ${(escortObj.tons || 0).toLocaleString()} t &bull; ${escortObj.type}`;
+          } else {
+            escortBanner.style.display = 'none';
+          }
+        }
+
+        if (chitImg) {
+          const chitPath = getTargetChitPath(t);
+          if (chitPath) {
+            chitImg.src = chitPath;
+            chitImg.style.display = 'block';
+            if (chitPlaceholder) chitPlaceholder.style.display = 'none';
+          } else {
+            chitImg.style.display = 'none';
+            if (chitPlaceholder) chitPlaceholder.style.display = 'block';
+          }
+        }
+      } else {
+        nameEl.style.color = '#94a3b8';
+        nameEl.style.fontStyle = 'italic';
+        nameEl.style.fontWeight = 'normal';
+        nameEl.innerHTML = isEn ? '-- No target generated yet --' : '-- Ningún buque generado aún --';
+        subEl.style.color = '#64748b';
+        subEl.innerHTML = isEn ? 'Roll size in Step 1, then merchant in Step 2, and escort in Step 3.' : 'Tira tamaño en Paso 1, buque en Paso 2 y escolta en Paso 3.';
+        if (banner) banner.style.display = 'none';
+        if (escortBanner) escortBanner.style.display = 'none';
+        if (chitImg) chitImg.style.display = 'none';
+        if (chitPlaceholder) chitPlaceholder.style.display = 'block';
+      }
+      updateCombatChits();
+    }
+
+    function applyTargetToWorkflow(t) {
       campaignState.workflow.currentTarget = t;
       if (typeof checkSubVsSubTarget === 'function') checkSubVsSubTarget(t);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
-      const nameEl = document.getElementById('wf-target-name');
-      const subEl = document.getElementById('wf-target-sub');
-      if (nameEl) nameEl.innerHTML = `<span style="color:var(--gold-400);">[${t.chart}]</span> ${t.name} <span style="font-size:0.75rem; color:#94a3b8;">(#${t.roll100})</span>`;
-      if (subEl) {
-        const tankerBadge = t.isTanker ? (isEn ? ' <span class="badge" style="background:#dc2626; color:#fff; font-size:0.65rem; padding:1px 5px; border-radius:3px;">TANKER (T)</span>' : ' <span class="badge" style="background:#dc2626; color:#fff; font-size:0.65rem; padding:1px 5px; border-radius:3px;">PETROLERO (T)</span>') : '';
-        const escortLabel = t.escort ? (isEn ? 'Escort Present' : 'Escolta presente') : (isEn ? 'No Escort' : 'Sin escolta');
-        const rollLabel = t.d6 ? ` • ${isEn ? 'Contact roll 1d6' : 'Tirada de contacto 1d6'}: [${t.d6}]` : (t.roll ? ` • ${isEn ? `${t.chart} roll` : `Tirada ${t.chart}`}: [${t.roll}]` : '');
-        subEl.innerHTML = `${t.tons.toLocaleString()} tons • ${t.type}${tankerBadge} • ${escortLabel}${rollLabel}`;
-      }
+      renderTargetUI(t);
       saveState();
     }
 
@@ -1368,113 +1902,17 @@ function rollChartB8Interactive() {
     }
 
     function onRangeChange() {
-      const r = document.getElementById('wf-range-select').value;
-      document.getElementById('wf-infilt-res').style.display = (r === 'close') ? 'block' : 'none';
+      const r = document.getElementById('wf-range-select') ? document.getElementById('wf-range-select').value : 'medium';
+      const infiltEl = document.getElementById('wf-infilt-res');
+      if (infiltEl) infiltEl.style.display = (r === 'close') ? 'block' : 'none';
+      if (typeof updateCombatChits === 'function') updateCombatChits();
     }
 
     // CHART B6 DAMAGE TABLE (d66)
     
 
-function rollB7Flooding() {
-      const d = Math.floor(Math.random() * 6) + 1;
-      const engSW = !!campaignState.crewInjuries && campaignState.crewInjuries.engineer;
-      const mod = engSW ? 1 : 0;
-      const total = d + mod;
-      const el = document.getElementById('wf-b7-flooding-res');
-      if (total <= 4) {
-        el.style.color = '#34d399';
-        el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 Tirada 1d6: [${d}]${mod ? ' (+1 MTD)' : ''} = ${total}</span> ➔ ¡Inundación Contenida! (Flooding Halted). No se marcan casillas adicionales.`;
-        showToast("Inundación contenida con éxito.");
-      } else {
-        el.style.color = '#ef4444';
-        el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 Tirada 1d6: [${d}]${mod ? ' (+1 MTD)' : ''} = ${total}</span> ➔ Inundación Descontrolada (+1 Casilla). Marca 1 casilla adicional en el tapiz.`;
-        showToast("¡Alerta! Inundación adicional en el submarino.");
-      }
-    }
-
-    function rollB7SystemRepair() {
-      const sys = document.getElementById('wf-b7-system-select').value;
-      const el = document.getElementById('wf-b7-repair-res');
-      if (sys === 'hull') {
-        el.style.color = '#f87171';
-        el.innerText = "❌ El daño de casco (Hull) NO se puede reparar en alta mar. Requiere dique seco (Refit).";
-        return;
-      }
-      const d = Math.floor(Math.random() * 6) + 1;
-      const engSW = !!campaignState.crewInjuries && campaignState.crewInjuries.engineer;
-      const mod = engSW ? 1 : 0;
-      const total = d + mod;
-      
-      let reqMax = 2; // Default for most systems: 1-2 fixed
-      if (sys === 'fuel' || sys === 'radar') reqMax = 3;
-      if (sys === 'engines' || sys === 'batteries') reqMax = 4;
-
-      if (total <= reqMax) {
-        el.style.color = '#34d399';
-        el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 Tirada 1d6: [${d}]${mod ? ' (+1 MTD)' : ''} = ${total} (requería &le;${reqMax})</span> ➔ ¡REPARADO CON ÉXITO! El sistema vuelve a estar operativo.`;
-        showToast("¡Sistema reparado con éxito!");
-      } else {
-        el.style.color = '#ef4444';
-        el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 Tirada 1d6: [${d}]${mod ? ' (+1 MTD)' : ''} = ${total} (requería &le;${reqMax})</span> ➔ NO REPARABLE EN EL MAR (INOP). Requiere dique seco (Refit).`;
-        showToast("Sistema no reparable en el mar.");
-      }
-    }
-
-    function rollB7CrewInjury() {
-      const d1 = Math.floor(Math.random() * 6) + 1;
-      const d2 = Math.floor(Math.random() * 6) + 1;
-      const sum = d1 + d2;
-      const sevRoll = Math.floor(Math.random() * 6) + 1;
-
-      let role = "Crew (Dotación genérica)";
-      let roleKey = "crew";
-      let penalty = "Si todas las casillas genéricas quedan SW/KIA: +1 To-Hit de torpedos.";
-
-      if (sum === 2) {
-        role = "Captain (Capitán)";
-        roleKey = "captain";
-        penalty = "El Primer Oficial (Exec) toma el mando. Penalizaciones: Detección +1, To-Hit +1.";
-      } else if (sum === 3) {
-        role = "Engineer (Jefe de Máquinas)";
-        roleKey = "engineer";
-        penalty = "Todas las tiradas de reparación y contención de inundación reciben +1 MTD.";
-      } else if (sum === 4) {
-        role = "Executive Officer (Primer Oficial / XO)";
-        roleKey = "exec";
-        penalty = "Si el XO estaba al mando, el 3er Oficial toma el mando: Detección +1, To-Hit +1.";
-      } else if (sum === 5) {
-        role = "Medic (Oficial Médico)";
-        roleKey = "medic";
-        penalty = "Todos los tripulantes con Herida Grave (SW) fallecen (KIA) tras cada zona con 1d6 >= 4.";
-      } else if (sum >= 6 && sum <= 10) {
-        role = `Crew (Dotación genérica, casilla #${sum - 5})`;
-        roleKey = "crew";
-        penalty = "Si todas las casillas genéricas quedan SW o KIA: To-Hit de torpedos empeora en +1.";
-      } else if (sum === 11) {
-        role = "Navigator (Navegante)";
-        roleKey = "navigator";
-        penalty = "Submarino debe abortar si el navegante estaba ejerciendo de Capitán.";
-      } else if (sum === 12) {
-        role = "Pilot / Midget / Kaiten Crew (Dotación Aérea o Minisubmarino)";
-        roleKey = "pilot";
-        penalty = "Misión especial falla automáticamente si todos caen SW o KIA.";
-      }
-
-      let sev = "LW (Light Wound - Herida Leve)";
-      let sevDesc = "Sin efecto negativo en combate.";
-      if (sevRoll >= 4 && sevRoll <= 5) {
-        sev = "SW (Serious Wound - Herida Grave)";
-        sevDesc = "Incapacitado para el servicio.";
-      } else if (sevRoll === 6) {
-        sev = "KIA (Killed In Action - Muerto en Combate)";
-        sevDesc = "Baja definitiva en combate.";
-      }
-
-      const el = document.getElementById('wf-b7-crew-res');
-      el.innerHTML = `<strong>Puesto (2d6 = ${sum} [${d1}+${d2}]):</strong> ${role}<br><strong>Gravedad (1d6 = ${sevRoll}):</strong> <span style="color:#fbbf24;">${sev}</span> (${sevDesc})<br><strong>Efecto en Campaña:</strong> ${penalty}`;
-      showToast(`Baja registrada: ${role} (${sev})`);
-    }
-
+// CHART B7 (Repairs, Flooding & Injuries) is canonically handled with full i18n and manual roll in gameflow_phase4_5.js
+    
     // CHARTS M5 - M8: MIDGET SUBMARINE (KO-HYOTEKI) LOGIC
     
 
@@ -1676,3 +2114,169 @@ function rollChartP5() {
 
   showToast(`P5 Antiaéreo [${sum}]: ${entry.result}`);
 }
+
+function rollTimeOfDayD6(manualVal) {
+  const isEn = (window.currentLang === 'en');
+  let d;
+  if (typeof manualVal === 'number' && manualVal >= 1 && manualVal <= 6) {
+    d = manualVal;
+  } else {
+    d = Math.floor(Math.random() * 6) + 1;
+  }
+  const isDay = (d <= 3);
+  const todSelect = document.getElementById('wf-tod-select');
+  if (todSelect) {
+    todSelect.value = isDay ? 'day' : 'night';
+  }
+  if (typeof onRangeChange === 'function') onRangeChange();
+
+  // Show visual die result badge
+  const resBadge = document.getElementById('p3-tod-dice-result');
+  if (resBadge) {
+    resBadge.style.display = 'inline-flex';
+    resBadge.style.alignItems = 'center';
+    resBadge.style.gap = '4px';
+    resBadge.style.background = isDay ? 'rgba(234, 179, 8, 0.25)' : 'rgba(59, 130, 246, 0.25)';
+    resBadge.style.borderColor = isDay ? '#eab308' : '#3b82f6';
+    resBadge.style.color = isDay ? '#fef08a' : '#bfdbfe';
+    resBadge.innerHTML = `🎲 <strong>1d6: [${d}]</strong> ➔ ${isDay ? (isEn ? '☀️ DÍA' : '☀️ DÍA') : (isEn ? '🌙 NOCHE' : '🌙 NOCHE')}`;
+  }
+
+  // Also sync manual selector if exists
+  const manualSel = document.getElementById('p3-manual-tod-d6');
+  if (manualSel) manualSel.value = String(d);
+
+  const text = isDay
+    ? (isEn ? `🎲 1d6 = [${d}] ➔ DAY (Submerged attack recommended)` : `🎲 1d6 = [${d}] ➔ DÍA (Ataque sumergido recomendado)`)
+    : (isEn ? `🎲 1d6 = [${d}] ➔ NIGHT (Surface attack permitted, -1 DRM to escorts without radar)` : `🎲 1d6 = [${d}] ➔ NOCHE (Ataque en superficie permitido, -1 DRM escoltas)`);
+  showToast(text);
+  return isDay ? 'day' : 'night';
+}
+
+function syncTodBadgeManual() {
+  const todSelect = document.getElementById('wf-tod-select');
+  const resBadge = document.getElementById('p3-tod-dice-result');
+  if (todSelect && resBadge) {
+    const isDay = (todSelect.value === 'day');
+    const isEn = (window.currentLang === 'en');
+    resBadge.style.display = 'inline-flex';
+    resBadge.style.alignItems = 'center';
+    resBadge.style.gap = '4px';
+    resBadge.style.background = isDay ? 'rgba(234, 179, 8, 0.25)' : 'rgba(59, 130, 246, 0.25)';
+    resBadge.style.borderColor = isDay ? '#eab308' : '#3b82f6';
+    resBadge.style.color = isDay ? '#fef08a' : '#bfdbfe';
+    resBadge.innerHTML = isDay ? (isEn ? '☀️ DAY (Manual)' : '☀️ DÍA (Manual)') : (isEn ? '🌙 NIGHT (Manual)' : '🌙 NOCHE (Manual)');
+  }
+}
+
+function rollInfiltration2d6(manualSuccess) {
+  const isEn = (window.currentLang === 'en');
+  let d1, d2, sum, success;
+  if (typeof manualSuccess === 'boolean') {
+    success = manualSuccess;
+    sum = success ? 7 : 11;
+    d1 = Math.floor(sum / 2);
+    d2 = sum - d1;
+  } else {
+    d1 = Math.floor(Math.random() * 6) + 1;
+    d2 = Math.floor(Math.random() * 6) + 1;
+    sum = d1 + d2;
+    success = (sum <= 9);
+  }
+  const resEl = document.getElementById('wf-infilt-res');
+  if (resEl) {
+    resEl.style.display = 'block';
+    if (success) {
+      resEl.style.color = '#34d399';
+      resEl.innerHTML = isEn
+        ? `★ Infiltration: 🎲 2d6 = [${d1}+${d2}=${sum}] &le; 9 ➔ <strong>SUCCESSFUL INFILTRATION!</strong> Close range (+1 to-hit in B1) achieved safely.`
+        : `★ Infiltración: 🎲 2d6 = [${d1}+${d2}=${sum}] &le; 9 ➔ <strong>¡INFILTRACIÓN LOGRADA!</strong> Corta distancia (+1 a impactar en B1) alcanzada con éxito.`;
+      showToast(isEn ? "Infiltration succeeded!" : "¡Infiltración lograda con éxito!");
+    } else {
+      resEl.style.color = '#ef4444';
+      resEl.innerHTML = isEn
+        ? `⚠️ Infiltration: 🎲 2d6 = [${d1}+${d2}=${sum}] > 9 ➔ <strong>INFILTRATION FAILED!</strong> Escorts detect submarine and counter-attack before you can fire!`
+        : `⚠️ Infiltración: 🎲 2d6 = [${d1}+${d2}=${sum}] > 9 ➔ <strong>¡FALLO DE INFILTRACIÓN!</strong> ¡Las escoltas te detectan y atacan antes de que puedas disparar!`;
+      showToast(isEn ? "Infiltration failed! Escorts alerted!" : "¡Infiltración fallida! ¡Escoltas alertadas!");
+    }
+  }
+}
+
+function testDepthDive(manualVal) {
+  const isEn = (window.currentLang === 'en');
+  let d;
+  if (typeof manualVal === 'number' && manualVal >= 1 && manualVal <= 6) d = manualVal;
+  else d = Math.floor(Math.random() * 6) + 1;
+  const success = (d >= 3);
+  const resText = success
+    ? (isEn ? `⚓ Deep Dive: 🎲 1d6 = [${d}] ➔ SUCCESS! Reached deep test depth (-1 DRM to escort depth charges).` : `⚓ Inmersión Profunda: 🎲 1d6 = [${d}] ➔ ¡ÉXITO! Cota profunda alcanzada (-1 DRM a cargas de escolta).`)
+    : (isEn ? `⚠️ Deep Dive: 🎲 1d6 = [${d}] ➔ FAILED. Hull creaks under pressure, no modifier.` : `⚠️ Inmersión Profunda: 🎲 1d6 = [${d}] ➔ FALLO. El casco cruje bajo presión, sin modificador.`);
+  showToast(resText);
+  const escortRes = document.getElementById('wf-escort-res-text');
+  if (escortRes) {
+    escortRes.innerHTML = `<span style="color:#38bdf8;">${resText}</span><br>` + escortRes.innerHTML;
+  }
+}
+
+function rollB6DamageManual(manualD66) {
+  const isEn = (window.currentLang === 'en');
+  let red, white, d66;
+  if (typeof manualD66 === 'number' && manualD66 >= 11 && manualD66 <= 66) {
+    d66 = manualD66;
+    red = Math.floor(d66 / 10);
+    white = d66 % 10;
+  } else {
+    red = Math.floor(Math.random() * 6) + 1;
+    white = Math.floor(Math.random() * 6) + 1;
+    d66 = red * 10 + white;
+  }
+  let desc = (typeof CHART_B6_TABLE !== 'undefined' && CHART_B6_TABLE[d66]) ? CHART_B6_TABLE[d66] : (isEn ? "Minor Damage" : "Avería Menor");
+  if (typeof desc === 'function') {
+    desc = desc(isEn);
+  }
+  if (isEn && window.I18N_PHASE3_B6_EN && window.I18N_PHASE3_B6_EN[d66]) {
+    desc = window.I18N_PHASE3_B6_EN[d66];
+  }
+  if ([12, 21, 31, 43, 44, 51].includes(d66)) {
+    if (typeof window.applySubmarineDamage === 'function') window.applySubmarineDamage({ flooding: 1, source: 'escort', reason: desc });
+  } else if (d66 === 54) {
+    if (typeof window.applySubmarineDamage === 'function') window.applySubmarineDamage({ flooding: 2, source: 'escort', reason: desc });
+  } else if ([33, 35, 41, 45, 52, 55].includes(d66)) {
+    if (typeof window.applySubmarineDamage === 'function') window.applySubmarineDamage({ hullDamage: 1, source: 'escort', reason: desc });
+  } else if (d66 === 65) {
+    if (typeof window.applySubmarineDamage === 'function') window.applySubmarineDamage({ hullDamage: 2, source: 'escort', reason: desc });
+  } else if (d66 === 34) {
+    if (typeof rollB7CrewInjury === 'function') rollB7CrewInjury();
+  } else if (d66 === 53) {
+    if (typeof rollB7CrewInjury === 'function') { rollB7CrewInjury(); rollB7CrewInjury(); }
+  } else {
+    if (typeof window.applySubmarineDamage === 'function') window.applySubmarineDamage({ systemsDamaged: desc, source: 'escort', reason: desc });
+  }
+
+  const escortRes = document.getElementById('wf-escort-res-text');
+  if (escortRes) {
+    escortRes.innerHTML = `<span style="color:#f87171; font-weight:bold;">🛠️ Chart B6: 🎲 d66 = [${red}, ${white} ➔ ${d66}]: ${desc}</span><br>` + escortRes.innerHTML;
+  }
+  showToast(isEn ? `Damage [B6]: d66=[${d66}] ➔ ${desc}` : `Avería [B6]: d66=[${d66}] ➔ ${desc}`);
+}
+
+window.rollShipSizeD6 = rollShipSizeD6;
+window.rollMerchantShip = rollMerchantShip;
+window.rollEscortShip = rollEscortShip;
+window.rollTargetGeneration = rollTargetGeneration;
+window.rollChartT1 = rollChartT1;
+window.rollChartT2 = rollChartT2;
+window.rollChartT3 = rollChartT3;
+window.rollChartT4 = rollChartT4;
+window.rollChartT5 = rollChartT5;
+window.onEncounterTypeChange = onEncounterTypeChange;
+window.setEncounterTypeQuick = setEncounterTypeQuick;
+window.rollTableA3Encounter = rollTableA3Encounter;
+window.rollEncounterFromPhase3 = rollEncounterFromPhase3;
+window.updatePhase3EncounterUI = updatePhase3EncounterUI;
+window.rollTimeOfDayD6 = rollTimeOfDayD6;
+window.syncTodBadgeManual = syncTodBadgeManual;
+window.renderTargetUI = renderTargetUI;
+window.rollInfiltration2d6 = rollInfiltration2d6;
+window.testDepthDive = testDepthDive;
+window.rollB6DamageManual = rollB6DamageManual;

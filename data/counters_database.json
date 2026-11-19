@@ -1,39 +1,5 @@
 {
-  "metadata": {
-    "project": "Sensuikan Canonical Master Cards",
-    "version": "2.0",
-    "description": "Base de datos parametrizada de counters, armamento y sistemas navales",
-    "slot_dimension_mm": 15.0,
-    "art_canvas_size_px": 1024,
-    "art_preprocessed_dir": "images/counters/ai/preprocessed",
-    "art_ai_dir": "images/counters/ai",
-    "art_realistic_dir": "images/counters/realistic"
-  },
-  "plaque_styles": {
-    "bottom_plaque": {
-      "description": "Cartela rectangular inferior azul marino (#0D1520) con reborde dorado (#C5A059) y 4 micro-remaches (#E2B765)",
-      "bg": "#0D1520",
-      "border": "#C5A059",
-      "rivet": "#E2B765",
-      "text_color": "#FAF6ED",
-      "subtext_color": "#E2B765",
-      "h_1line_mm": 3.8,
-      "h_2lines_mm": 4.8,
-      "h_3lines_mm": 5.8
-    },
-    "badge_top_left": {
-      "description": "Distintivo circular naval en esquina superior izquierda para tubos de torpedo",
-      "bg": "#0D1520",
-      "border": "#C5A059",
-      "text_color": "#FFE082",
-      "radius_mm": 2.3
-    },
-    "damage_gauge": {
-      "description": "Marcador de inundacion, superficie de emergencia o fatiga de casco",
-      "bg": "#0D1520",
-      "border": "#7A1818"
-    }
-  },
+  "metadata": {},
   "counters": {
     "captain": {
       "id": "captain",
@@ -43,7 +9,10 @@
         "captain",
         "comandante",
         "officer",
-        "superior"
+        "superior",
+        "capitán",
+        "capitan",
+        "oficial"
       ],
       "image_file": "counter_captain_portrait.png",
       "icon": "anchor_sakura",
@@ -62,7 +31,10 @@
         "xo",
         "1st off",
         "first officer",
-        "segundo"
+        "segundo",
+        "2.º cmdte.",
+        "2.º cmdte",
+        "segundo comandante"
       ],
       "image_file": "counter_xo_portrait.png",
       "icon": "ship_wheel",
@@ -80,7 +52,10 @@
       "keywords": [
         "engineer",
         "chief eng",
-        "maquinista"
+        "maquinista",
+        "jefe máq.",
+        "jefe maq.",
+        "jefe máquinas"
       ],
       "image_file": "counter_engineer_portrait.png",
       "icon": "gear_wrench",
@@ -118,7 +93,9 @@
       "keywords": [
         "medic",
         "doctor",
-        "cirujano"
+        "cirujano",
+        "médico",
+        "medico"
       ],
       "image_file": "counter_medic_portrait.png",
       "icon": "medical_cross_anchor",
@@ -137,7 +114,9 @@
         "crew",
         "sailor",
         "marineros",
-        "sailors"
+        "sailors",
+        "dotación",
+        "dotacion"
       ],
       "image_file": "counter_sailors_crew.png",
       "icon": "sailors_trio",
@@ -156,7 +135,10 @@
         "quality",
         "golden kite",
         "veteran",
-        "elite"
+        "elite",
+        "calidad",
+        "calidad tripul.",
+        "calidad tripul"
       ],
       "image_file": "counter_order_golden_kite.jpg",
       "icon": "chevrons",
@@ -214,7 +196,7 @@
       "plaque_style": "badge_top_left",
       "default_label": "1",
       "default_sublabel": "",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "torpedo_reloads": {
@@ -276,7 +258,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "140mm",
       "default_sublabel": "Status",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "artillery_ammo": {
@@ -297,7 +279,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Ammo",
       "default_sublabel": "x5",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "aa_gun": {
@@ -346,7 +328,6 @@
       "name": "Type A Midget Submarine (Ko-Hyoteki)",
       "category": "special",
       "keywords": [
-        "midget gunnery",
         "midget sub",
         "midget",
         "ko-hyoteki"
@@ -357,7 +338,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Midget",
       "default_sublabel": "Gunnery",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "seiran_plane": {
@@ -395,7 +376,10 @@
         "f.doors",
         "aft doors",
         "mine door",
-        "air system"
+        "air system",
+        "compt. proa",
+        "compt. popa",
+        "f. doors"
       ],
       "image_file": "counter_watertight_door.png",
       "icon": "watertight_hatch",
@@ -403,7 +387,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "F. Torp.",
       "default_sublabel": "Doors (Odd)",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "radio": {
@@ -413,7 +397,10 @@
       "keywords": [
         "radio",
         "telegrafo",
-        "transmitter"
+        "transmitter",
+        "superior comms",
+        "comms superiores",
+        "comunicaciones"
       ],
       "image_file": "counter_radio_transmitter.png",
       "icon": "radio_antenna_waves",
@@ -421,7 +408,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Radio",
       "default_sublabel": "",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "dive_planes": {
@@ -443,7 +430,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Dive",
       "default_sublabel": "Planes",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "crane_hangar": {
@@ -472,7 +459,9 @@
         "motor",
         "mtr",
         "electric motor",
-        "motor electrico"
+        "motor electrico",
+        "mot. eléctr.",
+        "mot. electr."
       ],
       "image_file": "counter_electric_motor.png",
       "icon": "electric_motor_rotor",
@@ -491,7 +480,9 @@
         "diesel",
         "engine",
         "eng",
-        "motor diesel"
+        "motor diesel",
+        "mot. diésel",
+        "mot. diesel"
       ],
       "image_file": "counter_diesel_engine.png",
       "icon": "diesel_engine_pistons",
@@ -510,7 +501,9 @@
         "batt",
         "battery",
         "bateria",
-        "acumulador"
+        "acumulador",
+        "baterías",
+        "baterias"
       ],
       "image_file": "counter_battery_cells.png",
       "icon": "battery_cells",
@@ -529,7 +522,9 @@
         "fuel",
         "combustible",
         "petroleo",
-        "tanks"
+        "tanks",
+        "dep. combust.",
+        "dep. combust"
       ],
       "image_file": "counter_fuel_tank.png",
       "icon": "fuel_drop_tank",
@@ -537,7 +532,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Fuel",
       "default_sublabel": "Tanks",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hydrophone_sonar": {
@@ -567,7 +562,11 @@
         "perisc",
         "periscope",
         "periscopio",
-        "snorkel"
+        "peri",
+        "peri-scope",
+        "peri-copio",
+        "snorkel",
+        "periscópio"
       ],
       "image_file": "counter_periscope_optics.jpg",
       "icon": "periscope_crosshair",
@@ -575,7 +574,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Periscope",
       "default_sublabel": "#1",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flooding_marker": {
@@ -586,7 +585,10 @@
         "flood",
         "flooding",
         "inundacion",
-        "vía de agua"
+        "vía de agua",
+        "marcador inundacion",
+        "marcador inundación",
+        "flood marker"
       ],
       "image_file": "counter_flooding_marker.png",
       "icon": "naval_pressure_gauge",
@@ -626,7 +628,12 @@
         "hull stress",
         "danio casco",
         "deformacion",
-        "hull marker"
+        "hull marker",
+        "marcador dano casco",
+        "marcador daño casco",
+        "marcador casco",
+        "hull marker",
+        "hull damage marker"
       ],
       "image_file": "counter_hull_damage_marker.jpg",
       "icon": "hull_stress_dial",
@@ -664,7 +671,8 @@
         "current base",
         "naval base",
         "base naval",
-        "base"
+        "base",
+        "base actual"
       ],
       "image_file": "counter_naval_base.png",
       "icon": "anchored_anchor",
@@ -672,7 +680,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Base",
       "default_sublabel": "Port",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "tactical_mission": {
@@ -681,7 +689,8 @@
       "category": "logistics",
       "keywords": [
         "mission",
-        "mision"
+        "mision",
+        "misión"
       ],
       "image_file": "counter_tactical_mission.png",
       "icon": "tactical_target_grid",
@@ -689,7 +698,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Mission",
       "default_sublabel": "",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "tactical_event": {
@@ -707,7 +716,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Event",
       "default_sublabel": "",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "transit_patrol": {
@@ -718,7 +727,9 @@
         "transit",
         "transit patrol",
         "patrol",
-        "patrulla"
+        "patrulla",
+        "tránsito",
+        "transito"
       ],
       "image_file": "counter_transit_patrol.png",
       "icon": "submarine_wake",
@@ -726,7 +737,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Transit",
       "default_sublabel": "Patrol",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_1": {
@@ -737,7 +748,9 @@
         "flood 1",
         "fld 1",
         "inundacion 1",
-        "nivel 1"
+        "nivel 1",
+        "inund. 1",
+        "inund 1"
       ],
       "image_file": "counter_flood_level_1.png",
       "icon": "naval_pressure_gauge",
@@ -746,7 +759,7 @@
       "default_label": "Flood 1",
       "default_sublabel": "",
       "badge_number": "1",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_2": {
@@ -757,7 +770,9 @@
         "flood 2",
         "fld 2",
         "inundacion 2",
-        "nivel 2"
+        "nivel 2",
+        "inund. 2",
+        "inund 2"
       ],
       "image_file": "counter_flood_level_2.png",
       "icon": "naval_pressure_gauge",
@@ -766,7 +781,7 @@
       "default_label": "Flood 2",
       "default_sublabel": "",
       "badge_number": "2",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_3": {
@@ -777,7 +792,9 @@
         "flood 3",
         "fld 3",
         "inundacion 3",
-        "nivel 3"
+        "nivel 3",
+        "inund. 3",
+        "inund 3"
       ],
       "image_file": "counter_flood_level_3.png",
       "icon": "naval_pressure_gauge",
@@ -786,7 +803,7 @@
       "default_label": "Flood 3",
       "default_sublabel": "",
       "badge_number": "3",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_4": {
@@ -797,7 +814,9 @@
         "flood 4",
         "fld 4",
         "inundacion 4",
-        "nivel 4"
+        "nivel 4",
+        "inund. 4",
+        "inund 4"
       ],
       "image_file": "counter_flood_level_4.png",
       "icon": "naval_pressure_gauge",
@@ -806,7 +825,7 @@
       "default_label": "Flood 4",
       "default_sublabel": "",
       "badge_number": "4",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_5": {
@@ -817,7 +836,9 @@
         "flood 5",
         "fld 5",
         "inundacion 5",
-        "nivel 5"
+        "nivel 5",
+        "inund. 5",
+        "inund 5"
       ],
       "image_file": "counter_flood_level_5.png",
       "icon": "naval_pressure_gauge",
@@ -826,7 +847,7 @@
       "default_label": "Flood 5",
       "default_sublabel": "",
       "badge_number": "5",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_6": {
@@ -837,7 +858,9 @@
         "flood 6",
         "fld 6",
         "inundacion 6",
-        "nivel 6"
+        "nivel 6",
+        "inund. 6",
+        "inund 6"
       ],
       "image_file": "counter_flood_level_6.png",
       "icon": "naval_pressure_gauge",
@@ -846,7 +869,7 @@
       "default_label": "Flood 6",
       "default_sublabel": "",
       "badge_number": "6",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_7": {
@@ -857,7 +880,9 @@
         "flood 7",
         "fld 7",
         "inundacion 7",
-        "nivel 7"
+        "nivel 7",
+        "inund. 7",
+        "inund 7"
       ],
       "image_file": "counter_flood_level_7.png",
       "icon": "naval_pressure_gauge",
@@ -866,7 +891,7 @@
       "default_label": "Flood 7",
       "default_sublabel": "",
       "badge_number": "7",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "flood_level_8": {
@@ -877,7 +902,9 @@
         "flood 8",
         "fld 8",
         "inundacion 8",
-        "nivel 8"
+        "nivel 8",
+        "inund. 8",
+        "inund 8"
       ],
       "image_file": "counter_flood_level_8.png",
       "icon": "naval_pressure_gauge",
@@ -886,7 +913,7 @@
       "default_label": "Flood 8",
       "default_sublabel": "",
       "badge_number": "8",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "on_station": {
@@ -896,7 +923,11 @@
       "keywords": [
         "on station",
         "on stat",
-        "station"
+        "station",
+        "en estación",
+        "en estacion",
+        "estación",
+        "estacion"
       ],
       "image_file": "counter_on_station.png",
       "icon": "submarine_wake",
@@ -904,7 +935,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "On Station",
       "default_sublabel": "Patrol",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_1": {
@@ -914,7 +945,8 @@
       "keywords": [
         "hull 1",
         "hull damage 1",
-        "dano casco 1"
+        "dano casco 1",
+        "casco 1"
       ],
       "image_file": "counter_hull_damage_level_1.png",
       "icon": "hull_stress_dial",
@@ -923,7 +955,7 @@
       "default_label": "Hull 1",
       "default_sublabel": "Damage",
       "badge_number": "1",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_2": {
@@ -933,7 +965,8 @@
       "keywords": [
         "hull 2",
         "hull damage 2",
-        "dano casco 2"
+        "dano casco 2",
+        "casco 2"
       ],
       "image_file": "counter_hull_damage_level_2.png",
       "icon": "hull_stress_dial",
@@ -942,7 +975,7 @@
       "default_label": "Hull 2",
       "default_sublabel": "Damage",
       "badge_number": "2",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_3": {
@@ -952,7 +985,8 @@
       "keywords": [
         "hull 3",
         "hull damage 3",
-        "dano casco 3"
+        "dano casco 3",
+        "casco 3"
       ],
       "image_file": "counter_hull_damage_level_3.png",
       "icon": "hull_stress_dial",
@@ -961,7 +995,7 @@
       "default_label": "Hull 3",
       "default_sublabel": "Damage",
       "badge_number": "3",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_4": {
@@ -971,7 +1005,8 @@
       "keywords": [
         "hull 4",
         "hull damage 4",
-        "dano casco 4"
+        "dano casco 4",
+        "casco 4"
       ],
       "image_file": "counter_hull_damage_level_4.png",
       "icon": "hull_stress_dial",
@@ -980,7 +1015,7 @@
       "default_label": "Hull 4",
       "default_sublabel": "Damage",
       "badge_number": "4",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_5": {
@@ -990,7 +1025,8 @@
       "keywords": [
         "hull 5",
         "hull damage 5",
-        "dano casco 5"
+        "dano casco 5",
+        "casco 5"
       ],
       "image_file": "counter_hull_damage_level_5.png",
       "icon": "hull_stress_dial",
@@ -999,7 +1035,7 @@
       "default_label": "Hull 5",
       "default_sublabel": "Damage",
       "badge_number": "5",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_6": {
@@ -1009,7 +1045,8 @@
       "keywords": [
         "hull 6",
         "hull damage 6",
-        "dano casco 6"
+        "dano casco 6",
+        "casco 6"
       ],
       "image_file": "counter_hull_damage_level_6.png",
       "icon": "hull_stress_dial",
@@ -1018,7 +1055,7 @@
       "default_label": "Hull 6",
       "default_sublabel": "Damage",
       "badge_number": "6",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_7": {
@@ -1028,7 +1065,8 @@
       "keywords": [
         "hull 7",
         "hull damage 7",
-        "dano casco 7"
+        "dano casco 7",
+        "casco 7"
       ],
       "image_file": "counter_hull_damage_level_7.png",
       "icon": "hull_stress_dial",
@@ -1037,7 +1075,7 @@
       "default_label": "Hull 7",
       "default_sublabel": "Damage",
       "badge_number": "7",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hull_damage_level_8": {
@@ -1047,7 +1085,8 @@
       "keywords": [
         "hull 8",
         "hull damage 8",
-        "dano casco 8"
+        "dano casco 8",
+        "casco 8"
       ],
       "image_file": "counter_hull_damage_level_8.png",
       "icon": "hull_stress_dial",
@@ -1056,7 +1095,7 @@
       "default_label": "Hull 8",
       "default_sublabel": "Damage",
       "badge_number": "8",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "midget_sub_crew": {
@@ -1068,7 +1107,15 @@
         "midget sub crew",
         "midget crew",
         "petty officer",
-        "petty off"
+        "petty off",
+        "tripul. sub enano",
+        "tripul sub enano",
+        "suboficial",
+        "tripulante enano",
+        "tripulación sub enano",
+        "tripulacion sub enano",
+        "tripul. sub",
+        "tripul sub"
       ],
       "image_file": "counter_midget_sub_crew.jpg",
       "icon": "officer_portrait",
@@ -1076,7 +1123,7 @@
       "plaque_style": "standard_navy",
       "default_label": "Midget",
       "default_sublabel": "SubCrew",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "sunk": {
@@ -1094,7 +1141,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "SUNK",
       "default_sublabel": "",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "boat_handling": {
@@ -1113,7 +1160,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Boat",
       "default_sublabel": "Handling",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "hangar": {
@@ -1151,7 +1198,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Penetrate",
       "default_sublabel": "Phase",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "patrol_attack": {
@@ -1170,7 +1217,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Attack",
       "default_sublabel": "Phase",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "patrol_egress": {
@@ -1189,7 +1236,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Egress",
       "default_sublabel": "Phase",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "patrol_recover": {
@@ -1208,7 +1255,7 @@
       "plaque_style": "bottom_plaque",
       "default_label": "Recover",
       "default_sublabel": "Phase",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
     },
     "port_dock": {
@@ -1216,6 +1263,7 @@
       "name": "Imperial Port & Dock Facility",
       "category": "logistics",
       "keywords": [
+        "en puerto",
         "at port",
         "port",
         "puerto",
@@ -1228,8 +1276,82 @@
       "plaque_style": "bottom_plaque",
       "default_label": "At",
       "default_sublabel": "Port",
-      "shift_pct": 0.0,
+      "shift_pct": 0,
       "extra_crop": 0
+    },
+    "wire_cutters": {
+      "id": "wire_cutters",
+      "name": "Submarine Bow Anti-Sub Net & Wire Cutters",
+      "category": "systems",
+      "keywords": [
+        "wire cutters",
+        "wire",
+        "cutters",
+        "corta-cables",
+        "cortacables",
+        "cables",
+        "corta- cables"
+      ],
+      "image_file": "counter_wire_cutters.jpg",
+      "icon": "wire_cutters",
+      "icon_tint": "#3E4A56",
+      "plaque_style": "bottom_plaque",
+      "default_label": "Wire",
+      "default_sublabel": "Cutters",
+      "shift_pct": 0,
+      "extra_crop": 0
+    },
+    "propeller": {
+      "id": "propeller",
+      "name": "Submarine Bronze Contra-Rotating Propeller Screw",
+      "category": "systems",
+      "keywords": [
+        "propeller",
+        "prop",
+        "screw",
+        "helice",
+        "hélice"
+      ],
+      "image_file": "counter_propeller.jpg",
+      "icon": "propeller",
+      "icon_tint": "#3E4A56",
+      "plaque_style": "bottom_plaque",
+      "default_label": "Propeller",
+      "default_sublabel": "",
+      "shift_pct": 0,
+      "extra_crop": 0
+    },
+    "gyro_compass": {
+      "id": "gyro_compass",
+      "name": "Submarine Marine Gyrocompass Console",
+      "category": "systems",
+      "keywords": [
+        "gyro compass",
+        "gyro",
+        "girocompas",
+        "girocompás",
+        "giro-compás",
+        "giro- compás"
+      ],
+      "image_file": "counter_gyro_compass.jpg",
+      "icon": "compass_rose",
+      "icon_tint": "#3E4A56",
+      "plaque_style": "bottom_plaque",
+      "default_label": "Gyro",
+      "default_sublabel": "Compass",
+      "shift_pct": 0,
+      "extra_crop": 0
+    },
+    "midget_gunnery": {
+      "id": "midget_gunnery",
+      "name": "Midget Submarine Gunnery",
+      "image_file": "counter_midget_gunnery.jpg",
+      "keywords": [
+        "midget gunnery",
+        "artillero enano",
+        "artillero",
+        "gunnery"
+      ]
     }
   }
 }

@@ -1,0 +1,781 @@
+        <div id="phase-content-patrol" class="phase-body">
+          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e293b 0%, #0369a1 100%); border-left:4px solid #38bdf8;">
+            <h2>
+              <span>✈️</span>
+              <span id="ppatrol-title">ENCUENTRO CON AVIONES [REGLA 8.3]</span>
+            </h2>
+            <div style="margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-size:0.82rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.22); display:flex; align-items:center; gap:6px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(239,68,68,0.3);">
+                <span>📖</span> <span>Guía Táctica: Ataque Aéreo [8.3]</span>
+              </button>
+              <span id="ppatrol-badge-zone" style="background:rgba(0,0,0,0.4); border:1px solid #38bdf8; color:#7dd3fc; padding:4px 10px; border-radius:6px; font-weight:700; font-size:0.84rem;">Zona: Casilla de Patrulla</span>
+              <button type="button" onclick="setWorkflowPhase(2)" class="action-btn" style="padding:4px 10px; font-size:0.84rem; border-color:#94a3b8; color:#e2e8f0; display:flex; align-items:center; gap:6px;">
+                <span>🗺️</span> <span id="ppatrol-btn-back-track">Ver Ruta Trayecto</span>
+              </button>
+            </div>
+            <span id="ppatrol-rules-pill" class="rules-ref-pill">[Regla 8.3 • Tablas A2, A4, B5, B7, FIDO]</span>
+          </div>
+
+          <!-- Active Contact Status Bar -->
+          <div style="background:var(--slate-800); border:1px solid var(--slate-700); border-radius:8px; padding:10px 16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <span style="font-size:1.15rem;">🎯</span>
+              <strong id="ppatrol-active-contact-label" style="color:#38bdf8; font-size:0.90rem;">Contacto Detectado en Casilla:</strong>
+              <div id="ppatrol-current-contact-pill" style="background:#0f172a; border:1px solid var(--gold-600); color:var(--gold-300); padding:4px 12px; border-radius:6px; font-size:0.86rem; font-weight:800;">
+                Contacto: Pendiente
+              </div>
+            </div>
+            <div id="ppatrol-last-roll-display" style="background:#0f172a; border:1px solid #38bdf8; color:#7dd3fc; padding:4px 12px; border-radius:6px; font-size:0.84rem; font-weight:700;">
+              🎲 2d6 [A3]: Sin Tirar
+            </div>
+          </div>
+
+          <!-- AMENAZA AÉREA / AIRCRAFT: SECUENCIA TÁCTICA DE ACCIONES (PASOS 1 A 5) -->
+          <div class="flow-card" style="border-top:4px solid #ef4444; background:linear-gradient(180deg, rgba(239,68,68,0.06) 0%, var(--slate-850) 100%);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+              <h4 id="ppatrol-air-title" style="color:#f87171; margin:0; display:flex; align-items:center; gap:8px;">
+                <span>✈️</span> <span>Secuencia Táctica de Encuentro Aéreo [Regla Oficial 8.3]</span>
+              </h4>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:3px 10px; font-size:0.78rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.2); font-weight:700; cursor:pointer; border-radius:4px; box-shadow:0 2px 6px rgba(239,68,68,0.25);">
+                  <span>📖</span> <span>Ver Workflow Completo [8.3]</span>
+                </button>
+                <span id="ppatrol-air-badge" class="badge-air-category" style="background:#7f1d1d; color:#fca5a5; border:1px solid #ef4444; font-size:0.75rem; padding:2px 8px; border-radius:4px; font-weight:700;">Aéreo</span>
+              </div>
+            </div>
+
+            <p id="ppatrol-air-desc" style="font-size:0.84rem; color:var(--slate-300); line-height:1.45; margin-bottom:14px;">
+              Al obtener <strong>Aircraft</strong> en la Tabla [A3], un avión enemigo en patrulla antisubmarina sorprende al buque. Sigue la secuencia reglamentaria en los siguientes 5 pasos:
+            </p>
+
+            <!-- ==========================================================
+                 PASO 1: TIRADA OBLIGATORIA DE INMERSIÓN DE EMERGENCIA [TABLA A4]
+                 ========================================================== -->
+            <div style="background:var(--navy-900); border:1px solid #16a34a; border-radius:8px; padding:12px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#16a34a; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">1</span>
+                  <strong style="color:#86efac; font-size:0.90rem;">
+                    <span id="ppatrol-a4-table-title">Paso 1: Tirada Obligatoria de Inmersión de Emergencia [Regla 8.3.1 &amp; Tabla A4]</span>
+                  </strong>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                  <span style="font-size:0.75rem; color:#86efac; background:rgba(34,197,94,0.2); padding:2px 8px; border-radius:4px; border:1px solid #22c55e;">Crash Dive (2d6)</span>
+                  <button type="button" class="btn-dice" onclick="rollInteractiveA4()" style="background:#1e40af; border-color:#3b82f6; font-size:0.76rem; padding:4px 8px;">
+                    🎲 <span id="ppatrol-btn-a4-label">Tirar [A4]</span>
+                  </button>
+                  <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #3b82f6; border-radius:3px; padding:1px 4px;">
+                    <span id="ppatrol-lbl-manual-a4" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
+                    <select id="ppatrol-sel-manual-a4" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
+                      <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                    </select>
+                    <button type="button" onclick="rollInteractiveA4(parseInt(document.getElementById('ppatrol-sel-manual-a4').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a4">Aplicar</span></button>
+                  </div>
+                </div>
+              </div>
+              
+              <table style="width:100%; border-collapse:collapse; font-size:0.76rem; text-align:center; margin-bottom:6px;">
+                <thead>
+                  <tr style="background:#1e293b; color:var(--slate-300);">
+                    <th id="ppatrol-th-a4-roll" style="padding:4px; border:1px solid #334155; width:90px;">Tirada Final</th>
+                    <th id="ppatrol-th-a4-result" style="padding:4px; border:1px solid #334155; width:140px;">Resultado</th>
+                    <th id="ppatrol-th-a4-effect" style="padding:4px; border:1px solid #334155; text-align:left;">Efecto Operativo</th>
+                  </tr>
+                </thead>
+                <tbody id="ppatrol-a4-tbody">
+                  <tr id="ppatrol-a4-row-1" onclick="selectA4Row(1)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; font-weight:bold; color:#ef4444;">&le; 1</td>
+                    <td id="ppatrol-td-a4-r1-res" style="border:1px solid #334155; font-weight:bold; color:#ef4444;">2 x Ataques Aéreos</td>
+                    <td id="ppatrol-td-a4-r1-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fca5a5;">2 pasadas con bombas + 1 herida automática de dotación (Pasa a Pasos 2, 3 y 4)</td>
+                  </tr>
+                  <tr id="ppatrol-a4-row-2" onclick="selectA4Row(2)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; font-weight:bold; color:#f59e0b;">2 - 5</td>
+                    <td id="ppatrol-td-a4-r2-res" style="border:1px solid #334155; font-weight:bold; color:#f59e0b;">1 x Ataque Aéreo</td>
+                    <td id="ppatrol-td-a4-r2-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fde047;">1 pasada con bombas + 1 herida automática de dotación (Pasa a Pasos 2, 3 y 4)</td>
+                  </tr>
+                  <tr id="ppatrol-a4-row-3" onclick="selectA4Row(3)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; font-weight:bold; color:#22c55e;">6 - 12</td>
+                    <td id="ppatrol-td-a4-r3-res" style="border:1px solid #334155; font-weight:bold; color:#22c55e;">Inmersión Exitosa</td>
+                    <td id="ppatrol-td-a4-r3-eff" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#86efac;">Submarino sumergido a salvo. Sin daños sufridos. Fin del encuentro.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Tabla Estructurada de Modificadores A4 (DRM de Año y Situacionales) -->
+              <div style="margin-top:8px; border:1px solid #334155; border-radius:6px; overflow:hidden; font-size:0.73rem; background:#0b1329;">
+                <!-- Subtabla 1: DRM por Año Histórico -->
+                <table style="width:100%; border-collapse:collapse; text-align:center; border-bottom:1px solid #1e293b;">
+                  <thead>
+                    <tr style="background:#1e293b; color:#7dd3fc;">
+                      <th colspan="4" id="ppatrol-th-a4-year-title" style="padding:4px 6px; font-size:0.72rem; text-align:left; color:#7dd3fc; border-bottom:1px solid #334155;">
+                        📅 <span id="ppatrol-lbl-a4-year-drm">Modificadores Oficiales por Año (DRM):</span>
+                      </th>
+                    </tr>
+                    <tr style="background:rgba(15,23,42,0.9); color:#94a3b8; font-size:0.70rem;">
+                      <th style="padding:2px 4px; border-right:1px solid #334155; width:25%;">1941</th>
+                      <th style="padding:2px 4px; border-right:1px solid #334155; width:25%;">1942</th>
+                      <th style="padding:2px 4px; border-right:1px solid #334155; width:25%;">1943</th>
+                      <th style="padding:2px 4px; width:25%;">1944+</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:rgba(30,41,59,0.4);">
+                      <td style="padding:3px 4px; border-right:1px solid #334155; color:#86efac; font-weight:bold;">+2</td>
+                      <td style="padding:3px 4px; border-right:1px solid #334155; color:#86efac; font-weight:bold;">+1</td>
+                      <td style="padding:3px 4px; border-right:1px solid #334155; color:#cbd5e1; font-weight:bold;">0</td>
+                      <td style="padding:3px 4px; color:#f87171; font-weight:bold;">-1</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- Subtabla 2: Modificadores de Dotación y Buque -->
+                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.71rem;">
+                  <thead>
+                    <tr style="background:#1e293b; color:#fde047;">
+                      <th colspan="2" id="ppatrol-th-a4-sit-title" style="padding:4px 6px; font-size:0.72rem; color:#fde047; border-bottom:1px solid #334155;">
+                        ⚓ <span id="ppatrol-lbl-a4-sit-drm">Modificadores de Tripulación y Buque:</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #1e293b; background:rgba(15,23,42,0.6);">
+                      <td style="padding:3px 6px; border-right:1px solid #334155; width:50%;">
+                        <span id="ppatrol-a4-m-elite">Dotación Élite:</span> <strong style="color:#86efac; float:right;">+1</strong>
+                      </td>
+                      <td style="padding:3px 6px; width:50%;">
+                        <span id="ppatrol-a4-m-planes">Planos inmersión averiados:</span> <strong style="color:#f87171; float:right;">-1</strong>
+                      </td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #1e293b; background:rgba(30,41,59,0.3);">
+                      <td style="padding:3px 6px; border-right:1px solid #334155;">
+                        <span id="ppatrol-a4-m-green">Dotación Novata (Green):</span> <strong style="color:#f87171; float:right;">-1</strong>
+                      </td>
+                      <td style="padding:3px 6px;">
+                        <span id="ppatrol-a4-m-radar">Radar instalado y operativo:</span> <strong style="color:#86efac; float:right;">+1</strong>
+                      </td>
+                    </tr>
+                    <tr style="background:rgba(15,23,42,0.6);">
+                      <td style="padding:3px 6px; border-right:1px solid #334155;">
+                        <span id="ppatrol-a4-m-kiasw">Toda tripulación herida (SW/KIA):</span> <strong style="color:#f87171; float:right;">-1</strong>
+                      </td>
+                      <td style="padding:3px 6px;">
+                        <span id="ppatrol-a4-m-night">Ataque Nocturno / Minado Especial:</span> <strong style="color:#cbd5e1; float:right;">+1 / -1</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="res-interactive-a4" style="margin-top:6px; padding:6px 8px; background:rgba(0,0,0,0.3); border-radius:4px; font-size:0.80rem; min-height:22px;">
+                <span style="color:var(--slate-400);">Sin tirada de inmersión en esta casilla.</span>
+              </div>
+            </div>
+
+            <!-- ==========================================================
+                 PASO 2: COMPROBACIÓN DE ARMA ESPECIAL: TORPEDO ACÚSTICO "FIDO" [REGLAS 8.3.2 / 8.3.3]
+                 ========================================================== -->
+            <div id="ppatrol-fido-panel" style="background:var(--navy-900); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div id="ppatrol-fido-chit-box" style="width:36px; height:36px; min-width:36px; border-radius:4px; overflow:hidden; border:2px solid #38bdf8; box-shadow:0 2px 6px rgba(0,0,0,0.5); background:#071220; display:flex; align-items:center; justify-content:center;" title="Contador Oficial: Torpedo Acústico FIDO">
+                    <img src="assets/chits/Fido.jpg" alt="FIDO Chit" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <span style="background:#0284c7; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">2</span>
+                  <strong style="color:#7dd3fc; font-size:0.90rem;">
+                    <span id="ppatrol-fido-title">Paso 2: Comprobación de Arma Especial: Torpedo Acústico "FIDO" [Regla 8.3.2 &amp; 8.3.3]</span>
+                  </strong>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <span style="font-size:0.75rem; color:#bae6fd; background:rgba(56,189,248,0.2); padding:2px 8px; border-radius:4px; border:1px solid #38bdf8;">Solo Mayo de 1944+ (1d6)</span>
+                  <span id="ppatrol-fido-status-badge" style="background:#1e293b; color:#cbd5e1; border:1px solid #64748b; font-size:0.74rem; font-weight:bold; padding:2px 8px; border-radius:4px;">
+                    ⚪ INACTIVA (Periodo &lt; 05/1944)
+                  </span>
+                </div>
+              </div>
+
+              <div id="ppatrol-fido-status-note" style="font-size:0.78rem; color:#94a3b8; margin-bottom:8px; line-height:1.4;">
+                A partir de Mayo de 1944 (5/44+), por cada ataque aéreo se tira 1d6: con resultado 6, el avión despliega un <strong>Torpedo Acústico Guiado Mark 24 «FIDO»</strong> (Pasa a Paso 4B). Con 1 a 5, utiliza bombardeo convencional (Pasa a Pasos 3 y 4A).
+              </div>
+
+              <!-- CONTROLES TIRADA COMPROBACIÓN FIDO (1d6) -->
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; background:#071220; border:1px solid #334155; border-radius:6px; padding:6px 10px; margin-bottom:8px;">
+                <span style="font-size:0.78rem; font-weight:bold; color:var(--gold-300);">Tirada 1d6 de Detección de FIDO:</span>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <button type="button" class="btn-dice" onclick="rollPatrolFidoCheck()" style="background:#0284c7; border-color:#38bdf8; font-size:0.74rem; padding:3px 8px;">
+                    🎲 <span id="ppatrol-btn-fido-check">Tirar Chequeo (1d6)</span>
+                  </button>
+                  <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
+                    <span style="color:var(--gold-300);">Mesa:</span>
+                    <select id="ppatrol-sel-fido-check" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
+                      <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                      <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                    </select>
+                    <button type="button" onclick="rollPatrolFidoCheck(parseInt(document.getElementById('ppatrol-sel-fido-check').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                      Aplicar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TABLA REFERENCIA FIDO 1d6 -->
+              <table style="width:100%; border-collapse:collapse; font-size:0.74rem; text-align:left; margin-bottom:8px;">
+                <thead>
+                  <tr style="background:#1e293b; color:var(--slate-300);">
+                    <th style="padding:3px 6px; border:1px solid #334155; width:55px; text-align:center;">1d6</th>
+                    <th style="padding:3px 6px; border:1px solid #334155; width:150px;">Tipo de Ataque Aéreo</th>
+                    <th style="padding:3px 6px; border:1px solid #334155;">Consecuencia Operativa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="ppatrol-fido-row-normal" class="patrol-interactive-row" onclick="rollPatrolFidoCheck(1)" style="border-bottom:1px solid #1e293b; background:rgba(30,41,59,0.3);">
+                    <td style="padding:3px 6px; text-align:center; font-weight:bold; color:var(--gold-400); border:1px solid #334155;">1 – 5</td>
+                    <td style="padding:3px 6px; font-weight:bold; color:#93c5fd; border:1px solid #334155;">Ataque Convencional</td>
+                    <td style="padding:3px 6px; color:#cbd5e1; border:1px solid #334155;">Bombas/cargas en Tabla [B5] (+2 DRM) + 1 baja de tripulación en Tabla [B7] (Paso 4A).</td>
+                  </tr>
+                  <tr id="ppatrol-fido-row-special" class="patrol-interactive-row" onclick="rollPatrolFidoCheck(6)" style="background:rgba(239,68,68,0.15);">
+                    <td style="padding:3px 6px; text-align:center; font-weight:bold; color:#ef4444; border:1px solid #334155;">6</td>
+                    <td style="padding:3px 6px; font-weight:bold; color:#f87171; border:1px solid #334155;">¡Ataque Especial FIDO!</td>
+                    <td style="padding:3px 6px; color:#fca5a5; border:1px solid #334155;">Avión lanza Torpedo Acústico Mark 24. No causa baja de dotación, pero evalúa impacto en Paso 4B.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div id="ppatrol-fido-check-res" style="font-size:0.78rem; color:#cbd5e1; background:rgba(0,0,0,0.3); padding:6px 10px; border-radius:4px; min-height:22px; line-height:1.4;">
+                <span style="color:#94a3b8; font-style:italic;">Pulsa «Tirar Chequeo (1d6)» para determinar si el ataque aéreo incluye torpedo acústico guiado.</span>
+              </div>
+            </div>
+
+            <!-- ==========================================================
+                 PASO 3: FUEGO ANTIAÉREO DEFENSIVO SIMULTÁNEO [TABLA A2]
+                 ========================================================== -->
+            <div style="background:var(--navy-900); border:1px solid #d97706; border-radius:8px; padding:12px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div id="ppatrol-aircraft-damage-box" style="height:36px; border-radius:4px; overflow:hidden; border:2px solid #eab308; box-shadow:0 2px 6px rgba(0,0,0,0.5); background:#071220; display:flex; align-items:center;" title="Pista Oficial de Daños del Avión (Regla 8.3 / Tabla A2)">
+                    <img id="ppatrol-aircraft-damage-chit" src="assets/chits/Aircraft Damage.jpg" alt="Aircraft Damage Track Chit" style="height:100%; object-fit:contain;">
+                  </div>
+                  <span style="background:#d97706; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">3</span>
+                  <strong style="color:#fde047; font-size:0.90rem;">
+                    <span id="ppatrol-a2-table-title">Paso 3: Fuego Antiaéreo Defensivo Simultáneo [Reglas 8.3.2, 8.3.5 &amp; Tabla A2]</span>
+                  </strong>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                  <span style="font-size:0.75rem; color:#fde047; background:rgba(245,158,11,0.2); padding:2px 8px; border-radius:4px; border:1px solid #f59e0b;">Tirada 2d6 simultánea</span>
+                  <button type="button" class="btn-dice" onclick="rollInteractiveA2()" style="background:#b91c1c; border-color:#ef4444; font-size:0.76rem; padding:4px 8px;">
+                    🎲 <span id="ppatrol-btn-a2-label">Tirar AA [A2]</span>
+                  </button>
+                  <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #ef4444; border-radius:3px; padding:1px 4px;">
+                    <span id="ppatrol-lbl-manual-a2" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
+                    <select id="ppatrol-sel-manual-a2" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
+                      <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                    </select>
+                    <button type="button" onclick="rollInteractiveA2(parseInt(document.getElementById('ppatrol-sel-manual-a2').value))" class="btn-xs" style="background:#b91c1c; color:#fee2e2; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a2">Aplicar</span></button>
+                  </div>
+                </div>
+              </div>
+              
+              <table style="width:100%; border-collapse:collapse; font-size:0.76rem; text-align:center; margin-bottom:6px;">
+                <thead>
+                  <tr style="background:#1e293b; color:var(--slate-300);">
+                    <th id="ppatrol-th-a2-roll" style="padding:4px; border:1px solid #334155; width:90px;">Tirada 2d6</th>
+                    <th id="ppatrol-th-a2-effect" style="padding:4px; border:1px solid #334155; width:140px;">Efecto contra Avión</th>
+                    <th id="ppatrol-th-a2-conseq" style="padding:4px; border:1px solid #334155; text-align:left;">Consecuencia</th>
+                  </tr>
+                </thead>
+                <tbody id="ppatrol-a2-tbody">
+                  <tr id="ppatrol-a2-row-1" onclick="selectA2Row(1)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; font-weight:bold; color:#f87171;">2 - 3</td>
+                    <td id="ppatrol-td-a2-r1-eff" style="border:1px solid #334155; font-weight:bold; color:#f87171;">¡Avión Derribado!</td>
+                    <td id="ppatrol-td-a2-r1-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#86efac;">Avión destruido antes de lanzar bombas. Cancela 2.ª pasada y otorga victoria limpia.</td>
+                  </tr>
+                  <tr id="ppatrol-a2-row-2" onclick="selectA2Row(2)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">4 - 5</td>
+                    <td id="ppatrol-td-a2-r2-eff" style="border:1px solid #334155; font-weight:bold; color:#fbbf24;">Avión Dañado</td>
+                    <td id="ppatrol-td-a2-r2-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fde047;">Ataque interrumpido. Avión se retira con averías sin acosar.</td>
+                  </tr>
+                  <tr id="ppatrol-a2-row-3" onclick="selectA2Row(3)" class="patrol-interactive-row" title="Click para seleccionar este resultado">
+                    <td style="border:1px solid #334155; color:#94a3b8;">6 - 12</td>
+                    <td id="ppatrol-td-a2-r3-eff" style="border:1px solid #334155; color:#94a3b8;">Fallo (Miss)</td>
+                    <td id="ppatrol-td-a2-r3-con" style="border:1px solid #334155; text-align:left; padding-left:6px; color:#fca5a5;">El avión enemigo bombardea el buque con impunidad.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div id="ppatrol-a2-footnote" style="font-size:0.72rem; color:var(--slate-400); font-style:italic;">
+                ★ Modificadores: 2x Cañones AA: -1 | 3x Cañones AA: -2 | Dotación Veterana/Elite: -1
+              </div>
+              <div id="res-interactive-a2" style="margin-top:6px; padding:6px 8px; background:rgba(0,0,0,0.3); border-radius:4px; font-size:0.80rem; min-height:22px;">
+                <span style="color:var(--slate-400);">Sin fuego antiaéreo en esta casilla.</span>
+              </div>
+            </div>
+
+            <!-- ==========================================================
+                 PASO 4: RESOLUCIÓN DE DAÑOS DEL ATAQUE AÉREO (CONVENCIONAL O FIDO)
+                 ========================================================== -->
+            <div id="ppatrol-air-attack-panel" style="background:linear-gradient(180deg, rgba(127,29,29,0.22) 0%, rgba(15,23,42,0.95) 100%); border:2px solid #ef4444; border-radius:8px; padding:12px; margin-bottom:14px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #b91c1c; padding-bottom:6px; margin-bottom:10px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#dc2626; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">4</span>
+                  <strong style="color:#fca5a5; font-size:0.90rem;">
+                    <span id="ppatrol-air-panel-title">Paso 4: Resolución de Daños del Ataque Aéreo (Convencional o FIDO)</span>
+                  </strong>
+                </div>
+                <span id="ppatrol-air-panel-badge" style="background:#7f1d1d; color:#fee2e2; border:1px solid #ef4444; font-size:0.72rem; font-weight:bold; padding:2px 8px; border-radius:4px;">
+                  Tabla [B5]/[B7] o FIDO
+                </span>
+              </div>
+
+              <div id="ppatrol-air-attack-summary" style="font-size:0.78rem; color:#fde047; background:rgba(0,0,0,0.4); border-left:3px solid #ef4444; padding:6px 10px; border-radius:3px; margin-bottom:12px;">
+                ⚠️ <strong>Ataque Aéreo Activo:</strong> Resuelve el daño según el arma utilizada (4A Bombardeo Convencional o 4B Torpedo Acústico FIDO):
+              </div>
+
+              <!-- SUB-PASO 4A: BOMBARDEO CONVENCIONAL -->
+              <div style="background:rgba(239,68,68,0.08); border:1px solid #ef4444; border-radius:6px; padding:10px; margin-bottom:12px;">
+                <div style="color:#fca5a5; font-weight:bold; font-size:0.85rem; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+                  <div style="width:34px; height:34px; min-width:34px; border-radius:4px; overflow:hidden; border:2px solid #ef4444; box-shadow:0 2px 6px rgba(0,0,0,0.5); background:#071220; display:inline-flex; align-items:center; justify-content:center;" title="Contador Oficial: Bombas / Cargas de Avión">
+                    <img src="assets/chits/Bombs.jpg" alt="Bombs Chit" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <span>4A. Bombardeo Convencional [Tabla B5 (+2 DRM) y 1 Herida de Dotación B7]</span>
+                </div>
+
+                <!-- 4A.1: Baja de Tripulación (Tabla B7) -->
+                <div style="background:#0f172a; border:1px solid #475569; border-radius:6px; padding:10px; margin-bottom:10px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                    <strong style="color:#fde047; font-size:0.82rem; display:flex; align-items:center; gap:6px;">
+                      <span>🩺</span> <span id="ppatrol-lbl-step-crew">4A.1 — Herida de Dotación Obligatoria (Tabla B7 • 2d6 Puesto + 1d6 Gravedad)</span>
+                    </strong>
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewPosOnly()" style="background:#1e40af; border-color:#3b82f6; font-size:0.74rem; padding:3px 8px;" title="Lanzar 2d6 para determinar qué tripulante u oficial resulta alcanzado">
+                        🎲 <span id="ppatrol-btn-air-crew-pos">1. Tirar Puesto (2d6)</span>
+                      </button>
+                      <button type="button" id="ppatrol-btn-air-crew-sev-roll" class="btn-dice" onclick="rollPatrolAirCrewSevOnly()" style="background:#b91c1c; border-color:#ef4444; font-size:0.74rem; padding:3px 8px;" title="Lanzar 1d6 para determinar el tipo de baja y acumulación">
+                        🎲 <span id="ppatrol-btn-air-crew-sev">2. Tirar Tipo de Baja (1d6)</span>
+                      </button>
+                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewInjury()" style="background:#334155; border-color:#64748b; font-size:0.72rem; padding:3px 7px;" title="Lanzar 2d6 y 1d6 simultáneamente">
+                        ⚡ <span id="ppatrol-btn-air-crew-roll-all">Tirar Ambos</span>
+                      </button>
+                      <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
+                        <span style="color:var(--gold-300);">Puesto (2d6):</span>
+                        <select id="ppatrol-sel-air-crew-pos" onchange="selectB7Pos(parseInt(this.value))" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 2px;">
+                          <option value="2">2 (Cmdte)</option><option value="3">3 (Ing)</option><option value="4">4 (XO)</option><option value="5">5 (Méd)</option>
+                          <option value="6">6 (Crew 1)</option><option value="7" selected>7 (Crew 2)</option><option value="8">8 (Crew 3)</option><option value="9">9 (Crew 4)</option><option value="10">10 (Crew 5)</option>
+                          <option value="11">11 (Nav)</option><option value="12">12 (Piloto)</option>
+                        </select>
+                        <span style="color:var(--gold-300); margin-left:4px;">Gravedad (1d6):</span>
+                        <select id="ppatrol-sel-air-crew-sev" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 2px;">
+                          <option value="1">1 (LW - Leve)</option><option value="2">2 (LW - Leve)</option><option value="3">3 (LW - Leve)</option>
+                          <option value="4" selected>4 (SW - Grave)</option><option value="5">5 (SW - Grave)</option><option value="6">6 (KIA - Muerto)</option>
+                        </select>
+                        <button type="button" onclick="rollPatrolAirCrewInjury(parseInt(document.getElementById('ppatrol-sel-air-crew-pos').value), parseInt(document.getElementById('ppatrol-sel-air-crew-sev').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                          Aplicar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tablas visuales B7: Puesto (2d6) y Gravedad (1d6) -->
+                  <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:8px; margin-bottom:8px;">
+                    <!-- Subtabla 1: Puesto Afectado (2d6) -->
+                    <div style="border:1px solid #334155; border-radius:4px; overflow:hidden;">
+                      <table style="width:100%; border-collapse:collapse; font-size:0.72rem; text-align:left;">
+                        <thead>
+                          <tr style="background:#1e293b; color:#fde047;">
+                            <th style="padding:3px 6px; border-right:1px solid #334155; width:45px; text-align:center;">2d6</th>
+                            <th style="padding:3px 6px; border-right:1px solid #334155;">Puesto de Dotación</th>
+                            <th style="padding:3px 6px;">Efecto si SW / KIA</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr id="b7-pos-row-2" onclick="selectB7Pos(2)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b;">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">2</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#fca5a5; border-right:1px solid #334155;">Comandante (Captain)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">XO asume mando (+1 Detección, +1 To-Hit)</td>
+                          </tr>
+                          <tr id="b7-pos-row-3" onclick="selectB7Pos(3)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(30,41,59,0.3);">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">3</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#93c5fd; border-right:1px solid #334155;">Jefe Máquinas (Engineer)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">+1 DRM a reparaciones y achique</td>
+                          </tr>
+                          <tr id="b7-pos-row-4" onclick="selectB7Pos(4)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b;">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">4</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#93c5fd; border-right:1px solid #334155;">Segundo Oficial (XO)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">Si mandaba, 3.er oficial toma mando</td>
+                          </tr>
+                          <tr id="b7-pos-row-5" onclick="selectB7Pos(5)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(30,41,59,0.3);">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">5</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#f472b6; border-right:1px solid #334155;">Médico (Medic)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">Heridos graves mueren en cambio zona (1d6≥4)</td>
+                          </tr>
+                          <tr id="b7-pos-row-6" onclick="selectB7Pos(6)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b;">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">6–10</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#e2e8f0; border-right:1px solid #334155;">Dotación Genérica (#1 a #5)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">Si todas SW/KIA: +1 To-Hit y -1 Crash Dive</td>
+                          </tr>
+                          <tr id="b7-pos-row-11" onclick="selectB7Pos(11)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(30,41,59,0.3);">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">11</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#67e8f9; border-right:1px solid #334155;">Navegante (Navigator)</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">Aborto obligatorio si ejercía de capitán</td>
+                          </tr>
+                          <tr id="b7-pos-row-12" onclick="selectB7Pos(12)" class="patrol-interactive-row">
+                            <td style="padding:2px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">12</td>
+                            <td style="padding:2px 6px; font-weight:bold; color:#c084fc; border-right:1px solid #334155;">Piloto / Minisub / Kaiten</td>
+                            <td style="padding:2px 6px; color:#cbd5e1;">Misión especial fracasa si todos SW/KIA</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- Subtabla 2: Severidad de la Herida (1d6) -->
+                    <div style="border:1px solid #334155; border-radius:4px; overflow:hidden;">
+                      <table style="width:100%; border-collapse:collapse; font-size:0.72rem; text-align:left;">
+                        <thead>
+                          <tr style="background:#1e293b; color:#f87171;">
+                            <th style="padding:3px 6px; border-right:1px solid #334155; width:35px; text-align:center;">1d6</th>
+                            <th style="padding:3px 6px; border-right:1px solid #334155;">Gravedad</th>
+                            <th style="padding:3px 6px;">Efecto</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr id="b7-sev-row-1" onclick="selectB7Sev(1)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(56,189,248,0.1);">
+                            <td style="padding:3px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">1–3</td>
+                            <td style="padding:3px 6px; font-weight:bold; color:#38bdf8; border-right:1px solid #334155;">LW (Herida Leve)</td>
+                            <td style="padding:3px 6px; color:#93c5fd;">Sin penalizador de combate</td>
+                          </tr>
+                          <tr id="b7-sev-row-4" onclick="selectB7Sev(4)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(245,158,11,0.12);">
+                            <td style="padding:3px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">4–5</td>
+                            <td style="padding:3px 6px; font-weight:bold; color:#fbbf24; border-right:1px solid #334155;">SW (Herida Grave)</td>
+                            <td style="padding:3px 6px; color:#fde047;">Incapacitado para el servicio</td>
+                          </tr>
+                          <tr id="b7-sev-row-6" onclick="selectB7Sev(6)" class="patrol-interactive-row" style="background:rgba(239,68,68,0.15);">
+                            <td style="padding:3px 4px; text-align:center; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">6</td>
+                            <td style="padding:3px 6px; font-weight:bold; color:#ef4444; border-right:1px solid #334155;">KIA (Muerto)</td>
+                            <td style="padding:3px 6px; color:#fca5a5;">Baja permanente definitiva</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="padding:4px 6px; font-size:0.68rem; color:#fde047; background:#0f172a; border-top:1px solid #334155; line-height:1.35;">
+                        ★ <strong>Regla Acumulativa [Regla 8.6]:</strong> 2x HL (Herida Leve) = HG (Herida Grave / Incapacitado). 2x HG = KIA (Baja Mortal). Las heridas adicionales sobre un tripulante ya herido se acumulan automáticamente en la hoja del buque.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="ppatrol-air-crew-res" style="font-size:0.76rem; color:#cbd5e1; background:rgba(30,41,59,0.5); padding:6px 8px; border-radius:4px; min-height:22px; line-height:1.4;">
+                    <span style="color:#94a3b8; font-style:italic;">Pulsa «1. Tirar Puesto (2d6)» para determinar qué oficial o marinero es alcanzado, y después «2. Tirar Tipo de Baja (1d6)» para resolver la gravedad y acumulación.</span>
+                  </div>
+                </div>
+
+                <!-- 4A.2: Pasada(s) de Bombas del Avión (Tabla B5) -->
+                <div style="background:#0f172a; border:1px solid #475569; border-radius:6px; padding:10px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                    <strong style="color:#f87171; font-size:0.82rem; display:flex; align-items:center; gap:6px;">
+                      <span>💣</span> <span id="ppatrol-lbl-step-bombs">4A.2 — Impactos de Bombas y Cargas (Tabla B5 con +2 DRM Aéreo)</span>
+                    </strong>
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                      <button type="button" class="btn-dice" onclick="rollPatrolAirBombRun()" style="background:#dc2626; border-color:#f87171; font-size:0.74rem; padding:3px 8px;">
+                        🎲 <span id="ppatrol-btn-air-bomb-roll">Tirar Bombas (B5)</span>
+                      </button>
+                      <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
+                        <span style="color:var(--gold-300);">Mesa (2d6):</span>
+                        <select id="ppatrol-sel-air-bomb-roll" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
+                          <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                          <option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                        </select>
+                        <button type="button" onclick="rollPatrolAirBombRun(parseInt(document.getElementById('ppatrol-sel-air-bomb-roll').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                          Aplicar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tabla Visual B5 Oficial -->
+                  <div style="border:1px solid #334155; border-radius:4px; overflow:hidden; margin-bottom:8px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:0.72rem; text-align:center;">
+                      <thead>
+                        <tr style="background:#1e293b; color:#fca5a5;">
+                          <th style="padding:4px; border-right:1px solid #334155; width:70px;">Tirada Final (2d6 + DRM)</th>
+                          <th style="padding:4px; border-right:1px solid #334155; width:130px;">Impactos de Bombas</th>
+                          <th style="padding:4px; text-align:left; padding-left:8px;">Efecto Operativo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr id="b5-row-1" onclick="selectB5Row(1)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(34,197,94,0.1);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">2 – 3</td>
+                          <td style="padding:3px; font-weight:bold; color:#4ade80; border-right:1px solid #334155;">0 Impactos (Ineficaz)</td>
+                          <td style="padding:3px 8px; text-align:left; color:#86efac;">Bombas explotan lejos sin causar averías.</td>
+                        </tr>
+                        <tr id="b5-row-2" onclick="selectB5Row(2)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(253,224,71,0.1);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">4 – 6</td>
+                          <td style="padding:3px; font-weight:bold; color:#fde047; border-right:1px solid #334155;">1 Impacto de Bomba</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fef08a;">1 tirada en Tabla B6 (d66) de averías al submarino.</td>
+                        </tr>
+                        <tr id="b5-row-3" onclick="selectB5Row(3)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(251,146,60,0.12);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">7 – 8</td>
+                          <td style="padding:3px; font-weight:bold; color:#fb923c; border-right:1px solid #334155;">2 Impactos de Bombas</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fed7aa;">2 tiradas en Tabla B6 (d66) de averías.</td>
+                        </tr>
+                        <tr id="b5-row-4" onclick="selectB5Row(4)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(248,113,113,0.15);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">9 – 10</td>
+                          <td style="padding:3px; font-weight:bold; color:#f87171; border-right:1px solid #334155;">3 Impactos de Bombas</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fca5a5;">3 tiradas en Tabla B6 (d66) de averías.</td>
+                        </tr>
+                        <tr id="b5-row-5" onclick="selectB5Row(5)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(239,68,68,0.2);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">11</td>
+                          <td style="padding:3px; font-weight:bold; color:#ef4444; border-right:1px solid #334155;">4 Impactos de Bombas</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fca5a5;">4 tiradas en Tabla B6 (d66) de averías.</td>
+                        </tr>
+                        <tr id="b5-row-6" onclick="selectB5Row(6)" class="patrol-interactive-row" style="border-bottom:1px solid #1e293b; background:rgba(220,38,38,0.25);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">12</td>
+                          <td style="padding:3px; font-weight:bold; color:#dc2626; border-right:1px solid #334155;">5 Impactos de Bombas</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fca5a5;">5 tiradas en Tabla B6 (d66) de averías.</td>
+                        </tr>
+                        <tr id="b5-row-7" onclick="selectB5Row(7)" class="patrol-interactive-row" style="background:rgba(69,10,10,0.4);">
+                          <td style="padding:3px; font-weight:bold; color:var(--gold-400); border-right:1px solid #334155;">13+</td>
+                          <td style="padding:3px; font-weight:900; color:#ef4444; border-right:1px solid #334155;">¡SUBMARINO HUNDIDO!</td>
+                          <td style="padding:3px 8px; text-align:left; color:#fca5a5;">Impacto directo catastrófico. Quiebra de casco de presión.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div style="padding:4px 6px; font-size:0.68rem; color:#94a3b8; background:#0f172a; border-top:1px solid #334155; line-height:1.3;">
+                      ★ <strong>Regla 8.3:</strong> Ataque aéreo aplica automáticamente <strong>+2 DRM</strong> a la tirada en Tabla B5.
+                    </div>
+                  </div>
+
+                  <div id="ppatrol-air-bomb-res" style="font-size:0.76rem; color:#cbd5e1; background:rgba(30,41,59,0.5); padding:6px 8px; border-radius:4px; min-height:22px; line-height:1.4;">
+                    <span style="color:#94a3b8; font-style:italic;">Pulsa «Tirar Bombas (B5)» o haz clic en la fila de arriba para resolver los impactos sobre el submarino.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB-PASO 4B: IMPACTO DEL TORPEDO ACÚSTICO FIDO -->
+              <div id="ppatrol-fido-impact-panel" style="background:rgba(56,189,248,0.08); border:1px solid #38bdf8; border-radius:6px; padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                  <strong style="color:#7dd3fc; font-size:0.85rem; display:flex; align-items:center; gap:8px;">
+                    <div style="width:34px; height:34px; min-width:34px; border-radius:4px; overflow:hidden; border:2px solid #38bdf8; box-shadow:0 2px 6px rgba(0,0,0,0.5); background:#071220; display:inline-flex; align-items:center; justify-content:center;" title="Contador Oficial: Torpedo Acústico FIDO">
+                      <img src="assets/chits/Fido.jpg" alt="FIDO Chit" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <span>4B. Torpedo Acústico Guiado Mark 24 «FIDO» [Regla 8.3.3]</span>
+                  </strong>
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="btn-dice" onclick="rollPatrolFidoImpact()" style="background:#0284c7; border-color:#38bdf8; font-size:0.72rem; padding:2px 7px;">
+                      🎯 <span>Tirar Impacto (1d6)</span>
+                    </button>
+                    <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
+                      <span style="color:var(--gold-300);">Mesa:</span>
+                      <select id="ppatrol-sel-fido-impact" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
+                        <option value="1">1 (Hundido)</option>
+                        <option value="2">2 (7 Daños)</option>
+                        <option value="3">3 (Fallo)</option>
+                        <option value="4">4 (Fallo)</option>
+                        <option value="5">5 (Fallo)</option>
+                        <option value="6">6 (Fallo)</option>
+                      </select>
+                      <button type="button" onclick="rollPatrolFidoImpact(parseInt(document.getElementById('ppatrol-sel-fido-impact').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                        Aplicar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:8px; line-height:1.35;">
+                  ℹ️ El torpedo acústico busca a cota profunda el sonido de cavitación de las hélices. <strong>No causa la baja automática de dotación</strong> de las bombas convencionales.
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; text-align:center; font-size:0.72rem; margin-bottom:6px;">
+                  <div id="ppatrol-fido-imp-box-1" onclick="rollPatrolFidoImpact(1)" style="background:rgba(220,38,38,0.25); border:1px solid #ef4444; border-radius:4px; padding:6px 4px; cursor:pointer;">
+                    <strong style="color:#ef4444; display:block; font-size:0.82rem;">1d6 = 1</strong>
+                    <span style="color:#fca5a5; font-weight:bold;">¡HUNDIDO!</span>
+                  </div>
+                  <div id="ppatrol-fido-imp-box-2" onclick="rollPatrolFidoImpact(2)" style="background:rgba(245,158,11,0.2); border:1px solid #f59e0b; border-radius:4px; padding:6px 4px; cursor:pointer;">
+                    <strong style="color:#fbbf24; display:block; font-size:0.82rem;">1d6 = 2</strong>
+                    <span style="color:#fde047; font-weight:bold;">7 Impactos de Daño</span>
+                  </div>
+                  <div id="ppatrol-fido-imp-box-3" onclick="rollPatrolFidoImpact(4)" style="background:rgba(34,197,94,0.15); border:1px solid #22c55e; border-radius:4px; padding:6px 4px; cursor:pointer;">
+                    <strong style="color:#4ade80; display:block; font-size:0.82rem;">1d6 = 3 – 6</strong>
+                    <span style="color:#86efac; font-weight:bold;">Fallo / Inerte (Sin daño)</span>
+                  </div>
+                </div>
+
+                <div id="ppatrol-fido-impact-res" style="font-size:0.75rem; color:#cbd5e1; background:rgba(0,0,0,0.4); padding:5px 8px; border-radius:3px; min-height:20px; line-height:1.35;">
+                  <span style="color:#94a3b8; font-style:italic;">Sin impacto de FIDO evaluado en esta casilla.</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ==========================================================
+                 PASO 5: ACOSO AÉREO Y BARRENADO ("HUNTED TO EXHAUSTION") [REGLA 8.3.4]
+                 ========================================================== -->
+            <div style="background:var(--navy-900); border:1px solid #a855f7; border-radius:8px; padding:12px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#7e22ce; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">5</span>
+                  <strong style="color:#d8b4fe; font-size:0.90rem;">
+                    <span id="ppatrol-hunted-title">Paso 5: Acoso Aéreo y Barrenado ("Hunted to Exhaustion") [Regla 8.3.4]</span>
+                  </strong>
+                </div>
+                <span style="font-size:0.75rem; color:#d8b4fe; background:rgba(168,85,247,0.2); padding:2px 8px; border-radius:4px; border:1px solid #a855f7;">Límite 4 Encuentros</span>
+              </div>
+              
+              <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 8px 0; line-height:1.4;">
+                Si el avión no fue derribado en el Paso 2 y el buque sufre daños críticos que le impiden sumergirse o permanece acosado en la casilla de patrulla:
+              </p>
+              
+              <div style="background:rgba(126,34,206,0.15); border:1px solid #9333ea; border-radius:6px; padding:10px; font-size:0.80rem; color:#e9d5ff; line-height:1.45; margin-bottom:12px;">
+                <strong>⚠️ Barrenado Forzoso por Doctrina Naval (Regla 8.3.4):</strong> La aviación enemiga mantiene el cerco sobre el buque convocando más patrullas. Si en el ciclo de rondas adicionales se acumulan <strong>4 encuentros combinados con aviones o escoltas</strong>, el submarino es considerado <strong>"Hunted to Exhaustion"</strong>: con baterías totalmente descargadas y aire no respirable, el Comandante está obligado por doctrina a emerger y <strong>barrenar y echar a pique el submarino (*Scuttle*)</strong> para impedir su captura.
+              </div>
+
+              <!-- Botones de resolución post-aérea -->
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="action-btn" onclick="nextPatrolBox(); setWorkflowPhase(2);" style="flex:1; min-width:180px; justify-content:center; background:#1e293b; border-color:#64748b; color:#cbd5e1; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
+                  ◀ <span id="ppatrol-btn-air-evaded">Avión Evadido: Avanzar Casilla</span>
+                </button>
+                <button type="button" class="action-btn" onclick="setWorkflowPhase(4)" style="flex:1; min-width:180px; justify-content:center; background:#7f1d1d; border-color:#ef4444; color:#fee2e2; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
+                  💥 <span id="ppatrol-btn-air-damaged">Daño Sufrido: Ir a Averías (Fase 4) ➔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Inline Script Guarantee for FIDO logic -->
+            <script>
+              (function() {
+                window.updateFidoStatus = function() {
+                  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+                  const monthStr = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.selectedMonth) || "1941-12";
+                  const isFidoActive = monthStr >= "1944-05";
+                  const badge = document.getElementById('ppatrol-fido-status-badge');
+                  const note = document.getElementById('ppatrol-fido-status-note');
+
+                  if (badge) {
+                    if (isFidoActive) {
+                      badge.style.background = "rgba(22, 163, 74, 0.25)";
+                      badge.style.borderColor = "#22c55e";
+                      badge.style.color = "#86efac";
+                      badge.innerHTML = isEn
+                        ? `🟢 ACTIVE (Current Period: ${monthStr} ≥ 05/1944)`
+                        : `🟢 ACTIVA (Periodo actual: ${monthStr} ≥ 05/1944)`;
+                    } else {
+                      badge.style.background = "rgba(100, 116, 139, 0.2)";
+                      badge.style.borderColor = "#64748b";
+                      badge.style.color = "#cbd5e1";
+                      badge.innerHTML = isEn
+                        ? `⚪ INACTIVE (Current Period: ${monthStr} &lt; 05/1944 • Unlocked May 1944)`
+                        : `⚪ INACTIVA (Periodo actual: ${monthStr} &lt; 05/1944 • Desbloqueo histórico Mayo 1944)`;
+                    }
+                  }
+
+                  if (note) {
+                    if (isFidoActive) {
+                      note.innerHTML = isEn
+                        ? `⚠️ <strong>Active Historical Period:</strong> Campaign date is post-May 1944 (5/44+). When under air attack, roll 1d6: on a roll of <strong>6</strong>, the aircraft drops a <strong>FIDO Mark 24 Acoustic Homing Torpedo</strong> instead of conventional charges. <em>(You can roll/test at any time)</em>.`
+                        : `⚠️ <strong>Periodo Histórico Activo:</strong> La fecha histórica actual es posterior a Mayo de 1944 (5/44+). Al sufrir ataque aéreo se tira 1d6: con resultado <strong>6</strong>, el avión lanza un <strong>Torpedo Acústico Guiado Mark 24 «FIDO»</strong> en lugar de cargas convencionales. <em>(Puedes tirar la comprobación en cualquier momento)</em>.`;
+                    } else {
+                      note.innerHTML = isEn
+                        ? `Históricamente los aliados introdujeron el torpedo acústico guiado Mark 24 «FIDO» en Mayo de 1944 (5/44+). <em>(Puedes tirar la comprobación y simular en cualquier momento aunque el periodo sea anterior)</em>.`
+                        : `Históricamente los aliados comenzaron a desplegar el torpedo acústico guiado Mark 24 «FIDO» a partir de Mayo de 1944 (5/44+). <em>(Puedes tirar la comprobación y simular en cualquier momento aunque el periodo sea anterior)</em>.`;
+                    }
+                  }
+                };
+
+                window.rollPatrolFidoCheck = function(manualRoll) {
+                  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+                  let roll;
+                  let isManual = false;
+                  if (typeof manualRoll === 'number' && manualRoll >= 1 && manualRoll <= 6) {
+                    roll = manualRoll;
+                    isManual = true;
+                  } else {
+                    roll = Math.floor(Math.random() * 6) + 1;
+                  }
+
+                  const rowNormal = document.getElementById('ppatrol-fido-row-normal');
+                  const rowSpecial = document.getElementById('ppatrol-fido-row-special');
+                  const resEl = document.getElementById('ppatrol-fido-check-res');
+                  const rollType = isManual ? (isEn ? "Tabletop 1d6" : "Mesa 1d6") : "1d6";
+
+                  if (rowNormal) rowNormal.style.outline = (roll <= 5) ? "2px solid #38bdf8" : "none";
+                  if (rowSpecial) rowSpecial.style.outline = (roll === 6) ? "2px solid #ef4444" : "none";
+
+                  let msg;
+                  if (roll <= 5) {
+                    msg = isEn
+                      ? `🎲 FIDO Check [${rollType} = ${roll}]: Conventional Attack (Bombs/Charges on Chart [B5] with +2 DRM + 1 crew casualty on [B7] in Step 4A). No FIDO deployed.`
+                      : `🎲 Comprobación FIDO [${rollType} = ${roll}]: Ataque Convencional Normal (Bombas/cargas en Tabla [B5] con +2 DRM + 1 baja de dotación en [B7] en Paso 4A). No despliega FIDO.`;
+                    if (resEl) {
+                      resEl.innerHTML = `<span style="color:#93c5fd; font-weight:700;">${msg}</span>`;
+                    }
+                  } else {
+                    msg = isEn
+                      ? `🚨 ALERT! FIDO Check [${rollType} = 6]: SPECIAL ATTACK! Aircraft drops Mark 24 "FIDO" Acoustic Homing Torpedo! Resolve impact in Step 4B below.`
+                      : `🚨 ¡ALERTA! Comprobación FIDO [${rollType} = 6]: ¡ATAQUE ESPECIAL! El avión lanza un Torpedo Acústico Teledirigido Mark 24 "FIDO". Resuelve el impacto en el Paso 4B a continuación.`;
+                    if (resEl) {
+                      resEl.innerHTML = `<span style="color:#f87171; font-weight:800;">${msg}</span>`;
+                    }
+                  }
+                  if (typeof showToast === 'function') showToast(msg);
+                  if (typeof saveState === 'function') saveState();
+                  return msg;
+                };
+
+                window.rollPatrolFidoImpact = function(manualRoll) {
+                  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+                  let roll;
+                  let isManual = false;
+                  if (typeof manualRoll === 'number' && manualRoll >= 1 && manualRoll <= 6) {
+                    roll = manualRoll;
+                    isManual = true;
+                  } else {
+                    roll = Math.floor(Math.random() * 6) + 1;
+                  }
+
+                  const b1 = document.getElementById('ppatrol-fido-imp-box-1');
+                  const b2 = document.getElementById('ppatrol-fido-imp-box-2');
+                  const b3 = document.getElementById('ppatrol-fido-imp-box-3');
+                  if (b1) b1.style.outline = (roll === 1) ? "2px solid #ef4444" : "none";
+                  if (b2) b2.style.outline = (roll === 2) ? "2px solid #f59e0b" : "none";
+                  if (b3) b3.style.outline = (roll >= 3) ? "2px solid #22c55e" : "none";
+
+                  const resEl = document.getElementById('ppatrol-fido-impact-res');
+                  const rollType = isManual ? (isEn ? "Tabletop 1d6" : "Mesa 1d6") : "1d6";
+                  let msg;
+
+                  if (roll === 1) {
+                    msg = isEn
+                      ? `💥 FIDO Impact [${rollType} = 1]: 💀 SUNK! Acoustic homing torpedo strikes pressure hull. Submarine lost!`
+                      : `💥 Impacto FIDO [${rollType} = 1]: 💀 ¡SUBMARINO HUNDIDO! El torpedo acústico impacta en el casco de presión. Pérdida catastrófica.`;
+                    if (resEl) resEl.innerHTML = `<span style="color:#ef4444; font-weight:800;">${msg}</span>`;
+                  } else if (roll === 2) {
+                    msg = isEn
+                      ? `💥 FIDO Impact [${rollType} = 2]: ⚠️ 7 HITS OF DAMAGE! Detonation inflicts 7 hull/system hits.`
+                      : `💥 Impacto FIDO [${rollType} = 2]: ⚠️ ¡7 IMPACTOS DE DAÑO! Detonación masiva provoca 7 puntos de daño en casco y sistemas.`;
+                    if (resEl) resEl.innerHTML = `<span style="color:#fbbf24; font-weight:800;">${msg}</span>`;
+                  } else {
+                    msg = isEn
+                      ? `🛡️ FIDO Impact [${rollType} = ${roll}]: ✅ MISS / DUD! Homing torpedo lost target or detonator failed. No damage!`
+                      : `🛡️ Impacto FIDO [${rollType} = ${roll}]: ✅ ¡FALLO / INERTE! El torpedo pierde la señal acústica o el detonador falla. Sin daños.`;
+                    if (resEl) resEl.innerHTML = `<span style="color:#4ade80; font-weight:800;">${msg}</span>`;
+                  }
+                  if (typeof showToast === 'function') showToast(msg);
+                  if (typeof saveState === 'function') saveState();
+                  return msg;
+                };
+
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', updateFidoStatus);
+                } else {
+                  updateFidoStatus();
+                }
+              })();
+            </script>
+
+          </div>
+
+          <!-- Quick Navigation Actions Bar -->
+          <div class="action-bar-nav" style="margin-top:16px;">
+            <button class="btn-step-prev" onclick="setWorkflowPhase(2)">
+              ◀ <span id="ppatrol-btn-prev">Volver a Fase 2: Trayecto</span>
+            </button>
+            <button class="btn-step-next" onclick="setWorkflowPhase(3)">
+              <span id="ppatrol-btn-next">Pasar a Fase 3: Encuentro con Barcos ➔</span>
+            </button>
+          </div>
+        </div>

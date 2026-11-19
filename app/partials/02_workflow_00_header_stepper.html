@@ -1,0 +1,40 @@
+<div id="tab-workflow" class="tab-pane active">
+      <div class="workflow-engine-card">
+        
+        <!-- Phase Stepper Navigation -->
+        <div class="phase-stepper">
+          <div id="step-nav-0" class="step-item active" onclick="setWorkflowPhase(0)" title="Atajo: [0]">
+            <span class="badge-num">0</span>
+            <span id="lbl-step0">Submarino</span>
+          </div>
+          <div id="step-nav-school" class="step-item" onclick="setWorkflowPhase('school')" title="Atajo: [E]">
+            <span class="badge-num">🏫</span>
+            <span id="lbl-stepschool">Escuelas</span>
+          </div>
+          <div id="step-nav-1" class="step-item" onclick="setWorkflowPhase(1)" title="Atajo: [F1] o [Z]">
+            <span class="badge-num">1</span>
+            <span id="lbl-step1">Zarpe</span>
+          </div>
+          <div id="step-nav-2" class="step-item" onclick="setWorkflowPhase(2)" title="Atajo: [F2] o [T]">
+            <span class="badge-num">2</span>
+            <span id="lbl-step2">Trayecto</span>
+          </div>
+          <div id="step-nav-patrol" class="step-item" onclick="setWorkflowPhase('patrol')" title="Atajo: [P] • Encuentro con Aviones [Regla 8.3]">
+            <span class="badge-num">✈️</span>
+            <span id="lbl-steppatrol">Encuentro con Aviones</span>
+          </div>
+          <div id="step-nav-3" class="step-item" onclick="setWorkflowPhase(3)" title="Atajo: [F3] o [C]">
+            <span class="badge-num">3</span>
+            <span id="lbl-step3">Encuentro con Barcos</span>
+          </div>
+          <div id="step-nav-4" class="step-item" onclick="setWorkflowPhase(4)" title="Atajo: [F4] o [A]">
+            <span class="badge-num">4</span>
+            <span id="lbl-step4">Averías</span>
+          </div>
+          <div id="step-nav-5" class="step-item" onclick="setWorkflowPhase(5)" title="Atajo: [F5] o [R]">
+            <span class="badge-num">5</span>
+            <span id="lbl-step5">Refit</span>
+          </div>
+        </div>
+
+        <!-- =================== FASE 0: ELECCIÓN DE SUBMARINO Y COMANDANTE =================== -->

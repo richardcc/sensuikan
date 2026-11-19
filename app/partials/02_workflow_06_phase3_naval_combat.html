@@ -1,0 +1,801 @@
+        <div id="phase-content-3" class="phase-body">
+          <!-- Main Header Banner (Single, clean, non-redundant) -->
+          <div class="phase-header-banner" style="background:linear-gradient(90deg, #0f2d4a 0%, #064e3b 100%); border-left:4px solid #10b981; padding:12px 16px; margin-bottom:14px; border-radius:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <h2>
+                <span>🚢</span>
+                <span id="p3-title">FASE 3: ENCUENTRO CON BARCOS Y COMBATE NAVAL [REGLAS 8.1 - 8.2]</span>
+              </h2>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <button type="button" onclick="openShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 14px; font-size:0.84rem; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.25); display:inline-flex; align-items:center; gap:6px; font-weight:800; cursor:pointer; box-shadow:0 2px 10px rgba(16,185,129,0.3); border-radius:6px;">
+                  <span>📖</span> <span id="p3-top-btn-ship-workflow">Ver Workflow Completo de Barcos [8.1 - 8.2]</span>
+                </button>
+                <button type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.82rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:6px; font-weight:bold; border-radius:6px;">
+                  <span>📋</span> <span id="p3-btn-b1b6">Ver Tablas B1-B6 Oficiales</span>
+                </button>
+                <button type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.82rem; border-color:var(--gold-500); color:var(--gold-300); display:inline-flex; align-items:center; gap:6px; border-radius:6px;">
+                  <span>🗺️</span> <span id="p3-btn-seq">Carta de Secuencia</span>
+                </button>
+              </div>
+            </div>
+            <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <span style="font-size:0.80rem; color:#cbd5e1;">Secuencia oficial paso a paso: Encuentro [A3] ➔ Determinación de Blanco [T1-T5] y Momento ➔ Alcance [8.2.1] ➔ Modalidad [8.2.2] ➔ Salva y Daño [B1-B4] ➔ Escoltas [B4-B6] ➔ Registro Rogu Bukku.</span>
+              <span id="p3-rules-pill" class="rules-ref-pill" style="font-size:0.75rem;">[Reglas 8.1 - 8.2 • Hoja H1 • Tablas T1-T5, B1-B6]</span>
+            </div>
+          </div>
+
+          <!-- TACTICAL WORKFLOW STEP CARDS -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+
+            <!-- ========================================================================= -->
+            <!-- PASO 0: DETERMINACIÓN DEL TIPO DE ENCUENTRO NAVAL [REGLA 8.1.1 & TABLA A3] -->
+            <!-- ========================================================================= -->
+            <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #0284c7; border-left:4px solid #38bdf8; border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#0284c7; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">0</span>
+                  <h4 id="p3-step0-title" style="margin:0; color:#38bdf8; font-size:0.96rem;">Paso 0: Tipo de Encuentro Naval Ocurrido [Regla 8.1.1 & Tabla A3]</h4>
+                </div>
+                <span id="p3-step0-rule-pill" class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px;">Tabla [A3] • Regla 8.1.1</span>
+              </div>
+
+              <!-- Controls: Dropdown -->
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:6px; border:1px solid #1e293b;">
+                <label for="p3-encounter-type-select" id="p3-lbl-enc-type" style="font-size:0.82rem; color:var(--gold-300); font-weight:700;">Contacto en Casilla:</label>
+                <select id="p3-encounter-type-select" onchange="onEncounterTypeChange(this.value, 'manual_change')" style="flex:1; min-width:240px; padding:6px 10px; font-size:0.85rem; background:#071220; color:#fff; border:1px solid #38bdf8; border-radius:5px; font-weight:bold;">
+                  <option value="Ship">🚢 Ship / Mercante Único (1-4: T1 • 5-6: T2)</option>
+                  <option value="Ship*">🚢* Ship* / Mercante con Escolta Cercana</option>
+                  <option value="Two Ships">🚢🚢 Two Ships / Dos Mercantes (2 Blancos)</option>
+                  <option value="Ship Group">🚢🚢🚢 Ship Group / Grupo de Mercantes (Convoy)</option>
+                  <option value="Warship">⚔️ Warship / Buque de Guerra (Tabla T3)</option>
+                  <option value="Capital Ship">⚓ Capital Ship / Buque Capital (Tabla T4/T5)</option>
+                </select>
+              </div>
+
+              <!-- Banner explicativo dinámico -->
+              <div id="p3-encounter-type-banner" style="font-size:0.80rem; padding:8px 12px; border-radius:6px; background:rgba(2,132,199,0.15); border:1px solid #0284c7; color:#bae6fd; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <span id="p3-encounter-desc-text">🚢 <strong>Ship:</strong> 1 Mercante en solitario. Tira 1d6 para determinar tamaño: 1–4 Mercante Pequeño (Tabla T1, sin escolta) o 5–6 Mercante Grande (Tabla T2, escoltado).</span>
+              </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- PASO 1: IDENTIFICACIÓN DEL BLANCO Y MOMENTO DEL DÍA [8.1.2 - 8.1.10]       -->
+            <!-- ========================================================================= -->
+            <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #10b981; border-left:4px solid #10b981; border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#059669; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">1</span>
+                  <h4 id="p3-step1-title" style="margin:0; color:#34d399; font-size:0.96rem;">Paso 1: Identificación del Blanco y Momento del Día [Reglas 8.1.2 - 8.1.10]</h4>
+                </div>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px;">Tablas [T1 - T5] • Regla 8.1.2</span>
+              </div>
+
+              <!-- Two Column Layout: Left Target Info & Rollers | Right Summary Table & Time of Day -->
+              <div style="display:grid; grid-template-columns: 1.15fr 0.85fr; gap:14px; align-items:start;">
+                
+                <!-- Left Column: Generated Target & Dice Rollers -->
+                <div>
+                  <div class="target-specs-box" style="margin-bottom:8px; padding:10px 14px; background:rgba(0,0,0,0.4); border:1px solid #334155; border-radius:6px; display:flex; align-items:center; gap:12px;">
+                    <!-- Authentic Ship Chit Preview -->
+                    <div id="wf-target-chit-box" style="width:64px; height:64px; min-width:64px; border-radius:6px; overflow:hidden; border:2px solid #475569; background:#071220; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(0,0,0,0.6);" title="Contador Oficial del Buque">
+                      <img id="wf-target-chit-img" src="" alt="Target Ship Chit" style="width:100%; height:100%; object-fit:cover; display:none;">
+                      <span id="wf-target-chit-placeholder" style="font-size:1.8rem; color:#475569;">🚢</span>
+                    </div>
+                    <div style="flex:1;">
+                      <div id="p3-target-lbl" style="font-size:0.80rem; color:var(--slate-400); text-transform:uppercase; font-weight:bold;">Buque / Contacto Generado:</div>
+                      <div id="wf-target-name" style="font-size:1.15rem; font-weight:800; color:#94a3b8; font-style:italic; margin:2px 0;">-- Ningún buque generado aún --</div>
+                      <div id="wf-target-sub" style="font-size:0.84rem; color:#64748b;">Tira 1d6 para tamaño o genera blanco según tablas T1–T5 abajo.</div>
+                    </div>
+                  </div>
+
+                  <!-- 3 TIRADAS INDEPENDIENTES SEGÚN WORKFLOW OFICIAL [REGLA 8.1.2] -->
+                  <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;">
+
+                    <!-- PARTE 1: TAMAÑO DEL BARCO (TIRADA 1d6 INDEPENDIENTE) -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #38bdf8; border-left:4px solid #38bdf8; border-radius:6px; padding:8px 10px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                        <span style="font-size:0.78rem; font-weight:bold; color:#38bdf8;">
+                          🎲 1. Tamaño del Barco (1d6):
+                        </span>
+                        <span style="font-size:0.72rem; color:#94a3b8;">1–4: Mercante Pequeño (T1) • 5–6: Mercante Grande (T2)</span>
+                      </div>
+                      
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <button id="p3-btn-roll-size-d6" type="button" class="btn-dice" onclick="rollShipSizeD6()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border:1px solid #38bdf8; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d6 para determinar si es T1 o T2 (no genera el buque aún)">
+                          🎲 Tirar 1d6 Tamaño [1-4: T1 • 5-6: T2]
+                        </button>
+                        
+                        <!-- Mesa 1d6 Tamaño -->
+                        <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
+                          <span style="font-size:0.73rem; color:#38bdf8; font-weight:bold;">Mesa (1d6):</span>
+                          <select id="p3-manual-size-d6" style="padding:2px 4px; font-size:0.75rem; background:#0f172a; color:#fff; border:1px solid #475569; border-radius:4px;">
+                            <option value="1">1 (T1 Peq)</option>
+                            <option value="2">2 (T1 Peq)</option>
+                            <option value="3">3 (T1 Peq)</option>
+                            <option value="4">4 (T1 Peq)</option>
+                            <option value="5">5 (T2 Gde)</option>
+                            <option value="6">6 (T2 Gde)</option>
+                          </select>
+                          <button type="button" onclick="rollShipSizeD6(parseInt(document.getElementById('p3-manual-size-d6').value))" class="btn-xs" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;" title="Aplicar valor 1d6 de mesa">➔ Tamaño</button>
+                        </div>
+                      </div>
+
+                      <!-- Banner de Resultado de Tirada de Tamaño 1d6 -->
+                      <div id="p3-size-d6-result-banner" style="display:none; font-size:0.78rem; padding:5px 8px; border-radius:4px; margin-top:6px; font-weight:bold; line-height:1.35;"></div>
+                    </div>
+
+                    <!-- PARTE 2: DETERMINACIÓN DEL BUQUE MERCANTE EN T1 O T2 (TIRADA 1d100 INDEPENDIENTE) -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #10b981; border-left:4px solid #10b981; border-radius:6px; padding:8px 10px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                        <span style="font-size:0.78rem; font-weight:bold; color:#34d399;">
+                          🚢 2. Buque Mercante (1d100 en T1 o T2):
+                        </span>
+                        <span style="font-size:0.72rem; color:#94a3b8;">Tira en T1 o T2 según el tamaño determinado arriba</span>
+                      </div>
+
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <button id="p3-btn-roll-merchant" type="button" class="btn-dice" onclick="rollMerchantShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #059669 0%, #047857 100%); border:1px solid #10b981; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d100 en la tabla según el tamaño determinado">
+                          🚢 Tirar Buque [Tabla T1 / T2]
+                        </button>
+                        <button type="button" onclick="rollChartT1()" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T1 (Mercante Pequeño)">
+                          T1 Pequeño
+                        </button>
+                        <button type="button" onclick="rollChartT2()" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T2 (Mercante Grande / Petrolero)">
+                          T2 Grande
+                        </button>
+
+                        <!-- Mesa 1d100 Mercante -->
+                        <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
+                          <span style="font-size:0.73rem; color:var(--gold-300); font-weight:bold;">Mesa (1d100):</span>
+                          <input type="number" id="p3-manual-merchant-d100" min="1" max="100" placeholder="1-100" style="width:48px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:4px; font-size:0.74rem;">
+                          <button type="button" onclick="rollMerchantShip(parseInt(document.getElementById('p3-manual-merchant-d100').value))" class="btn-xs" style="background:#047857; color:#fff; border:1px solid #10b981; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;">➔ Aplicar</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- PARTE 3: DETERMINACIÓN DE ESCOLTA EN T3 O T5 SEGÚN EL SITIO (TIRADA INDEPENDIENTE) -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #f59e0b; border-left:4px solid #f59e0b; border-radius:6px; padding:8px 10px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                        <span style="font-size:0.78rem; font-weight:bold; color:#fde047;">
+                          🛡️ 3. Escolta / Buque de Guerra [T3 o T5 según sitio]:
+                        </span>
+                        <span id="p3-escort-theater-tag" style="font-size:0.72rem; color:#fde68a; background:rgba(245,158,11,0.2); padding:1px 6px; border-radius:3px; border:1px solid #d97706;">Sitio: Pearl Harbor ➔ Tabla T3 (US)</span>
+                      </div>
+
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <button id="p3-btn-roll-escort" type="button" class="btn-dice" onclick="rollEscortShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #b45309 0%, #92400e 100%); border:1px solid #f59e0b; color:#fff; font-weight:bold; cursor:pointer;" title="Tira la escolta en T3 o T5 según la zona asignada">
+                          🛡️ Tirar Escolta Según Sitio
+                        </button>
+                        <button type="button" onclick="rollEscortShip(null, 'T3')" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Tirar en Tabla T3 (Escoltas / Destructores US)">
+                          T3 (US)
+                        </button>
+                        <button type="button" onclick="rollEscortShip(null, 'T5')" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Tirar en Tabla T5 (Royal Navy / Commonwealth)">
+                          T5 (CW)
+                        </button>
+
+                        <!-- Mesa Escolta -->
+                        <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
+                          <span style="font-size:0.73rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
+                          <input type="number" id="p3-manual-escort-val" min="1" max="100" placeholder="d100/d20" style="width:55px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:4px; font-size:0.74rem;">
+                          <button type="button" onclick="rollEscortShip(parseInt(document.getElementById('p3-manual-escort-val').value))" class="btn-xs" style="background:#b45309; color:#fff; border:1px solid #f59e0b; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;">➔ Escolta</button>
+                        </div>
+                      </div>
+
+                      <!-- Banner de Escolta Generada -->
+                      <div id="p3-escort-result-banner" style="display:none; font-size:0.78rem; padding:5px 8px; border-radius:4px; margin-top:6px; font-weight:bold; line-height:1.35; background:rgba(245,158,11,0.2); border:1px solid #f59e0b; color:#fde68a;"></div>
+                    </div>
+
+                    <!-- ACCESO RÁPIDO PARA BUQUES CAPITALES O DE GUERRA DIRECTOS -->
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.72rem; color:#94a3b8; background:rgba(0,0,0,0.2); padding:4px 8px; border-radius:4px; border:1px solid #334155; flex-wrap:wrap;">
+                      <span>⚡ Contactos directos de guerra:</span>
+                      <div style="display:flex; gap:4px;">
+                        <button type="button" onclick="rollChartT3()" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T3 Guerra US</button>
+                        <button type="button" onclick="rollChartT4()" class="btn-xs" style="background:#581c87; color:#f3e8ff; border:1px solid #c084fc; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T4 Capital</button>
+                        <button type="button" onclick="rollChartT5()" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T5 CW</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- Rule 8.2.9: Submarine vs Submarine Special Procedure (Conditional) -->
+                  <div id="wf-sub-vs-sub-card" style="display:none; background:rgba(239,68,68,0.12); border:1px solid #ef4444; border-radius:6px; padding:8px 10px; margin-bottom:8px;">
+                    <div style="font-weight:bold; color:#fca5a5; font-size:0.80rem; display:flex; align-items:center; gap:6px;">
+                      <span>⚡</span> <span>REGLA [8.2.9]: COMBATE SUBMARINO VS SUBMARINO</span>
+                    </div>
+                    <p style="font-size:0.74rem; color:#cbd5e1; margin:4px 0 6px 0; line-height:1.35;">
+                      Tira 1d10 para iniciativa: <strong>1–3:</strong> Iniciativa tuya (atacas primero o evitas contacto). <strong>4–10:</strong> ¡El submarino enemigo dispara primero 4 torpedos a media distancia! <em>(Cañón prohibido).</em>
+                    </p>
+                    <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                      <button type="button" class="btn-dice" onclick="rollSubVsSubInitiative()" style="font-size:0.76rem; padding:3px 8px;">🎲 Tirar 1d10</button>
+                      <button type="button" class="btn-xs" onclick="setSubVsSubInitiative(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px 6px; font-size:0.72rem; cursor:pointer;" title="1-3 en mesa">✅ Iniciativa IJN</button>
+                      <button type="button" class="btn-xs" onclick="setSubVsSubInitiative(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px 6px; font-size:0.72rem; cursor:pointer;" title="4-10 en mesa">⚠️ Sorpresa Enemiga</button>
+                    </div>
+                    <div id="wf-sub-initiative-res" style="font-size:0.76rem; font-weight:bold; margin-top:4px;"></div>
+                  </div>
+                </div>
+
+                <!-- Right Column: Implied Target Determination Table & Time of Day -->
+                <div>
+                  <!-- Tabla de Referencia de Clasificación de Blancos (T1-T5) -->
+                  <div style="background:var(--navy-900); border:1px solid var(--slate-700); border-radius:6px; padding:8px; margin-bottom:8px;">
+                    <div id="p3-tgt-table-title" style="font-size:0.76rem; font-weight:700; color:var(--gold-400); margin-bottom:4px; text-transform:uppercase;">
+                      📋 Resumen de Determinación de Blancos (Regla 8.1.2)
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.74rem; text-align:center;">
+                      <thead>
+                        <tr style="background:#1e293b; color:var(--slate-300);">
+                          <th id="p3-th-tgt-enc" style="padding:3px; border:1px solid #334155;">Encuentro [A3]</th>
+                          <th id="p3-th-tgt-die" style="padding:3px; border:1px solid #334155;">1d6</th>
+                          <th id="p3-th-tgt-chart" style="padding:3px; border:1px solid #334155;">Tabla</th>
+                          <th id="p3-th-tgt-type" style="padding:3px; border:1px solid #334155;">Tipo & Escolta</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="patrol-interactive-row" onclick="rollChartT1()" title="Click para generar Mercante Pequeño T1">
+                          <td style="border:1px solid #334155; font-weight:bold; color:#38bdf8; cursor:pointer;">Ship / Ship*</td>
+                          <td style="border:1px solid #334155; color:#a7f3d0; font-weight:bold;">1 - 4</td>
+                          <td style="border:1px solid #334155; font-weight:bold; color:#a7f3d0;">Tabla T1</td>
+                          <td style="border:1px solid #334155; text-align:left; padding-left:4px;">Mercante peq. (Sin escolta)</td>
+                        </tr>
+                        <tr class="patrol-interactive-row" onclick="rollChartT2()" title="Click para generar Mercante Grande T2">
+                          <td style="border:1px solid #334155; font-weight:bold; color:#38bdf8; cursor:pointer;">Ship / Ship*</td>
+                          <td style="border:1px solid #334155; color:#fde047; font-weight:bold;">5 - 6</td>
+                          <td style="border:1px solid #334155; font-weight:bold; color:#fde047;">Tabla T2</td>
+                          <td style="border:1px solid #334155; text-align:left; padding-left:4px;">Mercante gde. / Petrolero (Escoltado)</td>
+                        </tr>
+                        <tr class="patrol-interactive-row" onclick="rollChartT3()" title="Click para generar Buque de Guerra T3">
+                          <td style="border:1px solid #334155; font-weight:bold; color:#f87171; cursor:pointer;">Warship</td>
+                          <td style="border:1px solid #334155; color:#fca5a5;">1 - 6</td>
+                          <td style="border:1px solid #334155; font-weight:bold; color:#fca5a5;">Tabla T3</td>
+                          <td style="border:1px solid #334155; text-align:left; padding-left:4px;">Destructor / Crucero (Escoltado)</td>
+                        </tr>
+                        <tr class="patrol-interactive-row" onclick="rollChartT4()" title="Click para generar Buque Capital T4/T5">
+                          <td style="border:1px solid #334155; font-weight:bold; color:#c084fc; cursor:pointer;">Capital Ship</td>
+                          <td style="border:1px solid #334155; color:#f3e8ff;">1 - 6</td>
+                          <td style="border:1px solid #334155; font-weight:bold; color:#f3e8ff;">Tabla T4 / T5</td>
+                          <td style="border:1px solid #334155; text-align:left; padding-left:4px;">Acorazado / Portaaviones (Alta escolta)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Momento del Día [Regla 8.1.10] con Tirador de Dados y Resultado Visual -->
+                  <div style="background:rgba(0,0,0,0.3); border:1px solid var(--slate-700); border-radius:6px; padding:8px 10px;">
+                    <!-- Fila 1: Título / Etiqueta siempre fija en la primera fila -->
+                    <div style="margin-bottom:6px;">
+                      <label id="p3-tod-lbl" style="display:block; font-size:0.78rem; font-weight:bold; color:var(--gold-300);">Momento del Día (1–3 Día, 4–6 Noche):</label>
+                    </div>
+                    <!-- Fila 2: Tirador 1d6 y Resultado siempre en la segunda fila -->
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+                      <button type="button" class="btn-dice" onclick="rollTimeOfDayD6()" style="font-size:0.74rem; padding:3px 8px; white-space:nowrap;" title="Tirar 1d6: 1-3 Día, 4-6 Noche">
+                        🎲 Tirar 1d6 Momento
+                      </button>
+                      <span id="p3-tod-dice-result" style="display:none; font-size:0.78rem; font-weight:bold; padding:2px 8px; border-radius:4px; border:1px solid #eab308; background:rgba(234,179,8,0.25); color:#fef08a; white-space:nowrap;"></span>
+                    </div>
+                    <!-- Fila 3: Contador gráfico, Selector y Mesa -->
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                      <div id="wf-tod-chit-box" style="width:48px; height:48px; min-width:48px; border-radius:5px; overflow:hidden; border:2px solid #eab308; box-shadow:0 2px 8px rgba(0,0,0,0.5); background:#0f172a; display:flex; align-items:center; justify-content:center;" title="Contador Oficial: Momento del Día">
+                        <img id="wf-tod-chit-img" src="assets/chits/Day.jpg" alt="Day/Night Chit" style="width:100%; height:100%; object-fit:cover;">
+                      </div>
+                      <select id="wf-tod-select" class="flow-select" style="flex:1; min-width:200px; padding:4px 8px; font-size:0.80rem;" onchange="onRangeChange(); if(typeof syncTodBadgeManual==='function')syncTodBadgeManual(); if(typeof updateCombatChits==='function')updateCombatChits();">
+                        <option id="p3-tod-opt-day" value="day">☀️ Día [Tirada 1–3: Ataque sumergido recomendado]</option>
+                        <option id="p3-tod-opt-night" value="night">🌙 Noche [Tirada 4–6: Superficie autorizada, -1 DRM escolta]</option>
+                      </select>
+                      <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
+                        <span style="font-size:0.72rem; color:#94a3b8; font-weight:bold;">Mesa (1d6):</span>
+                        <select id="p3-manual-tod-d6" style="padding:2px 4px; font-size:0.74rem; background:#0f172a; color:#fff; border:1px solid #475569; border-radius:3px;">
+                          <option value="1">1 (Día)</option>
+                          <option value="2">2 (Día)</option>
+                          <option value="3">3 (Día)</option>
+                          <option value="4">4 (Noche)</option>
+                          <option value="5">5 (Noche)</option>
+                          <option value="6">6 (Noche)</option>
+                        </select>
+                        <button type="button" onclick="rollTimeOfDayD6(parseInt(document.getElementById('p3-manual-tod-d6').value))" class="btn-xs" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; border-radius:3px; padding:2px 6px; font-size:0.70rem; cursor:pointer;" title="Aplicar valor de mesa">➔ Aplicar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- GRID 2 COLUMNS: PASO 2 & PASO 3                                           -->
+            <!-- ========================================================================= -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+
+              <!-- PASO 2: SELECCIÓN DE ALCANCE [REGLA 8.2.1] -->
+              <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #3b82f6; border-left:4px solid #3b82f6; border-radius:8px; padding:12px 14px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="background:#2563eb; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:bold;">2</span>
+                    <h4 id="p3-step2-title" style="margin:0; color:#60a5fa; font-size:0.92rem;">Paso 2: Selección de Alcance [Regla 8.2.1]</h4>
+                  </div>
+                  <span class="rules-ref-pill" style="font-size:0.72rem; padding:2px 8px;">Regla 8.2.1</span>
+                </div>
+
+                <!-- Resumen Táctico de Alcances -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-bottom:8px; font-size:0.72rem; text-align:center;">
+                  <div style="background:rgba(16,185,129,0.15); border:1px solid #10b981; border-radius:4px; padding:5px;">
+                    <strong style="color:#6ee7b7; display:block;">Corta (Close)</strong>
+                    <span style="color:#fff;">Hit 2–8 (+1 B1)</span><br>
+                    <span style="color:#f87171;">Infiltración &le;9</span>
+                  </div>
+                  <div style="background:rgba(59,130,246,0.15); border:1px solid #3b82f6; border-radius:4px; padding:5px;">
+                    <strong style="color:#93c5fd; display:block;">Media (Medium)</strong>
+                    <span style="color:#fff;">Hit 2–7 (0 DRM)</span><br>
+                    <span style="color:#a7f3d0;">Estándar segura</span>
+                  </div>
+                  <div style="background:rgba(245,158,11,0.15); border:1px solid #f59e0b; border-radius:4px; padding:5px;">
+                    <strong style="color:#fde047; display:block;">Larga (Long)</strong>
+                    <span style="color:#fff;">Hit 2–6 (-1 B1)</span><br>
+                    <span style="color:#a7f3d0;">-1 DRM Escoltas</span>
+                  </div>
+                </div>
+
+                <div class="flow-field" style="margin-bottom:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                  <div id="wf-range-chit-box" style="width:48px; height:48px; min-width:48px; border-radius:5px; overflow:hidden; border:2px solid #3b82f6; box-shadow:0 2px 8px rgba(0,0,0,0.5); background:#0f172a; display:flex; align-items:center; justify-content:center;" title="Contador Oficial: Alcance de Combate">
+                    <img id="wf-range-chit-img" src="assets/chits/Range Medium.jpg" alt="Range Chit" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <div style="flex:1; min-width:200px;">
+                    <label id="p3-range-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Alcance de Fuego Seleccionado:</label>
+                    <select id="wf-range-select" class="flow-select" onchange="onRangeChange(); if(typeof updateCombatChits==='function')updateCombatChits();" style="font-size:0.80rem; padding:4px 8px; width:100%;">
+                      <option id="p3-range-opt-med" value="medium">Alcance Medio (Seguro, puntería 2–7)</option>
+                      <option id="p3-range-opt-close" value="close">Corta Distancia (Puntería 2–8, requiere infiltración 2d6 &le; 9)</option>
+                      <option id="p3-range-opt-long" value="long">Larga Distancia (Puntería 2–6, mayor evasión escoltas)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Tirador de Infiltración para Corta Distancia -->
+                <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:4px; padding:6px 8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span style="font-size:0.74rem; color:var(--slate-300); font-weight:bold;">Infiltración a Corta (2d6 &le; 9):</span>
+                    <div style="display:flex; gap:4px;">
+                      <button type="button" class="btn-dice" onclick="rollInfiltration2d6()" style="font-size:0.72rem; padding:3px 7px;">🎲 Tirar 2d6</button>
+                      <button type="button" class="btn-xs" onclick="rollInfiltration2d6(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Éxito en mesa (&le;9)">✅ Lograda</button>
+                      <button type="button" class="btn-xs" onclick="rollInfiltration2d6(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Fallo en mesa (&gt;9)">🚨 Falla</button>
+                    </div>
+                  </div>
+                  <div id="wf-infilt-res" style="font-size:0.76rem; color:#38bdf8; margin-top:4px; display:none; line-height:1.35;"></div>
+                </div>
+              </div>
+
+              <!-- PASO 3: MODALIDAD DE ATAQUE [REGLA 8.2.2] -->
+              <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #eab308; border-left:4px solid #eab308; border-radius:8px; padding:12px 14px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="background:#ca8a04; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:bold;">3</span>
+                    <h4 id="p3-step3-title" style="margin:0; color:#fde047; font-size:0.92rem;">Paso 3: Modalidad de Ataque [Regla 8.2.2]</h4>
+                  </div>
+                  <span class="rules-ref-pill" style="font-size:0.72rem; padding:2px 8px;">Regla 8.2.2</span>
+                </div>
+
+                <!-- Resumen de Modalidades -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:8px; font-size:0.72rem;">
+                  <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:4px; padding:6px;">
+                    <strong style="color:#38bdf8;">🌊 Inmersión:</strong> Salva estándar recomendada de día. Mantiene sigilo bajo el agua.
+                  </div>
+                  <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:4px; padding:6px;">
+                    <strong style="color:#a7f3d0;">🌙 Superficie Nocturna:</strong> Permite disparar tubos de popa a +1. Sigilo visual.
+                  </div>
+                </div>
+
+                <div class="flow-field" style="margin-bottom:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                  <div id="wf-mode-chit-box" style="width:48px; height:48px; min-width:48px; border-radius:5px; overflow:hidden; border:2px solid #10b981; box-shadow:0 2px 8px rgba(0,0,0,0.5); background:#0f172a; display:flex; align-items:center; justify-content:center;" title="Contador Oficial: Sumergido / Superficie">
+                    <img id="wf-mode-chit-img" src="assets/chits/Submerged.jpg" alt="Attack Mode Chit" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <div style="flex:1; min-width:200px;">
+                    <label id="p3-mode-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Modalidad Seleccionada:</label>
+                    <select id="wf-attack-mode-select" class="flow-select" style="font-size:0.80rem; padding:4px 8px; width:100%;" onchange="syncPhase3TorpedoOptions(); if(typeof updateCombatChits==='function')updateCombatChits();">
+                      <option id="p3-mode-opt-sub" value="submerged">Ataque en Inmersión (Torpedos estándar - Recomendado Día)</option>
+                      <option id="p3-mode-opt-surf" value="surface_night">Superficie Nocturna (Torpedos - Permite salva popa a +1)</option>
+                      <option id="p3-mode-opt-gun" value="gun">Cañón de Cubierta (Superficie - ¡PROHIBIDO si hay escoltas!)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style="font-size:0.74rem; color:#94a3b8; background:rgba(0,0,0,0.25); padding:6px 8px; border-radius:4px; border:1px solid #334155;">
+                  <span style="color:#fde047; font-weight:bold;">⚠️ Doctrina Imperial:</span> El uso del cañón de cubierta solo está autorizado contra blancos no escoltados o tras neutralizar la escolta enemiga.
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- PASO 4: ASIGNACIÓN Y DISPARO DE TORPEDOS [REGLAS 8.2.3 - 8.2.7 & B1, B2, B3, B4] -->
+            <!-- ========================================================================= -->
+            <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #10b981; border-left:4px solid #10b981; border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:#059669; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">4</span>
+                  <h4 id="p3-step4-title" style="margin:0; color:#34d399; font-size:0.96rem;">Paso 4: Asignación y Disparo de Torpedos [Reglas 8.2.3 - 8.2.7 & Tablas B1, B2, B3, B4]</h4>
+                </div>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px;">Tablas [B1, B2, B3, B4] • Reglas 8.2.3 - 8.2.7</span>
+              </div>
+
+              <!-- SUBMARINE ARMAMENT & STATUS HUD -->
+              <div id="p3-sub-status-hud" style="background:rgba(15,23,42,0.95); border:1px solid #10b981; border-radius:8px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+                <!-- Header with Submarine info & action buttons -->
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:6px; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:1.15rem;">🚢</span>
+                    <div>
+                      <span id="p3-hud-sub-name" style="font-size:0.88rem; font-weight:bold; color:#fde047;">I-16</span>
+                      <span id="p3-hud-sub-class" style="font-size:0.75rem; color:#94a3b8; background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px; margin-left:6px;">8 Proa • 0 Popa</span>
+                    </div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <button type="button" onclick="reloadAllEmptyTubesFromReserves()" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:4px; padding:3px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Recargar tubos vacíos usando las reservas de torpedos">
+                      🔄 Recargar Tubos
+                    </button>
+                    <button type="button" onclick="switchToSubmarineSheet()" class="btn-xs" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; border-radius:4px; padding:3px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Ver la hoja interactiva completa del submarino">
+                      📋 Ver Ficha Submarino
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tube status indicators and reserve/ammo metrics -->
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:10px; font-size:0.75rem;">
+                  <!-- Proa (Bow) Tubes -->
+                  <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:6px; padding:6px 10px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                      <span style="font-weight:bold; color:#93c5fd;">▲ Tubos de Proa (Bow):</span>
+                      <span id="p3-hud-fwd-count" style="color:#a7f3d0; font-weight:bold;">--</span>
+                    </div>
+                    <div id="p3-hud-fwd-tubes-badges" style="display:flex; gap:4px; flex-wrap:wrap;"></div>
+                  </div>
+
+                  <!-- Popa (Stern) Tubes (if present) -->
+                  <div id="p3-hud-aft-container" style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:6px; padding:6px 10px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                      <span style="font-weight:bold; color:#fca5a5;">▼ Tubos de Popa (Stern):</span>
+                      <span id="p3-hud-aft-count" style="color:#a7f3d0; font-weight:bold;">--</span>
+                    </div>
+                    <div id="p3-hud-aft-tubes-badges" style="display:flex; gap:4px; flex-wrap:wrap;"></div>
+                  </div>
+
+                  <!-- Reserves & Deck Gun -->
+                  <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:6px; padding:6px 10px; display:flex; flex-direction:column; justify-content:space-around; gap:4px;">
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:#cbd5e1;">📦 Reservas:</span>
+                      <span id="p3-hud-reloads-count" style="color:#fde047; font-weight:bold;">--</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:#cbd5e1;">💥 Cañón Cubierta:</span>
+                      <span id="p3-hud-ammo-count" style="color:#fde047; font-weight:bold;">--</span>
+                    </div>
+                    <div id="p3-hud-damage-warnings" style="font-size:0.70rem; color:#ef4444; font-weight:bold;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Two Column Layout: Weapon Config & Controls | Implied Tables B1, B2, B3, B4 -->
+              <div style="display:grid; grid-template-columns: 1.15fr 0.85fr; gap:14px; align-items:start;">
+                
+                <!-- Left: Weapon Selectors, Rollers & Results -->
+                <div>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
+                    <div class="flow-field" style="margin:0;">
+                      <label id="p3-tubes-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Tubos Disparados:</label>
+                      <select id="wf-tubes-fired" class="flow-select" style="font-size:0.80rem; padding:4px 8px;">
+                        <option id="p3-tubes-opt-2" value="2">2 Torpedos (Salva Reducida)</option>
+                        <option id="p3-tubes-opt-4" value="4" selected>4 Torpedos (Salva Estándar)</option>
+                        <option id="p3-tubes-opt-6" value="6">6 Torpedos (Salva Completa Proa)</option>
+                      </select>
+                    </div>
+                    <div class="flow-field" style="margin:0;">
+                      <label id="p3-torp-type-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Tipo de Torpedo:</label>
+                      <select id="wf-torp-type-select" class="flow-select" style="font-size:0.80rem; padding:4px 8px;">
+                        <option id="p3-torp-opt-95" value="type95">Type 95 Oxygen (Sin estela visible, letal)</option>
+                        <option id="p3-torp-opt-89" value="type89">Type 89 Steam (Estela de vapor, penaliza evasión)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Virtual Salvo Button & Result Banner -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px 14px; border-radius:6px; border:1px solid #334155; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+                    <div>
+                      <div id="p3-hits-calc-lbl" style="font-size:0.80rem; color:var(--slate-400); text-transform:uppercase; font-weight:bold;">Impactos y Daño Calculado:</div>
+                      <div id="wf-combat-hit-res" style="font-size:1.15rem; font-weight:800; color:var(--emerald-500);">¡2 IMPACTOS! (Defectuosos: 0)</div>
+                      <div id="wf-combat-sink-status" style="font-size:0.82rem; font-weight:700; color:#fde047;">¡BUQUE HUNDIDO! (5,700 tons)</div>
+                    </div>
+                    <button id="p3-btn-fire" class="btn-dice" onclick="resolveTorpedoSalvo()" style="padding:8px 16px; font-size:0.88rem; background:linear-gradient(135deg, #059669 0%, #047857 100%); border-color:#10b981; font-weight:bold; box-shadow:0 3px 10px rgba(16,185,129,0.35);">
+                      🚀 ¡FUEGO! (Lanzar Salva Virtual)
+                    </button>
+                  </div>
+
+                  <!-- Entrada Manual de Impactos de Mesa (Físicos) -->
+                  <div style="background:rgba(15,23,42,0.7); border:1px solid var(--slate-700); border-radius:6px; padding:6px 10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <div style="font-size:0.75rem; color:var(--gold-300); font-weight:bold;">🎲 Dados Físicos de Mesa:</div>
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                      <label style="font-size:0.74rem; color:var(--slate-300);">Impactos:
+                        <select id="wf-manual-hits-select" style="background:#0f172a; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 4px; font-weight:bold; font-size:0.78rem;">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                        </select>
+                      </label>
+                      <label style="font-size:0.74rem; color:var(--slate-300);">Defectuosos:
+                        <select id="wf-manual-duds-select" style="background:#0f172a; color:#fde68a; border:1px solid #d97706; border-radius:3px; padding:2px 4px; font-size:0.78rem;">
+                          <option value="0" selected>0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </label>
+                      <label style="font-size:0.74rem; color:var(--slate-300);">Pts Daño:
+                        <input type="number" id="wf-manual-dmg-input" value="6" min="0" max="24" style="background:#0f172a; color:#38bdf8; border:1px solid #38bdf8; border-radius:3px; padding:2px 4px; width:44px; font-weight:bold; font-size:0.78rem;" />
+                      </label>
+                      <button type="button" onclick="applyManualTorpedoHits()" class="btn-xs" style="background:#047857; color:#fff; border:1px solid #10b981; border-radius:4px; padding:3px 8px; font-size:0.75rem; font-weight:bold; cursor:pointer;" title="Aplicar impactos tirados en mesa">🎯 Aplicar Mesa</button>
+                    </div>
+                  </div>
+
+                  <!-- Desglose Visual de Dados por Torpedo (B1, B2, B3) -->
+                  <div id="wf-torpedo-dice-details" style="display:flex; flex-direction:column; gap:4px;"></div>
+                </div>
+
+                <!-- Right: Implied Tactical Tables B1 (To-Hit) and B2/B3 (Duds & Damage) -->
+                <div>
+                  <!-- Tabla B1: Puntería (2d6) -->
+                  <div style="background:var(--navy-900); border:1px solid #334155; border-radius:6px; padding:8px 10px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                      <span id="p3-b1-title" style="font-weight:bold; color:var(--gold-300); font-size:0.78rem;">TABLA B1: PUNTERÍA TO-HIT (2d6)</span>
+                      <span id="p3-b1-sub" style="color:#93c5fd; font-size:0.74rem;">Tirada BAJA impacta</span>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.74rem; text-align:center; margin-bottom:6px;">
+                      <thead>
+                        <tr style="background:#1e293b; color:#f1f5f9;">
+                          <th id="p3-b1-th1" style="padding:3px; border:1px solid #334155;">Corta Distancia</th>
+                          <th id="p3-b1-th2" style="padding:3px; border:1px solid #334155;">Alcance Medio</th>
+                          <th id="p3-b1-th3" style="padding:3px; border:1px solid #334155;">Larga Distancia</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">2 – 8 Impacta<br><span style="color:#94a3b8; font-size:0.68rem;">9-12 Fallo</span></td>
+                          <td style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">2 – 7 Impacta<br><span style="color:#94a3b8; font-size:0.68rem;">8-12 Fallo</span></td>
+                          <td style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">2 – 6 Impacta<br><span style="color:#94a3b8; font-size:0.68rem;">7-12 Fallo</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div id="p3-b1-drms" style="font-size:0.72rem; color:var(--slate-300); line-height:1.35;">
+                      <strong>DRMs:</strong> -1 Superficie, +1 Cmdte herido, -1 Minisub torpedo, +2 Escolta/DD/DE.<br>
+                      <em style="color:var(--gold-400);">★ Tirada de "2" natural = Impacto Crítico (+3 daño si no es inerte).</em>
+                    </div>
+                  </div>
+
+                  <!-- Tabla B2 & B3: Torpedos Inertes y Daño -->
+                  <div style="background:var(--navy-900); border:1px solid #334155; border-radius:6px; padding:8px 10px;">
+                    <div style="font-weight:bold; color:var(--gold-300); font-size:0.78rem; margin-bottom:4px;">
+                      TABLAS B2 & B3: INERTES Y DAÑO
+                    </div>
+                    <div style="font-size:0.72rem; color:#cbd5e1; margin-bottom:6px; line-height:1.35;">
+                      <strong>Tabla B2 (1d6 por impacto):</strong> 1 = Torpedo Inerte / Dud (0 daño); 2–6 = Explota normal.<br>
+                      <strong>Tabla B3 (Daño 1d6):</strong> 1: 4 daño &bull; 2–3: 3 daño &bull; 4: 2 daño &bull; 5–7: 1 daño (+1 Type 95).
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--slate-400); border-top:1px solid #334155; padding-top:4px;">
+                      <strong>Puntos para Hundir:</strong> &le;1.000t: 1 pt | 1.001–5.000t: 2 pts | 5.001–9.999t: 3 pts | &ge;10.000t: 4 pts | Capital: 5–7 pts.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- PASO 5: DETECCIÓN Y ATAQUE DE ESCOLTAS [REGLAS 8.2.8, 8.4 & TABLAS B4, B5, B6] -->
+            <!-- ========================================================================= -->
+            <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #ef4444; border-left:4px solid #ef4444; border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div id="wf-escort-chit-box" style="width:36px; height:36px; min-width:36px; border-radius:4px; overflow:hidden; border:2px solid #ef4444; box-shadow:0 2px 6px rgba(0,0,0,0.5); background:#0f172a; display:flex; align-items:center; justify-content:center;" title="Contador Oficial: Escolta">
+                    <img id="wf-escort-chit-img" src="assets/chits/Escort.jpg" alt="Escort Chit" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <span style="background:#dc2626; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">5</span>
+                  <h4 id="p3-step5-title" style="margin:0; color:#f87171; font-size:0.96rem;">Paso 5: Detección y Ataque de Escoltas [Reglas 8.2.8, 8.4 & Tablas B4, B5, B6]</h4>
+                </div>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:#ef4444; color:#fca5a5;">Tablas [B4, B5, B6] • Reglas 8.2.8, 8.4</span>
+              </div>
+
+              <!-- Two Column Layout: Escort Action Rollers | Implied Tables B4, B5, B6 -->
+              <div style="display:grid; grid-template-columns: 1.15fr 0.85fr; gap:14px; align-items:start;">
+                
+                <!-- Left: Rollers for Detection (B4) and Depth Charges (B5/B6) -->
+                <div>
+                  <p id="p3-escort-desc" style="font-size:0.78rem; color:#cbd5e1; margin:0 0 8px 0; line-height:1.4;">
+                    Si el blanco está escoltado o es un buque de combate, evalúa si la escolta te detecta acústicamente (Tabla B4) y resuelve el contraataque de cargas de profundidad (Tablas B5 & B6):
+                  </p>
+
+                  <!-- Digital Dice Buttons -->
+                  <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+                    <button id="p3-btn-b4" type="button" class="btn-dice" onclick="rollB4Detection()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px;">
+                      🎲 1. Tirar Detección (B4)
+                    </button>
+                    <button id="p3-btn-b5" type="button" class="btn-dice" onclick="rollEscortCounterAttack()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px; background:linear-gradient(135deg,#991b1b,#b91c1c); border-color:#ef4444;">
+                      💣 2. Tirar Cargas (B5/B6)
+                    </button>
+                    <button id="p3-btn-deep" type="button" class="action-btn" onclick="testDepthDive()" style="font-size:0.82rem; border-color:#38bdf8; color:#38bdf8; padding:6px 10px;">
+                      ⚓ Inmersión Profunda
+                    </button>
+                  </div>
+
+                  <!-- Botones Rápidos / Mesa para B4 y B5 -->
+                  <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px; background:rgba(0,0,0,0.3); padding:8px 10px; border-radius:6px; border:1px solid #334155;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem;">
+                      <span style="color:var(--gold-400); font-weight:bold;">Mesa B4 (Detección 2d6):</span>
+                      <div style="display:flex; gap:4px;">
+                        <button type="button" onclick="rollB4Detection(7)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Evadido (tirada &le;8)">✅ No Detectado (&le;8)</button>
+                        <button type="button" onclick="rollB4Detection(9)" class="btn-xs" style="background:#b45309; color:#fde68a; border:1px solid #f59e0b; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Detectado (tirada 9-10)">⚠️ Detectado (9-10)</button>
+                        <button type="button" onclick="rollB4Detection(11)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Detectado con +1 ataque (tirada &ge;11)">🚨 Detectado +1 (&ge;11)</button>
+                      </div>
+                    </div>
+
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem;">
+                      <span style="color:#f87171; font-weight:bold;">Mesa B5 (Cargas 2d6):</span>
+                      <div style="display:flex; gap:3px; flex-wrap:wrap;">
+                        <button type="button" onclick="rollEscortCounterAttack(3)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Ineficaz (&le;3)">🌊 Ineficaz</button>
+                        <button type="button" onclick="rollEscortCounterAttack(5)" class="btn-xs" style="background:#1e3a8a; color:#bfdbfe; border:1px solid #3b82f6; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="1 impacto de carga (4-6)">1 Daño</button>
+                        <button type="button" onclick="rollEscortCounterAttack(7)" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="2 impactos (7-8)">2 Daños</button>
+                        <button type="button" onclick="rollEscortCounterAttack(9)" class="btn-xs" style="background:#c2410c; color:#fed7aa; border:1px solid #f97316; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="3 impactos (9-10)">3 Daños</button>
+                        <button type="button" onclick="rollEscortCounterAttack(11)" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="4 impactos (11)">4 Daños</button>
+                        <button type="button" onclick="rollEscortCounterAttack(12)" class="btn-xs" style="background:#581c87; color:#f5d0fe; border:1px solid #a855f7; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="5 impactos (12)">5 Daños</button>
+                      </div>
+                    </div>
+
+                    <!-- Mesa B6 Averías (d66) -->
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem; border-top:1px solid #1e293b; padding-top:4px;">
+                      <span style="color:#c084fc; font-weight:bold;">Mesa B6 (Avería d66):</span>
+                      <div style="display:inline-flex; align-items:center; gap:4px;">
+                        <button type="button" class="btn-dice" onclick="rollB6DamageManual()" style="font-size:0.70rem; padding:2px 6px;">🎲 Tirar d66</button>
+                        <input type="number" id="p3-manual-b6-val" min="11" max="66" placeholder="d66" style="width:48px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:3px; font-size:0.74rem;">
+                        <button type="button" onclick="rollB6DamageManual(parseInt(document.getElementById('p3-manual-b6-val').value))" class="btn-xs" style="background:#581c87; color:#f3e8ff; border:1px solid #c084fc; border-radius:3px; padding:2px 6px; font-size:0.70rem; cursor:pointer;">➔ Avería</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Escort Attack Result Banner -->
+                  <div id="wf-escort-res-text" style="font-size:0.78rem; color:#f87171; background:var(--navy-900); padding:8px 12px; border-radius:6px; border:1px solid #334155; min-height:28px; line-height:1.4;">
+                    Escoltas no han atacado todavía.
+                  </div>
+                </div>
+
+                <!-- Right: Implied Tactical Tables B4 & B5 -->
+                <div>
+                  <!-- Tabla B4: Detección de Escoltas (2d6) -->
+                  <div style="background:var(--navy-900); border:1px solid #334155; border-radius:6px; padding:8px 10px; margin-bottom:8px;">
+                    <div style="font-weight:bold; color:var(--gold-300); font-size:0.78rem; margin-bottom:4px;">
+                      TABLA B4: DETECCIÓN DE ESCOLTAS (2d6)
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.74rem; text-align:center; margin-bottom:4px;">
+                      <thead>
+                        <tr style="background:#1e293b; color:#f1f5f9;">
+                          <th style="padding:3px; border:1px solid #334155;">2 – 8</th>
+                          <th style="padding:3px; border:1px solid #334155;">9 – 10</th>
+                          <th style="padding:3px; border:1px solid #334155;">11+</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">No Detectado<br><span style="color:#94a3b8; font-size:0.68rem;">Evasión exitosa</span></td>
+                          <td style="padding:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">Detectado<br><span style="color:#fde047; font-size:0.68rem;">1 ataque B5</span></td>
+                          <td style="padding:4px; border:1px solid #334155; color:#f87171; font-weight:bold;">Detectado +1<br><span style="color:#f87171; font-size:0.68rem;">2 ataques B5</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div style="font-size:0.70rem; color:var(--slate-400);">
+                      DRMs: +1 Tanques/Planos rotos, +1 Corta Dist., -1 Larga Dist., +1/+2/+3 en 43/44/45.
+                    </div>
+                  </div>
+
+                  <!-- Tabla B5: Ataque de Escolta / Cargas (2d6) -->
+                  <div style="background:var(--navy-900); border:1px solid #334155; border-radius:6px; padding:8px 10px;">
+                    <div style="font-weight:bold; color:#f87171; font-size:0.78rem; margin-bottom:4px;">
+                      TABLA B5: ATAQUE DE ESCOLTA O AVIACIÓN (2d6)
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.72rem; text-align:center;">
+                      <thead>
+                        <tr style="background:#1e293b; color:#f1f5f9;">
+                          <th style="padding:2px; border:1px solid #334155;">2–3</th>
+                          <th style="padding:2px; border:1px solid #334155;">4–6</th>
+                          <th style="padding:2px; border:1px solid #334155;">7–8</th>
+                          <th style="padding:2px; border:1px solid #334155;">9–10</th>
+                          <th style="padding:2px; border:1px solid #334155;">11</th>
+                          <th style="padding:2px; border:1px solid #334155;">12</th>
+                          <th style="padding:2px; border:1px solid #334155;">13+</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding:3px; border:1px solid #334155; color:#a7f3d0;">0 hit</td>
+                          <td style="padding:3px; border:1px solid #334155; color:#fde047;">1 hit</td>
+                          <td style="padding:3px; border:1px solid #334155; color:#f97316;">2 hits</td>
+                          <td style="padding:3px; border:1px solid #334155; color:#ef4444;">3 hits</td>
+                          <td style="padding:3px; border:1px solid #334155; color:#dc2626; font-weight:bold;">4</td>
+                          <td style="padding:3px; border:1px solid #334155; color:#b91c1c; font-weight:bold;">5</td>
+                          <td style="padding:3px; border:1px solid #334155; background:#7f1d1d; color:#fff; font-weight:bold;">HUNDIDO</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div style="font-size:0.70rem; color:var(--slate-400); margin-top:4px;">
+                      Cada impacto genera 1 tirada d66 en Tabla B6 de Averías.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- PASO 6: DECISIÓN TÁCTICA Y REGISTRO EN ROGU BUKKU [REGLAS 8.2.10 & 8.4]   -->
+            <!-- ========================================================================= -->
+            <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid var(--gold-500); border-left:4px solid var(--gold-500); border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:var(--gold-600); color:#000; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">6</span>
+                  <h4 style="margin:0; color:var(--gold-300); font-size:0.96rem;">Paso 6: Decisión Táctica y Registro en Rogu Bukku [Reglas 8.2.10 & 8.4]</h4>
+                </div>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:var(--gold-500); color:var(--gold-300);">Reglas 8.2.10 & 8.4</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; align-items:center;">
+                <!-- Segunda Ronda / Seguir Convoy -->
+                <div>
+                  <button type="button" id="btn-follow-convoy" onclick="followConvoyNextRound()" class="action-btn" style="width:100%; justify-content:center; border-color:#38bdf8; color:#38bdf8; font-size:0.84rem; padding:8px 12px; font-weight:bold; background:rgba(2,132,199,0.15);" title="Regla 8.4: Permanecer en la misma casilla y realizar una segunda ronda de combate contra buques dañados o el convoy">
+                    🔄 Seguir Convoy / Buque Dañado [Regla 8.4]
+                  </button>
+                  <div style="font-size:0.74rem; color:#94a3b8; margin-top:4px; line-height:1.35;">
+                    Permite realizar una 2.ª ronda de ataque permaneciendo en el contacto o romper contacto para evadirte.
+                  </div>
+                </div>
+
+                <!-- Sincronizar en Rogu Bukku -->
+                <div>
+                  <button id="p3-btn-sync-rogu" type="button" class="action-btn" onclick="logCombatToRoguBukku(true)" style="background:var(--gold-500); color:#0f172a; font-weight:800; border:none; width:100%; justify-content:center; font-size:0.84rem; padding:8px 12px; box-shadow:0 2px 8px rgba(234,179,8,0.35);">
+                    📋 Registrar / Sincronizar en Rogu Bukku
+                  </button>
+                  <div id="wf-rogu-log-status" style="font-size:0.78rem; text-align:center; min-height:18px; margin-top:4px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- TARGET CHARTS INSPECTOR [T1 - T5] (Limpio y Colapsable)                    -->
+            <!-- ========================================================================= -->
+            <details style="background:var(--navy-900); border:1px solid #334155; border-radius:8px; padding:10px 14px;">
+              <summary style="font-weight:bold; color:var(--gold-300); font-size:0.88rem; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                <span>🚢</span> <span>Consultar Catálogo de Blancos Completo [Tablas T1 a T5]</span>
+                <span style="font-size:0.75rem; color:#94a3b8; margin-left:auto;">(Haz clic para desplegar/ocultar)</span>
+              </summary>
+              <div style="margin-top:10px; border-top:1px solid #334155; padding-top:10px;">
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+                  <button id="p3-t1-btn" type="button" class="action-btn" onclick="showTargetChartTab('T1')" style="padding:4px 10px; font-size:0.80rem;">T1: Cargueros Peq.</button>
+                  <button id="p3-t2-btn" type="button" class="action-btn" onclick="showTargetChartTab('T2')" style="padding:4px 10px; font-size:0.80rem;">T2: Petroleros/Gdes.</button>
+                  <button id="p3-t3-btn" type="button" class="action-btn" onclick="showTargetChartTab('T3')" style="padding:4px 10px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; font-weight:bold;">T3: Buques Guerra EE.UU.</button>
+                  <button id="p3-t4-btn" type="button" class="action-btn" onclick="showTargetChartTab('T4')" style="padding:4px 10px; font-size:0.80rem; border-color:#c084fc; color:#f3e8ff; font-weight:bold;">T4: Buques Capitales</button>
+                  <button id="p3-t5-btn" type="button" class="action-btn" onclick="showTargetChartTab('T5')" style="padding:4px 10px; font-size:0.80rem; border-color:#14b8a6; color:#99f6e4; font-weight:bold;">T5: Buques Commonwealth</button>
+                </div>
+                <!-- Interactive display container for Target Charts -->
+                <div id="p3-target-chart-viewer" style="background:rgba(0,0,0,0.3); border-radius:6px; padding:10px; max-height:260px; overflow-y:auto; font-size:0.82rem;">
+                  <!-- Populated dynamically by JS -->
+                </div>
+              </div>
+            </details>
+
+          </div>
+
+          <!-- Bottom Navigation Bar -->
+          <div class="action-bar-nav" style="margin-top:16px;">
+            <button id="p3-btn-prev" class="btn-step-prev" onclick="setWorkflowPhase('patrol')">
+              ◀ <span id="p3-btn-prev-lbl">Volver a Encuentro con Aviones</span>
+            </button>
+            <button class="btn-step-next" onclick="setWorkflowPhase(4)">
+              <span id="p3-btn-next">Pasar a Fase 4: Control de Averías ➔</span>
+            </button>
+          </div>
+        </div>

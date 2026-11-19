@@ -49,6 +49,8 @@ scratch/
 # Large PDF backups and duplicates
 pdf/backup/
 pdf/* - copia.pdf
+tmp_test/
+*.bak
 
 # Root test / temporary images
 temp_scan.png

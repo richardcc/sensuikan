@@ -227,30 +227,21 @@
     }
 
     function syncF3ToK1() {
-      const sub = getActiveSubmarine();
-      const hasPlane = checkSubAircraft(sub);
       const chkWeap = document.getElementById('chk-f3-weap');
       const chkMaint = document.getElementById('chk-f3-maint');
       const chkAcm = document.getElementById('chk-f3-acm');
       const chkNav = document.getElementById('chk-f3-nav');
       if (typeof setK1Token === 'function') {
-        setK1Token('air1-weap', Boolean(hasPlane && chkWeap && chkWeap.checked));
-        setK1Token('air1-maint', Boolean(hasPlane && chkMaint && chkMaint.checked));
-        setK1Token('air1-acm', Boolean(hasPlane && chkAcm && chkAcm.checked));
-        setK1Token('air1-nav', Boolean(hasPlane && chkNav && chkNav.checked));
+        setK1Token('air1-weap', Boolean(chkWeap && chkWeap.checked));
+        setK1Token('air1-maint', Boolean(chkMaint && chkMaint.checked));
+        setK1Token('air1-acm', Boolean(chkAcm && chkAcm.checked));
+        setK1Token('air1-nav', Boolean(chkNav && chkNav.checked));
       }
       if (typeof renderTokens === 'function') renderTokens();
     }
 
     function validateF3Checkboxes(el) {
       const isEn = (window.currentLang === 'en');
-      const sub = getActiveSubmarine();
-      const hasPlane = checkSubAircraft(sub);
-      if (!hasPlane) {
-        if (el) el.checked = false;
-        showToast(isEn ? "⚠️ Does not apply: submarine has no aircraft (Rule 4.8.3)." : "⚠️ No aplica: el buque no dispone de hidroavión (Regla 4.8.3).");
-        return;
-      }
       const chks = [
         document.getElementById('chk-f3-weap'),
         document.getElementById('chk-f3-maint'),
@@ -268,12 +259,6 @@
 
     function rollRandomF3Skills() {
       const isEn = (window.currentLang === 'en');
-      const sub = getActiveSubmarine();
-      const hasPlane = checkSubAircraft(sub);
-      if (!hasPlane) {
-        showToast(isEn ? "⚠️ Does not apply: submarine has no aircraft (Rule 4.8.3)." : "⚠️ No aplica: el buque no dispone de hidroavión (Regla 4.8.3).");
-        return;
-      }
       const ids = ['chk-f3-weap', 'chk-f3-maint', 'chk-f3-acm', 'chk-f3-nav'];
       ids.forEach(id => {
         const el = document.getElementById(id);
@@ -309,48 +294,26 @@
           f3Badge.style.background = "#059669";
           f3Badge.style.color = "#ffffff";
           f3Badge.innerHTML = isEn ? `🟢 Air Crew Active (${planeName})` : `🟢 Dotación Aérea Operativa (${planeName})`;
-          if (f3BtnRoll) {
-            f3BtnRoll.disabled = false;
-            f3BtnRoll.style.opacity = "1";
-            f3BtnRoll.style.cursor = "pointer";
-          }
-          if (f3OptsContainer) {
-            f3OptsContainer.style.opacity = "1";
-            f3OptsContainer.style.pointerEvents = "auto";
-          }
           if (f3Notice) f3Notice.style.display = "none";
-          ['chk-f3-weap', 'chk-f3-maint', 'chk-f3-acm', 'chk-f3-nav'].forEach(id => {
-            const chk = document.getElementById(id);
-            if (chk) chk.disabled = false;
-          });
         } else {
           f3Badge.style.background = "#334155";
           f3Badge.style.color = "#cbd5e1";
-          f3Badge.innerHTML = isEn ? `🔴 No Floatplane (Does Not Apply to Submarine)` : `🔴 Sin Hidroavión (No Aplica a tu Buque)`;
-          if (f3BtnRoll) {
-            f3BtnRoll.disabled = true;
-            f3BtnRoll.style.opacity = "0.5";
-            f3BtnRoll.style.cursor = "not-allowed";
-          }
-          if (f3OptsContainer) {
-            f3OptsContainer.style.opacity = "0.45";
-            f3OptsContainer.style.pointerEvents = "none";
-          }
+          f3Badge.innerHTML = isEn ? `⚪ No Floatplane (Inactive • Manual Mode)` : `⚪ Sin Hidroavión (Inactivo • Modo Libre)`;
           if (f3Notice) f3Notice.style.display = "block";
-          ['chk-f3-weap', 'chk-f3-maint', 'chk-f3-acm', 'chk-f3-nav'].forEach(id => {
-            const chk = document.getElementById(id);
-            if (chk) {
-              chk.checked = false;
-              chk.disabled = true;
-            }
-          });
-          if (typeof setK1Token === 'function') {
-            setK1Token('air1-weap', false);
-            setK1Token('air1-maint', false);
-            setK1Token('air1-acm', false);
-            setK1Token('air1-nav', false);
-          }
         }
+        if (f3BtnRoll) {
+          f3BtnRoll.disabled = false;
+          f3BtnRoll.style.opacity = "1";
+          f3BtnRoll.style.cursor = "pointer";
+        }
+        if (f3OptsContainer) {
+          f3OptsContainer.style.opacity = "1";
+          f3OptsContainer.style.pointerEvents = "auto";
+        }
+        ['chk-f3-weap', 'chk-f3-maint', 'chk-f3-acm', 'chk-f3-nav'].forEach(id => {
+          const chk = document.getElementById(id);
+          if (chk) chk.disabled = false;
+        });
       }
 
       // Chart F2: Ko-hyoteki Midget Sub Status
@@ -384,61 +347,41 @@
           f4Badge.style.background = "#059669";
           f4Badge.style.color = "#ffffff";
           f4Badge.innerHTML = isEn ? `🟢 Kaiten Capable (4–6 Pilots onboard) [Rule 4.8.4]` : `🟢 Capacidad Kaiten (4–6 Pilotos a bordo) [Regla 4.8.4]`;
-          if (f4BtnRoll) {
-            f4BtnRoll.disabled = false;
-            f4BtnRoll.style.opacity = "1";
-            f4BtnRoll.style.cursor = "pointer";
-          }
-          if (f4BtnPreset) {
-            f4BtnPreset.disabled = false;
-            f4BtnPreset.style.opacity = "1";
-            f4BtnPreset.style.cursor = "pointer";
-          }
-          if (f4OptsContainer) {
-            f4OptsContainer.style.opacity = "1";
-            f4OptsContainer.style.pointerEvents = "auto";
-          }
           if (f4Notice) f4Notice.style.display = "none";
-          for (let i = 1; i <= 6; i++) {
-            const sel = document.getElementById(`sel-f4-pilot-${i}`);
-            if (sel) sel.disabled = false;
-          }
         } else {
           f4Badge.style.background = "#334155";
           f4Badge.style.color = "#cbd5e1";
-          f4Badge.innerHTML = isEn ? `⚪ No Kaiten (Does Not Apply to Submarine)` : `⚪ Sin Kaiten (No Aplica a tu Buque)`;
-          if (f4BtnRoll) {
-            f4BtnRoll.disabled = true;
-            f4BtnRoll.style.opacity = "0.5";
-            f4BtnRoll.style.cursor = "not-allowed";
-          }
-          if (f4BtnPreset) {
-            f4BtnPreset.disabled = true;
-            f4BtnPreset.style.opacity = "0.5";
-            f4BtnPreset.style.cursor = "not-allowed";
-          }
-          if (f4OptsContainer) {
-            f4OptsContainer.style.opacity = "0.45";
-            f4OptsContainer.style.pointerEvents = "none";
-          }
+          f4Badge.innerHTML = isEn ? `⚪ No Kaiten (Inactive • Manual Mode)` : `⚪ Sin Kaiten (Inactivo • Modo Libre)`;
           if (f4Notice) f4Notice.style.display = "block";
-          for (let i = 1; i <= 6; i++) {
-            const sel = document.getElementById(`sel-f4-pilot-${i}`);
-            if (sel) sel.disabled = true;
-          }
+        }
+        if (f4BtnRoll) {
+          f4BtnRoll.disabled = false;
+          f4BtnRoll.style.opacity = "1";
+          f4BtnRoll.style.cursor = "pointer";
+        }
+        if (f4BtnPreset) {
+          f4BtnPreset.disabled = false;
+          f4BtnPreset.style.opacity = "1";
+          f4BtnPreset.style.cursor = "pointer";
+        }
+        if (f4OptsContainer) {
+          f4OptsContainer.style.opacity = "1";
+          f4OptsContainer.style.pointerEvents = "auto";
+        }
+        for (let i = 1; i <= 6; i++) {
+          const sel = document.getElementById(`sel-f4-pilot-${i}`);
+          if (sel) sel.disabled = false;
         }
       }
     }
 
     function syncF4ToK1() {
-      const sub = getActiveSubmarine();
-      const hasKaiten = checkSubKaiten(sub);
       if (!Array.isArray(campaignState.kaitenPilots)) campaignState.kaitenPilots = [];
       campaignState.kaitenPilots = [];
       for (let i = 1; i <= 6; i++) {
         const sel = document.getElementById(`sel-f4-pilot-${i}`);
         if (sel) {
-          campaignState.kaitenPilots.push({ pilot: i, benefit: hasKaiten ? sel.value : '' });
+          campaignState.kaitenPilots.push({ pilot: i, benefit: sel.value || '' });
         }
       }
       if (typeof renderTokens === 'function') renderTokens();
@@ -447,12 +390,6 @@
 
     function rollRandomF4Benefits() {
       const isEn = (window.currentLang === 'en');
-      const sub = getActiveSubmarine();
-      const hasKaiten = checkSubKaiten(sub);
-      if (!hasKaiten) {
-        showToast(isEn ? "⚠️ Does not apply: submarine cannot carry Kaiten torpedoes (Rules 4.8.4 & 7.18)." : "⚠️ No aplica: este buque no admite torpedos Kaiten (Reglas 4.8.4 & 7.18).");
-        return;
-      }
       const opts = ['senninbari', 'hachimaki', 'ashes'];
       for (let i = 1; i <= 6; i++) {
         const sel = document.getElementById(`sel-f4-pilot-${i}`);
@@ -467,12 +404,6 @@
 
     function setPresetF4Benefits() {
       const isEn = (window.currentLang === 'en');
-      const sub = getActiveSubmarine();
-      const hasKaiten = checkSubKaiten(sub);
-      if (!hasKaiten) {
-        showToast(isEn ? "⚠️ Does not apply: submarine cannot carry Kaiten torpedoes (Rules 4.8.4 & 7.18)." : "⚠️ No aplica: este buque no admite torpedos Kaiten (Reglas 4.8.4 & 7.18).");
-        return;
-      }
       const preset = ['senninbari', 'hachimaki', 'ashes', 'senninbari', 'hachimaki', 'ashes'];
       for (let i = 1; i <= 6; i++) {
         const sel = document.getElementById(`sel-f4-pilot-${i}`);
@@ -515,10 +446,10 @@
       const chkMaint = document.getElementById('chk-f3-maint');
       const chkAcm = document.getElementById('chk-f3-acm');
       const chkNav = document.getElementById('chk-f3-nav');
-      setK1Token('air1-weap', Boolean(hasPlane && chkWeap && chkWeap.checked));
-      setK1Token('air1-maint', Boolean(hasPlane && chkMaint && chkMaint.checked));
-      setK1Token('air1-acm', Boolean(hasPlane && chkAcm && chkAcm.checked));
-      setK1Token('air1-nav', Boolean(hasPlane && chkNav && chkNav.checked));
+      setK1Token('air1-weap', Boolean(chkWeap && chkWeap.checked));
+      setK1Token('air1-maint', Boolean(chkMaint && chkMaint.checked));
+      setK1Token('air1-acm', Boolean(chkAcm && chkAcm.checked));
+      setK1Token('air1-nav', Boolean(chkNav && chkNav.checked));
 
       // 7. Midget Sub School: apply earned skills
       setK1Token('midget-torp', Boolean(campaignState.school && campaignState.school.f2TorpEarned));
@@ -537,8 +468,21 @@
 
     function onWorkflowSubClassChange() {
       const selVal = document.getElementById('wf-sub-class-select').value;
+      if (!selVal) {
+        campaignState.activeSubKey = null;
+        if (typeof changeBoardSubmarine === 'function') {
+          changeBoardSubmarine('');
+        }
+        updateWorkflowSubmarineSpecs();
+        buildWorkflowMonthSelect();
+        saveState();
+        return;
+      }
       campaignState.activeSubKey = selVal;
       selectSubmarine(selVal);
+      if (typeof changeBoardSubmarine === 'function') {
+        changeBoardSubmarine(selVal);
+      }
       if (campaignState.workflow) {
         delete campaignState.workflow.torpedoPeriodOverride;
       }
@@ -577,7 +521,10 @@
       updateBaseDescriptionPill(val);
       const base1 = document.getElementById('wf-base-select');
       if (base1 && base1.value !== val) base1.value = val;
+      if (typeof window.onSensuikanBaseChanged === 'function') window.onSensuikanBaseChanged(val);
       saveState();
+      if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+      if (typeof renderSubBoard === 'function') renderSubBoard();
     }
 
     function loadHistoricalAce(name, boat, subClass) {
@@ -600,18 +547,128 @@
       saveState();
     }
 
-    function updateWorkflowSubmarineSpecs() {
-      const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
-      const sub = subs[campaignState.activeSubKey] || subs[Object.keys(subs)[0]];
-      if (!sub) return;
+    
+    function checkSubmarineRadarStatus() {
+      const subKey = campaignState.activeSubKey || "Type_B_Class";
+      const monthStr = (campaignState.workflow && campaignState.workflow.selectedMonth) ? campaignState.workflow.selectedMonth : "1941-12";
       const isEn = window.currentLang === 'en';
 
+      let isEquipped = false;
+      let radarModel = "";
+
+      // 1. Fixed Submarines with Radar
+      if (subKey === "Sen_Toku_Class") {
+        isEquipped = true;
+        radarModel = isEn ? "Mk 3 M1 Air / Mk 2 M2 Surface" : "Mk 3 M1 Aéreo / Mk 2 M2 Superficie";
+      } else if (subKey === "Type_B3_Class" || subKey === "Type_B_3_Class" || subKey.includes("B3") || subKey.includes("B_3")) {
+        isEquipped = true;
+        radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
+      } else if (subKey === "Type_A_Modified") {
+        isEquipped = true;
+        radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
+      } else if (subKey === "Sen_Taka_Class") {
+        isEquipped = true;
+        radarModel = isEn ? "Advanced Air/Surface Radar" : "Radar Avanzado Aéreo/Superficie";
+      }
+
+      // 2. Submarines with Radar retrofit available from Dec. 1944 onwards
+      if (!isEquipped && (subKey === "Type_C_Class" || subKey === "Type_C3_Class" || subKey === "Type_C_3_Class")) {
+        const parts = monthStr.split('-');
+        const y = parseInt(parts[0], 10) || 1941;
+        const m = parseInt(parts[1], 10) || 12;
+        if (y > 1944 || (y === 1944 && m >= 12)) {
+          isEquipped = true;
+          radarModel = isEn ? "Type 22 AS/SS (Retrofit 12/44)" : "Radar Tipo 22 AS/SS (Refit 12/44)";
+        }
+      }
+
+      // 3. Check damage status
+      const isDamaged = !!(campaignState.damage && campaignState.damage.radar);
+      const isOperational = isEquipped && !isDamaged;
+
+      campaignState.hasRadar = isOperational;
+      campaignState.radarEquipped = isEquipped;
+      campaignState.radarDamaged = isDamaged;
+      campaignState.radarModel = radarModel;
+
+      return {
+        isEquipped,
+        isOperational,
+        isDamaged,
+        radarModel
+      };
+    }
+    window.checkSubmarineRadarStatus = checkSubmarineRadarStatus;
+
+    const SUB_CHITS_MAP = {
+      'Kaidai_KD3_Class': 'Submarine - KD.3.jpg',
+      'Kaidai_KD4_Class': 'Submarine - KD.4.jpg',
+      'Kaidai_KD5_Class': 'Submarine - KD.5.jpg',
+      'Kaidai_KD6_Class': 'Submarine - KD.6.jpg',
+      'Kaidai_KD7_Class': 'Submarine - KD.7.jpg',
+      'Kirai_Sen_Class': 'Submarine - Kirai-Sen.jpg',
+      'Junsen_J_IM_Class': 'Submarine - Junsen J1M.jpg',
+      'Junsen_J2_Class': 'Submarine - Junsen J2.jpg',
+      'Junsen_J3_Class': 'Submarine - Junsen J3.jpg',
+      'Type_A_Class': 'Submarine - Type A.jpg',
+      'Type_B_Class': 'Submarine - Type B.jpg',
+      'Type_B_3_Class': 'Submarine - Type B.3.jpg',
+      'Type_C_Class': 'Submarine - Type C.jpg',
+      'Type_A_Modified': 'Submarine - Type A(M).jpg',
+      'Sen_Toku_Class': 'Submarine - Sen-Toku.jpg',
+      'Sen_Taka_Class': 'Submarine - Sen-Taka.jpg',
+      'Type_C3_Class': 'Submarine - Type C.3.jpg',
+      'Type_A_Midget_Submarine___Ko_Hyoteki': 'Submarine - Midget.jpg'
+    };
+    window.SUB_CHITS_MAP = SUB_CHITS_MAP;
+
+    function updateWorkflowSubmarineSpecs() {
+      const isEn = window.currentLang === 'en';
       const setT = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.innerText = val || "--";
       };
 
-      setT('wf-spec-class-name', sub.class_name || sub.full_title || campaignState.activeSubKey);
+      const selEl = document.getElementById('wf-sub-class-select');
+      const activeKey = campaignState.activeSubKey || (selEl ? selEl.value : null);
+
+      if (!activeKey) {
+        setT('wf-spec-class-name', isEn ? "-- Select Submarine --" : "-- Selecciona Submarino --");
+        setT('wf-spec-entry-date', "--");
+        setT('wf-spec-tubes', "--");
+        setT('wf-spec-torp-load', "--");
+        setT('wf-spec-aircraft', "--");
+        setT('wf-spec-kaiten', "--");
+        setT('wf-spec-deckgun', "--");
+        setT('wf-spec-aa', "--");
+        setT('wf-spec-hull', "--");
+        setT('wf-spec-depth', "--");
+        setT('wf-spec-radar', isEn ? "None" : "Ninguno");
+        const chitImg = document.getElementById('wf-spec-sub-chit');
+        if (chitImg) chitImg.style.display = 'none';
+        return;
+      }
+
+      const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
+      const sub = subs[activeKey];
+      if (!sub) return;
+
+      // Update submarine counter chit
+      const chitImg = document.getElementById('wf-spec-sub-chit');
+      if (chitImg) {
+        const fname = SUB_CHITS_MAP[activeKey] || 'Submarine - Type B.jpg';
+        const rawSrc = `assets/chits/${fname}`;
+        chitImg.src = (typeof resolveAsset === 'function') ? resolveAsset(rawSrc) : rawSrc;
+        chitImg.alt = sub.class_name || 'Submarine Counter Chit';
+        chitImg.style.display = 'block';
+      }
+
+      const chitLbl = document.getElementById('wf-spec-chit-label');
+      if (chitLbl) {
+        chitLbl.innerText = isEn ? "Compass Games Official Counter Chit" : "Ficha Oficial de Contadores Compass Games";
+      }
+
+      setT('wf-spec-class-name', sub.class_name || sub.full_title || activeKey);
       const availableDate = sub.available_date || (isEn ? 'Available Dec 1941' : 'Disponible Dic-41');
       setT('wf-spec-entry-date', isEn
         ? availableDate.replace(/^Disponible:\s*/i, 'Available: ')
@@ -621,6 +678,8 @@
       if (tubesStrong) tubesStrong.innerText = isEn ? "Torpedo Tubes:" : "Tubos Torpedo:";
       const torpLoadStrong = document.querySelector('strong[data-i18n="p0TorpedoLoad"]');
       if (torpLoadStrong) torpLoadStrong.innerText = isEn ? "Torpedo Load:" : "Carga Torpedos:";
+      const radarStrong = document.querySelector('strong[data-i18n="p0Radar"]');
+      if (radarStrong) radarStrong.innerText = isEn ? "Radar:" : "Radar:";
 
       const tt = sub.torpedo_tubes || {};
       const bow = tt.fwd !== undefined ? tt.fwd : (tt.forward !== undefined ? tt.forward : (tt.bow !== undefined ? tt.bow : 6));
@@ -661,6 +720,21 @@
       setT('wf-spec-hull', isEn ? `${hullBoxes} Damage Boxes` : `${hullBoxes} Casillas de Daño`);
       setT('wf-spec-depth', isEn ? '100 meters (Test Depth)' : '100 metros (Profundidad Test)');
 
+      // Radar status determination [Rules 8.1.7, 8.3 & Chart A3/A4]
+      const radarInfo = checkSubmarineRadarStatus();
+      const radarEl = document.getElementById('wf-spec-radar');
+      if (radarEl) {
+        if (radarInfo.isEquipped) {
+          if (radarInfo.isOperational) {
+            radarEl.innerHTML = `<span style="color:#4ade80; font-weight:700;">📡 ${radarInfo.radarModel} [${isEn ? 'Operational' : 'Operativo'}]</span>`;
+          } else {
+            radarEl.innerHTML = `<span style="color:#ef4444; font-weight:700;">📡 ${radarInfo.radarModel} [${isEn ? 'DAMAGED / INOP' : 'AVERIADO / INOP'}]</span>`;
+          }
+        } else {
+          radarEl.innerHTML = `<span style="color:#94a3b8;">${isEn ? 'Not equipped' : 'No instalado'}</span>`;
+        }
+      }
+
       // Update dynamic torpedo loadout [Rule 4.5]
       updateTorpedoDoctrineDisplay();
     }
@@ -692,13 +766,370 @@
       updateTorpedoDoctrineDisplay();
     }
 
+    function getTorpedoArmamentConfig(subKey) {
+      if (typeof getSubmarineArmamentConfig === 'function') {
+        return getSubmarineArmamentConfig(subKey);
+      }
+      const subs = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines : {};
+      const sub = subs[subKey] || subs[Object.keys(subs)[0]];
+      const tt = sub ? (sub.torpedo_tubes || {}) : {};
+      const fwdTubes = tt.fwd !== undefined ? tt.fwd : (tt.forward || 6);
+      const aftTubes = tt.aft !== undefined ? tt.aft : (tt.stern || 0);
+      const fwdReloads = tt.reloads_fwd !== undefined ? tt.reloads_fwd : (sub ? (sub.reload_capacity || 0) : 8);
+      const aftReloads = tt.reloads_aft !== undefined ? tt.reloads_aft : (aftTubes > 0 ? 2 : 0);
+      return { fwdTubes, aftTubes, fwdReloads, aftReloads };
+    }
+
+    function getTorpedoBudgetAndTypes() {
+      const isEn = (window.currentLang === 'en');
+      const subKey = (campaignState && campaignState.activeSubKey) || 'Kaidai_KD3_Class';
+      const cfg = getTorpedoArmamentConfig(subKey);
+      const totalCapacity = cfg.fwdTubes + cfg.aftTubes + cfg.fwdReloads + cfg.aftReloads;
+
+      const curMonth = (campaignState && campaignState.workflow && campaignState.workflow.selectedMonth) || "1941-12";
+      let activePeriod = campaignState && campaignState.workflow && campaignState.workflow.torpedoPeriodOverride;
+      if (!activePeriod) {
+        activePeriod = (curMonth < "1942-07") ? 'pre' : 'post';
+      }
+      const isPre = (activePeriod === 'pre');
+      const isKDorB = (typeof isKaidaiOrTypeB === 'function') ? isKaidaiOrTypeB(subKey) : (subKey.includes('KD') || subKey.includes('Type_B'));
+
+      let specialType = 'type95';
+      let baseType = 'type6';
+      let specialLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+      let baseLabel = isEn ? 'Type 6 (Steam)' : 'Tipo 6 (Vapor)';
+      let specialBudget = 0;
+      let baseCount = 0;
+
+      if (isPre) {
+        if (isKDorB) {
+          baseType = 'type6';
+          baseLabel = isEn ? 'Type 6 (Steam)' : 'Tipo 6 (Vapor)';
+          baseCount = Math.min(12, totalCapacity);
+          specialBudget = Math.max(0, totalCapacity - baseCount);
+          specialType = 'type95';
+          specialLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+        } else {
+          const rollVal = (campaignState && campaignState.workflow && campaignState.workflow.torpedoRollInitial) ? campaignState.workflow.torpedoRollInitial : 1;
+          if (rollVal <= 3) {
+            baseType = 'type89';
+            baseLabel = isEn ? 'Type 89 (Steam)' : 'Tipo 89 (Vapor)';
+            baseCount = Math.min(12, totalCapacity);
+            specialBudget = Math.max(0, totalCapacity - baseCount);
+            specialType = 'type95';
+            specialLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+          } else {
+            baseType = 'type95';
+            baseLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+            baseCount = 0;
+            specialBudget = totalCapacity;
+            specialType = 'type95';
+            specialLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+          }
+        }
+      } else {
+        // >= July 1942
+        const t92Count = (campaignState && campaignState.workflow && campaignState.workflow.torpedoType92Count !== undefined)
+          ? campaignState.workflow.torpedoType92Count
+          : 6;
+        specialBudget = Math.min(t92Count, totalCapacity);
+        baseCount = totalCapacity - specialBudget;
+        specialType = 'type92';
+        specialLabel = isEn ? 'Type 92 (Electric)' : 'Tipo 92 (Eléctrico)';
+        baseType = 'type95';
+        baseLabel = isEn ? 'Type 95 (Oxygen)' : 'Tipo 95 (Oxígeno)';
+      }
+
+      return {
+        isPre,
+        isKDorB,
+        specialType,
+        baseType,
+        specialLabel,
+        baseLabel,
+        specialBudget,
+        baseCount,
+        totalCapacity,
+        cfg
+      };
+    }
+
+    function getNormalizedTorpedoAllocation(budgetInfo) {
+      if (!budgetInfo) budgetInfo = getTorpedoBudgetAndTypes();
+      const { cfg, specialBudget } = budgetInfo;
+      let alloc = (campaignState && campaignState.workflow && campaignState.workflow.torpedoAllocation) || null;
+
+      if (!alloc || (alloc.fwdTubes === undefined && alloc.fwdT92 === undefined)) {
+        let fwdT = Math.min(cfg.fwdTubes, specialBudget);
+        let rem = specialBudget - fwdT;
+        let aftT = Math.min(cfg.aftTubes, rem);
+        rem -= aftT;
+        let fwdR = Math.min(cfg.fwdReloads, rem);
+        rem -= fwdR;
+        let aftR = Math.min(cfg.aftReloads, rem);
+
+        if (cfg.aftTubes > 0 && specialBudget >= 2) {
+          aftT = Math.min(cfg.aftTubes, 2);
+          fwdT = Math.min(cfg.fwdTubes, specialBudget - aftT);
+          rem = specialBudget - fwdT - aftT;
+          fwdR = Math.min(cfg.fwdReloads, rem);
+          rem -= fwdR;
+          aftR = Math.min(cfg.aftReloads, rem);
+        }
+
+        alloc = {
+          fwdTubes: fwdT,
+          aftTubes: aftT,
+          fwdReloads: fwdR,
+          aftReloads: aftR,
+          fwdT92: fwdT + fwdR,
+          aftT92: aftT + aftR
+        };
+      } else if (alloc.fwdTubes === undefined && alloc.fwdT92 !== undefined) {
+        let fRem = Number(alloc.fwdT92) || 0;
+        let fwdT = Math.min(cfg.fwdTubes, fRem);
+        let fwdR = Math.min(cfg.fwdReloads, fRem - fwdT);
+        let aRem = Number(alloc.aftT92) || 0;
+        let aftT = Math.min(cfg.aftTubes, aRem);
+        let aftR = Math.min(cfg.aftReloads, aRem - aftT);
+        alloc = {
+          fwdTubes: fwdT,
+          aftTubes: aftT,
+          fwdReloads: fwdR,
+          aftReloads: aftR,
+          fwdT92: fwdT + fwdR,
+          aftT92: aftT + aftR
+        };
+      }
+
+      alloc.fwdTubes = Math.max(0, Math.min(cfg.fwdTubes, Number(alloc.fwdTubes) || 0));
+      alloc.aftTubes = Math.max(0, Math.min(cfg.aftTubes, Number(alloc.aftTubes) || 0));
+      alloc.fwdReloads = Math.max(0, Math.min(cfg.fwdReloads, Number(alloc.fwdReloads) || 0));
+      alloc.aftReloads = Math.max(0, Math.min(cfg.aftReloads, Number(alloc.aftReloads) || 0));
+
+      let sum = alloc.fwdTubes + alloc.aftTubes + alloc.fwdReloads + alloc.aftReloads;
+      if (sum > specialBudget) {
+        let excess = sum - specialBudget;
+        if (alloc.aftReloads > 0) {
+          let s = Math.min(alloc.aftReloads, excess);
+          alloc.aftReloads -= s;
+          excess -= s;
+        }
+        if (excess > 0 && alloc.fwdReloads > 0) {
+          let s = Math.min(alloc.fwdReloads, excess);
+          alloc.fwdReloads -= s;
+          excess -= s;
+        }
+        if (excess > 0 && alloc.aftTubes > 0) {
+          let s = Math.min(alloc.aftTubes, excess);
+          alloc.aftTubes -= s;
+          excess -= s;
+        }
+        if (excess > 0 && alloc.fwdTubes > 0) {
+          let s = Math.min(alloc.fwdTubes, excess);
+          alloc.fwdTubes -= s;
+          excess -= s;
+        }
+      }
+
+      alloc.fwdT92 = alloc.fwdTubes + alloc.fwdReloads;
+      alloc.aftT92 = alloc.aftTubes + alloc.aftReloads;
+
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.torpedoAllocation = alloc;
+      return alloc;
+    }
+
     function onType92CountChange() {
       const sel = document.getElementById('wf-torp-type92-count');
       if (!sel) return;
       if (!campaignState.workflow) campaignState.workflow = {};
-      campaignState.workflow.torpedoType92Count = parseInt(sel.value, 10);
-      updateTorpedoDoctrineDisplay();
+      const tCount = parseInt(sel.value, 10);
+      campaignState.workflow.torpedoType92Count = tCount;
+
+      setTorpedoAllocationPreset('balanced');
     }
+    window.onType92CountChange = onType92CountChange;
+
+    function setTorpedoAllocationPreset(preset) {
+      const budgetInfo = getTorpedoBudgetAndTypes();
+      const { cfg, specialBudget } = budgetInfo;
+
+      let fwdT = 0, aftT = 0, fwdR = 0, aftR = 0;
+      if (preset === 'standard') {
+        fwdT = Math.min(cfg.fwdTubes, specialBudget);
+        let rem = specialBudget - fwdT;
+        aftT = Math.min(cfg.aftTubes, rem);
+        rem -= aftT;
+        fwdR = Math.min(cfg.fwdReloads, rem);
+        rem -= fwdR;
+        aftR = Math.min(cfg.aftReloads, rem);
+      } else if (preset === 'balanced') {
+        if (cfg.aftTubes > 0) {
+          aftT = Math.min(cfg.aftTubes, Math.min(2, specialBudget));
+          fwdT = Math.min(cfg.fwdTubes, specialBudget - aftT);
+          let rem = specialBudget - fwdT - aftT;
+          aftR = Math.min(cfg.aftReloads, Math.min(2, rem));
+          rem -= aftR;
+          fwdR = Math.min(cfg.fwdReloads, rem);
+        } else {
+          fwdT = Math.min(cfg.fwdTubes, specialBudget);
+          fwdR = Math.min(cfg.fwdReloads, specialBudget - fwdT);
+        }
+      } else if (preset === 'all-fwd') {
+        fwdT = Math.min(cfg.fwdTubes, specialBudget);
+        fwdR = Math.min(cfg.fwdReloads, specialBudget - fwdT);
+        aftT = 0;
+        aftR = 0;
+      } else if (preset === 'reloads') {
+        fwdR = Math.min(cfg.fwdReloads, specialBudget);
+        let rem = specialBudget - fwdR;
+        aftR = Math.min(cfg.aftReloads, rem);
+        rem -= aftR;
+        fwdT = Math.min(cfg.fwdTubes, rem);
+        rem -= fwdT;
+        aftT = Math.min(cfg.aftTubes, rem);
+      }
+
+      const alloc = {
+        fwdTubes: fwdT,
+        aftTubes: aftT,
+        fwdReloads: fwdR,
+        aftReloads: aftR,
+        fwdT92: fwdT + fwdR,
+        aftT92: aftT + aftR
+      };
+
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.torpedoAllocation = alloc;
+
+      if (typeof applyTorpedoAllocation === 'function') {
+        applyTorpedoAllocation(alloc);
+      }
+      updateTorpedoDoctrineDisplay();
+      if (typeof saveState === 'function') saveState();
+    }
+    window.setTorpedoAllocationPreset = setTorpedoAllocationPreset;
+
+    function onTorpedoAllocationInputChange(changedField) {
+      const budgetInfo = getTorpedoBudgetAndTypes();
+      const { cfg, specialBudget } = budgetInfo;
+
+      const inpFwdT = document.getElementById('wf-torp-alloc-fwd-tubes');
+      const inpAftT = document.getElementById('wf-torp-alloc-aft-tubes');
+      const inpFwdR = document.getElementById('wf-torp-alloc-fwd-reloads');
+      const inpAftR = document.getElementById('wf-torp-alloc-aft-reloads');
+
+      let fwdT = inpFwdT ? (parseInt(inpFwdT.value, 10) || 0) : 0;
+      let aftT = inpAftT ? (parseInt(inpAftT.value, 10) || 0) : 0;
+      let fwdR = inpFwdR ? (parseInt(inpFwdR.value, 10) || 0) : 0;
+      let aftR = inpAftR ? (parseInt(inpAftR.value, 10) || 0) : 0;
+
+      fwdT = Math.max(0, Math.min(cfg.fwdTubes, fwdT));
+      aftT = Math.max(0, Math.min(cfg.aftTubes, aftT));
+      fwdR = Math.max(0, Math.min(cfg.fwdReloads, fwdR));
+      aftR = Math.max(0, Math.min(cfg.aftReloads, aftR));
+
+      let sum = fwdT + aftT + fwdR + aftR;
+      if (sum > specialBudget) {
+        const diff = sum - specialBudget;
+        if (changedField === 'fwdTubes') fwdT = Math.max(0, fwdT - diff);
+        else if (changedField === 'aftTubes') aftT = Math.max(0, aftT - diff);
+        else if (changedField === 'fwdReloads') fwdR = Math.max(0, fwdR - diff);
+        else if (changedField === 'aftReloads') aftR = Math.max(0, aftR - diff);
+        else fwdT = Math.max(0, fwdT - diff);
+      }
+
+      const alloc = {
+        fwdTubes: fwdT,
+        aftTubes: aftT,
+        fwdReloads: fwdR,
+        aftReloads: aftR,
+        fwdT92: fwdT + fwdR,
+        aftT92: aftT + aftR
+      };
+
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.torpedoAllocation = alloc;
+
+      if (typeof applyTorpedoAllocation === 'function') {
+        applyTorpedoAllocation(alloc);
+      }
+      updateTorpedoDoctrineDisplay();
+      if (typeof saveState === 'function') saveState();
+    }
+    window.onTorpedoAllocationInputChange = onTorpedoAllocationInputChange;
+
+    function stepTorpedoAllocation(field, delta) {
+      const inpMap = {
+        fwdTubes: 'wf-torp-alloc-fwd-tubes',
+        aftTubes: 'wf-torp-alloc-aft-tubes',
+        fwdReloads: 'wf-torp-alloc-fwd-reloads',
+        aftReloads: 'wf-torp-alloc-aft-reloads'
+      };
+      const inp = document.getElementById(inpMap[field]);
+      if (!inp) return;
+      const currentVal = parseInt(inp.value, 10) || 0;
+      inp.value = Math.max(0, currentVal + delta);
+      onTorpedoAllocationInputChange(field);
+    }
+    window.stepTorpedoAllocation = stepTorpedoAllocation;
+
+    function autoFillRemainingTorpedoes() {
+      const budgetInfo = getTorpedoBudgetAndTypes();
+      const { cfg, specialBudget } = budgetInfo;
+      const alloc = getNormalizedTorpedoAllocation(budgetInfo);
+
+      let currentSum = alloc.fwdTubes + alloc.aftTubes + alloc.fwdReloads + alloc.aftReloads;
+      let remaining = specialBudget - currentSum;
+      if (remaining <= 0) return;
+
+      const fwdTSpace = cfg.fwdTubes - alloc.fwdTubes;
+      const addFwdT = Math.min(fwdTSpace, remaining);
+      alloc.fwdTubes += addFwdT;
+      remaining -= addFwdT;
+
+      if (remaining > 0) {
+        const aftTSpace = cfg.aftTubes - alloc.aftTubes;
+        const addAftT = Math.min(aftTSpace, remaining);
+        alloc.aftTubes += addAftT;
+        remaining -= addAftT;
+      }
+
+      if (remaining > 0) {
+        const fwdRSpace = cfg.fwdReloads - alloc.fwdReloads;
+        const addFwdR = Math.min(fwdRSpace, remaining);
+        alloc.fwdReloads += addFwdR;
+        remaining -= addFwdR;
+      }
+
+      if (remaining > 0) {
+        const aftRSpace = cfg.aftReloads - alloc.aftReloads;
+        const addAftR = Math.min(aftRSpace, remaining);
+        alloc.aftReloads += addAftR;
+        remaining -= addAftR;
+      }
+
+      alloc.fwdT92 = alloc.fwdTubes + alloc.fwdReloads;
+      alloc.aftT92 = alloc.aftTubes + alloc.aftReloads;
+
+      campaignState.workflow.torpedoAllocation = alloc;
+      if (typeof applyTorpedoAllocation === 'function') {
+        applyTorpedoAllocation(alloc);
+      }
+      updateTorpedoDoctrineDisplay();
+      if (typeof saveState === 'function') saveState();
+    }
+    window.autoFillRemainingTorpedoes = autoFillRemainingTorpedoes;
+
+    function syncTorpedoAllocationToSubBoard() {
+      const budgetInfo = getTorpedoBudgetAndTypes();
+      const alloc = getNormalizedTorpedoAllocation(budgetInfo);
+      if (typeof applyTorpedoAllocation === 'function') {
+        applyTorpedoAllocation(alloc);
+      }
+    }
+    window.syncTorpedoAllocationToSubBoard = syncTorpedoAllocationToSubBoard;
 
     function updateTorpedoDoctrineDisplay() {
       const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
@@ -915,6 +1346,164 @@
         }
       }
 
+      // Unified 4-Compartment Allocation Panel Update (Pre-42 and Post-42)
+      const allocPanel = document.getElementById('wf-torp-allocation-panel');
+      if (allocPanel) {
+        allocPanel.style.display = 'block';
+
+        const budgetInfo = getTorpedoBudgetAndTypes();
+        const { specialType, baseType, specialLabel, baseLabel, specialBudget, baseCount, cfg } = budgetInfo;
+        const bannerBaseLabel = baseType === 'type6' ? (isEn ? 'Type 6' : 'Tipo 6')
+          : baseType === 'type89' ? (isEn ? 'Type 89' : 'Tipo 89')
+          : baseType === 'type92' ? (isEn ? 'Type 92' : 'Tipo 92')
+          : (isEn ? 'Type 95' : 'Tipo 95');
+        const alloc = getNormalizedTorpedoAllocation(budgetInfo);
+
+        const assignedCount = alloc.fwdTubes + alloc.aftTubes + alloc.fwdReloads + alloc.aftReloads;
+        const remainingCount = Math.max(0, specialBudget - assignedCount);
+
+        // Budget Banner
+        const bannerCapEl = document.getElementById('wf-torp-banner-total-cap');
+        if (bannerCapEl) bannerCapEl.textContent = `${totalCapacity} ${isEn ? "Torpedoes LOADED" : "Torpedos CARGADOS"}`;
+
+        const baseSummaryEl = document.getElementById('wf-torp-banner-base-summary');
+        const baseCountEl = document.getElementById('wf-torp-banner-base-count');
+        if (baseCountEl) baseCountEl.textContent = `${baseCount}x ${bannerBaseLabel}`;
+        if (baseSummaryEl) baseSummaryEl.innerHTML = `${isEn ? "Remaining filled with" : "Resto"}: <strong id="wf-torp-banner-base-count" style="color:#cbd5e1;">${baseCount}x ${bannerBaseLabel}</strong>`;
+
+        const nameEl = document.getElementById('wf-torp-budget-name');
+        if (nameEl) nameEl.textContent = specialLabel;
+        const totalEl = document.getElementById('wf-torp-budget-total');
+        if (totalEl) totalEl.textContent = specialBudget;
+        const assignedEl = document.getElementById('wf-torp-budget-assigned');
+        if (assignedEl) assignedEl.textContent = assignedCount;
+        const remEl = document.getElementById('wf-torp-budget-remaining');
+        if (remEl) {
+          remEl.textContent = remainingCount;
+          remEl.style.color = (remainingCount === 0) ? '#4ade80' : '#f59e0b';
+        }
+
+        const statusEl = document.getElementById('wf-torp-budget-status');
+        const autofillBtn = document.getElementById('wf-torp-autofill-btn');
+        if (statusEl) {
+          if (remainingCount === 0) {
+            statusEl.innerHTML = `<span style="color:#4ade80;">✓ ${totalCapacity}/${totalCapacity} ${isEn ? "Loaded" : "Cargados"}</span>`;
+            if (autofillBtn) autofillBtn.style.display = 'none';
+          } else {
+            statusEl.innerHTML = `<span style="color:#f59e0b;">⚠️ ${isEn ? `Remaining: ${remainingCount}` : `Faltan: ${remainingCount}`}</span>`;
+            if (autofillBtn) autofillBtn.style.display = 'inline-block';
+          }
+        }
+
+        const specShort = (specialType === 'type95') ? 'T95' : 'T92';
+        const baseShort = (baseType === 'type6') ? 'T6' : ((baseType === 'type89') ? 'T89' : 'T95');
+
+        // 1. Bow Tubes
+        const inpFwdT = document.getElementById('wf-torp-alloc-fwd-tubes');
+        const capFwdT = document.getElementById('wf-torp-cap-fwd-tubes');
+        const descFwdT = document.getElementById('wf-torp-desc-fwd-tubes');
+        if (inpFwdT) {
+          inpFwdT.value = alloc.fwdTubes;
+          inpFwdT.max = cfg.fwdTubes;
+          inpFwdT.disabled = (cfg.fwdTubes === 0);
+        }
+        if (capFwdT) capFwdT.innerHTML = `<span style="color:#4ade80; font-weight:bold;">${cfg.fwdTubes}/${cfg.fwdTubes} ${isEn ? "Loaded ✓" : "Cargados ✓"}</span>`;
+        if (descFwdT) {
+          const baseFwdT = Math.max(0, cfg.fwdTubes - alloc.fwdTubes);
+          descFwdT.innerHTML = `<span style="color:#38bdf8; font-weight:bold;">${alloc.fwdTubes}x ${specShort}</span> + <span style="color:#cbd5e1; font-weight:bold;">${baseFwdT}x ${baseShort}</span>`;
+        }
+
+        // 2. Stern Tubes
+        const inpAftT = document.getElementById('wf-torp-alloc-aft-tubes');
+        const capAftT = document.getElementById('wf-torp-cap-aft-tubes');
+        const descAftT = document.getElementById('wf-torp-desc-aft-tubes');
+        const cardAftT = document.getElementById('wf-torp-card-aft-tubes');
+        const btnMinusAftT = document.getElementById('wf-torp-btn-minus-aft-tubes');
+        const btnPlusAftT = document.getElementById('wf-torp-btn-plus-aft-tubes');
+        if (cfg.aftTubes === 0) {
+          if (inpAftT) { inpAftT.value = 0; inpAftT.disabled = true; }
+          if (capAftT) capAftT.textContent = isEn ? "(No Aft Tubes)" : "(Sin tubos)";
+          if (descAftT) descAftT.textContent = "--";
+          if (cardAftT) cardAftT.style.opacity = '0.45';
+          if (btnMinusAftT) btnMinusAftT.disabled = true;
+          if (btnPlusAftT) btnPlusAftT.disabled = true;
+        } else {
+          if (cardAftT) cardAftT.style.opacity = '1';
+          if (btnMinusAftT) btnMinusAftT.disabled = false;
+          if (btnPlusAftT) btnPlusAftT.disabled = false;
+          if (inpAftT) {
+            inpAftT.value = alloc.aftTubes;
+            inpAftT.max = cfg.aftTubes;
+            inpAftT.disabled = false;
+          }
+          if (capAftT) capAftT.innerHTML = `<span style="color:#4ade80; font-weight:bold;">${cfg.aftTubes}/${cfg.aftTubes} ${isEn ? "Loaded ✓" : "Cargados ✓"}</span>`;
+          if (descAftT) {
+            const baseAftT = Math.max(0, cfg.aftTubes - alloc.aftTubes);
+            descAftT.innerHTML = `<span style="color:#f87171; font-weight:bold;">${alloc.aftTubes}x ${specShort}</span> + <span style="color:#cbd5e1; font-weight:bold;">${baseAftT}x ${baseShort}</span>`;
+          }
+        }
+
+        // 3. Bow Reloads
+        const inpFwdR = document.getElementById('wf-torp-alloc-fwd-reloads');
+        const capFwdR = document.getElementById('wf-torp-cap-fwd-reloads');
+        const descFwdR = document.getElementById('wf-torp-desc-fwd-reloads');
+        const cardFwdR = document.getElementById('wf-torp-card-fwd-reloads');
+        const btnMinusFwdR = document.getElementById('wf-torp-btn-minus-fwd-reloads');
+        const btnPlusFwdR = document.getElementById('wf-torp-btn-plus-fwd-reloads');
+        if (cfg.fwdReloads === 0) {
+          if (inpFwdR) { inpFwdR.value = 0; inpFwdR.disabled = true; }
+          if (capFwdR) capFwdR.textContent = isEn ? "(No Reloads)" : "(Sin recargas)";
+          if (descFwdR) descFwdR.textContent = "--";
+          if (cardFwdR) cardFwdR.style.opacity = '0.45';
+          if (btnMinusFwdR) btnMinusFwdR.disabled = true;
+          if (btnPlusFwdR) btnPlusFwdR.disabled = true;
+        } else {
+          if (cardFwdR) cardFwdR.style.opacity = '1';
+          if (btnMinusFwdR) btnMinusFwdR.disabled = false;
+          if (btnPlusFwdR) btnPlusFwdR.disabled = false;
+          if (inpFwdR) {
+            inpFwdR.value = alloc.fwdReloads;
+            inpFwdR.max = cfg.fwdReloads;
+            inpFwdR.disabled = false;
+          }
+          if (capFwdR) capFwdR.innerHTML = `<span style="color:#4ade80; font-weight:bold;">${cfg.fwdReloads}/${cfg.fwdReloads} ${isEn ? "Loaded ✓" : "Cargadas ✓"}</span>`;
+          if (descFwdR) {
+            const baseFwdR = Math.max(0, cfg.fwdReloads - alloc.fwdReloads);
+            descFwdR.innerHTML = `<span style="color:#38bdf8; font-weight:bold;">${alloc.fwdReloads}x ${specShort}</span> + <span style="color:#cbd5e1; font-weight:bold;">${baseFwdR}x ${baseShort}</span>`;
+          }
+        }
+
+        // 4. Stern Reloads
+        const inpAftR = document.getElementById('wf-torp-alloc-aft-reloads');
+        const capAftR = document.getElementById('wf-torp-cap-aft-reloads');
+        const descAftR = document.getElementById('wf-torp-desc-aft-reloads');
+        const cardAftR = document.getElementById('wf-torp-card-aft-reloads');
+        const btnMinusAftR = document.getElementById('wf-torp-btn-minus-aft-reloads');
+        const btnPlusAftR = document.getElementById('wf-torp-btn-plus-aft-reloads');
+        if (cfg.aftReloads === 0) {
+          if (inpAftR) { inpAftR.value = 0; inpAftR.disabled = true; }
+          if (capAftR) capAftR.textContent = isEn ? "(No Reloads)" : "(Sin recargas)";
+          if (descAftR) descAftR.textContent = "--";
+          if (cardAftR) cardAftR.style.opacity = '0.45';
+          if (btnMinusAftR) btnMinusAftR.disabled = true;
+          if (btnPlusAftR) btnPlusAftR.disabled = true;
+        } else {
+          if (cardAftR) cardAftR.style.opacity = '1';
+          if (btnMinusAftR) btnMinusAftR.disabled = false;
+          if (btnPlusAftR) btnPlusAftR.disabled = false;
+          if (inpAftR) {
+            inpAftR.value = alloc.aftReloads;
+            inpAftR.max = cfg.aftReloads;
+            inpAftR.disabled = false;
+          }
+          if (capAftR) capAftR.innerHTML = `<span style="color:#4ade80; font-weight:bold;">${cfg.aftReloads}/${cfg.aftReloads} ${isEn ? "Loaded ✓" : "Cargadas ✓"}</span>`;
+          if (descAftR) {
+            const baseAftR = Math.max(0, cfg.aftReloads - alloc.aftReloads);
+            descAftR.innerHTML = `<span style="color:#f87171; font-weight:bold;">${alloc.aftReloads}x ${specShort}</span> + <span style="color:#cbd5e1; font-weight:bold;">${baseAftR}x ${baseShort}</span>`;
+          }
+        }
+      }
+
       // Update spec load line in #wf-sub-specs-box
       const specLoadEl = document.getElementById('wf-spec-torp-load');
       if (specLoadEl && specLoadText) {
@@ -1012,77 +1601,160 @@
       const k1RankEl = document.getElementById('k1-rank-badge');
       if (k1RankEl) k1RankEl.innerText = rank;
 
+      if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+      if (typeof renderSubBoard === 'function') renderSubBoard();
+
       showToast(`¡Submarino ${hull} comisionado al mando de ${rank} ${cmdr}! Procediendo a Escuela Naval.`);
       setWorkflowPhase('school');
       saveState();
     }
 
     function buildWorkflowSubClassSelect() {
-      const sel = document.getElementById('wf-sub-class-select');
-      if (!sel) return;
-      sel.innerHTML = '';
+      const select = document.getElementById('wf-sub-class-select');
+      if (!select) return;
+      
+      const isEn = window.currentLang === 'en';
       const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
       const keys = Object.keys(subs);
+      const targetSub = campaignState.activeSubKey;
+
+      select.innerHTML = `<option value="">${isEn ? "-- Select Submarine --" : "-- Selecciona Submarino --"}</option>`;
       
-      keys.forEach(k => {
+      keys.forEach((k) => {
         const sub = subs[k];
-        const opt = document.createElement('option');
-        opt.value = k;
-        opt.innerText = `${sub.class_name || k} (${sub.available_date || '1941'})`;
-        opt.style.backgroundColor = '#071b2d';
-        opt.style.color = '#f1f5f9';
-        if (k === campaignState.activeSubKey || (!campaignState.activeSubKey && k === keys[0])) {
-          opt.selected = true;
-          campaignState.activeSubKey = k;
-        }
-        sel.appendChild(opt);
+        const dateMatch = sub.available_date || '1941';
+        const option = document.createElement('option');
+        option.value = k;
+        option.textContent = `${sub.class_name || k} (${dateMatch})`;
+        if (k === targetSub) option.selected = true;
+        select.appendChild(option);
       });
+      
       updateWorkflowSubmarineSpecs();
     }
 
-        function buildWorkflowMonthSelect() {
-      const sel = document.getElementById('wf-month-select');
-      if (!sel) return;
-      sel.innerHTML = '';
-      const startMonth = getSubmarineStartMonth(campaignState.activeSubKey);
-      const validMonths = MONTHS.filter(m => m.id >= startMonth);
-      const isEn = window.currentLang === 'en';
-      validMonths.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.id;
-        const monthLabel = isEn ? `${m.short} (${m.id})` : m.label;
-        opt.innerText = monthLabel + (m.milestone ? ' [' + m.milestone + ']' : '');
-        sel.appendChild(opt);
-      });
 
-      if (!campaignState.workflow.selectedMonth || campaignState.workflow.selectedMonth < startMonth) {
-        campaignState.workflow.selectedMonth = startMonth;
-      }
-      sel.value = campaignState.workflow.selectedMonth;
 
-      const subObj = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines[campaignState.activeSubKey] : null;
-      const subName = subObj ? subObj.class_name : campaignState.activeSubKey;
-      const hintEl = document.getElementById('p1-sub-avail-hint');
-      if (hintEl) {
-        hintEl.innerHTML = isEn
-          ? `⚓ <strong>${subName}:</strong> Available for patrols from <strong>${startMonth}</strong> (${validMonths.length} operational months).`
-          : `⚓ <strong>${subName}:</strong> Disponible para patrullas a partir de <strong>${startMonth}</strong> (${validMonths.length} meses operacionales).`;
-      }
-
-      updatePhase1TableHighlight();
-      updateBasesForDate(campaignState.workflow.selectedMonth);
-      updateSpecialEventsForMonthArea(); renderMissionChits();
+    function formatSensuikanMonth(monthId, isEn) {
+      if (!monthId) return isEn ? "Dec-41 (1941-12)" : "Dic-41 (1941-12)";
+      const parts = monthId.split('-');
+      const year = parts[0] || '1941';
+      const yr2 = year.slice(-2);
+      const m = parseInt(parts[1] || '12', 10);
+      const esMonths = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      const enMonths = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const prefix = isEn ? (enMonths[m] || 'Dec') : (esMonths[m] || 'Dic');
+      return `${prefix}-${yr2} (${monthId})`;
     }
 
+    function buildWorkflowMonthSelect() {
+      const dropdown = document.getElementById('wf-month-dropdown');
+      const display = document.getElementById('wf-month-display');
+      const hiddenInput = document.getElementById('wf-month-select');
+      if (!dropdown || !display) return;
+      
+      const isEn = window.currentLang === 'en';
+      const startMonth = getSubmarineStartMonth(campaignState.activeSubKey) || "1941-12";
+      const allMonths = (MONTHS || []);
+      
+      if (!campaignState.workflow.selectedMonth) {
+        campaignState.workflow.selectedMonth = startMonth;
+      }
+      const targetMonth = campaignState.workflow.selectedMonth;
+
+      if (hiddenInput) hiddenInput.value = targetMonth;
+      display.innerText = formatSensuikanMonth(targetMonth, isEn);
+
+      dropdown.innerHTML = '';
+      
+      // Header 1: Disponibles
+      const headerAvailable = document.createElement('div');
+      headerAvailable.className = 'custom-option-header';
+      headerAvailable.innerHTML = isEn ? '📌 <b>Available Months for this Submarine</b>' : '📌 <b>Meses Disponibles para este Buque</b>';
+      dropdown.appendChild(headerAvailable);
+
+      const available = allMonths.filter(m => m.id >= startMonth).sort((a, b) => a.id.localeCompare(b.id));
+      available.forEach(m => {
+          const opt = document.createElement('div');
+          opt.className = 'custom-option';
+          opt.innerHTML = `<span style="color:#fbbf24;">★</span> ${formatSensuikanMonth(m.id, isEn)}`;
+          opt.onclick = () => {
+              if (hiddenInput) hiddenInput.value = m.id;
+              campaignState.workflow.selectedMonth = m.id;
+              display.innerText = opt.innerText.replace('★ ', '');
+              dropdown.style.display = 'none';
+              onWorkflowMonthChange();
+          };
+          dropdown.appendChild(opt);
+      });
+
+      const headerAll = document.createElement('div');
+      headerAll.className = 'custom-option-header';
+      headerAll.innerHTML = isEn ? '<br>🌐 <b>All Historical Months</b>' : '<br>🌐 <b>Todos los Meses Históricos</b>';
+      dropdown.appendChild(headerAll);
+
+      const all = [...allMonths].sort((a, b) => a.id.localeCompare(b.id));
+      all.forEach(m => {
+          const opt = document.createElement('div');
+          opt.className = 'custom-option';
+          opt.style.paddingLeft = '20px';
+          opt.innerText = formatSensuikanMonth(m.id, isEn);
+          opt.onclick = () => {
+              if (hiddenInput) hiddenInput.value = m.id;
+              campaignState.workflow.selectedMonth = m.id;
+              display.innerText = opt.innerText;
+              dropdown.style.display = 'none';
+              onWorkflowMonthChange();
+          };
+          dropdown.appendChild(opt);
+      });
+
+      updatePhase1TableHighlight();
+      updateBasesForDate(targetMonth);
+      updateSpecialEventsForMonthArea(); renderMissionChits();
+      renderTokens();
+    }
+
+    window.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('wf-month-dropdown');
+        const display = document.getElementById('wf-month-display');
+        if (dropdown && dropdown.style.display === 'block' && !dropdown.contains(e.target) && e.target !== display) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    window.toggleMonthDropdown = function() {
+        const d = document.getElementById('wf-month-dropdown');
+        d.style.display = d.style.display === 'block' ? 'none' : 'block';
+    };
+
+    window.selectMonth = function(monthId) {
+        campaignState.workflow.selectedMonth = monthId;
+        const hiddenInput = document.getElementById('wf-month-select');
+        if (hiddenInput) hiddenInput.value = monthId;
+        const display = document.getElementById('wf-month-display');
+        if (display) display.innerText = formatSensuikanMonth(monthId, (window.currentLang === 'en'));
+        const d = document.getElementById('wf-month-dropdown');
+        if (d) d.style.display = 'none';
+        onWorkflowMonthChange();
+    };
+
     function onWorkflowMonthChange() {
-      campaignState.workflow.selectedMonth = document.getElementById('wf-month-select').value;
+      const hiddenInput = document.getElementById('wf-month-select');
+      if (hiddenInput && hiddenInput.value) {
+        campaignState.workflow.selectedMonth = hiddenInput.value;
+      }
+      const selectedMonth = campaignState.workflow.selectedMonth || "1941-12";
       populateAreaDropdown();
       updatePhase1TableHighlight();
-      updateBasesForDate(campaignState.workflow.selectedMonth);
-      updateSpecialEventsForMonthArea(); renderMissionChits();
+      updateBasesForDate(selectedMonth);
+      updateSpecialEventsForMonthArea(); 
+      renderMissionChits();
       recalculatePatrolTrack();
       syncCurrentPatrolToLog();
+      if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
       if (typeof updateTorpedoDoctrineDisplay === 'function') updateTorpedoDoctrineDisplay();
+      if (typeof updateFidoStatus === 'function') updateFidoStatus();
       saveState();
     }
 

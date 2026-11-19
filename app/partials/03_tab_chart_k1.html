@@ -17,33 +17,57 @@
           <div class="counter-col">
             <div id="k1-sec-command" class="section-label">Habilidad de Mando</div>
             <div id="token-optional" class="wargame-token token-orange inactive" onclick="toggleToken('optional')">
-              <span class="badge-icon">⭐</span>
+              <img src="assets/tokens/Blessings of the Emperor.jpg" class="k1-chit-img" alt="Blessings of the Emperor">
+              <div class="k1-chit-label-wrap">
+                <span class="badge-icon">⭐</span>
               <span>Habilidad Opcional</span>
+              </div>
             </div>
 
             <div id="k1-sec-midget" class="section-label" style="margin-top:10px;">Habilidades de Minisubmarinos</div>
             <div id="token-midget-torp" class="wargame-token token-blue inactive" onclick="toggleToken('midget-torp')">
-              <span>Tiro Torpedero Minisub</span>
+              <img src="assets/tokens/Midget Torpedo Gunnery.jpg" class="k1-chit-img" alt="Midget Torpedo Gunnery">
+              <div class="k1-chit-label-wrap">
+                <span>Tiro Torpedero Minisub</span>
+              </div>
             </div>
             <div id="token-midget-boat" class="wargame-token token-blue inactive" onclick="toggleToken('midget-boat')">
-              <span>Maniobra Redes / Barca</span>
+              <img src="assets/tokens/Boat Handling.jpg" class="k1-chit-img" alt="Boat Handling">
+              <div class="k1-chit-label-wrap">
+                <span>Maniobra Redes / Barca</span>
+              </div>
             </div>
             <div id="token-midget-comms" class="wargame-token token-blue inactive" onclick="toggleToken('midget-comms')">
-              <span>Comunicaciones Superiores</span>
+              <img src="assets/tokens/Superior Comms.jpg" class="k1-chit-img" alt="Superior Comms">
+              <div class="k1-chit-label-wrap">
+                <span>Comunicaciones Superiores</span>
+              </div>
             </div>
 
             <div id="k1-sec-air1" class="section-label" style="margin-top:10px;">Dotación Aérea (Seiran #1)</div>
             <div id="token-air1-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air1-weap')">
-              <span>Experto en Armas</span>
+              <img src="assets/tokens/Weapons Expert.jpg" class="k1-chit-img" alt="Weapons Expert">
+              <div class="k1-chit-label-wrap">
+                <span>Experto en Armas</span>
+              </div>
             </div>
             <div id="token-air1-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air1-maint')">
-              <span>Mantenimiento Avión</span>
+              <img src="assets/tokens/Aircraft Maint.jpg" class="k1-chit-img" alt="Aircraft Maint">
+              <div class="k1-chit-label-wrap">
+                <span>Mantenimiento Avión</span>
+              </div>
             </div>
             <div id="token-air1-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air1-acm')">
-              <span>Maniobra Aérea (ACM)</span>
+              <img src="assets/tokens/ACM.jpg" class="k1-chit-img" alt="ACM">
+              <div class="k1-chit-label-wrap">
+                <span>Maniobra Aérea (ACM)</span>
+              </div>
             </div>
             <div id="token-air1-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air1-nav')">
-              <span>Navegación Aérea</span>
+              <img src="assets/tokens/Aerial Navigation.jpg" class="k1-chit-img" alt="Aerial Navigation">
+              <div class="k1-chit-label-wrap">
+                <span>Navegación Aérea</span>
+              </div>
             </div>
           </div>
 
@@ -53,17 +77,26 @@
             
             <div class="captain-top-skills">
               <div id="token-cap-shibumi" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-shibumi')">
+              <img src="assets/tokens/Shibumi.jpg" class="k1-chit-img" alt="Shibumi">
+              <div class="k1-chit-label-wrap">
                 <span>Shibumi</span>
                 <span style="font-size:0.80rem; color:#666;">(Sigilo)</span>
               </div>
+            </div>
               <div id="token-cap-leadership" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-leadership')">
+              <img src="assets/tokens/Leadership.jpg" class="k1-chit-img" alt="Leadership">
+              <div class="k1-chit-label-wrap">
                 <span>Liderazgo</span>
                 <span style="font-size:0.80rem; color:#666;">(Moral)</span>
               </div>
+            </div>
               <div id="token-cap-torp" class="wargame-token token-yellow inactive" onclick="toggleToken('cap-torp')">
+              <img src="assets/tokens/Torpedo Gunnery.jpg" class="k1-chit-img" alt="Torpedo Gunnery">
+              <div class="k1-chit-label-wrap">
                 <span>Tácticas Torpedos</span>
                 <span style="font-size:0.80rem; color:#666;">(+1 Impacto)</span>
               </div>
+            </div>
             </div>
 
             <div class="portrait-wrap" style="cursor:pointer;" onclick="cycleCommanderPortrait()" title="Clic para cambiar rostro / Click to cycle portrait">
@@ -74,36 +107,60 @@
               <div class="chest-row">
                 <div id="k1-lbl-rank" style="font-size:0.80rem; font-weight:800; color:#fff; margin-right:8px;">RANGO:</div>
                 <div id="token-rank" class="wargame-token token-yellow active rank-slot" onclick="cycleRank()">
-                  <span id="rank-text" style="font-size:0.90rem;">LT Cdr (少佐)</span>
+              <img id="k1-rank-chit-img" src="assets/tokens/Rank.jpg" class="k1-chit-img" alt="Rank">
+              <div class="k1-chit-label-wrap">
+                <span id="rank-text" style="font-size:0.90rem;">LT Cdr (少佐)</span>
                   <span id="k1-lbl-cycle" style="font-size:0.80rem; color:#555;">[Clic para Cambiar]</span>
-                </div>
+              </div>
+            </div>
               </div>
 
               <div class="chest-row">
                 <div id="token-medal-gk4" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gk4')">
-                  <span>Milano de Oro (4.ª)</span>
-                </div>
+              <img src="assets/tokens/Order of the Golden Kite 4th.jpg" class="k1-chit-img" alt="Order of the Golden Kite 4th">
+              <div class="k1-chit-label-wrap">
+                <span>Milano de Oro (4.ª)</span>
+              </div>
+            </div>
                 <div id="token-medal-rising" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-rising')">
-                  <span>Sol Naciente</span>
-                </div>
+              <img src="assets/tokens/Order of Rising Sun.jpg" class="k1-chit-img" alt="Order of Rising Sun">
+              <div class="k1-chit-label-wrap">
+                <span>Sol Naciente</span>
+              </div>
+            </div>
                 <div id="token-medal-wound" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-wound')">
-                  <span>Insignia de Herido</span>
-                </div>
+              <img src="assets/tokens/Wound Badge.jpg" class="k1-chit-img" alt="Wound Badge">
+              <div class="k1-chit-label-wrap">
+                <span>Insignia de Herido</span>
+              </div>
+            </div>
                 <div id="token-medal-gea" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gea')">
-                  <span>Medalla Gran Asia</span>
-                </div>
+              <img src="assets/tokens/Great East Asia War Medal.jpg" class="k1-chit-img" alt="Great East Asia War Medal">
+              <div class="k1-chit-label-wrap">
+                <span>Medalla Gran Asia</span>
+              </div>
+            </div>
               </div>
 
               <div class="chest-row">
                 <div id="token-medal-gk5" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-gk5')">
-                  <span>Milano de Oro (5.ª)</span>
-                </div>
+              <img src="assets/tokens/Order of the Golden Kite 5th.jpg" class="k1-chit-img" alt="Order of the Golden Kite 5th">
+              <div class="k1-chit-label-wrap">
+                <span>Milano de Oro (5.ª)</span>
+              </div>
+            </div>
                 <div id="token-medal-sub" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-sub')">
-                  <span>Insignia de Sumergible</span>
-                </div>
+              <img src="assets/tokens/Submarine School Badge.jpg" class="k1-chit-img" alt="Submarine School Badge">
+              <div class="k1-chit-label-wrap">
+                <span>Insignia de Sumergible</span>
+              </div>
+            </div>
                 <div id="token-medal-sacred" class="wargame-token token-medal inactive medal-slot" onclick="toggleToken('medal-sacred')">
-                  <span>Tesoro Sagrado</span>
-                </div>
+              <img src="assets/tokens/Order of Sacred Treasure.jpg" class="k1-chit-img" alt="Order of Sacred Treasure">
+              <div class="k1-chit-label-wrap">
+                <span>Tesoro Sagrado</span>
+              </div>
+            </div>
               </div>
             </div>
           </div>
@@ -112,44 +169,80 @@
           <div class="counter-col">
             <div id="k1-sec-status" class="section-label">Marcadores de Sumergible y Estado</div>
             <div id="token-sub-upgrades" class="wargame-token token-grey inactive" onclick="toggleToken('sub-upgrades')">
-              <span>Mejoras de Sumergible</span>
+              <img src="assets/tokens/New Sub Chance.jpg" class="k1-chit-img" alt="New Sub Chance">
+              <div class="k1-chit-label-wrap">
+                <span>Mejoras de Sumergible</span>
+              </div>
             </div>
             <div id="token-penalty-promo" class="wargame-token token-grey inactive" onclick="toggleToken('penalty-promo')">
-              <span>-2 a la Promoción</span>
+              <img src="assets/tokens/Promotion -2.jpg" class="k1-chit-img" alt="Promotion -2">
+              <div class="k1-chit-label-wrap">
+                <span>-2 a la Promoción</span>
+              </div>
             </div>
             <div id="token-maneki-neko" class="wargame-token token-gold inactive" onclick="toggleToken('maneki-neko')">
-              <span>🐱 Maneki Neko (Amuleto)</span>
+              <img src="assets/tokens/Maneki Neko 1.jpg" class="k1-chit-img" alt="Maneki Neko">
+              <div class="k1-chit-label-wrap">
+                <span>🐱 Maneki Neko (Amuleto)</span>
+              </div>
             </div>
             <div id="token-at-port" class="wargame-token token-grey inactive" onclick="toggleToken('at-port')">
-              <span>En Puerto</span>
+              <img src="assets/tokens/Port Yokosuka.jpg" class="k1-chit-img" alt="Port Yokosuka">
+              <div class="k1-chit-label-wrap">
+                <span>En Puerto</span>
+              </div>
             </div>
 
             <div id="k1-sec-air2" class="section-label" style="margin-top:10px;">Dotación Aérea (Aichi #2)</div>
             <div id="token-air2-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air2-weap')">
-              <span>Experto en Armas</span>
+              <img src="assets/tokens/Weapons Expert.jpg" class="k1-chit-img" alt="Weapons Expert">
+              <div class="k1-chit-label-wrap">
+                <span>Experto en Armas</span>
+              </div>
             </div>
             <div id="token-air2-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air2-maint')">
-              <span>Mantenimiento Avión</span>
+              <img src="assets/tokens/Aircraft Maint.jpg" class="k1-chit-img" alt="Aircraft Maint">
+              <div class="k1-chit-label-wrap">
+                <span>Mantenimiento Avión</span>
+              </div>
             </div>
             <div id="token-air2-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air2-acm')">
-              <span>Maniobra Aérea (ACM)</span>
+              <img src="assets/tokens/ACM.jpg" class="k1-chit-img" alt="ACM">
+              <div class="k1-chit-label-wrap">
+                <span>Maniobra Aérea (ACM)</span>
+              </div>
             </div>
             <div id="token-air2-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air2-nav')">
-              <span>Navegación Aérea</span>
+              <img src="assets/tokens/Aerial Navigation.jpg" class="k1-chit-img" alt="Aerial Navigation">
+              <div class="k1-chit-label-wrap">
+                <span>Navegación Aérea</span>
+              </div>
             </div>
 
             <div id="k1-sec-air3" class="section-label" style="margin-top:10px;">Dotación Aérea (Aichi #3)</div>
             <div id="token-air3-weap" class="wargame-token token-grey inactive" onclick="toggleToken('air3-weap')">
-              <span>Experto en Armas</span>
+              <img src="assets/tokens/Weapons Expert.jpg" class="k1-chit-img" alt="Weapons Expert">
+              <div class="k1-chit-label-wrap">
+                <span>Experto en Armas</span>
+              </div>
             </div>
             <div id="token-air3-maint" class="wargame-token token-grey inactive" onclick="toggleToken('air3-maint')">
-              <span>Mantenimiento Avión</span>
+              <img src="assets/tokens/Aircraft Maint.jpg" class="k1-chit-img" alt="Aircraft Maint">
+              <div class="k1-chit-label-wrap">
+                <span>Mantenimiento Avión</span>
+              </div>
             </div>
             <div id="token-air3-acm" class="wargame-token token-grey inactive" onclick="toggleToken('air3-acm')">
-              <span>Maniobra Aérea (ACM)</span>
+              <img src="assets/tokens/ACM.jpg" class="k1-chit-img" alt="ACM">
+              <div class="k1-chit-label-wrap">
+                <span>Maniobra Aérea (ACM)</span>
+              </div>
             </div>
             <div id="token-air3-nav" class="wargame-token token-grey inactive" onclick="toggleToken('air3-nav')">
-              <span>Navegación Aérea</span>
+              <img src="assets/tokens/Aerial Navigation.jpg" class="k1-chit-img" alt="Aerial Navigation">
+              <div class="k1-chit-label-wrap">
+                <span>Navegación Aérea</span>
+              </div>
             </div>
           </div>
 
@@ -162,33 +255,78 @@
             <div class="crew-role-card">
               <h4 id="k1-role-xo">Segundo Oficial (XO)</h4>
               <div class="crew-tokens-stack">
-                <div id="token-xo-expert" class="wargame-token token-grey inactive" onclick="toggleToken('xo-expert')"><span>Experto</span></div>
-                <div id="token-xo-vigilant" class="wargame-token token-green inactive" onclick="toggleToken('xo-vigilant')"><span>Vigilante</span></div>
-                <div id="token-xo-deckgun" class="wargame-token token-green inactive" onclick="toggleToken('xo-deckgun')"><span>Experto Cañón Cubierta</span></div>
-                <div id="token-xo-aagun" class="wargame-token token-green inactive" onclick="toggleToken('xo-aagun')"><span>Experto Artillería AA</span></div>
+                <div id="token-xo-expert" class="wargame-token token-grey inactive" onclick="toggleToken('xo-expert')">
+              <img src="assets/tokens/Crew Expert - X0.jpg" class="k1-chit-img" alt="Crew Expert - XO">
+              <div class="k1-chit-label-wrap">
+                <span>Experto</span>
+              </div>
+            </div>
+                <div id="token-xo-vigilant" class="wargame-token token-green inactive" onclick="toggleToken('xo-vigilant')">
+              <img src="assets/tokens/Vigilant.jpg" class="k1-chit-img" alt="Vigilant">
+              <div class="k1-chit-label-wrap">
+                <span>Vigilante</span>
+              </div>
+            </div>
+                <div id="token-xo-deckgun" class="wargame-token token-green inactive" onclick="toggleToken('xo-deckgun')">
+              <img src="assets/tokens/Deck Gun Expert.jpg" class="k1-chit-img" alt="Deck Gun Expert">
+              <div class="k1-chit-label-wrap">
+                <span>Experto Cañón Cubierta</span>
+              </div>
+            </div>
+                <div id="token-xo-aagun" class="wargame-token token-green inactive" onclick="toggleToken('xo-aagun')">
+              <img src="assets/tokens/AA Expert.jpg" class="k1-chit-img" alt="AA Expert">
+              <div class="k1-chit-label-wrap">
+                <span>Experto Artillería AA</span>
+              </div>
+            </div>
               </div>
             </div>
 
             <div class="crew-role-card">
               <h4 id="k1-role-eng">Jefe de Máquinas</h4>
               <div class="crew-tokens-stack">
-                <div id="token-eng-expert" class="wargame-token token-grey inactive" onclick="toggleToken('eng-expert')"><span>Experto</span></div>
-                <div id="token-eng-mech" class="wargame-token token-green inactive" onclick="toggleToken('eng-mech')"><span>Genio Mecánico</span></div>
-                <div id="token-eng-keen" class="wargame-token token-green inactive" onclick="toggleToken('eng-keen')"><span>Juicio Certero</span></div>
+                <div id="token-eng-expert" class="wargame-token token-grey inactive" onclick="toggleToken('eng-expert')">
+              <img src="assets/tokens/Crew Expert - Eng.jpg" class="k1-chit-img" alt="Crew Expert - Eng">
+              <div class="k1-chit-label-wrap">
+                <span>Experto</span>
+              </div>
+            </div>
+                <div id="token-eng-mech" class="wargame-token token-green inactive" onclick="toggleToken('eng-mech')">
+              <img src="assets/tokens/Mechanical Genius.jpg" class="k1-chit-img" alt="Mechanical Genius">
+              <div class="k1-chit-label-wrap">
+                <span>Genio Mecánico</span>
+              </div>
+            </div>
+                <div id="token-eng-keen" class="wargame-token token-green inactive" onclick="toggleToken('eng-keen')">
+              <img src="assets/tokens/Keen Judgement.jpg" class="k1-chit-img" alt="Keen Judgement">
+              <div class="k1-chit-label-wrap">
+                <span>Juicio Certero</span>
+              </div>
+            </div>
               </div>
             </div>
 
             <div class="crew-role-card">
               <h4 id="k1-role-nav">Navegante</h4>
               <div class="crew-tokens-stack">
-                <div id="token-nav-expert" class="wargame-token token-grey inactive" onclick="toggleToken('nav-expert')"><span>Experto</span></div>
+                <div id="token-nav-expert" class="wargame-token token-grey inactive" onclick="toggleToken('nav-expert')">
+              <img src="assets/tokens/Crew Expert - Nav.jpg" class="k1-chit-img" alt="Crew Expert - Nav">
+              <div class="k1-chit-label-wrap">
+                <span>Experto</span>
+              </div>
+            </div>
               </div>
             </div>
 
             <div class="crew-role-card">
               <h4 id="k1-role-med">Médico</h4>
               <div class="crew-tokens-stack">
-                <div id="token-med-expert" class="wargame-token token-grey inactive" onclick="toggleToken('med-expert')"><span>Experto</span></div>
+                <div id="token-med-expert" class="wargame-token token-grey inactive" onclick="toggleToken('med-expert')">
+              <img src="assets/tokens/Crew Expert - Med.jpg" class="k1-chit-img" alt="Crew Expert - Med">
+              <div class="k1-chit-label-wrap">
+                <span>Experto</span>
+              </div>
+            </div>
               </div>
             </div>
           </div>
@@ -204,38 +342,56 @@
             <div id="k1-kaiten-card-1" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #1</h4>
               <div id="token-kaiten-1" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(1)">
+              <img id="img-kaiten-1" src="assets/tokens/Kaiten-1.jpg" class="k1-chit-img" alt="Kaiten Pilot 1">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-1">Sin Asignar</span>
               </div>
+            </div>
             </div>
             <div id="k1-kaiten-card-2" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #2</h4>
               <div id="token-kaiten-2" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(2)">
+              <img id="img-kaiten-2" src="assets/tokens/Kaiten-2.jpg" class="k1-chit-img" alt="Kaiten Pilot 2">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-2">Sin Asignar</span>
               </div>
+            </div>
             </div>
             <div id="k1-kaiten-card-3" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #3</h4>
               <div id="token-kaiten-3" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(3)">
+              <img id="img-kaiten-3" src="assets/tokens/Kaiten-3.jpg" class="k1-chit-img" alt="Kaiten Pilot 3">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-3">Sin Asignar</span>
               </div>
+            </div>
             </div>
             <div id="k1-kaiten-card-4" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #4</h4>
               <div id="token-kaiten-4" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(4)">
+              <img id="img-kaiten-4" src="assets/tokens/Kaiten-4.jpg" class="k1-chit-img" alt="Kaiten Pilot 4">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-4">Sin Asignar</span>
               </div>
+            </div>
             </div>
             <div id="k1-kaiten-card-5" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #5</h4>
               <div id="token-kaiten-5" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(5)">
+              <img id="img-kaiten-5" src="assets/tokens/Kaiten-5.jpg" class="k1-chit-img" alt="Kaiten Pilot 5">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-5">Sin Asignar</span>
               </div>
+            </div>
             </div>
             <div id="k1-kaiten-card-6" class="crew-role-card" style="border-color:rgba(239,68,68,0.3); text-align:center;">
               <h4 style="color:#fca5a5; margin:0 0 6px 0; font-size:0.88rem;">Piloto Kaiten #6</h4>
               <div id="token-kaiten-6" class="wargame-token token-red inactive" onclick="toggleKaitenPilot(6)">
+              <img id="img-kaiten-6" src="assets/tokens/Kaiten-6.jpg" class="k1-chit-img" alt="Kaiten Pilot 6">
+              <div class="k1-chit-label-wrap">
                 <span id="lbl-kaiten-benefit-6">Sin Asignar</span>
               </div>
+            </div>
             </div>
           </div>
         </div>

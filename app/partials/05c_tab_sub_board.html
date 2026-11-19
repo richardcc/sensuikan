@@ -1,0 +1,69 @@
+<!-- ====================================================================
+     TAB 5c: HOJA COMPLETA DE SUBMARINO (CANONICAL PLAYER BOARD)
+     Ficha Oficial Canónica + Sobretablero 3D Doble Capa + Fichas Interactivas
+     ==================================================================== -->
+<div id="tab-sub-board" class="tab-pane">
+  <!-- Toolbar: Selection, Modes & Sync Controls -->
+  <div class="sub-board-toolbar" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:12px; background:rgba(15,23,42,0.7); border:1px solid #334155; border-radius:8px; padding:10px 14px;">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.25rem;">🚢</span>
+        <div>
+          <strong id="lbl-subboard-title" style="font-family:'Cinzel', serif; font-size:1.05rem; color:var(--gold-400); letter-spacing:1px; display:block;">
+            HOJA CANÓNICA DE SUBMARINO
+          </strong>
+          <span style="font-size:0.80rem; color:#94a3b8;">Tablero de Doble Capa (238 × 180.4 mm) • Escala 100%</span>
+        </div>
+      </div>
+
+      <!-- Submarine Selector Dropdown -->
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label for="board-sub-select" style="font-size:0.82rem; color:#cbd5e1; font-weight:700;">Submarino:</label>
+        <select id="board-sub-select" onchange="changeBoardSubmarine(this.value)" style="background:#1e293b; color:#f8fafc; border:1px solid #c5a059; border-radius:5px; padding:5px 10px; font-size:0.86rem; font-weight:700; cursor:pointer;">
+          <!-- Generated dynamically from SUB_CLASS_NAMES -->
+        </select>
+        <button type="button" class="action-btn" onclick="loadActiveCampaignSubmarine()" style="padding:5px 10px; font-size:0.82rem; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;" title="Cargar el submarino actualmente comisionado en tu campaña">
+          <span>⚓ Mi Submarino Activo</span>
+        </button>
+        <button type="button" class="action-btn" onclick="loadAllTorpedoes()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#93c5fd; border:1px solid #3b82f6; border-radius:5px; font-weight:bold; cursor:pointer;" title="Reabastecer al 100% todos los tubos y reservas de torpedos">
+          <span>⚡ Llenar Torpedos</span>
+        </button>
+        <button type="button" class="action-btn" onclick="reloadAllEmptyTubesFromReserves()" style="padding:5px 10px; font-size:0.82rem; background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:5px; font-weight:bold; cursor:pointer;" title="Recargar todos los tubos vacíos consumiendo las reservas de torpedos de la ficha">
+          <span>🔄 Recargar Tubos (Usar Reservas)</span>
+        </button>
+        <button type="button" class="action-btn" onclick="openTorpedoDistributionDialog()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#fde047; border:1px solid #eab308; border-radius:5px; font-weight:bold; cursor:pointer;" title="Repartir torpedos delante (proa) y detrás (popa)">
+          <span>📍 Repartir Proa / Popa</span>
+        </button>
+      </div>
+      <div id="subboard-torpedo-summary-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.80rem; font-weight:bold; padding:4px 10px; border-radius:5px; background:rgba(15,23,42,0.95); border:1px solid #334155; color:#fde047;"></div>
+    </div>
+  </div>
+
+  <!-- Interactive Board Viewport Container -->
+  <div class="sub-board-viewport" id="sub-board-viewport">
+    <!-- Layer 1: Submarine Background Printed Card Image -->
+    <img id="sub-board-bg-img" src="assets/submarines_cards/Type_B_Class_es.webp" alt="Submarine Player Card" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:1;" />
+
+    <!-- Layer 2: 3D Acrylic/Plastic Top Overlay (Toggled with display mode) -->
+    <img id="sub-board-3d-overlay" src="assets/submarines_cards/overlay_3d_es.webp" alt="3D Double Layer Overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; pointer-events:none; z-index:5; display:none;" />
+
+    <!-- Layer 3: Interactive Hotspots and Token Overlay (86 exact slots) -->
+    <div id="sub-board-interactive-layer" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:10;">
+      <!-- Populated dynamically by sub_board.js -->
+    </div>
+  </div>
+
+  <!-- Interactive Help / Control Tips -->
+  <div style="margin-top:12px; background:#0f172a; border:1px solid #334155; border-radius:8px; padding:10px 16px; font-size:0.80rem; color:#94a3b8; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <span>💡 <strong>Control Interactivo:</strong> Haz clic en cualquier casilla para mover marcadores o cambiar estado.</span>
+      <span>⚓ <strong>Patrulla:</strong> Haz clic en una casilla para situar tu submarino.</span>
+      <span>💧 <strong>Inundación / Casco:</strong> Haz clic para marcar daño.</span>
+      <span>👨‍✈️ <strong>Tripulación:</strong> Clic alterna <em>Activo → Herido → Baja</em>.</span>
+      <span>⚙️ <strong>Sistemas / Tubos:</strong> Clic alterna <em>Operativo / Avería</em> y <em>Cargado / Disparado</em>.</span>
+    </div>
+    <div style="color:#64748b; font-size:0.75rem;">
+      Compatible con impresión 3D Bambu Lab (256×256 mm)
+    </div>
+  </div>
+</div>

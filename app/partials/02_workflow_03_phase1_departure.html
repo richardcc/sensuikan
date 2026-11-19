@@ -1,0 +1,228 @@
+        <div id="phase-content-1" class="phase-body">
+          <div class="phase-header-banner">
+            <h2>
+              <span>⚓</span>
+              <span id="p1-title">FASE 1: ZARPE Y ASIGNACIÓN DE PATRULLA</span>
+            
+            </h2>
+            <button type="button" onclick="openModalViewer('1: Mission Start', '', 'FLOW_1')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
+              <span>🗺️</span> <span id="p1-guide-label">📋 Guía de Fase</span>
+            </button>
+            <span id="p1-rules-pill" class="rules-ref-pill">[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]</span>
+          </div>
+
+          <div class="workflow-grid-2">
+            <!-- Left: Patrol & Zone Selection -->
+            <div class="flow-card">
+              <h4 id="p1-c1-title">1. Asignación del Área de Operaciones</h4>
+              
+              <!-- Mes Histórico -->
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label id="p1-lbl-month" style="font-weight:700; color:var(--slate-200); font-size:0.82rem; margin:0;">Mes Histórico:</label>
+                  <div id="p1-sub-avail-hint" style="font-size:0.84rem; color:#38bdf8;"></div>
+                </div>
+                <!-- MES HISTÓRICO: DESPLEGABLE PERSONALIZADO -->
+                <div class="custom-dropdown-container">
+                    <div id="wf-month-display" class="custom-dropdown-display" onclick="toggleMonthDropdown()">
+                      -- Selecciona Mes --
+                    </div>
+                    <div id="wf-month-dropdown" class="custom-dropdown-options">
+                    </div>
+                    <input type="hidden" id="wf-month-select" onchange="onWorkflowMonthChange()">
+                </div>
+              </div>
+
+              <!-- Base de Salida -->
+              <div style="margin-bottom:14px; background:rgba(15,23,42,0.4); border:1px solid #1e293b; border-radius:8px; padding:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <label id="p1-lbl-base" style="font-weight:700; color:var(--slate-200); font-size:0.82rem; margin:0;">Base Naval de Salida (Puerto de Atraque):</label>
+                  <span style="font-size:0.82rem; color:var(--gold-400); background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid rgba(197,160,89,0.25);">
+                    Regla 4.7
+                  </span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                  <img id="wf-base-chit-img" src="assets/chits/Port Yokosuka.jpg" alt="Port Chit" style="width:44px; height:44px; border-radius:4px; border:1px solid #b91c1c; box-shadow:0 2px 6px rgba(0,0,0,0.5); flex-shrink:0; object-fit:contain;">
+                  <select id="wf-base-select" class="flow-select" style="flex:1; margin:0;" onchange="handleBaseChange(this.value)">
+                    <option value="Yokosuka">Yokosuka [4.7.1] (At Port / Base Principal)</option>
+                    <option value="Paramushiro">Paramushiro [4.7.2] (Kuriles / Base Pacífico Norte)</option>
+                    <option value="Truk">Truk [4.7.3] (Base Avanzada Pacífico Central)</option>
+                    <option value="New Guinea">New Guinea [4.7.4] (Rabaul / Shortland)</option>
+                    <option value="Dutch East Indies">Dutch East Indies (DEI) [4.7.5] (Singapur / Penang / Sabang)</option>
+                  </select>
+                </div>
+                <div id="wf-base-desc-pill" style="font-size:0.86rem; color:#38bdf8; font-weight:600; line-height:1.4; margin-bottom:6px; background:rgba(15,23,42,0.6); padding:8px 10px; border-radius:6px; border-left:3px solid #38bdf8;">
+                  <!-- Rellenado dinámicamente por updateBaseDescriptionPill() -->
+                </div>
+                <div style="font-size:0.84rem; color:var(--slate-400); line-height:1.4; border-top:1px dashed #334155; padding-top:6px;">
+                  📖 <em>Regla 4.7:</em> En Sensuikan <strong>no se tira ningún dado para la base</strong>. El submarino zarpa del puerto donde está atracado (comienza en Yokosuka [4.7.1], y se reasigna automáticamente si la misión lo exige, como a Paramushiro en Aleutianas [4.7.2]). La tirada con 2d6 en la Tabla [A1] determina la zona de destino.
+                </div>
+              </div>
+
+              <!-- Tirada en Tabla A1 -->
+              <div style="background:rgba(15,23,42,0.5); border:1px solid #1e3a8a; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+                  <div>
+                    <label id="p1-lbl-roll" style="font-size:0.80rem; font-weight:700; color:var(--slate-300);">Asignación de Área de Patrulla [Tabla A1]:</label>
+                    <div id="p1-roll-help" style="font-size:0.82rem; color:#94a3b8;">Tira 2d6 o selecciona tu destino en el desplegable:</div>
+                  </div>
+                  <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                    <button type="button" class="btn-dice" onclick="rollPatrolAssignment()" style="display:flex; align-items:center; gap:5px; font-weight:bold; padding:4px 10px;">
+                      <span>🎲</span> <span id="p1-roll-btn-label">Tirar [A1]</span>
+                    </button>
+                    <div style="display:flex; align-items:center; gap:4px; background:var(--slate-900); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
+                      <span id="p1-lbl-manual-a1" style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
+                      <select id="sel-manual-a1-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.80rem; padding:1px 3px; border-radius:3px;">
+                        <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                      </select>
+                      <button type="button" onclick="rollPatrolAssignment(parseInt(document.getElementById('sel-manual-a1-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:2px 5px; font-size:0.72rem; cursor:pointer;" title="Aplicar tirada física de mesa"><span id="p1-btn-apply-a1">Aplicar</span></button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Desplegable de Selección Manual -->
+                <div style="margin-top:4px;">
+                  <select id="wf-area-select" class="flow-select" onchange="onManualAreaSelected(this.value)" style="width:100%; font-weight:bold; color:#fde047; background:#0f172a; border-color:#38bdf8; padding:6px 8px; font-size:0.78rem;">
+                    <!-- Rellenado dinámicamente con populateAreaDropdown() -->
+                  </select>
+                </div>
+
+                <div id="wf-patrol-area-res" style="font-weight:700; color:var(--gold-300); margin-top:6px; font-size:0.86rem; line-height:1.35;">
+                  Pearl Harbor / Hawaii (Operación Z)
+                </div>
+              </div>
+
+              <div style="font-size:0.84rem; color:var(--slate-400); line-height:1.4;">
+                <span id="p1-help-request">★ Regla 7.14: Un Comandante (中佐) puede solicitar su área con 1 en 1d6. Un Capitán (大佐) con 1-2 en 1d6. Puedes elegir el área en el desplegable o tirar en la tabla oficial.</span>
+              </div>
+            </div>
+
+            <!-- Right: Major Event & Special Mission Check -->
+            <div class="flow-card">
+              <h4 id="p1-c2-title">2. Gran Evento Histórico y Misión Especial [7.0]</h4>
+              <div class="flow-field">
+                <label id="p1-lbl-me">¿Gran Evento en el Área?</label>
+                <select id="wf-me-select" class="flow-select" onchange="updateSpecialMissionCheck()">
+                  <option value="yes_pearl">Sí: Ataque a Pearl Harbor (Dic-41) [Midget / Recon / Patrol]</option>
+                  <option value="yes_sydney">Sí: Ataque a Sydney (May-42) [Midget 2 / Recon]</option>
+                  <option value="yes_diego">Sí: Madagascar / Diego Suárez (May-42) [Midget 3]</option>
+                  <option value="yes_midway">Sí: Batalla de Midway (Jun-42) [Vigilancia]</option>
+                  <option value="yes_guadalcanal">Sí: Guadalcanal / Islas Salomón (Ago-42)</option>
+                  <option value="yes_kaiten">Sí: Misión de Torpedos Suicidas Kaiten (Nov-44+)</option>
+                  <option value="no">No: Patrulla Estándar de Interdicción</option>
+                </select>
+              </div>
+
+              <div id="wf-special-mission-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem; border-left:3px solid var(--gold-400);">
+                <strong id="p1-mission-label">Misión Operativa:</strong> <span id="wf-mission-name">Ataque a Pearl Harbor / Reconocimiento</span>.<br>
+                <span id="wf-mission-desc" style="color:var(--slate-300);">Se resolverá en la casilla de misión especial en ruta a estación.</span>
+                
+                <!-- Tabla Dinámica de Evaluación de Misiones Especiales (Regla 7.14) -->
+                <div id="wf-special-mission-eval-container" style="margin-top:10px;"></div>
+              </div>
+
+              <div class="flow-field">
+                <label id="p1-lbl-transits">Casillas de Tránsito Adicionales:</label>
+                <span id="wf-extra-transit-val" style="font-weight:800; color:#38bdf8;">+2 Tránsitos (Zona Lejana)</span>
+              </div>
+
+              <!-- BANDEJA DE FICHAS DE DESTINOS Y MISIONES ESPECIALES [DOBLE CARA] DENTRO DE CAJA 2 -->
+              <div style="background:rgba(15,23,42,0.6); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-top:14px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(56,189,248,0.25); padding-bottom:8px; margin-bottom:10px;">
+                  <div>
+                    <h5 style="margin:0; color:#38bdf8; font-size:0.92rem; display:flex; align-items:center; gap:6px;">
+                      <span>🗂️</span>
+                      <span>Bandeja de Fichas de Gran Evento & Misiones Especiales</span>
+                    </h5>
+                    <div style="font-size:0.75rem; color:var(--slate-400); margin-top:2px;">
+                      Haz clic en cualquier ficha para voltearla y evaluar su compatibilidad.
+                    </div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="action-btn" onclick="toggleAllChitsFlip()" style="padding:3px 8px; font-size:0.78rem; background:#334155; border-color:#64748b; color:#f1f5f9;">
+                      🔄 Voltear
+                    </button>
+                    <div style="display:flex; background:#0f172a; border-radius:4px; padding:2px; border:1px solid #334155;">
+                      <button type="button" id="btn-chits-filtered" class="tab-btn active" onclick="setChitsFilter('month')" style="padding:2px 8px; font-size:0.78rem; border-radius:3px;">
+                        📅 Mes Actual
+                      </button>
+                      <button type="button" id="btn-chits-all" class="tab-btn" onclick="setChitsFilter('all')" style="padding:2px 8px; font-size:0.78rem; border-radius:3px;">
+                        🗃️ Catálogo (28)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Rack grid container -->
+                <div id="mission-chits-grid" class="chit-rack" style="margin-top:8px;">
+                  <!-- Rendered dynamically -->
+                </div>
+
+                <div style="margin-top:10px; text-align:right;">
+                  <button type="button" onclick="openAllMissionsGuideModal()" class="action-btn" style="border-color:#38bdf8; color:#7dd3fc; font-size:0.78rem; padding:3px 8px; display:inline-flex; align-items:center; gap:5px;">
+                    <span>📖</span> <span>Guía Oficial: Las 20 Misiones Especiales (7.1 a 7.18)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- CHART A1: PATROL ASSIGNMENT (TABLA A1 DIRECTAMENTE EN FASE 1) -->
+          <div style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
+            <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h4 style="margin:0; color:var(--gold-300); font-size:1.05rem; display:flex; align-items:center; gap:8px;">
+                  <span>🗺️</span>
+                  <span>CHART A1: PATROL ASSIGNMENT (TABLA A1 - 2d6)</span>
+                </h4>
+                <span style="font-size:0.86rem; color:var(--slate-400);">Lanza 2d6 para determinar el área de operaciones según el período histórico (Regla 7.14).</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span id="p1-active-period-badge" style="background:#1e3a8a; border:1px solid #3b82f6; color:#93c5fd; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.86rem;">Período Activo: 1941</span>
+                <button type="button" onclick="rollPatrolAssignment()" class="btn-dice" style="padding:6px 14px; font-size:0.82rem;">
+                  🎲 Tirar [A1]
+                </button>
+              </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+              <table style="width:100%; border-collapse:collapse; font-size:0.86rem; text-align:center;">
+                <thead>
+                  <tr style="background:var(--navy-900); color:var(--gold-400); border-bottom:2px solid var(--gold-600);">
+                    <th style="padding:6px; border:1px solid #334155; width:50px;">2d6</th>
+                    <th style="padding:6px; border:1px solid #334155;">1941</th>
+                    <th style="padding:6px; border:1px solid #334155;">1942 Jan-Jun</th>
+                    <th style="padding:6px; border:1px solid #334155;">1942 Jul-Dec</th>
+                    <th style="padding:6px; border:1px solid #334155;">1943 Jan-Jun</th>
+                    <th style="padding:6px; border:1px solid #334155;">1943 Jul-Dec</th>
+                    <th style="padding:6px; border:1px solid #334155;">1944 Jan-Jun</th>
+                    <th style="padding:6px; border:1px solid #334155;">1944 Jul-Dec</th>
+                    <th style="padding:6px; border:1px solid #334155;">1945 Jan-Jul</th>
+                  </tr>
+                </thead>
+                <tbody id="phase1-a1-tbody">
+                  <!-- Generado dinámicamente por updatePhase1TableHighlight() -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top:10px; font-size:0.86rem; color:var(--slate-400); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; line-height:1.4;">
+              <span id="p1-a1-europe-note">* <strong>Europa (Misión Yanagi):</strong> Requiere submarino con gran autonomía (Tipos A/B).</span>
+              <span id="p1-a1-panama-note">** <strong>Canal de Panamá:</strong> Misión histórica Sen-Toku (I-400 / AM).</span>
+              <span id="p1-a1-click-note" style="color:var(--gold-300); font-weight:bold;">💡 Clic en cualquier celda de la columna activa para solicitar o fijar esa área (Regla 7.14).</span>
+            </div>
+          </div>
+
+
+          <div class="action-bar-nav">
+            <button class="btn-step-prev" onclick="setWorkflowPhase('school')">
+              ◀ <span id="p1-btn-prev">Volver a Escuelas</span>
+            </button>
+            <button class="btn-step-next" onclick="setWorkflowPhase(2)">
+              <span id="p1-btn-next">Zarpar hacia la Fase 2: Navegación ➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PHASE 2: NAVEGACIÓN Y TRAYECTO -->

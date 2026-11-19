@@ -6,10 +6,15 @@ function switchTab(tabId) {
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       
+      // Cerrar cualquier dropdown abierto al cambiar de pestaña
+      const openDropdown = document.getElementById('wf-month-dropdown');
+      if (openDropdown) openDropdown.style.display = 'none';
+
       const pane = document.getElementById('tab-' + tabId);
       if (pane) pane.classList.add('active');
 
-      const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId));
+      const btn = document.querySelector(`.tab-btn[onclick*="${tabId}"]`) || 
+                  document.getElementById('tab-nav-' + tabId);
       if (btn) btn.classList.add('active');
 
       if (tabId === 'chart-k1' || tabId === 'k1') {
@@ -23,14 +28,26 @@ function switchTab(tabId) {
       }
       if (tabId === 'workflow') {
         if (typeof renderCommanderDossier === 'function') renderCommanderDossier();
+        if (typeof syncAreaSelectDropdown === 'function' && typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.assignedArea) {
+          syncAreaSelectDropdown(campaignState.workflow.assignedArea);
+        }
       }
       if (tabId === 'dock') {
         buildSubmarineList();
-        const activeKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) ? campaignState.activeSubKey : 'Type_B_Class';
+        const activeKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) 
+          ? campaignState.activeSubKey 
+          : ((typeof currentPreviewSubKey !== 'undefined' && currentPreviewSubKey) ? currentPreviewSubKey : 'Type_B_Class');
         if (typeof selectSubmarine === 'function') {
           selectSubmarine(activeKey);
-        } else if (typeof renderSubmarinePatrolTrack === 'function') {
+        } else if (activeKey && typeof renderSubmarinePatrolTrack === 'function') {
           renderSubmarinePatrolTrack(activeKey);
+        }
+      }
+      if (tabId === 'sub-board') {
+        if (typeof initSubBoard === 'function') {
+          initSubBoard();
+        } else if (typeof renderSubBoard === 'function') {
+          renderSubBoard();
         }
       }
       if (tabId === 'operations-map') {
@@ -90,9 +107,18 @@ function switchTab(tabId) {
         const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
         if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
         if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
+        if (typeof updateFidoStatus === 'function') updateFidoStatus();
       }
       if (phaseId === 'school') updateSchoolEquipDisplay();
-      if (phaseId === 1 || phaseId === '1') updateBasesForDate();
+      if (phaseId === 1 || phaseId === '1') {
+        updateBasesForDate();
+        if (typeof syncAreaSelectDropdown === 'function' && typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.assignedArea) {
+          syncAreaSelectDropdown(campaignState.workflow.assignedArea);
+        }
+      }
+      if (phaseId === 3 || phaseId === '3') {
+        if (typeof updatePhase3EncounterUI === 'function') updatePhase3EncounterUI();
+      }
       if (phaseId === 5 || phaseId === '5') {
         updateAirRaidUI();
         recalculateRefitTime();
@@ -173,10 +199,37 @@ function openModalViewer(title, dummySrc, chartKey) {
       if (modal) modal.style.display = 'none';
     }
 
+    function openAirEncounterWorkflowModal() {
+      const modal = document.getElementById('modal-air-workflow');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeAirEncounterWorkflowModal() {
+      const modal = document.getElementById('modal-air-workflow');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function openShipEncounterWorkflowModal() {
+      const modal = document.getElementById('modal-ship-workflow');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeShipEncounterWorkflowModal() {
+      const modal = document.getElementById('modal-ship-workflow');
+      if (modal) modal.style.display = 'none';
+    }
+
+    window.openAirEncounterWorkflowModal = openAirEncounterWorkflowModal;
+    window.closeAirEncounterWorkflowModal = closeAirEncounterWorkflowModal;
+    window.openShipEncounterWorkflowModal = openShipEncounterWorkflowModal;
+    window.closeShipEncounterWorkflowModal = closeShipEncounterWorkflowModal;
+
     function closeAllModals() {
       closeModalViewer();
       closeTargetEditor();
       closeAboutModal();
+      closeAirEncounterWorkflowModal();
+      closeShipEncounterWorkflowModal();
     }
 
     // GLOBAL KEYBOARD SHORTCUTS FOR TABS AND WORKFLOW PHASES
@@ -201,7 +254,7 @@ function openModalViewer(title, dummySrc, chartKey) {
 
       const k = e.key;
 
-      // TOP-LEVEL TABS SHORTCUTS: [1]..[5]
+      // TOP-LEVEL TABS SHORTCUTS: [1]..[7]
       if (k === '1') {
         e.preventDefault();
         if (typeof switchTab === 'function') switchTab('workflow');
@@ -222,20 +275,26 @@ function openModalViewer(title, dummySrc, chartKey) {
       }
       if (k === '4') {
         e.preventDefault();
-        if (typeof switchTab === 'function') switchTab('dock');
-        showToast("⚓ Submarines (18) [4]");
+        if (typeof switchTab === 'function') switchTab('operations-map');
+        showToast("🗺️ Mapa de Operaciones [4]");
         return;
       }
       if (k === '5') {
         e.preventDefault();
-        if (typeof switchTab === 'function') switchTab('compendium');
-        showToast("📚 Todas las Tablas [5]");
+        if (typeof switchTab === 'function') switchTab('sub-board');
+        showToast("📋 Hoja de Submarino [5]");
         return;
       }
       if (k === '6') {
         e.preventDefault();
-        if (typeof switchTab === 'function') switchTab('operations-map');
-        showToast("🗺️ Mapa de Operaciones [6]");
+        if (typeof switchTab === 'function') switchTab('dock');
+        showToast("⚓ Submarines (18) [6]");
+        return;
+      }
+      if (k === '7') {
+        e.preventDefault();
+        if (typeof switchTab === 'function') switchTab('compendium');
+        showToast("📚 Todas las Tablas [7]");
         return;
       }
 
@@ -342,21 +401,8 @@ function openModalViewer(title, dummySrc, chartKey) {
       }
     });
 
-    function saveState() {
-      localStorage.setItem('sensuikan_campaign_state', JSON.stringify(campaignState));
-    }
-
-    function loadSavedState() {
-      const saved = localStorage.getItem('sensuikan_campaign_state');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          campaignState = Object.assign(campaignState, parsed);
-        } catch(e) {
-          console.error("Error loading state", e);
-        }
-      }
-    }
+    // State management canonical methods are in state.js
+    // Delegated to window.saveState and window.loadSavedState
 
     function exportCampaignJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(campaignState, null, 2));
@@ -395,24 +441,40 @@ function openModalViewer(title, dummySrc, chartKey) {
     function resetCampaign() {
       const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
       const confirmMsg = isEn
-        ? "Are you sure you want to reset all campaign and patrol data back to Phase 0?"
-        : "¿Estás seguro de poner a 0 todos los datos de patrullas y volver a la Fase 0?";
+        ? "Are you sure you want to reset all campaign, submarine and patrol data back to Phase 0?"
+        : "¿Estás seguro de poner a 0 todos los datos de campaña, submarino y patrullas y volver a la Fase 0?";
       if (confirm(confirmMsg)) {
+        campaignState.activeSubKey = null;
         campaignState.tokens = {};
         campaignState.patrols = {};
-        campaignState.workflow.currentPhase = 0;
-        campaignState.workflow.currentBoxIndex = 0;
+        if (campaignState.workflow) {
+          campaignState.workflow.currentPhase = 0;
+          campaignState.workflow.currentBoxIndex = 0;
+          campaignState.workflow.hullNumber = "";
+          campaignState.workflow.commanderName = "";
+          delete campaignState.workflow.torpedoPeriodOverride;
+        }
+        localStorage.removeItem('sensuikan_sub_board_state');
+        if (typeof resetSubBoardToEmpty === 'function') {
+          resetSubBoardToEmpty();
+        }
         saveState();
         initApp();
+        if (typeof buildWorkflowSubClassSelect === 'function') {
+          buildWorkflowSubClassSelect();
+        }
         if (typeof switchTab === 'function') switchTab('workflow');
         setWorkflowPhase(0);
-        showToast(isEn ? "Campaign reset to Phase 0." : "Campaña reseteada a Fase 0.");
+        showToast(isEn ? "Campaign and submarine sheet reset to Phase 0." : "Campaña y ficha de submarino reseteadas a Fase 0.");
       }
     }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
+      const msgEl = document.getElementById('toast-msg');
+      if (!t || !msgEl) return;
+      
+      msgEl.innerText = msg;
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 2400);
     }
@@ -432,95 +494,4 @@ function openModalViewer(title, dummySrc, chartKey) {
           });
       });
     }
-  
-  // =========================================================================
-  // LOGIN SECURITY GATE LOGIC (USER / PWD AUTHENTICATION)
-  // =========================================================================
-  function checkLoginGate() {
-    const isAuth = localStorage.getItem('sensuikan_auth_state');
-    const gateEl = document.getElementById('security-login-gate');
-    if (!gateEl) return;
-    if (isAuth === 'granted') {
-      gateEl.style.display = 'none';
-    } else {
-      gateEl.style.display = 'flex';
-      setTimeout(() => {
-        const uInp = document.getElementById('gate-user-input');
-        if (uInp) uInp.focus();
-      }, 300);
-    }
-  }
-
-  function executeLoginGate() {
-    const uInp = document.getElementById('gate-user-input');
-    const pInp = document.getElementById('gate-pwd-input');
-    const remChk = document.getElementById('gate-remember-chk');
-    const errEl = document.getElementById('gate-error-msg');
-    
-    const userVal = uInp ? uInp.value.trim().toLowerCase() : '';
-    const pwdVal = pInp ? pInp.value.trim() : '';
-
-    const expectedUser = (localStorage.getItem('sensuikan_sec_user') || 'admin').toLowerCase();
-    const expectedPwd = localStorage.getItem('sensuikan_sec_pwd') || 'sensuikan';
-
-    // Check credentials (allows admin/sensuikan or user/sensuikan or custom)
-    const isUserOk = (userVal === expectedUser || userVal === 'comandante' || userVal === 'admin');
-    const isPwdOk = (pwdVal === expectedPwd);
-
-    if (isUserOk && isPwdOk) {
-      if (errEl) errEl.style.display = 'none';
-      if (remChk && remChk.checked) {
-        localStorage.setItem('sensuikan_auth_state', 'granted');
-      } else {
-        sessionStorage.setItem('sensuikan_auth_state', 'granted');
-      }
-      const gateEl = document.getElementById('security-login-gate');
-      if (gateEl) {
-        gateEl.style.opacity = '0';
-        gateEl.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => gateEl.style.display = 'none', 300);
-      }
-      showToast("⚓ Acceso autorizado. Bienvenido, Comandante.");
-    } else {
-      if (errEl) errEl.style.display = 'block';
-      if (pInp) {
-        pInp.value = '';
-        pInp.focus();
-      }
-    }
-  }
-
-  function logoutApp() {
-    localStorage.removeItem('sensuikan_auth_state');
-    sessionStorage.removeItem('sensuikan_auth_state');
-    const gateEl = document.getElementById('security-login-gate');
-    if (gateEl) {
-      gateEl.style.display = 'flex';
-      gateEl.style.opacity = '1';
-    }
-    const pInp = document.getElementById('gate-pwd-input');
-    if (pInp) pInp.value = '';
-    showToast("Terminal bloqueado");
-  }
-
-  function promptChangeCredentials() {
-    const currentPwd = localStorage.getItem('sensuikan_sec_pwd') || 'sensuikan';
-    const old = prompt("Introduce tu clave actual:");
-    if (old === null) return;
-    if (old.trim() !== currentPwd) {
-      alert("❌ Clave actual incorrecta.");
-      return;
-    }
-    const newUser = prompt("Introduce tu nuevo nombre de usuario:", localStorage.getItem('sensuikan_sec_user') || 'admin');
-    if (!newUser || !newUser.trim()) return;
-    const newPwd = prompt("Introduce tu nueva contraseña:");
-    if (!newPwd || !newPwd.trim()) return;
-
-    localStorage.setItem('sensuikan_sec_user', newUser.trim());
-    localStorage.setItem('sensuikan_sec_pwd', newPwd.trim());
-    alert("✅ Credenciales actualizadas con éxito.\nUsuario: " + newUser + "\nNueva clave guardada.");
-  }
-
-  // Auto check on load
-  document.addEventListener('DOMContentLoaded', checkLoginGate);
 

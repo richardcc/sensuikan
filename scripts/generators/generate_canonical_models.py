@@ -122,13 +122,13 @@ def generate_canonical_stl_models():
     os.makedirs(stl_dir, exist_ok=True)
     os.makedirs(preview_dir, exist_ok=True)
     
-    # Canonical player card dimensions: 238.0 x 181.5 mm
+    # Canonical player card dimensions: 238.0 x 180.4 mm (Equal 2.5mm Margin on all 4 sides)
     card_w = 238.0
-    card_h = 181.5
+    card_h = 180.4
     clearance = 0.45 # Generous 0.45 mm tolerance per side (0.90 mm total) for manual cutting / laminating!
-    wall_t = 1.4 # Calibrated to 241.7 x 185.2 mm so it fits Bambu 256x256 plate with >7mm margin on all sides!
+    wall_t = 1.4 # Calibrated to 241.7 x 184.1 mm so it fits Bambu 256x256 plate with >7mm margin on all sides!
     tray_w = card_w + 2 * (wall_t + clearance) # 241.7 mm
-    tray_h = card_h + 2 * (wall_t + clearance) # 185.2 mm
+    tray_h = card_h + 2 * (wall_t + clearance) # 184.1 mm
     floor_h = 1.80
     rim_h = 3.60
     total_z = floor_h + rim_h # 5.40 mm total tray height
@@ -186,74 +186,56 @@ def generate_canonical_stl_models():
     # 2. MONOLITHIC TOP OVERLAY (CLEAN SQUARE SLOTS - NO SEMICIRCLES)
     # -------------------------------------------------------------
     overlay_w = card_w - 0.4 # 237.6 mm
-    overlay_h = card_h - 0.4 # 181.1 mm
+    overlay_h = card_h - 0.4 # 180.0 mm
     overlay_plate = box(0, 0, overlay_w, overlay_h)
     
     def to_bot_y(y_top):
         return overlay_h - y_top
 
+    COLS_9_X = [27.5, 44.1, 60.7, 77.3, 93.9, 110.5, 127.1, 143.7, 160.3]
+    RIGHT_COLS_X = [177.9, 194.6, 211.3, 228.0]
+
     slots_list = []
-    # 1. Left Base slots (3 slots at X = 10.0: Base, Mission, Port)
-    for y_top in [28.5, 46.5, 64.5]:
+    # 1. Left Base slots (3 slots at X = 10.0: Base, Mission, Port: Y = 28.5, 46.5, 66.9)
+    for y_top in [28.5, 46.5, 66.9]:
         slots_list.append(make_clean_square_slot(10.0, to_bot_y(y_top)))
         
-    # 2. Patrol track (9 universal slots, Y = 64.5):
-    for x in np.linspace(28.0, 156.0, 9):
-        slots_list.append(make_clean_square_slot(x, to_bot_y(64.5)))
+    # 2. Patrol track (9 universal slots, Y = 66.9):
+    for x in COLS_9_X:
+        slots_list.append(make_clean_square_slot(x, to_bot_y(66.9)))
         
-    # 3. Damage tracks (2 x 10 = 20 slots):
-    slots_list.append(make_clean_square_slot(10.0, to_bot_y(82.5)))
-    slots_list.append(make_clean_square_slot(10.0, to_bot_y(99.5)))
-    for x in np.linspace(28.0, 156.0, 9):
-        slots_list.append(make_clean_square_slot(x, to_bot_y(82.5)))
-        slots_list.append(make_clean_square_slot(x, to_bot_y(99.5)))
+    # 3. Damage tracks (2 x 10 = 20 slots: Flooding Y = 88.5, Hull Y = 105.9):
+    slots_list.append(make_clean_square_slot(10.0, to_bot_y(88.5)))
+    slots_list.append(make_clean_square_slot(10.0, to_bot_y(105.9)))
+    for x in COLS_9_X:
+        slots_list.append(make_clean_square_slot(x, to_bot_y(88.5)))
+        slots_list.append(make_clean_square_slot(x, to_bot_y(105.9)))
         
-    # 4. Middle band: Crew Status (Shifted 1 column left: 10.0 + Cols 0..3 = 10 slots) + Systems Status (Cols 5..8 = 8 slots)
-    cols9 = np.linspace(28.0, 156.0, 9)
-    crew_x = [10.0] + list(cols9[:4])  # [10.0, 28.0, 44.0, 60.0, 76.0]
+    # 4. Middle band: Crew Status (Shifted 1 column left: 10.0 + Cols 0..3) & Systems Status (Cols 5..8)
+    # Row 1: Y = 127.5, Row 2: Y = 144.9
+    crew_x = [10.0] + list(COLS_9_X[:4])  # 5 columns [10.0, 27.5, 44.1, 60.7, 77.3]
     for x in crew_x:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(119.5)))
-        slots_list.append(make_clean_square_slot(x, to_bot_y(136.5)))
+        slots_list.append(make_clean_square_slot(x, to_bot_y(127.5)))
+        slots_list.append(make_clean_square_slot(x, to_bot_y(144.9)))
 
-    # Systems Status (Right: 4 columns x 2 rows: Cols 5..8)
-    for x in cols9[5:]:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(119.5)))
-        slots_list.append(make_clean_square_slot(x, to_bot_y(136.5)))
+    # Systems Status (Right: 4 columns x 2 rows: Cols 5..8 [110.5, 127.1, 143.7, 160.3])
+    for x in COLS_9_X[5:]:
+        slots_list.append(make_clean_square_slot(x, to_bot_y(127.5)))
+        slots_list.append(make_clean_square_slot(x, to_bot_y(144.9)))
         
-    # 5. Right block: 4 standard columns at [178.5, 195.0, 211.5, 228.0]
-    col_x = [178.5, 195.0, 211.5, 228.0]
-    
-    # Row 0: Aircraft & Events (Y = 13.5)
-    for tx in col_x:
-        slots_list.append(make_clean_square_slot(tx, to_bot_y(13.5)))
-
-    # Row 1: Forward Torpedo Tubes 1..4 (Y = 32.7)
-    for x in col_x:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(32.7)))
-
-    # Row 2: Forward Torpedo Tubes 5..8 (Y = 49.2)
-    for x in col_x:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(49.2)))
-
-    # Row 3: Aft Torpedo Tubes & Reloads (Y = 68.4)
-    for x in col_x:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(68.4)))
-
-    # Row 4: Artillery & AA Deck Weapons (Y = 87.6)
-    for x in col_x:
-        slots_list.append(make_clean_square_slot(x, to_bot_y(87.6)))
-
-    # Rows 5, 6, 7, 8: 16 FORWARD TORPEDO RELOADS (1–16) — ALL 100% INDIVIDUAL SLOTS!
-    for ry in [107.0, 123.5, 140.0, 156.5]:
-        for x in col_x:
-            slots_list.append(make_clean_square_slot(x, to_bot_y(ry)))
+    # 5. Right block: 4 standard columns at RIGHT_COLS_X (Pitch 16.7mm, Gap 1.7mm, Ribs 2.4mm vertical)
+    col_x = RIGHT_COLS_X
+    r_centers = [14.4, 36.0, 53.4, 75.0, 96.6, 118.2, 135.6, 153.0, 170.4]
+    for ry in r_centers:
+        for tx in col_x:
+            slots_list.append(make_clean_square_slot(tx, to_bot_y(ry)))
 
     # -------------------------------------------------------------
     # 3. OBSERVATION WINDOWS (OPCIÓN A: 3 GRANDES VENTANAS ESTRUCTURALES)
     # -------------------------------------------------------------
-    win_title_block = box(2.5, to_bot_y(18.5), 163.5, to_bot_y(2.5))
-    win_sub = box(20.5, to_bot_y(52.0), 163.5, to_bot_y(21.0))
-    win_rules = box(8.0, to_bot_y(164.0), 163.5, to_bot_y(145.5))
+    win_title_block = box(2.5, to_bot_y(18.5), 167.8, to_bot_y(2.5))
+    win_sub = box(20.0, to_bot_y(52.0), 167.8, to_bot_y(21.0))
+    win_rules = box(8.0, to_bot_y(177.9), 167.8, to_bot_y(154.6))
     
     large_windows = [
         ('VESSEL IDENTIFICATION & BANNER', win_title_block),
@@ -310,15 +292,15 @@ def generate_canonical_stl_models():
 
     # Annotate Universal 3D Engraved Labels on the solid plate surface
     engraved_labels = [
-        (ox_shift + 92.0, oy_shift + to_bot_y(54.5), "PATROL TRACK (TRANSIT & ON-STATION PHASES)"),
-        (ox_shift + 92.0, oy_shift + to_bot_y(73.5), "DAMAGE TRACKS (FLOODING & HULL DAMAGE)"),
-        (ox_shift + 43.0, oy_shift + to_bot_y(109.5), "CREW STATUS & QUALITY"),
-        (ox_shift + 132.0, oy_shift + to_bot_y(109.5), "⚙ SYSTEMS STATUS"),
-        (ox_shift + 203.2, oy_shift + to_bot_y(3.5), "✈ AIRCRAFT & TACTICAL EVENT"),
-        (ox_shift + 203.2, oy_shift + to_bot_y(23.2), "▲ FORWARD TORPEDO TUBES (1–8)"),
-        (ox_shift + 203.2, oy_shift + to_bot_y(58.9), "▼ AFT TUBES & RELOADS"),
-        (ox_shift + 203.2, oy_shift + to_bot_y(78.1), "⚔ ARTILLERY & DECK WEAPONS"),
-        (ox_shift + 203.2, oy_shift + to_bot_y(97.5), "▲ FORWARD TORPEDO RELOADS (1–16)"),
+        (ox_shift + 92.0, oy_shift + to_bot_y(56.4), "PATROL TRACK (TRANSIT & ON-STATION PHASES)"),
+        (ox_shift + 92.0, oy_shift + to_bot_y(78.0), "DAMAGE TRACKS (FLOODING & HULL DAMAGE)"),
+        (ox_shift + 43.0, oy_shift + to_bot_y(117.0), "CREW STATUS & QUALITY"),
+        (ox_shift + 132.0, oy_shift + to_bot_y(117.0), "⚙ SYSTEMS STATUS"),
+        (ox_shift + 203.2, oy_shift + to_bot_y(3.9), "✈ AIRCRAFT & TACTICAL EVENT"),
+        (ox_shift + 203.2, oy_shift + to_bot_y(25.5), "▲ FORWARD TORPEDO TUBES (1–8)"),
+        (ox_shift + 203.2, oy_shift + to_bot_y(64.5), "▼ AFT TUBES & RELOADS"),
+        (ox_shift + 203.2, oy_shift + to_bot_y(86.1), "⚔ ARTILLERY & DECK WEAPONS"),
+        (ox_shift + 203.2, oy_shift + to_bot_y(107.7), "▲ FORWARD TORPEDO RELOADS (1–16)"),
     ]
     for lx, ly, ltxt in engraved_labels:
         ax.text(lx, ly, ltxt, color='#FDE047', fontsize=5.8, weight='bold', ha='center', va='center',

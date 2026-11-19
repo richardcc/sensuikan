@@ -16,164 +16,84 @@
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="icon" type="image/png" href="./icon-192.png">
-  <script src="i18n.js"></script>
+  <script src="i18n.js?v=20261119_01"></script>
 </head>
 <body>
-  <!-- ====================================================================
-       PANTALLA DE ACCESO RESTRINGIDO POR USUARIO Y CONTRASEÑA (PWA LOGIN GATE)
-       ==================================================================== -->
-  <div id="security-login-gate" style="display:flex; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#070d19; z-index:999999; justify-content:center; align-items:center; padding:16px;">
-    <div style="background:#0f172a; border:2px solid #c5a059; border-radius:12px; max-width:440px; width:100%; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,0.85); text-align:center; color:#f8fafc;">
-      
-      <!-- Flag & Emblem -->
-      <div style="margin-bottom:10px;">
-        <span style="font-size:2.4rem;">⚓</span>
-      </div>
-
-      <!-- Compass Games Badge & Emblem -->
-      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(15,23,42,0.9); border:1px solid rgba(250,204,21,0.6); border-radius:24px; padding:5px 16px; margin-bottom:10px; box-shadow:0 4px 14px rgba(0,0,0,0.5);">
-        <!-- SVG Compass Rose -->
-        <svg width="22" height="22" viewBox="0 0 100 100" style="flex-shrink:0;">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#fde047" stroke-width="3"/>
-          <circle cx="50" cy="50" r="41" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-          <polygon points="50,8 55,42 50,38 45,42" fill="#ef4444"/>
-          <polygon points="50,92 55,58 50,62 45,58" fill="#cbd5e1"/>
-          <polygon points="8,50 42,45 38,50 42,55" fill="#cbd5e1"/>
-          <polygon points="92,50 58,45 62,50 58,55" fill="#cbd5e1"/>
-          <polygon points="20,20 45,45 42,42" fill="#94a3b8"/>
-          <polygon points="80,20 55,45 58,42" fill="#94a3b8"/>
-          <polygon points="20,80 45,55 42,58" fill="#94a3b8"/>
-          <polygon points="80,80 55,55 58,58" fill="#94a3b8"/>
-          <circle cx="50" cy="50" r="4" fill="#fde047"/>
-        </svg>
-        <span style="font-family:'Cinzel', serif; font-size:0.80rem; font-weight:800; color:#fde047; letter-spacing:1.2px;">COMPASS GAMES LLC</span>
-      </div>
-
-      <div style="font-size:0.84rem; color:#f87171; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; background:rgba(239,68,68,0.14); border:1px solid rgba(239,68,68,0.35); border-radius:6px; padding:3px 8px;">
-        ⚠️ FAN-MADE COMPANION APP • NO OFICIAL
-      </div>
-
-      <h2 style="font-family:'Cinzel', serif; color:#fde047; font-size:1.35rem; margin:0 0 4px 0; letter-spacing:1px;">
-        SENSUiKAN <span style="font-family:'Noto Serif JP', serif; font-size:1.1rem; color:#ef4444;">潜水艦</span>
-      </h2>
-      <div style="font-size:0.86rem; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
-        <span data-i18n="ui.accessRestricted">Centro de Mando Táctico • Acceso Restringido</span>
-      </div>
-
-      <div style="background:rgba(0,0,0,0.3); border:1px solid #1e293b; border-radius:8px; padding:16px; margin-bottom:18px; text-align:left;">
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:0.86rem; font-weight:700; color:#38bdf8; text-transform:uppercase; margin-bottom:4px;">
-            <span data-i18n="ui.officerUser">Oficial / Usuario:</span>
-          </label>
-          <input type="text" id="gate-user-input" class="flow-select" style="width:100%; padding:8px 10px; font-size:0.90rem;" placeholder="ej. comandante o admin" data-i18n-placeholder="ui.loginUserPlaceholder" autocomplete="username">
-        </div>
-
-        <div style="margin-bottom:14px;">
-          <label style="display:block; font-size:0.86rem; font-weight:700; color:#38bdf8; text-transform:uppercase; margin-bottom:4px;">
-            <span data-i18n="ui.accessKey">Clave de Acceso (Password):</span>
-          </label>
-          <input type="password" id="gate-pwd-input" class="flow-select" style="width:100%; padding:8px 10px; font-size:0.90rem;" placeholder="Introduce tu contraseña" data-i18n-placeholder="ui.loginPasswordPlaceholder" autocomplete="current-password" onkeydown="if(event.key==='Enter') executeLoginGate();">
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.76rem; color:#94a3b8;">
-          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-            <input type="checkbox" id="gate-remember-chk" checked style="accent-color:#c5a059;">
-            <span data-i18n="ui.rememberDevice">Recordar en esta tablet</span>
-          </label>
-          <button type="button" onclick="promptChangeCredentials()" style="background:none; border:none; color:#fde047; font-size:0.84rem; cursor:pointer; text-decoration:underline;">
-            <span data-i18n="ui.changePassword">Cambiar clave</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="gate-error-msg" style="color:#ef4444; font-size:0.78rem; font-weight:bold; margin-bottom:12px; display:none;">
-        <span data-i18n="ui.invalidCredentials">⚠️ Usuario o contraseña incorrectos.</span>
-      </div>
-
-      <button type="button" onclick="executeLoginGate()" class="btn-dice" style="width:100%; padding:10px; font-size:0.95rem; font-weight:bold; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); border:none; border-radius:6px; color:#fff; cursor:pointer; box-shadow:0 4px 12px rgba(180,83,9,0.4);">
-        <span data-i18n="ui.login">🔓 Acceder al Sistema de Mando</span>
-      </button>
-
-      <div style="margin-top:14px; font-size:0.84rem; color:#64748b; line-height:1.4;">
-        <span data-i18n="ui.defaultCredentials">Por defecto: Usuario: <code style="color:#fef08a;">admin</code> | Clave: <code style="color:#fef08a;">sensuikan</code><br>
-        (Puedes cambiar tu usuario y clave cuando quieras pulsando "Cambiar clave").</span>
-      </div>
-
-    </div>
-  </div>
-
-
   <!-- Header -->
   <header>
-    <div class="top-bar">
-      <!-- Left: Logo & Title Group (Enlarged) -->
-      <div class="logo-group">
+    <!-- Row 1: Brand, Title, Credits & System Utility Actions -->
+    <div class="header-top-row">
+      <div class="header-brand-block">
         <a href="#tab-workflow" onclick="switchTab('workflow')" style="display:flex; align-items:center; text-decoration:none;">
-          <img src="assets/branding/sensuikan-logo.jpg" alt="Sensuikan - 潜水艦" style="height:36px; width:auto; max-width:110px; object-fit:contain; border-radius:4px; border:1px solid rgba(250,204,21,0.65); box-shadow:0 1px 6px rgba(0,0,0,0.55), 0 0 6px rgba(250,204,21,0.25); background:#fff; margin-right:4px;">
+          <img src="assets/branding/sensuikan-logo.jpg" alt="Sensuikan - 潜水艦" class="header-logo-img">
         </a>
-        <div class="title-box">
-          <h1>SENSUIKAN <span class="kanji">潜水艦</span></h1>
-          <p id="app-tagline">Armada Imperial Japonesa, 1941–45</p>
-          <div style="font-size:0.78rem; color:var(--slate-300); margin-top:1px; display:flex; align-items:center; gap:5px;">
-            <span id="app-fanmade-badge" style="background:rgba(212,175,55,0.18); border:1px solid var(--gold-500); color:var(--gold-300); font-weight:bold; font-size:0.78rem; padding:1px 4px; border-radius:3px;">FANMADE NO OFICIAL</span>
-            <span>© Compass Games LLC • Diseñado por Gregory M. Smith</span>
+        <div class="header-title-meta">
+          <div class="header-title-line">
+            <h1>SENSUIKAN <span class="kanji">潜水艦</span></h1>
+            <span class="header-title-sep">•</span>
+            <span id="app-tagline" class="header-tagline">Armada Imperial Japonesa, 1941–45</span>
+          </div>
+          <div class="header-credits-line">
+            <span id="app-fanmade-badge" class="header-badge">FANMADE NO OFICIAL</span>
+            <span class="header-credits-text">© Compass Games LLC • Diseñado por Gregory M. Smith</span>
           </div>
         </div>
       </div>
 
-      <!-- Right: Stacked Buttons (Upper: Language & System, Lower: Navigation Tabs) -->
-      <div class="header-right-stack">
-        <!-- Top Controls & Actions (Upper Row) -->
-        <div class="top-controls">
-          <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">
-            <span id="lang-label">🌐 IDIOMA: ES</span>
-          </button>
-          <button id="about-btn" class="action-btn" type="button" onclick="openAboutModal()">
-            <span id="about-btn-label">ℹ️ Acerca de</span>
-          </button>
-          <button class="action-btn" onclick="exportCampaignJSON()" title="Descargar copia de seguridad en JSON">
-            <span id="lbl-backup">💾 Backup JSON</span>
-          </button>
-          <button class="action-btn" onclick="triggerImportJSON()" title="Cargar campaña guardada">
-            <span id="lbl-load">📂 Cargar JSON</span>
-          </button>
-          <input type="file" id="importFileInput" style="display:none;" onchange="importCampaignJSON(event)" accept=".json">
-          <button class="action-btn danger" onclick="resetCampaign()" title="Poner todo a 0">
-            <span id="lbl-reset">🔄 Reset 0</span>
-          </button>
-          <button class="action-btn" onclick="logoutApp()" title="Bloquear terminal y cerrar sesión" style="border-color:#38bdf8; color:#38bdf8;">
-            <span id="lbl-lock">🔒 Bloquear</span>
-          </button>
-        </div>
-
-        <!-- Navigation Tabs (Lower Row) -->
-        <div class="nav-tabs">
-          <button class="tab-btn active" onclick="switchTab('workflow')" title="Atajo: [1]">
-            <span id="tab-nav-workflow">🎮 Game Flow</span>
-            <kbd class="nav-kbd-hint">1</kbd>
-          </button>
-          <button class="tab-btn" onclick="switchTab('chart-k1')" title="Atajo: [2]">
-            <span id="tab-nav-chartk1">🎴 Habilidades (Tabla K1)</span>
-            <kbd class="nav-kbd-hint">2</kbd>
-          </button>
-          <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Atajo: [3]">
-            <span id="tab-nav-rogubukku">📜 Rogu Bukku (Log)</span>
-            <kbd class="nav-kbd-hint">3</kbd>
-          </button>
-          <button class="tab-btn" onclick="switchTab('dock')" title="Atajo: [4]">
-            <span id="tab-nav-dock">⚓ Submarines (18)</span>
-            <kbd class="nav-kbd-hint">4</kbd>
-          </button>
-          <button class="tab-btn" onclick="switchTab('compendium')" title="Atajo: [5]">
-            <span id="tab-nav-compendium">📚 Todas las Tablas</span>
-            <kbd class="nav-kbd-hint">5</kbd>
-          </button>
-          <button class="tab-btn" onclick="switchTab('operations-map')" title="Atajo: [6]">
-            <span id="tab-nav-opmap">🗺️ Mapa de Operaciones</span>
-            <kbd class="nav-kbd-hint">6</kbd>
-          </button>
-        </div>
+      <div class="header-system-controls">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button" title="Cambiar idioma / Switch language">
+          <span id="lang-label">🌐 IDIOMA: ES</span>
+        </button>
+        <button id="about-btn" class="action-btn" type="button" onclick="openAboutModal()" title="Información sobre la aplicación">
+          <span id="about-btn-label">ℹ️ Acerca de</span>
+        </button>
+        <div class="header-actions-divider"></div>
+        <button class="action-btn" onclick="exportCampaignJSON()" title="Descargar copia de seguridad en JSON">
+          <span id="lbl-backup">💾 Backup JSON</span>
+        </button>
+        <button class="action-btn" onclick="triggerImportJSON()" title="Cargar campaña guardada">
+          <span id="lbl-load">📂 Cargar JSON</span>
+        </button>
+        <input type="file" id="importFileInput" style="display:none;" onchange="importCampaignJSON(event)" accept=".json">
+        <button class="action-btn danger" onclick="resetCampaign()" title="Reiniciar campaña a valores iniciales">
+          <span id="lbl-reset">🔄 Reset 0</span>
+        </button>
+<!-- Removed Lock button -->
       </div>
+    </div>
+
+    <!-- Row 2: Dedicated Navigation Tabs Bar -->
+    <div class="header-nav-row">
+      <nav class="nav-tabs" aria-label="Navegación principal">
+        <button class="tab-btn active" onclick="switchTab('workflow')" title="Atajo: [1]">
+          <span id="tab-nav-workflow">🎮 Game Flow</span>
+          <kbd class="nav-kbd-hint">1</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('chart-k1')" title="Atajo: [2]">
+          <span id="tab-nav-chartk1">🎴 Habilidades (Tabla K1)</span>
+          <kbd class="nav-kbd-hint">2</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Atajo: [3]">
+          <span id="tab-nav-rogubukku">📜 Rogu Bukku (Log)</span>
+          <kbd class="nav-kbd-hint">3</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('operations-map')" title="Atajo: [4]">
+          <span id="tab-nav-opmap">🗺️ Mapa de Operaciones</span>
+          <kbd class="nav-kbd-hint">4</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('sub-board')" title="Atajo: [5]">
+          <span id="tab-nav-subboard">📋 Hoja de Submarino</span>
+          <kbd class="nav-kbd-hint">5</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('dock')" title="Atajo: [6]">
+          <span id="tab-nav-dock">⚓ Submarines (18)</span>
+          <kbd class="nav-kbd-hint">6</kbd>
+        </button>
+        <button class="tab-btn" onclick="switchTab('compendium')" title="Atajo: [7]">
+          <span id="tab-nav-compendium">📚 Todas las Tablas</span>
+          <kbd class="nav-kbd-hint">7</kbd>
+        </button>
+      </nav>
     </div>
   </header>
 

@@ -34,7 +34,7 @@ def inline_local_resources(html_str, base_dir='app'):
 def main():
     print("Building Single-File Standalone HTML...")
     build_html()
-    target_dirs = ['chits', 'tokens', 'submarines_profiles', 'tracks', 'branding', 'commanders']
+    target_dirs = ['chits', 'tokens', 'submarines_profiles', 'tracks', 'branding', 'commanders', 'maps', 'submarines_chits', 'submarines_cards']
     asset_dict = {}
 
     orig_size = 0

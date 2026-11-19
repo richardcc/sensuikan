@@ -1,0 +1,50 @@
+/* Custom Month Dropdown Styling */
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    background: #071b2d;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #f1f5f9;
+}
+
+.dropdown-selected {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #071b2d;
+    border: 1px solid #334155;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+}
+
+.dropdown-option {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.dropdown-option:hover {
+    background: #1e293b;
+}
+
+.month-available {
+    color: #fde047; /* Yellow */
+    font-weight: bold;
+}
+
+.month-unavailable {
+    color: #64748b; /* Grey */
+    font-weight: normal;
+}

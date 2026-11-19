@@ -10,9 +10,18 @@
       showToast("Ficha actualizada: " + tokenId);
     }
 
+    function getRankChitImage(rankIdx) {
+      if (rankIdx <= 0) return 'assets/tokens/Rank.jpg';
+      if (rankIdx === 1) return 'assets/tokens/Rank1.jpg';
+      if (rankIdx === 2) return 'assets/tokens/Rank2.jpg';
+      return 'assets/tokens/Rank3.jpg';
+    }
+
     function cycleRank() {
       campaignState.currentRankIdx = (campaignState.currentRankIdx + 1) % RANKS.length;
       document.getElementById('rank-text').innerText = RANKS[campaignState.currentRankIdx];
+      const rankImg = document.getElementById('k1-rank-chit-img');
+      if (rankImg) rankImg.src = getRankChitImage(campaignState.currentRankIdx);
       saveState();
       showToast("Rango actualizado: " + RANKS[campaignState.currentRankIdx]);
     }
@@ -78,6 +87,10 @@
       if (rankEl && RANKS[campaignState.currentRankIdx]) {
         rankEl.innerText = RANKS[campaignState.currentRankIdx];
       }
+      const rankImg = document.getElementById('k1-rank-chit-img');
+      if (rankImg) {
+        rankImg.src = getRankChitImage(campaignState.currentRankIdx);
+      }
 
       // Iterate through every standard token slot on Chart K1
       document.querySelectorAll('.wargame-token').forEach(el => {
@@ -101,6 +114,11 @@
         hachimaki: { es: "Hachimaki (Repite tirada)", en: "Hachimaki (Reroll)" },
         ashes: { es: "Cenizas Compañeros", en: "Classmates' Ashes" }
       };
+      const kaitenBenefitImages = {
+        senninbari: 'assets/tokens/Senninhari.jpg',
+        hachimaki: 'assets/tokens/Hachimaki.jpg',
+        ashes: 'assets/tokens/Blessings of the Emperor.jpg'
+      };
       const isEn = (window.currentLang === 'en');
       const kaitenTitleEl = document.getElementById('k1-kaiten-title');
       if (kaitenTitleEl) {
@@ -112,6 +130,7 @@
       for (let i = 1; i <= 6; i++) {
         const tokEl = document.getElementById(`token-kaiten-${i}`);
         const lblEl = document.getElementById(`lbl-kaiten-benefit-${i}`);
+        const imgEl = document.getElementById(`img-kaiten-${i}`);
         if (!tokEl || !lblEl) continue;
 
         let benefit = '';
@@ -126,10 +145,16 @@
 
         if (benefit && benefitLabels[benefit]) {
           lblEl.innerText = isEn ? benefitLabels[benefit].en : benefitLabels[benefit].es;
+          if (imgEl && kaitenBenefitImages[benefit]) {
+            imgEl.src = kaitenBenefitImages[benefit];
+          }
           tokEl.classList.remove('inactive');
           tokEl.classList.add('active');
         } else {
           lblEl.innerText = isEn ? "Unassigned" : "Sin Asignar";
+          if (imgEl) {
+            imgEl.src = `assets/tokens/Kaiten-${i}.jpg`;
+          }
           tokEl.classList.remove('active');
           tokEl.classList.add('inactive');
         }

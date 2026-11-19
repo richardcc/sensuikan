@@ -209,8 +209,13 @@
 
     // Phase 5: Refit Calculation
     function recalculateRefitTime() {
-      const inop = parseInt(document.getElementById('wf-inop-select').value) || 0;
-      const hull = parseInt(document.getElementById('wf-hull-dmg-select').value) || 0;
+      const inopEl = document.getElementById('wf-inop-select');
+      const hullEl = document.getElementById('wf-hull-dmg-select');
+
+      if (!inopEl || !hullEl) return;
+
+      const inop = parseInt(inopEl.value) || 0;
+      const hull = parseInt(hullEl.value) || 0;
       const airRaidExtra = campaignState.workflow.airRaidRefitMonths || 0;
       const total = 1 + inop + hull + airRaidExtra;
       const extraLabel = airRaidExtra > 0 ? ` (incluye +${airRaidExtra}m por incursión aérea [4.7.6])` : '';
@@ -374,7 +379,11 @@
       } else {
         el.style.color = '#ef4444';
         el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 ${isEn ? '1d6 Roll' : 'Tirada 1d6'}: [${d}]${mod ? ' (+1 DRM)' : ''} = ${total}</span> ➔ ${isEn ? 'Uncontrolled flooding (+1 box). Mark 1 additional box.' : '¡Inundación adicional! Marca 1 casilla más.'}`;
-        showToast(isEn ? 'Warning! Additional flooding.' : '¡Alerta! Inundación adicional en el submarino.');
+        if (typeof window.applySubmarineDamage === 'function') {
+          window.applySubmarineDamage({ flooding: 1, source: 'flooding', reason: 'Uncontrolled flooding +1' });
+        } else {
+          showToast(isEn ? 'Warning! Additional flooding.' : '¡Alerta! Inundación adicional en el submarino.');
+        }
       }
     }
 
@@ -399,24 +408,174 @@
       if (total <= reqMax) {
         el.style.color = '#34d399';
         el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 ${isEn ? '1d6 Roll' : 'Tirada 1d6'}: [${d}]${mod ? ' (+1 DRM)' : ''} = ${total} (≤${reqMax})</span> ➔ ${isEn ? 'REPAIRED SUCCESSFULLY! The system is operational again.' : '¡REPARADO CON ÉXITO! El sistema vuelve a estar operativo.'}`;
+        if (!campaignState.damage) campaignState.damage = {};
+        campaignState.damage[sys] = false;
+        if (sys === 'radar') {
+          if (typeof checkSubmarineRadarStatus === 'function') checkSubmarineRadarStatus();
+          if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
+        }
+        if (typeof window.applySubmarineRepair === 'function') {
+          window.applySubmarineRepair({ systemRepaired: sys });
+        }
+        saveState();
         showToast(isEn ? 'System repaired successfully!' : '¡Sistema reparado con éxito!');
       } else {
         el.style.color = '#ef4444';
         el.innerHTML = `<span style="color:#fde047; font-weight:800;">🎲 ${isEn ? '1d6 Roll' : 'Tirada 1d6'}: [${d}]${mod ? ' (+1 DRM)' : ''} = ${total} (≤${reqMax})</span> ➔ ${isEn ? 'NOT REPAIRABLE AT SEA (INOP). Drydock (Refit) is required.' : 'NO REPARABLE EN EL MAR (INOP). Requiere dique seco (Refit).'}`;
+        if (typeof window.applySubmarineRepair === 'function') {
+          window.applySubmarineRepair({ systemInop: sys });
+        }
         showToast(isEn ? 'System cannot be repaired at sea.' : 'Sistema no reparable en el mar.');
       }
     }
 
-    function rollB7CrewInjury() {
+    function renderB7CasualtyTableHtml(sum, d1, d2, role, sevRoll, sevKey, sev, sevDesc, penalty, isEn, injuryResult = null) {
+      let sevBg = 'rgba(56, 189, 248, 0.2)';
+      let sevColor = '#38bdf8';
+      let sevBorder = 'rgba(56, 189, 248, 0.4)';
+      if (sevKey === 'SW') {
+        sevBg = 'rgba(245, 158, 11, 0.25)';
+        sevColor = '#fbbf24';
+        sevBorder = 'rgba(245, 158, 11, 0.5)';
+      } else if (sevKey === 'KIA') {
+        sevBg = 'rgba(239, 68, 68, 0.25)';
+        sevColor = '#f87171';
+        sevBorder = 'rgba(239, 68, 68, 0.5)';
+      }
+
+      let accumBadgeHtml = '';
+      if (injuryResult && injuryResult.isAccumulated) {
+        accumBadgeHtml = `
+          <div style="margin-top:5px; background:rgba(239,68,68,0.22); border:1px solid #ef4444; border-radius:4px; padding:3px 6px;">
+            <div style="font-weight:bold; color:#fca5a5; font-size:0.72rem;">⚠️ ${injuryResult.accumMsg}</div>
+            <div style="font-size:0.68rem; color:#fed7aa; margin-top:2px;">
+              ${isEn 
+                ? `Previous on board: <strong>${injuryResult.prevStatus.toUpperCase()}</strong> ➔ Final: <strong style="color:#ef4444;">${injuryResult.newStatus.toUpperCase()}</strong>`
+                : `Estado previo en buque: <strong>${injuryResult.prevStatus.toUpperCase()}</strong> ➔ Estado final: <strong style="color:#ef4444;">${injuryResult.newStatus.toUpperCase()}</strong>`}
+            </div>
+          </div>
+        `;
+      } else {
+        accumBadgeHtml = `
+          <div style="margin-top:4px; font-size:0.68rem; color:#94a3b8;">
+            ${isEn ? 'Fitted on Submarine Sheet' : 'Marcador actualizado en la Hoja del Submarino'}
+          </div>
+        `;
+      }
+
+      return `
+        <table class="table-sub-data" style="width:100%; border-collapse:collapse; margin-top:8px; font-size:0.75rem; text-align:left; background:rgba(15,23,42,0.7); border:1px solid rgba(239,68,68,0.4); border-radius:6px; overflow:hidden;">
+          <thead>
+            <tr style="background:rgba(239,68,68,0.22); color:#fca5a5; font-size:0.72rem; text-transform:uppercase;">
+              <th style="padding:5px 8px; border:1px solid rgba(239,68,68,0.3); width:32%;">${isEn ? 'Station (2d6)' : 'Puesto Afectado (2d6)'}</th>
+              <th style="padding:5px 8px; border:1px solid rgba(239,68,68,0.3); width:34%;">${isEn ? 'Severity & Accumulation (1d6)' : 'Gravedad y Acumulación (1d6)'}</th>
+              <th style="padding:5px 8px; border:1px solid rgba(239,68,68,0.3); width:34%;">${isEn ? 'Operational Effect' : 'Efecto Operativo'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(239,68,68,0.25); font-weight:bold; color:var(--gold-300); vertical-align:top;">
+                <div style="font-size:0.72rem; color:#94a3b8;">2d6 = ${sum} [${d1}+${d2}]</div>
+                <div style="color:#ffffff; font-size:0.80rem; margin-top:2px;">${role}</div>
+              </td>
+              <td style="padding:6px 8px; border:1px solid rgba(239,68,68,0.25); vertical-align:top;">
+                <div style="font-size:0.72rem; color:#94a3b8;">1d6 = ${sevRoll}</div>
+                <span style="display:inline-block; padding:2px 6px; border-radius:4px; font-weight:bold; font-size:0.72rem; background:${sevBg}; color:${sevColor}; border:1px solid ${sevBorder}; margin-top:2px;">${sev}</span>
+                <div style="font-size:0.70rem; color:#cbd5e1; margin-top:3px;">${sevDesc}</div>
+                ${accumBadgeHtml}
+              </td>
+              <td style="padding:6px 8px; border:1px solid rgba(239,68,68,0.25); color:#e2e8f0; font-size:0.73rem; line-height:1.4; vertical-align:top;">
+                ${penalty}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+    }
+    window.renderB7CasualtyTableHtml = renderB7CasualtyTableHtml;
+
+    let p4B7SelectedPos = 7;
+    function rollB7CrewPosOnly(manualPos) {
       const isEn = window.currentLang === 'en';
-      const d1 = Math.floor(Math.random() * 6) + 1;
-      const d2 = Math.floor(Math.random() * 6) + 1;
-      const sum = d1 + d2;
-      const sevRoll = Math.floor(Math.random() * 6) + 1;
+      let d1, d2, sum;
+      if (typeof manualPos === 'number' && manualPos >= 2 && manualPos <= 12) {
+        sum = manualPos;
+        d1 = Math.floor(sum / 2);
+        d2 = sum - d1;
+      } else {
+        d1 = Math.floor(Math.random() * 6) + 1;
+        d2 = Math.floor(Math.random() * 6) + 1;
+        sum = d1 + d2;
+      }
+      p4B7SelectedPos = sum;
+      const sel = document.getElementById('p4-b7-pos-tabletop');
+      if (sel) sel.value = String(sum);
+      const roles = {
+        2: isEn ? "Captain" : "Comandante",
+        3: isEn ? "Chief Engineer" : "Jefe de Máquinas",
+        4: isEn ? "Executive Officer (XO)" : "Segundo Oficial",
+        5: isEn ? "Medical Officer" : "Oficial Médico",
+        6: isEn ? "Crew #1" : "Dotación #1",
+        7: isEn ? "Crew #2" : "Dotación #2",
+        8: isEn ? "Crew #3" : "Dotación #3",
+        9: isEn ? "Crew #4" : "Dotación #4",
+        10: isEn ? "Crew #5" : "Dotación #5",
+        11: isEn ? "Navigator" : "Navegante",
+        12: isEn ? "Special Pilot" : "Piloto Especial"
+      };
+      const role = roles[sum] || "Dotación";
+      const el = document.getElementById('wf-b7-crew-res');
+      if (el) {
+        el.innerHTML = `
+          <div style="background:rgba(15,23,42,0.85); border:1px solid #38bdf8; border-radius:6px; padding:8px 12px; margin-top:4px;">
+            <span style="font-weight:bold; color:#fde047;">🎲 1. Puesto Afectado: 2d6 = [${d1}+${d2} = ${sum}] ➔ ${role}</span><br>
+            <span style="font-size:0.75rem; color:#bae6fd;">👉 Ahora tira 1d6 para determinar el tipo de baja y acumulación.</span>
+          </div>
+        `;
+      }
+      showToast(isEn ? `Station hit: ${role}. Now roll 1d6 for Severity.` : `Puesto alcanzado: ${role}. Ahora tira 1d6 para gravedad.`);
+    }
+    window.rollB7CrewPosOnly = rollB7CrewPosOnly;
+
+    function rollB7CrewSevOnly(manualSev) {
+      const pos = p4B7SelectedPos || parseInt(document.getElementById('p4-b7-pos-tabletop')?.value || '7', 10);
+      let sev = (typeof manualSev === 'number' && manualSev >= 1 && manualSev <= 6) ? manualSev : (Math.floor(Math.random() * 6) + 1);
+      const sevSel = document.getElementById('p4-b7-sev-tabletop');
+      if (sevSel) sevSel.value = String(sev);
+      rollB7CrewInjury(pos, sev);
+    }
+    window.rollB7CrewSevOnly = rollB7CrewSevOnly;
+
+    function applyP4B7Tabletop() {
+      const posVal = parseInt(document.getElementById('p4-b7-pos-tabletop')?.value || '7', 10);
+      const sevVal = parseInt(document.getElementById('p4-b7-sev-tabletop')?.value || '4', 10);
+      rollB7CrewInjury(posVal, sevVal);
+    }
+    window.applyP4B7Tabletop = applyP4B7Tabletop;
+
+    function rollB7CrewInjury(manualSum, manualSev) {
+      const isEn = window.currentLang === 'en';
+      let d1, d2, sum;
+      if (typeof manualSum === 'number' && manualSum >= 2 && manualSum <= 12) {
+        sum = manualSum;
+        d1 = Math.floor(sum / 2);
+        d2 = sum - d1;
+      } else {
+        d1 = Math.floor(Math.random() * 6) + 1;
+        d2 = Math.floor(Math.random() * 6) + 1;
+        sum = d1 + d2;
+      }
+
+      let sevRoll;
+      if (typeof manualSev === 'number' && manualSev >= 1 && manualSev <= 6) {
+        sevRoll = manualSev;
+      } else {
+        sevRoll = Math.floor(Math.random() * 6) + 1;
+      }
 
       let role = isEn ? "Crew (Generic)" : "Dotación genérica";
       let roleKey = "crew";
-      let penalty = isEn ? "If all generic crew boxes are SW/KIA: +1 torpedo To-Hit." : "Si todas las casillas genéricas quedan SW/KIA: +1 a impactar con torpedos.";
+      let penalty = isEn ? "If all generic crew boxes are SW/KIA: +1 torpedo To-Hit." : "Si todas las casillas genéricas quedan SW o KIA: +1 a impactar con torpedos.";
 
       if (sum === 2) {
         role = isEn ? "Captain" : "Comandante";
@@ -448,19 +607,49 @@
         penalty = isEn ? "The special mission fails automatically if all are SW or KIA." : "La misión especial fracasa automáticamente si todos quedan SW o KIA.";
       }
 
+      let sevKey = 'LW';
       let sev = isEn ? "LW (Light Wound)" : "LW (Herida leve)";
       let sevDesc = isEn ? "No adverse combat effect." : "Sin efecto negativo en combate.";
       if (sevRoll >= 4 && sevRoll <= 5) {
+        sevKey = 'SW';
         sev = isEn ? "SW (Serious Wound)" : "SW (Herida grave)";
         sevDesc = isEn ? "Incapacitated for service." : "Incapacitado para el servicio.";
       } else if (sevRoll === 6) {
+        sevKey = 'KIA';
         sev = isEn ? "KIA (Killed in Action)" : "KIA (Muerto en combate)";
         sevDesc = isEn ? "Permanent combat casualty." : "Baja definitiva en combate.";
       }
 
+      campaignState.crewInjuries = campaignState.crewInjuries || {};
+      if (sevKey === 'SW' || sevKey === 'KIA') {
+        campaignState.crewInjuries[roleKey] = true;
+      }
+
+      // Centralized Submarine Board & State update
+      let subSlotKey = 'crew-1';
+      if (sum === 2) subSlotKey = 'capt';
+      else if (sum === 3) subSlotKey = 'eng';
+      else if (sum === 4) subSlotKey = 'xo';
+      else if (sum === 5) subSlotKey = 'med';
+      else if (sum >= 6 && sum <= 10) subSlotKey = `crew-${sum - 5}`;
+      else if (sum === 11) subSlotKey = 'nav';
+      else if (sum === 12) subSlotKey = 'spec';
+
+      let dmgPayload = {
+        crewInjury: { roleKey: subSlotKey, severity: sevKey },
+        source: 'phase4',
+        reason: `${role} (${sevKey})`
+      };
+      if (typeof window.applySubmarineDamage === 'function') {
+        window.applySubmarineDamage(dmgPayload);
+      }
+
       const el = document.getElementById('wf-b7-crew-res');
-      el.innerHTML = `<strong>${isEn ? 'Station' : 'Puesto'} (2d6 = ${sum} [${d1}+${d2}]):</strong> ${role}<br><strong>${isEn ? 'Severity' : 'Gravedad'} (1d6 = ${sevRoll}):</strong> <span style="color:#fbbf24;">${sev}</span> (${sevDesc})<br><strong>${isEn ? 'Campaign Effect' : 'Efecto en campaña'}:</strong> ${penalty}`;
+      if (el) {
+        el.innerHTML = renderB7CasualtyTableHtml(sum, d1, d2, role, sevRoll, sevKey, sev, sevDesc, penalty, isEn, dmgPayload.injuryResult);
+      }
       showToast(isEn ? `Casualty recorded: ${role} (${sev})` : `Baja registrada: ${role} (${sev})`);
+      saveState();
     }
 
     // CHARTS M5 - M8: MIDGET SUBMARINE (KO-HYOTEKI) LOGIC

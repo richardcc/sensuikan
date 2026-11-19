@@ -102,22 +102,9 @@ function renderMissionChits() {
     }
 
     function showChitDetail(chit) {
-      const box = document.getElementById('chit-detail-box');
-      if (!box) return;
-      box.style.display = 'block';
-
-      const tEl = document.getElementById('chit-detail-title');
-      const dEl = document.getElementById('chit-detail-dates');
-      const mEl = document.getElementById('chit-detail-missions');
-      const descEl = document.getElementById('chit-detail-desc');
-
-      if (tEl) tEl.innerText = (chit.redTitle || 'Ficha') + (chit.redSub ? ' ' + chit.redSub : '');
-      if (dEl) dEl.innerText = chit.redDate || (chit.cat === 'port' ? 'Puerto / Base' : 'Fechas');
-      if (mEl) mEl.innerText = 'Cara Blanca (Misión Especial): ' + (chit.whiteLines || []).join(' • ');
-      if (descEl) descEl.innerText = chit.desc || 'Sin notas.';
-
+      if (!chit) return;
       const subKey = campaignState.activeSubKey || "Type_B_Class";
-      renderSpecialMissionsEvaluationTable(chit, subKey, 'chit-detail-eval-container');
+      renderSpecialMissionsEvaluationTable(chit, subKey, 'wf-special-mission-eval-container');
     }
 
 
@@ -165,3 +152,10 @@ campaignState.school = campaignState.school || {
 // Backward compatibility & convenience aliases
 window.setGameFlowPhase = setWorkflowPhase;
 window.switchGameFlowPhase = setWorkflowPhase;
+
+    function onSubmarineChange() {
+        if (typeof updateBasesForDate === 'function') updateBasesForDate(campaignState.workflow.selectedMonth || "1941-12");
+        if (typeof buildWorkflowMonthSelect === 'function') buildWorkflowMonthSelect();
+        if (typeof renderSubBoard === 'function') renderSubBoard();
+        saveState();
+    }

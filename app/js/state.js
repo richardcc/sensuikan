@@ -6,7 +6,7 @@ window.currentLang = currentLang;
 
 let campaignState = {
   currentRankIdx: 2,
-  activeSubKey: "Type_B_Class",
+  activeSubKey: null,
   tokens: { "token-medal-gea": true, "token-medal-sub": true },
   patrols: {},
   workflow: {
@@ -15,7 +15,7 @@ let campaignState = {
     currentBoxIndex: 0,
     boxList: ["Tránsito 1", "Casilla de Misión", "En Estación 1", "En Estación 2", "En Estación 3", "Retorno 1"],
     encounterStatus: "none",
-    currentTarget: { name: "SS Steel Seafarer", tons: 5700, nation: "USA", escort: true },
+    currentTarget: null,
     startingBase: "Yokosuka",
     assignedArea: "Pearl Harbor",
     lastA1Roll: 0,

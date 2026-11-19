@@ -1,0 +1,462 @@
+        <div id="phase-content-school" class="phase-body">
+          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e3a8a 0%, #064e3b 100%); border-left:4px solid var(--gold-500); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <h2 style="margin:0; display:flex; align-items:center; gap:8px;">
+                <span>🏫</span>
+                <span id="pschool-title">TABLA [F1]: ESCUELA DE SUBMARINOS DE KURE Y ESPECIALIDADES (REGLA 4.8)</span>
+              </h2>
+              <div id="pschool-sub-desc" style="font-size:0.86rem; color:#93c5fd; margin-top:3px;">
+                Escuela de Kure [F1] • Minisubmarinos [F2] • Escuela Aérea Kasumigaura [F3] • Escuela Kaiten Otsujima [F4] • Tablas Activas: [B1], [B6], [M5], [M7], [K5], [K6]
+              </div>
+            </div>
+            
+            <!-- The integrated tables below are the single source of reference. -->
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto;">
+              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); display:flex; align-items:center; gap:4px;">
+                <span>🗺️</span> <span id="pschool-guide-label">📋 Guía de Fase</span>
+              </button>
+              <button type="button" onclick="toggleSchoolTablesDrawer()" id="btn-toggle-school-tables" class="action-btn" style="border-color:#38bdf8; color:#f8fafc; font-weight:bold; font-size:0.84rem; padding:4px 9px; background:rgba(2,132,199,0.25);">
+                👁️ Ocultar Tablas ▲
+              </button>
+              <span id="pschool-rules-pill" class="rules-ref-pill">[Regla 4.8 • Tablas F1-F4]</span>
+            </div>
+          </div>
+
+          <!-- =====================================================================
+               PANEL DESPLEGABLE: TABLAS DE REGLAS QUE PARTICIPAN EN ESCUELAS
+               ===================================================================== -->
+          <div id="school-tables-drawer" style="background:#071220; border:2px solid #38bdf8; border-radius:10px; padding:14px; margin-bottom:18px; display:block;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e3a8a; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span id="sch-drawer-pill" style="background:#0284c7; color:#fff; font-size:0.84rem; font-weight:800; padding:2px 8px; border-radius:4px; letter-spacing:0.5px;">REGLAS Y TABLAS ACTIVAS</span>
+                <h4 id="sch-drawer-title" style="margin:0; color:#38bdf8; font-family:'Cinzel', serif; font-size:1.02rem;">TABLAS QUE PARTICIPAN EN EL ADIESTRAMIENTO</h4>
+              </div>
+              <span id="sch-drawer-sub" style="font-size:0.84rem; color:#94a3b8;">Consulta directa durante las tiradas de adiestramiento</span>
+            </div>
+
+            <!-- GRID OF 4 PARTICIPATING TABLES -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
+
+              <!-- 1. TABLA B1: DISTANCIAS Y TIRO -->
+              <div style="background:#0f172a; border:1px solid #1e3a8a; border-radius:6px; padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span id="sch-b1-title" style="font-weight:bold; color:#ef4444; font-size:0.80rem;">🎯 TABLA [B1]: FIRING RANGE (ALCANCE Y TIRO)</span>
+                </div>
+                <p id="sch-b1-desc" style="font-size:0.84rem; color:#cbd5e1; margin:0 0 6px 0;">
+                  Utilizada en <strong>Captain</strong> (Torpedos), <strong>XO</strong> (Cañón de cubierta) y <strong>Minisubmarinos [F2]</strong>:
+                </p>
+                <table style="width:100%; border-collapse:collapse; font-size:0.84rem; text-align:center; margin-bottom:6px;">
+                  <thead>
+                    <tr style="background:#1e293b; color:#94a3b8;">
+                      <th id="sch-b1-th-range" style="padding:4px; border:1px solid #334155;">Rango</th>
+                      <th id="sch-b1-th-dist" style="padding:4px; border:1px solid #334155;">Distancia</th>
+                      <th id="sch-b1-th-roll" style="padding:4px; border:1px solid #334155;">Tirada 2d6 Requerida</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="sch-b1-r1-lbl" style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">Corta (Close)</td>
+                      <td style="padding:4px; border:1px solid #334155; color:#cbd5e1;">0 – 1,500 m</td>
+                      <td id="sch-b1-r1-val" style="padding:4px; border:1px solid #334155; color:#a7f3d0; font-weight:bold;">2 – 8 (Tirada ≤ 8)</td>
+                    </tr>
+                    <tr>
+                      <td id="sch-b1-r2-lbl" style="padding:4px; border:1px solid #334155; color:#93c5fd;">Media (Medium)</td>
+                      <td style="padding:4px; border:1px solid #334155; color:#cbd5e1;">1,500 – 3,000 m</td>
+                      <td id="sch-b1-r2-val" style="padding:4px; border:1px solid #334155; color:#93c5fd; font-weight:bold;">2 – 7 (Tirada ≤ 7)</td>
+                    </tr>
+                    <tr style="background:rgba(239,68,68,0.18); font-weight:bold;">
+                      <td id="sch-b1-r3-lbl" style="padding:4px; border:1px solid #ef4444; color:#fca5a5;">Larga (Long) ★</td>
+                      <td style="padding:4px; border:1px solid #ef4444; color:#fca5a5;">&gt; 3,000 m</td>
+                      <td id="sch-b1-r3-val" style="padding:4px; border:1px solid #ef4444; color:#fde047; font-size:0.82rem;">2 – 6 (Tirada ≤ 6)</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div id="sch-b1-note" style="font-size:0.82rem; color:#fde047;">
+                  ★ <strong>Regla Escuela:</strong> En Sensuikan <em>la tirada baja impacta</em> (Roll Low). A Larga Distancia se necesita una tirada de 2 a 6 (≤6 en 2d6). Obtener al menos 2 Hits de 3 Rolls para ganar la habilidad.
+                </div>
+              </div>
+
+              <!-- 2. PROFUNDIDAD LÍMITE (EXCEED TEST DEPTH) -->
+              <div style="background:#0f172a; border:1px solid #1e3a8a; border-radius:6px; padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span id="sch-td-title" style="font-weight:bold; color:var(--gold-400); font-size:0.80rem;">⚡ PROFUNDIDAD LÍMITE (EXCEED TEST DEPTH)</span>
+                </div>
+                <p id="sch-td-desc" style="font-size:0.84rem; color:#cbd5e1; margin:0 0 6px 0;">
+                  Utilizada en el adiestramiento del <strong>Jefe de Máquinas (Engineer)</strong>:
+                </p>
+                <div id="sch-td-rules" style="background:#1e293b; border-radius:4px; padding:6px; font-size:0.84rem; line-height:1.4; color:#e2e8f0; margin-bottom:6px;">
+                  <div>• Daño simulado <strong>D = 3, 4 y 5</strong> [Regla Oficial 8.2.6].</div>
+                  <div>• Tira 2d6 en cada prueba sucesiva:</div>
+                  <div>• Si <strong>2d6 &lt; Daño (D)</strong> ➔ ¡Implosión y hundimiento!</div>
+                  <div>• Si <strong>2d6 &ge; Daño (D)</strong> ➔ ¡Superado sin daño!</div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.84rem; background:#071220; border:1px dashed #334155; border-radius:4px; padding:4px 8px; margin-bottom:6px;">
+                  <div id="sch-box-depth-pass" class="sch-depth-box" style="flex:1; text-align:center; padding:3px; border-right:1px solid #1e293b; color:#a7f3d0; font-weight:bold;">
+                    2d6 ≥ Daño:<br>¡Superado!
+                  </div>
+                  <div id="sch-box-depth-fail" class="sch-depth-box" style="flex:1; text-align:center; padding:3px; color:#fca5a5; font-weight:bold;">
+                    2d6 &lt; Daño:<br>¡Implosión!
+                  </div>
+                </div>
+                <div id="sch-td-note" style="font-size:0.82rem; color:var(--gold-300);">
+                  ★ Si supera las 3 pruebas sin implosión ➔ Gana <em>Keen Judgment</em> (inmune al 1.er daño de profundidad en patrulla).
+                </div>
+              </div>
+
+              <!-- 3. TABLAS M5 Y M7 MINISUBMARINOS -->
+              <div style="background:#0f172a; border:1px solid #1e3a8a; border-radius:6px; padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span id="sch-m5m7-title" style="font-weight:bold; color:#38bdf8; font-size:0.80rem;">🤿 TABLAS [M5] &amp; [M7]: MINISUBMARINOS</span>
+                </div>
+                <p id="sch-m5m7-desc" style="font-size:0.84rem; color:#cbd5e1; margin:0 0 6px 0;">
+                  Utilizadas en <strong>Chart F2 (Escuela de Minisubmarinos)</strong>:
+                </p>
+                <div style="font-size:0.84rem; color:#e2e8f0; line-height:1.4;">
+                  <div id="sch-m5-content" style="background:#1e293b; padding:4px 6px; border-radius:4px; margin-bottom:4px;">
+                    <strong style="color:#38bdf8;">Tabla [M5] Redes Portuarias (2d6):</strong><br>
+                    • 2–4: Atrapado en red (Fallo)<br>
+                    • 5–9: Cruce con sigilo (Aprobado)<br>
+                    • 10–12: Evita la barrera defensiva
+                  </div>
+                  <div id="sch-m7-content" style="background:#1e293b; padding:4px 6px; border-radius:4px;">
+                    <strong style="color:#38bdf8;">Tabla [M7] Recuperación de Minisubmarino (1d6):</strong><br>
+                    • Tira 2 veces 1d6 en [M7]. Ambas tiradas deben ser <strong>4–6</strong> (éxito de recuperación) para no fallar y ganar la habilidad <strong>Superior Comms (+1 drm permanente)</strong>.
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. TABLA F4 & REGLAS KAITEN -->
+              <div style="background:#0f172a; border:1px solid #f43f5e; border-radius:6px; padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span id="sch-f4-title" style="font-weight:bold; color:#fda4af; font-size:0.80rem;">🚀 TABLA [F4]: ESCUELA KAITEN (OTSUJIMA)</span>
+                </div>
+                <p id="sch-f4-desc" style="font-size:0.84rem; color:#cbd5e1; margin:0 0 6px 0;">
+                  Ventajas para cada piloto suicida Kaiten [Reglas 4.8.4 &amp; 7.18]:
+                </p>
+                <div style="font-size:0.84rem; color:#e2e8f0; line-height:1.4;">
+                  <div id="sch-f4-b1" style="background:#1e293b; padding:4px 6px; border-radius:4px; margin-bottom:4px; border-left:2px solid #f43f5e;">
+                    <strong style="color:#fda4af;">1. Senninbari:</strong> -3 DRM Arrecifes o -1 Detección de escoltas.
+                  </div>
+                  <div id="sch-f4-b2" style="background:#1e293b; padding:4px 6px; border-radius:4px; margin-bottom:4px; border-left:2px solid #eab308;">
+                    <strong style="color:#fde047;">2. Hachimaki:</strong> Permite repetir cualquier tirada en [K5] o [K6].
+                  </div>
+                  <div id="sch-f4-b3" style="background:#1e293b; padding:4px 6px; border-radius:4px; border-left:2px solid #10b981;">
+                    <strong style="color:#a7f3d0;">3. Ashes of Classmate:</strong> Ataque impacta automáticamente (sin tirar dado).
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Top Grid: Chart F1 (Submarine School at Kure) -->
+          <div style="background:var(--slate-800); border:2px solid var(--gold-600); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <div style="background:var(--navy-900); padding:8px 12px; border-radius:6px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+              <h3 id="f1-main-title" style="margin:0; color:var(--gold-300); font-family:'Cinzel', serif; font-size:1.05rem;">CHART F1: ESCUELA DE SUBMARINOS (KURE)</h3>
+              <span id="f1-navy-label" style="font-size:0.86rem; color:var(--slate-400);">Armada Imperial Japonesa • WW2</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; font-size:0.78rem;">
+              <!-- 1. Captain Course -->
+              <div style="background:var(--slate-900); border:1px solid var(--slate-700); border-radius:6px; padding:10px;">
+                <div id="f1-cap-title" style="font-weight:bold; color:var(--gold-400); margin-bottom:2px;">Capitán (Koshu gakusei)</div>
+                <div id="f1-cap-sub" style="font-size:0.82rem; color:var(--slate-400); font-style:italic; margin-bottom:6px;">Tácticas, Estrategia, Ataques con Torpedos, Navegación...</div>
+                <div id="f1-cap-desc" style="font-size:0.84rem; color:var(--slate-300); line-height:1.4; margin-bottom:8px;">
+                  <strong>Entrenamiento de Torpedos:</strong> Tirar 3 veces en Tabla [B1] a Larga Distancia (2 a 6 en 2d6 / ≤ 6). <a href="javascript:void(0)" onclick="openModalViewer('Chart B1', '', 'B1')" style="color:#ef4444; text-decoration:underline;">Ver Tabla [B1]</a>. Si logras al menos 2 impactos, ganas <em>Torpedo Gunnery</em> (repite 1 fallo por patrulla).
+                </div>
+                <button type="button" id="f1-cap-btn" onclick="rollCaptainTorpedoTraining()" class="action-btn" style="width:100%; border-color:#ef4444; color:#fca5a5; font-size:0.84rem; padding:4px 6px;">
+                  <span id="lbl-f1-torp-btn">🎲 Tirar Prueba de Torpedos (3x)</span>
+                </button>
+                <div style="display:flex; gap:4px; margin-top:4px;">
+                  <button type="button" onclick="setCaptainTorpedoTraining(true)" class="btn-xs" style="flex:1; background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer; font-weight:bold;" title="Superado con dados de mesa"><span id="lbl-f1-torp-pass">✅ Superado (Mesa)</span></button>
+                  <button type="button" onclick="setCaptainTorpedoTraining(false)" class="btn-xs" style="flex:1; background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa"><span id="lbl-f1-torp-fail">❌ Fallo</span></button>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <img src="assets/tokens/Torpedo Gunnery.jpg" alt="Torpedo Gunnery" style="width:34px; height:34px; border-radius:4px; border:1px solid var(--gold-500);" />
+                  <div id="res-f1-cap-torp" data-i18n="statusNotRolled" style="font-size:0.86rem; font-weight:bold; color:var(--slate-300);">Sin tirar</div>
+                </div>
+              </div>
+
+              <!-- 2. XO Course -->
+              <div style="background:var(--slate-900); border:1px solid var(--slate-700); border-radius:6px; padding:10px;">
+                <div id="f1-xo-title" style="font-weight:bold; color:var(--gold-400); margin-bottom:2px;">Segundo Oficial XO (Otsushu)</div>
+                <div id="f1-xo-sub" style="font-size:0.82rem; color:var(--slate-400); font-style:italic; margin-bottom:6px;">Tácticas, Operaciones Submarinas, Inmersión...</div>
+                <div id="f1-xo-desc" style="font-size:0.84rem; color:var(--slate-300); line-height:1.4; margin-bottom:8px;">
+                  <strong>Entrenamiento de Cañón de Cubierta:</strong> Tirar 3 veces en Tabla [B1] a Larga Distancia (2 a 6 en 2d6 / ≤ 6). <a href="javascript:void(0)" onclick="openModalViewer('Chart B1', '', 'B1')" style="color:#ef4444; text-decoration:underline;">Ver Tabla [B1]</a>. Si logras al menos 2 impactos, ganas <em>Deck Gun Expert</em> (tiradas cañón a -1 DRM permanente).
+                </div>
+                <button type="button" id="f1-xo-btn" onclick="rollXODeckGunTraining()" class="action-btn" style="width:100%; border-color:#ef4444; color:#fca5a5; font-size:0.84rem; padding:4px 6px;">
+                  <span id="lbl-f1-gun-btn">🎲 Tirar Prueba de Cañón (3x)</span>
+                </button>
+                <div style="display:flex; gap:4px; margin-top:4px;">
+                  <button type="button" onclick="setXODeckGunTraining(true)" class="btn-xs" style="flex:1; background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer; font-weight:bold;" title="Superado con dados de mesa"><span id="lbl-f1-gun-pass">✅ Superado (Mesa)</span></button>
+                  <button type="button" onclick="setXODeckGunTraining(false)" class="btn-xs" style="flex:1; background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa"><span id="lbl-f1-gun-fail">❌ Fallo</span></button>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <img src="assets/tokens/Deck Gun Expert.jpg" alt="Deck Gun Expert" style="width:34px; height:34px; border-radius:4px; border:1px solid var(--gold-500);" />
+                  <div id="res-f1-xo-gun" data-i18n="statusNotRolled" style="font-size:0.86rem; font-weight:bold; color:var(--slate-300);">Sin tirar</div>
+                </div>
+              </div>
+
+              <!-- 3. Engineer Course -->
+              <div style="background:var(--slate-900); border:1px solid var(--slate-700); border-radius:6px; padding:10px;">
+                <div id="f1-eng-title" style="font-weight:bold; color:var(--gold-400); margin-bottom:2px;">Jefe de Máquinas (Kikan gakusei)</div>
+                <div id="f1-eng-sub" style="font-size:0.82rem; color:var(--slate-400); font-style:italic; margin-bottom:6px;">Ingeniería, Construcción, Trimado y Tácticas</div>
+                <div id="f1-eng-desc" style="font-size:0.84rem; color:var(--slate-300); line-height:1.4; margin-bottom:8px;">
+                  <strong>Entrenamiento de Juicio:</strong> Iniciando con 3 daños de casco, excede Test Depth 3 veces. <a href="javascript:void(0)" onclick="openModalViewer('Tabla [F1]: Escuela de Submarinos de Kure • Reglas [4.8.1] y [8.2.6]', '', 'F1')" style="color:var(--gold-400); text-decoration:underline;">👁️ Ver Tabla [F1] / Regla [8.2.6]</a>. Si ninguna resulta en "implosión", ganas <em>Keen Judgment</em> (inmune al 1.er daño de profundidad).
+                </div>
+                <button type="button" id="f1-eng-btn" onclick="rollEngineerJudgmentTraining()" class="action-btn" style="width:100%; border-color:var(--gold-500); color:var(--gold-300); font-size:0.84rem; padding:4px 6px;">
+                  <span id="lbl-f1-depth-btn">🎲 Tirar Prueba de Profundidad (3x)</span>
+                </button>
+                <div style="display:flex; gap:4px; margin-top:4px;">
+                  <button type="button" onclick="setEngineerJudgmentTraining(true)" class="btn-xs" style="flex:1; background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer; font-weight:bold;" title="Superado con dados de mesa"><span id="lbl-f1-depth-pass">✅ Superado (Mesa)</span></button>
+                  <button type="button" onclick="setEngineerJudgmentTraining(false)" class="btn-xs" style="flex:1; background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa"><span id="lbl-f1-depth-fail">❌ Implosión</span></button>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <img src="assets/tokens/Keen Judgement.jpg" alt="Keen Judgement" style="width:34px; height:34px; border-radius:4px; border:1px solid var(--gold-500);" />
+                  <div id="res-f1-eng-keen" data-i18n="statusNotRolled" style="font-size:0.86rem; font-weight:bold; color:var(--slate-300);">Sin tirar</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spare Time Activities -->
+            <div style="margin-top:14px; background:var(--slate-900); border:1px solid var(--slate-700); border-radius:6px; padding:10px;">
+              <div id="f1-spare-title" style="font-weight:bold; color:var(--gold-400); font-size:0.82rem; margin-bottom:4px;">
+                🥋 Actividades de Tiempo Libre (Elige 1 de las 3 actividades de tiempo libre del Capitán):
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; font-size:0.86rem;">
+                <label style="background:var(--slate-800); border:1px solid var(--slate-700); border-radius:4px; padding:8px; display:flex; gap:6px; cursor:pointer;">
+                  <input type="radio" name="f1-spare-time" value="martial" checked onchange="onSpareTimeChange()">
+                  <div id="f1-spare-opt1">
+                    <strong style="color:var(--gold-300);">1. Entrenamiento en Artes Marciales</strong><br>
+                    Ganas el marcador <strong>"Shibumi"</strong> en Chart [K1]. Permite superar automáticamente 1 tirada de dados por patrulla.
+                  </div>
+                </label>
+
+                <label style="background:var(--slate-800); border:1px solid var(--slate-700); border-radius:4px; padding:8px; display:flex; gap:6px; cursor:pointer;">
+                  <input type="radio" name="f1-spare-time" value="study" onchange="onSpareTimeChange()">
+                  <div id="f1-spare-opt2">
+                    <strong style="color:#93c5fd;">2. Tiempo Extra de Estudio</strong><br>
+                    Graduado con honores. Inicias con <strong>1 "Sub Upgrade" gratis</strong> y <strong>-2 a tu primer intento de ascenso</strong>.
+                  </div>
+                </label>
+
+                <label style="background:var(--slate-800); border:1px solid var(--slate-700); border-radius:4px; padding:8px; display:flex; gap:6px; cursor:pointer;">
+                  <input type="radio" name="f1-spare-time" value="gosei" onchange="onSpareTimeChange()">
+                  <div id="f1-spare-opt3">
+                    <strong style="color:#6ee7b7;">3. Meditación Gosei</strong><br>
+                    Inicias con la ficha-amuleto <strong>"Maneki Neko"</strong> en tu submarino. <strong>Uso único (consumible):</strong> repite cualquier tirada de dados (1d6 o 2d6). Si no se usa en la patrulla, se conserva y acumula.
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Graduation Box -->
+            <div style="margin-top:10px; background:rgba(212,175,55,0.08); border:1px solid var(--gold-600); border-radius:6px; padding:8px 12px; display:flex; align-items:center; gap:12px;">
+              <img src="assets/tokens/Submarine School Badge.jpg" alt="Submarine School Badge" style="width:42px; height:42px; border-radius:6px; border:1px solid var(--gold-500);" />
+              <div id="f1-grad-text" style="font-size:0.86rem; color:var(--slate-300);">
+                <strong style="color:var(--gold-300);">Graduación:</strong> ¡Felicidades! Tú y tu tripulación os habéis graduado en la Escuela de Submarinos de Kure. Se otorga la insignia <strong>Sub Badge</strong> en tu uniforme en Chart [K1].
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Grid: Chart F2 (Midget Sub), Chart F3 (Air School) & Chart F4 (Kaiten School) -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-bottom:16px;">
+
+            <!-- Chart F2: Midget Submarine School -->
+            <div id="card-school-f2" style="background:var(--slate-850, #0f172a); border:2px solid var(--gold-600); border-radius:8px; padding:12px; display:flex; flex-direction:column;">
+              <div style="background:linear-gradient(90deg, #1e3a8a, #0b2545); color:#fff; padding:8px 12px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                <h4 id="f2-main-title" style="margin:0; font-size:0.92rem; color:var(--gold-300); display:flex; align-items:center; gap:6px;">
+                  <span>🤿</span> <span>TABLA [F2]: ESCUELA DE MINISUBMARINOS KO-HYOTEKI</span>
+                </h4>
+                <span id="f2-avail-badge" style="font-size:0.84rem; font-weight:bold; background:#334155; color:#94a3b8; padding:2px 8px; border-radius:4px;">Adiestramiento Opcional</span>
+              </div>
+              <div id="f2-body-content" style="font-size:0.76rem; line-height:1.45; color:#f8fafc;">
+                <div style="margin-bottom:8px; background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px;">
+                  <div id="f2-item1-desc"><strong style="color:var(--gold-300);">1. Adiestramiento de Torpedos:</strong> 3 tiradas a larga distancia en [B1]. <a href="javascript:void(0)" onclick="openModalViewer('Chart B1', '', 'B1')" style="color:#ef4444; text-decoration:underline;">Ver B1</a>. Si ≥ 2 impactos ➔ <em>Midget Torpedo Gunnery</em>.</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                    <div style="display:flex; gap:4px; align-items:center;">
+                    <button type="button" id="f2-btn-torp" onclick="rollF2Torpedo()" class="action-btn" style="padding:3px 8px; font-size:0.84rem; border-color:#ef4444; color:#fca5a5;">🎲 Tirar</button>
+                    <button type="button" onclick="setF2Torpedo(true)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Superado con dados de mesa">✅</button>
+                    <button type="button" onclick="setF2Torpedo(false)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa">❌</button>
+                  </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <img src="assets/tokens/Midget Torpedo Gunnery.jpg" alt="Midget Torp" style="width:26px; height:26px; border-radius:3px;" />
+                      <span id="res-f2-torp" data-i18n="statusNotRolled" style="color:#f8fafc; font-weight:bold;">Sin tirar</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-bottom:8px; background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px;">
+                  <div id="f2-item2-desc"><strong style="color:var(--gold-300);">2. Comunicaciones:</strong> 2 tiradas en Sub Recovery [M7]. Si no hay fallo ➔ <em>Superior Comms (+1 drm)</em>.</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                    <div style="display:flex; gap:4px; align-items:center;">
+                    <button type="button" id="f2-btn-comms" onclick="rollF2Comms()" class="action-btn" style="padding:3px 8px; font-size:0.84rem; border-color:#38bdf8; color:#38bdf8;">🎲 Tirar</button>
+                    <button type="button" onclick="setF2Comms(true)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Superado con dados de mesa">✅</button>
+                    <button type="button" onclick="setF2Comms(false)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa">❌</button>
+                  </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <img src="assets/tokens/Superior Comms.jpg" alt="Superior Comms" style="width:26px; height:26px; border-radius:3px;" />
+                      <span id="res-f2-comms" data-i18n="statusNotRolled" style="color:#f8fafc; font-weight:bold;">Sin tirar</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px;">
+                  <div id="f2-item3-desc"><strong style="color:var(--gold-300);">3. Maniobra en Redes y Barca:</strong> 3 tiradas en Redes [M5]. Si ninguna es 2–4 ➔ <em>Boat Handling (4 = A través de la red)</em>.</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                    <div style="display:flex; gap:4px; align-items:center;">
+                    <button type="button" id="f2-btn-net" onclick="rollF2Net()" class="action-btn" style="padding:3px 8px; font-size:0.84rem; border-color:#10b981; color:#a7f3d0;">🎲 Tirar</button>
+                    <button type="button" onclick="setF2Net(true)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Superado con dados de mesa">✅</button>
+                    <button type="button" onclick="setF2Net(false)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Fallo con dados de mesa">❌</button>
+                  </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <img src="assets/tokens/Boat Handling.jpg" alt="Boat Handling" style="width:26px; height:26px; border-radius:3px;" />
+                      <span id="res-f2-net" data-i18n="statusNotRolled" style="color:#f8fafc; font-weight:bold;">Sin tirar</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart F3: Kasumigaura Naval Air School -->
+            <div id="card-school-f3" style="background:var(--slate-850, #0f172a); border:2px solid #0284c7; border-radius:8px; padding:12px; display:flex; flex-direction:column;">
+              <div style="background:linear-gradient(90deg, #0369a1, #075985); color:#fff; padding:8px 12px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                <h4 id="f3-main-title" style="margin:0; font-size:0.92rem; color:#bae6fd; display:flex; align-items:center; gap:6px;">
+                  <span>✈️</span> <span>TABLA [F3]: ESCUELA NAVAL DE AVIACIÓN DE KASUMIGAURA</span>
+                </h4>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button type="button" id="f3-btn-roll" class="btn-dice" onclick="rollRandomF3Skills()" style="padding:2px 8px; font-size:0.84rem;">
+                    🎲 Tirar al Azar (2 Opciones)
+                  </button>
+                  <span id="f3-avail-badge" style="font-size:0.84rem; font-weight:bold; background:#334155; color:#94a3b8; padding:2px 8px; border-radius:4px;">Sin Hidroavión</span>
+                </div>
+              </div>
+              <div id="f3-options-container" style="font-size:0.76rem; line-height:1.45; color:#f8fafc; transition:opacity 0.2s ease;">
+                <div id="f3-choose-text" style="margin-bottom:10px; color:#e2e8f0; font-weight:bold;">Elige exactamente 2 habilidades para tu dotación aérea:</div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <label style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="chk-f3-weap" onchange="validateF3Checkboxes(this)" style="width:16px; height:16px;" />
+                    <img src="assets/tokens/Weapons Expert.jpg" style="width:26px; height:26px; border-radius:3px;" />
+                    <span id="f3-desc-weap"><strong style="color:var(--gold-300);">Weapons Expert:</strong> Bombardeo a +1. Ametralladora trasera a -1 to-hit.</span>
+                  </label>
+                  <label style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="chk-f3-maint" onchange="validateF3Checkboxes(this)" style="width:16px; height:16px;" />
+                    <img src="assets/tokens/Aircraft Maint.jpg" style="width:26px; height:26px; border-radius:3px;" />
+                    <span id="f3-desc-maint"><strong style="color:var(--gold-300);">Flawless Maintenance:</strong> Repite cualquier fallo de avería (Mishap/Malfunction) 1 vez por misión.</span>
+                  </label>
+                  <label style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="chk-f3-acm" onchange="validateF3Checkboxes(this)" style="width:16px; height:16px;" />
+                    <img src="assets/tokens/ACM.jpg" style="width:26px; height:26px; border-radius:3px;" />
+                    <span id="f3-desc-acm"><strong style="color:var(--gold-300);">Air Combat Maneuvering (ACM):</strong> El primer daño recibido en combate aéreo se reduce en 1 punto.</span>
+                  </label>
+                  <label style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="chk-f3-nav" onchange="validateF3Checkboxes(this)" style="width:16px; height:16px;" />
+                    <img src="assets/tokens/Aerial Navigation.jpg" style="width:26px; height:26px; border-radius:3px;" />
+                    <span id="f3-desc-nav"><strong style="color:var(--gold-300);">Aerial Navigation:</strong> +1 drm a la tirada de recuperación con el submarino nodriza.</span>
+                  </label>
+                </div>
+              </div>
+              <div id="f3-no-plane-notice" style="display:none; margin-top:10px; padding:8px 12px; background:rgba(239, 68, 68, 0.12); border:1px solid #ef4444; border-radius:6px; color:#fca5a5; font-size:0.75rem; line-height:1.4;">
+                <span>⚠️</span> <span id="f3-no-plane-msg"><strong>No Aplica [Regla 4.8.3]:</strong> Tu buque actual no dispone de hidroavión ni hangar embarcado. Esta escuela sólo aplica a submarinos dotados de aviación (p. ej. Tipo B, I-9, I-400).</span>
+              </div>
+            </div>
+
+            <!-- Chart F4: Otsujima Kaiten Training School -->
+            <div id="card-school-f4" style="background:var(--slate-850, #0f172a); border:2px solid #e11d48; border-radius:8px; padding:12px; display:flex; flex-direction:column;">
+              <div style="background:linear-gradient(90deg, #9f1239, #881337); color:#fff; padding:8px 12px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <h4 id="f4-main-title" style="margin:0; font-size:0.92rem; color:#fecdd3; display:flex; align-items:center; gap:6px;">
+                  <span>🚀</span> <span>TABLA [F4]: ESCUELA DE ADIESTRAMIENTO KAITEN DE OTSUJIMA</span>
+                </h4>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button type="button" id="f4-btn-roll" class="btn-dice" onclick="rollRandomF4Benefits()" style="padding:2px 8px; font-size:0.84rem; background:#be123c; border-color:#fda4af;">
+                    🎲 Tirar Aleatorio (1d3)
+                  </button>
+                  <span id="f4-avail-badge" style="font-size:0.84rem; font-weight:bold; background:#334155; color:#94a3b8; padding:2px 8px; border-radius:4px;">Sin Kaiten</span>
+                </div>
+              </div>
+              <div style="font-size:0.76rem; line-height:1.45; color:#f8fafc;">
+                <!-- Historical Rules context box -->
+                <div style="background:#0f172a; border:1px solid #475569; border-radius:6px; padding:8px 10px; margin-bottom:10px; font-size:0.84rem; line-height:1.4;">
+                  <div id="f4-when-title" style="color:#fecdd3; font-weight:bold; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
+                    <span>ℹ️</span> <span>¿CUÁNDO APLICA ESTA ESCUELA? [Reglas 4.8.4 &amp; 7.18]:</span>
+                  </div>
+                  <div id="f4-req-text" style="color:#cbd5e1; margin-bottom:4px;">
+                    • <strong>Requisito de Buque:</strong> Aplica únicamente cuando tu submarino esté configurado para transportar torpedos suicidas <em>Kaiten</em> (disponibles desde finales de 1944 / 1945 en submarinos convertidos como Tipo B, Tipo C o Kaidai, y asignado a una Misión Especial Kaiten contra Ulithi, Iwo Jima u Okinawa).
+                  </div>
+                  <div id="f4-pilot-note" style="color:#fda4af;">
+                    • <strong>Pilotos Suicidas de Un Solo Uso:</strong> Al ser misiones kamikaze sin retorno, todos los operadores perecen tras el ataque. Por ello, se eligen o tiran nuevos beneficios antes de cada Patrulla con Kaiten.
+                  </div>
+                </div>
+
+                <div id="f4-options-container" style="background:var(--navy-900, #071220); border:1px solid #334155; padding:8px 10px; border-radius:6px; transition:opacity 0.2s ease;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:4px;">
+                    <span id="f4-slots-header" style="color:#fecdd3; font-weight:bold;">4–6 Kaiten a bordo • Elige beneficio por piloto [Regla 4.8.4]:</span>
+                    <button type="button" id="f4-btn-preset" onclick="setPresetF4Benefits()" style="background:none; border:1px solid #fda4af; color:#fda4af; font-size:0.82rem; padding:1px 6px; border-radius:3px; cursor:pointer;">Preset Óptimo</button>
+                  </div>
+                  <div id="f4-pilot-slots-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap:6px;">
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p1-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 1:</span>
+                      <select id="sel-f4-pilot-1" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari">1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki">2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes">3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p2-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 2:</span>
+                      <select id="sel-f4-pilot-2" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari">1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki" selected>2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes">3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p3-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 3:</span>
+                      <select id="sel-f4-pilot-3" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari">1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki">2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes" selected>3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p4-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 4:</span>
+                      <select id="sel-f4-pilot-4" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari" selected>1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki">2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes">3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p5-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 5:</span>
+                      <select id="sel-f4-pilot-5" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari">1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki" selected>2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes">3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                    <div style="background:#0f172a; padding:4px 6px; border-radius:4px; border:1px solid #334155;">
+                      <span id="f4-p6-lbl" style="font-weight:bold; color:#fda4af; font-size:0.84rem;">🚀 Piloto 6:</span>
+                      <select id="sel-f4-pilot-6" onchange="syncF4ToK1()" class="custom-select" style="font-size:0.84rem; padding:2px 4px; width:100%; margin-top:2px; background:#1e293b; color:#f8fafc; border:1px solid #475569;">
+                        <option value="senninbari">1. Senninbari (-3 Arrecife / -1 Det.)</option>
+                        <option value="hachimaki">2. Hachimaki (Repetir Tirada)</option>
+                        <option value="ashes" selected>3. Ashes (Impacto Automático)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div id="f4-no-kaiten-notice" style="display:none; margin-top:10px; padding:8px 12px; background:rgba(239, 68, 68, 0.12); border:1px solid #ef4444; border-radius:6px; color:#fca5a5; font-size:0.75rem; line-height:1.4;">
+                  <span>⚠️</span> <span id="f4-no-kaiten-msg"><strong>No Aplica [Reglas 4.8.4 &amp; 7.18]:</strong> Tu buque no admite instalación de torpedos Kaiten. Esta escuela sólo aplica a buques con capacidad Kaiten (ej. Kaidai KD6/KD7, Tipo B, Tipo C, Junsen J3).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-bar-nav" style="margin-top:20px;">
+            <button class="btn-step-prev" onclick="setWorkflowPhase(0)">
+              ◀ <span id="pschool-btn-prev">Volver a Submarino</span>
+            </button>
+            <button class="btn-step-next" id="btn-school-complete" onclick="completeTrainingAndProceedToPatrol()">
+              <span id="pschool-btn-next">🎖️ Completar Adiestramiento y Pasar a Zarpe (Fase 1) ➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- =================== FASE 1: ZARPE Y ASIGNACIÓN =================== -->

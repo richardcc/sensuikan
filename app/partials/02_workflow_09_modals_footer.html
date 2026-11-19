@@ -1,0 +1,542 @@
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: SUBMARINE UPGRADE & REPLACEMENT [RULES 9.2 & 9.3]
+         ==================================================================== -->
+    <div id="modal-sub-upgrade" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
+      <div style="background:var(--navy-900, #071220); border:2px solid var(--gold-500, #c5a059); border-radius:12px; max-width:760px; width:100%; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.9); color:#f1f5f9; overflow:hidden;">
+        
+        <!-- HEADER -->
+        <div style="padding:14px 18px; border-bottom:1px solid #334155; display:flex; justify-content:space-between; align-items:center; background:#0f172a;">
+          <h3 style="margin:0; font-size:1.08rem; color:var(--gold-300, #fde047); display:flex; align-items:center; gap:8px;">
+            <span>⚓</span>
+            <span id="sub-upgrade-modal-title">MEJORA / REASIGNACIÓN DE SUBMARINO [REGLAS 9.2 Y 9.3]</span>
+          </h3>
+          <button type="button" onclick="closeSubUpgradeModal()" class="action-btn" style="padding:2px 8px; font-size:0.9rem; border-color:#64748b; color:#94a3b8;">✕</button>
+        </div>
+
+        <!-- BODY (SCROLLABLE) -->
+        <div style="padding:16px 18px; overflow-y:auto; flex:1; font-size:0.86rem;">
+          <!-- REASON & CONTEXT BANNER -->
+          <div id="sub-upgrade-reason-banner" style="background:rgba(56,189,248,0.1); border:1px solid #0284c7; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+          </div>
+
+          <!-- CURRENT STATUS STRIP -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:14px; background:#071b2d; padding:10px; border-radius:8px; border:1px solid #1e293b;">
+            <div>
+              <span id="lbl-upg-date" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase;">Fecha Patrulla:</span><br>
+              <strong id="sub-upgrade-current-date" style="color:#38bdf8; font-size:0.95rem;">Dic-1941</strong>
+            </div>
+            <div>
+              <span id="lbl-upg-sub" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase;">Buque Actual:</span><br>
+              <strong id="sub-upgrade-current-sub" style="color:var(--gold-300); font-size:0.95rem;">Type B Class</strong>
+            </div>
+            <div>
+              <span id="lbl-upg-rank" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase;">Rango Comandante:</span><br>
+              <strong id="sub-upgrade-current-rank" style="color:#a7f3d0; font-size:0.95rem;">Lt Cdr (少佐)</strong>
+            </div>
+            <div>
+              <span id="lbl-upg-token" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase;">Fichas Sub Upgrade:</span><br>
+              <strong id="sub-upgrade-token-status" style="color:#fde047; font-size:0.95rem;">1 Disponible</strong>
+            </div>
+          </div>
+
+          <!-- SUBMARINE SELECTION FORM -->
+          <div style="margin-bottom:14px;">
+            <label id="lbl-upg-select" style="font-weight:bold; color:var(--gold-300); display:block; margin-bottom:6px;">
+              Selecciona el Nuevo Modelo de Submarino:
+            </label>
+            <select id="sub-upgrade-select" class="flow-select" onchange="onSubUpgradeSelectChange()" style="width:100%; padding:8px 10px; font-size:0.9rem; background:#071220; border:1px solid #475569; border-radius:6px; color:#fff;">
+            </select>
+            <div id="sub-upgrade-rank-warning" style="display:none; color:#ef4444; font-size:0.80rem; margin-top:4px; font-weight:bold;">
+              🔒 Requiere rango Commander (Cdr / 中佐) o superior para comisionar este buque [Regla 9.3].
+            </div>
+          </div>
+
+          <!-- SPECS PREVIEW BOX -->
+          <div id="sub-upgrade-preview" style="background:#0f172a; border:1px solid #334155; border-radius:8px; padding:12px; margin-bottom:14px;">
+          </div>
+
+          <!-- HULL NUMBER ASSIGNMENT -->
+          <div style="background:#071b2d; border:1px solid #1e293b; border-radius:8px; padding:12px;">
+            <label id="lbl-upg-hull" style="font-weight:bold; color:var(--gold-300); display:block; margin-bottom:4px;">
+              Identificador / Número de Casco Asignado:
+            </label>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <input type="text" id="sub-upgrade-hull-input" class="flow-input" style="flex:1; padding:7px 10px; font-size:0.9rem; background:#071220; border:1px solid #475569; border-radius:6px; color:#fff;" placeholder="Ej: I-400">
+              <div id="sub-upgrade-hull-suggestions" style="display:flex; gap:4px; flex-wrap:wrap;">
+              </div>
+            </div>
+            <span id="lbl-upg-hull-note" style="font-size:0.76rem; color:#94a3b8; margin-top:4px; display:block;">
+              Puedes introducir cualquier numeral histórico IJN para este buque.
+            </span>
+          </div>
+        </div>
+
+        <!-- FOOTER ACTIONS -->
+        <div style="padding:12px 18px; border-top:1px solid #334155; display:flex; justify-content:flex-end; gap:10px; background:#0f172a;">
+          <button type="button" onclick="closeSubUpgradeModal()" class="action-btn" style="padding:6px 14px; font-size:0.86rem; border-color:#64748b; color:#cbd5e1;">
+            Cancelar
+          </button>
+          <button type="button" id="sub-upgrade-confirm-btn" onclick="confirmSubUpgrade()" class="action-btn" style="padding:6px 16px; font-size:0.88rem; background:linear-gradient(135deg, #059669, #10b981); border-color:#10b981; color:#fff; font-weight:bold;">
+            ⚓ Comisionar Buque
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: WORKFLOW Y GUÍA TÁCTICA DE ATAQUE AÉREO EN PATRULLA [REGLA 8.3]
+         ==================================================================== -->
+    <div id="modal-air-workflow" onclick="if(event.target===this)closeAirEncounterWorkflowModal();" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(6px);">
+      <div style="position:relative; max-width:980px; width:100%; max-height:92vh; background:linear-gradient(170deg, #0f172a 0%, #1e1b4b 40%, #090d16 100%); border:2px solid #ef4444; border-radius:12px; padding:20px; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.95), 0 0 30px rgba(239,68,68,0.25);">
+        
+        <!-- HEADER -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid rgba(239,68,68,0.4); padding-bottom:12px; margin-bottom:14px; gap:12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <h3 style="margin:0; color:#fca5a5; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
+                <span>✈️</span> <span>PROCEDIMIENTO TÁCTICO: ATAQUE AÉREO EN PATRULLA</span>
+              </h3>
+              <span style="background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fecaca; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLA OFICIAL 8.3</span>
+            </div>
+            <div style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+              Protocolo completo de combate aeronaval: Detección [A3], Inmersión Obligatoria [A4], Defensa Antiaérea [A2], Torpedo FIDO (5/44+) [8.3.3], Bombardeo [B5] y Acoso [8.3.4].
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">✕ Cerrar</button>
+          </div>
+        </div>
+
+        <!-- SCROLLABLE CONTENT BODY -->
+        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+          
+          <!-- RESUMEN OPERATIVO -->
+          <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+            <strong style="color:#fde047;">⚡ Alerta de Combate (Regla 8.3.1):</strong> Al obtener <span style="color:#f87171; font-weight:bold;">Aircraft</span> en la tirada de encuentro de la <strong>Tabla [A3]</strong>, un avión enemigo en patrulla antisubmarina ha localizado al buque. <strong>No existe la opción de permanecer en superficie</strong>: el Comandante ordena zafarrancho de inmersión rápida (*Crash Dive*) obligatorio en la Tabla [A4]. La defensa antiaérea [A2] solo se activa de forma simultánea si la inmersión falla (resultado &le; 5 en [A4]).
+          </div>
+
+          <!-- PASO 1: INMERSIÓN DE EMERGENCIA (TABLA A4) -->
+          <div style="background:#0b1329; border:1px solid #22c55e; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#4ade80; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#16a34a; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">1</span>
+                <span>Tirada Obligatoria de Inmersión de Emergencia [Regla 8.3.1 & Tabla A4]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#86efac; background:rgba(34,197,94,0.2); padding:2px 8px; border-radius:4px; border:1px solid #22c55e;">Crash Dive (2d6)</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Todo encuentro aéreo exige tirada obligatoria de inmersión rápida. Se lanzan <strong>2d6</strong> en la <strong>Tabla [A4]</strong> con los modificadores oficiales (DRM):
+            </p>
+            
+            <!-- TABLA DRM A4 -->
+            <div style="background:#071220; border:1px solid #334155; border-radius:6px; padding:8px 12px; margin-bottom:10px;">
+              <div style="font-size:0.78rem; font-weight:bold; color:var(--gold-300); margin-bottom:6px;">📅 Modificadores Oficiales por Año (DRM):</div>
+              <div style="display:grid; grid-template-columns: repeat(4, 1fr); text-align:center; gap:6px; font-size:0.78rem; margin-bottom:8px;">
+                <div style="background:#1e293b; padding:4px; border-radius:4px; border:1px solid #475569;"><span style="color:#94a3b8;">1941:</span> <strong style="color:#4ade80;">+2</strong></div>
+                <div style="background:#1e293b; padding:4px; border-radius:4px; border:1px solid #475569;"><span style="color:#94a3b8;">1942:</span> <strong style="color:#4ade80;">+1</strong></div>
+                <div style="background:#1e293b; padding:4px; border-radius:4px; border:1px solid #475569;"><span style="color:#94a3b8;">1943:</span> <strong style="color:#cbd5e1;">0</strong></div>
+                <div style="background:#1e293b; padding:4px; border-radius:4px; border:1px solid #475569;"><span style="color:#f87171;">1944+:</span> <strong style="color:#f87171;">-1</strong></div>
+              </div>
+              <div style="font-size:0.75rem; color:#94a3b8; line-height:1.4;">
+                <strong style="color:#cbd5e1;">Tripulación y Buque:</strong> Dotación Élite: <span style="color:#4ade80;">+1</span> • Novata (Green): <span style="color:#f87171;">-1</span> • Toda tripulación herida (SW/KIA): <span style="color:#f87171;">-1</span> • Radar aéreo operativo: <span style="color:#4ade80;">+1</span> • Planos inmersión averiados: <span style="color:#f87171;">-1</span> • Noche: <span style="color:#4ade80;">+1</span> • Minado Especial: <span style="color:#f87171;">-1</span>
+              </div>
+            </div>
+
+            <!-- RESULTADOS A4 -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+              <div style="background:rgba(22,163,74,0.15); border:1px solid #16a34a; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#4ade80; font-size:0.82rem;">Tirada Final &ge; 6</div>
+                <div style="font-size:0.80rem; font-weight:700; color:#fff; margin:2px 0;">¡Inmersión Exitosa!</div>
+                <div style="font-size:0.74rem; color:#cbd5e1;">El submarino alcanza cota profunda a salvo. <strong>NO HAY COMBATE</strong>: no hay bombas ni fuego AA. Fin del encuentro.</div>
+              </div>
+              <div style="background:rgba(245,158,11,0.15); border:1px solid #f59e0b; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#fbbf24; font-size:0.82rem;">Tirada Final 2 a 5</div>
+                <div style="font-size:0.80rem; font-weight:700; color:#fff; margin:2px 0;">1 Ataque Aéreo</div>
+                <div style="font-size:0.74rem; color:#cbd5e1;">El avión ataca antes de culminar la inmersión. <strong>Pasa a Paso 2 (Comprobación FIDO) y Paso 3 (Fuego AA)</strong>.</div>
+              </div>
+              <div style="background:rgba(239,68,68,0.18); border:1px solid #ef4444; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#f87171; font-size:0.82rem;">Tirada Final &le; 1</div>
+                <div style="font-size:0.80rem; font-weight:700; color:#fff; margin:2px 0;">2 Ataques Aéreos</div>
+                <div style="font-size:0.74rem; color:#cbd5e1;">Sorprendido en superficie: 2 pasadas consecutivas de ataque. <strong>Pasa a Paso 2 (Comprobación FIDO) y Paso 3 (Fuego AA)</strong>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 2: COMPROBACIÓN DE TORPEDO ACÚSTICO "FIDO" -->
+          <div style="background:#0b1329; border:1px solid #38bdf8; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#38bdf8; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#0284c7; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">2</span>
+                <span>Comprobación de Arma Especial: Torpedo Acústico "FIDO" [Regla 8.3.2 & 8.3.3]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#bae6fd; background:rgba(56,189,248,0.2); padding:2px 8px; border-radius:4px; border:1px solid #38bdf8;">Solo Mayo de 1944+ (1d6)</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              A partir de la fecha histórica <strong>Mayo de 1944 (5/44+)</strong>, por cada ataque aéreo que realice el avión enemigo se lanza <strong>1d6</strong> para determinar el arma utilizada (Regla 8.3.2):
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div style="background:rgba(15,23,42,0.6); border:1px solid #475569; border-radius:6px; padding:10px;">
+                <div style="color:#94a3b8; font-weight:bold; font-size:0.85rem; margin-bottom:4px;">Tirada 1 a 5: Bombardeo Convencional</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  El avión utiliza bombas y cargas de profundidad. Pasa al <strong>Paso 3 (Fuego AA) y Paso 4A (Tabla B5 con +2 DRM y 1 baja de dotación en B7)</strong>.
+                </div>
+              </div>
+              <div style="background:rgba(56,189,248,0.15); border:1px solid #38bdf8; border-radius:6px; padding:10px;">
+                <div style="color:#38bdf8; font-weight:bold; font-size:0.85rem; margin-bottom:4px;">Tirada 6: ¡Ataque con Torpedo Acústico FIDO!</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  ¡El avión despliega un torpedo acústico Mark 24! Se salta la Tabla [B5] y pasa directamente al <strong>Paso 4B (Tabla de Efectos FIDO)</strong>.
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:8px; font-size:0.75rem; color:#94a3b8; background:rgba(0,0,0,0.3); padding:6px 10px; border-radius:4px;">
+              ℹ️ <em>Nota cronológica: Si la patrulla transcurre entre 1941 y Abril de 1944 (antes de 5/44), la comprobación FIDO está inactiva y todo ataque aéreo es convencional (Paso 4A).</em>
+            </div>
+          </div>
+
+          <!-- PASO 3: FUEGO ANTIAÉREO DEFENSIVO SIMULTÁNEO -->
+          <div style="background:#0b1329; border:1px solid #f59e0b; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#fbbf24; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#d97706; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">3</span>
+                <span>Fuego Antiaéreo Defensivo Simultáneo [Reglas 8.3.2, 8.3.5 & Tabla A2]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#fde047; background:rgba(245,158,11,0.2); padding:2px 8px; border-radius:4px; border:1px solid #f59e0b;">Tirada 2d6 simultánea</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Si la inmersión falló (resultado &le; 5 en [A4]), los artilleros disparan los montajes antiaéreos en la <strong>Tabla [A2]</strong> simultáneamente con el ataque del avión:
+            </p>
+            <!-- Modificadores AA -->
+            <div style="background:#071220; border:1px solid #334155; border-radius:6px; padding:6px 10px; font-size:0.75rem; color:#cbd5e1; margin-bottom:10px;">
+              <strong style="color:#fde047;">🎯 Modificadores Oficiales de Fuego AA (Regla 8.3.5):</strong> 
+              &ge; 2 Cañones AA operativos: <span style="color:#4ade80; font-weight:bold;">-1 DRM</span> • &ge; 3 Cañones AA operativos: <span style="color:#4ade80; font-weight:bold;">-2 DRM</span> • Dotación Veterana o Élite: <span style="color:#4ade80; font-weight:bold;">-1 DRM</span>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; text-align:center;">
+              <div style="background:rgba(34,197,94,0.15); border:1px solid #22c55e; border-radius:6px; padding:8px;">
+                <div style="font-weight:bold; color:#4ade80; font-size:0.82rem;">Shot Down (Derribado)</div>
+                <div style="font-size:0.74rem; color:#cbd5e1; margin-top:2px;">El avión es destruido en el aire. <strong>Cancela el 2.º ataque aéreo</strong> si estaba pendiente por tirada &le; 1 en [A4]. Otorga puntos de victoria.</div>
+              </div>
+              <div style="background:rgba(245,158,11,0.15); border:1px solid #f59e0b; border-radius:6px; padding:8px;">
+                <div style="font-weight:bold; color:#fbbf24; font-size:0.82rem;">Damaged (Dañado)</div>
+                <div style="font-size:0.74rem; color:#cbd5e1; margin-top:2px;">El avión sufre impactos graves. Si tenía un 2.º ataque pendiente lo completa, pero luego se retira sin poder seguir acosando.</div>
+              </div>
+              <div style="background:rgba(239,68,68,0.15); border:1px solid #ef4444; border-radius:6px; padding:8px;">
+                <div style="font-weight:bold; color:#f87171; font-size:0.82rem;">Miss (Fallo)</div>
+                <div style="font-size:0.74rem; color:#cbd5e1; margin-top:2px;">Sin daños para el avión. Completa todas sus pasadas de ataque con total impunidad.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 4: RESOLUCIÓN DE DAÑOS (CONVENCIONAL O FIDO) -->
+          <div style="background:#0b1329; border:1px solid #ef4444; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#f87171; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#dc2626; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">4</span>
+                <span>Resolución de Daños del Ataque Aéreo (Convencional o FIDO)</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#fca5a5; background:rgba(239,68,68,0.2); padding:2px 8px; border-radius:4px; border:1px solid #ef4444;">Tabla [B5] o FIDO</span>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <!-- 4A: BOMBAS CONVENCIONALES -->
+              <div style="background:rgba(239,68,68,0.12); border:1px solid #ef4444; border-radius:6px; padding:10px;">
+                <div style="color:#fca5a5; font-weight:bold; font-size:0.85rem; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>🎯</span> <span>4A. Bombardeo Convencional [Tabla B5]</span>
+                </div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; display:flex; flex-direction:column; gap:6px;">
+                  <div>• <strong>Tirada en [B5] con +2 DRM:</strong> Se lanzan 2d6 sumando obligatoriamente <strong>+2 al resultado</strong> por bombardeo aéreo en picado (Regla 8.3.2).</div>
+                  <div>• <strong>Daños del Buque:</strong> Se aplican impactos de casco (*Hull Damage*), inundaciones (*Flooding*) o sistemas averiados/inoperativos.</div>
+                  <div>• <strong>1 Herida de Dotación [Tabla B7]:</strong> Un ataque aéreo convencional siempre causa <strong>1 baja de tripulación</strong>. Se tira en [B7] para determinar tripulante y gravedad (SW o KIA).</div>
+                </div>
+              </div>
+
+              <!-- 4B: TORPEDO FIDO -->
+              <div style="background:rgba(56,189,248,0.12); border:1px solid #38bdf8; border-radius:6px; padding:10px;">
+                <div style="color:#38bdf8; font-weight:bold; font-size:0.85rem; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>⚡</span> <span>4B. Torpedo Acústico FIDO [Regla 8.3.3]</span>
+                </div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; display:flex; flex-direction:column; gap:6px;">
+                  <div style="color:#86efac;">• <strong>Sin herida de dotación:</strong> El ataque acústico no causa la herida automática de tripulación de la Regla 8.3.2.</div>
+                  <div>• <strong>Tirada de Impacto FIDO (1d6):</strong></div>
+                  <div style="background:#071220; padding:6px; border-radius:4px; font-size:0.76rem; border:1px solid #1e293b;">
+                    <div><strong style="color:#f87171;">Dado = 1:</strong> HUNDIDO (*Sunk*). El submarino es destruido.</div>
+                    <div><strong style="color:#fbbf24;">Dado = 2:</strong> 7 IMPACTOS (*7 Hits*). Daños masivos en casco.</div>
+                    <div><strong style="color:#4ade80;">Dado = 3 - 6:</strong> FALLO / DEFECTUOSO (*Miss / Dud*). Sin daños.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 5: ACOSO AÉREO Y BARRENADO -->
+          <div style="background:#0b1329; border:1px solid #a855f7; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#c084fc; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#7e22ce; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">5</span>
+                <span>Acoso Aéreo y Barrenado ("Hunted to Exhaustion") [Regla 8.3.4]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#d8b4fe; background:rgba(168,85,247,0.2); padding:2px 8px; border-radius:4px; border:1px solid #a855f7;">Límite 4 Encuentros</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 6px 0; line-height:1.4;">
+              Si el avión no fue derribado y el submarino permanece en el área de combate o sufre averías críticas que le impiden sumergirse (planos de inmersión, bombas o baterías):
+            </p>
+            <div style="background:rgba(126,34,206,0.15); border:1px solid #9333ea; border-radius:6px; padding:10px; font-size:0.80rem; color:#e9d5ff; line-height:1.45;">
+              <strong>⚠️ Barrenado Forzoso por Doctrina Naval (Regla 8.3.4):</strong> La aviación enemiga mantiene el cerco sobre el buque convocando más patrullas. Si en el ciclo de rondas adicionales se acumulan <strong>4 encuentros combinados con aviones o escoltas</strong>, el submarino es considerado <strong>"Hunted to Exhaustion"</strong>: con baterías totalmente descargadas y aire no respirable, el Comandante está obligado por doctrina a emerger y <strong>barrenar y echar a pique el submarino (*Scuttle*)</strong> para impedir su captura.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FOOTER ACTIONS -->
+        <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(239,68,68,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button type="button" onclick="openModalViewer('Tablas B1 a B6 (Combate y Ataque Aéreo)', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span>Ver Tabla [B5] en Visor Oficial</span>
+            </button>
+            <button type="button" onclick="openModalViewer('Tabla [B7]: Heridas de Tripulación', '', 'B7')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#f59e0b; color:#fde047; background:rgba(245,158,11,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🩸</span> <span>Ver Tabla [B7]</span>
+            </button>
+          </div>
+          <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#1e293b; border-color:#64748b; color:#e2e8f0; font-weight:bold;">
+            <span>✓</span> <span>Entendido (Cerrar)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: WORKFLOW Y GUÍA TÁCTICA DE ATAQUE NAVAL EN PATRULLA [REGLAS 8.1 - 8.2]
+         ==================================================================== -->
+    <div id="modal-ship-workflow" onclick="if(event.target===this)closeShipEncounterWorkflowModal();" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(6px);">
+      <div style="position:relative; max-width:980px; width:100%; max-height:92vh; background:linear-gradient(170deg, #091a14 0%, #064e3b 35%, #0f172a 100%); border:2px solid #10b981; border-radius:12px; padding:20px; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.95), 0 0 30px rgba(16,185,129,0.25);">
+        
+        <!-- HEADER -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:12px; margin-bottom:14px; gap:12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <h3 style="margin:0; color:#a7f3d0; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
+                <span>🚢</span> <span id="modal-ship-title">PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA</span>
+              </h3>
+              <span id="modal-ship-rule-badge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#a7f3d0; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLAS OFICIALES 8.1 - 8.2</span>
+            </div>
+            <div id="modal-ship-subtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+              Protocolo completo de combate de superficie y submarino: Detección [A3/T1-T5], Modo y Distancia [8.1.3-8.1.10], Solución de Torpedos [B1/B2/B3], Daño al Objetivo [B4] y Contraataque de Escoltas [B5].
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.2);">✕ Cerrar</button>
+          </div>
+        </div>
+
+        <!-- SCROLLABLE CONTENT BODY -->
+        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+          
+          <!-- RESUMEN OPERATIVO -->
+          <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-left:4px solid #10b981; border-radius:6px; padding:10px 14px; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
+            <strong style="color:#6ee7b7;">⚡ Alerta de Combate Naval:</strong> Al obtener el resultado <span style="color:#34d399; font-weight:bold;">Ship</span>, <span style="color:#38bdf8; font-weight:bold;">Two Ships</span>, <span style="color:#fbbf24; font-weight:bold;">Ship Group</span>, <span style="color:#f87171; font-weight:bold;">Warship</span> o <span style="color:#c084fc; font-weight:bold;">Capital Ship</span> en la tirada de encuentro de la <strong>Tabla [A3]</strong>, el submarino ha interceptado tráfico marítimo enemigo. El Comandante debe ejecutar la siguiente secuencia táctica operativa.
+          </div>
+
+          <!-- STEP 1 -->
+          <div style="background:#0b1329; border:1px solid #10b981; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#34d399; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#059669; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">1</span>
+                <span>Identificación del Blanco y Momento del Día [8.1.3 - 8.1.10 & Tablas T1-T5]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#6ee7b7; background:rgba(5,150,105,0.2); padding:2px 8px; border-radius:4px; border:1px solid #10b981;">Determinación de Blanco</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Se determina el buque específico tirando 1d100 en las tablas de objetivos y se comprueba el momento del día:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div style="background:rgba(16,185,129,0.12); border:1px solid #059669; border-radius:6px; padding:10px;">
+                <div style="color:#6ee7b7; font-weight:bold; font-size:0.84rem; margin-bottom:4px;">☀️ MOMENTO: DÍA (DAY)</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  Ataques <strong>sumergidos</strong> recomendados. Ataques en superficie de día solo están permitidos a Larga Distancia (Long Range) y con riesgo de detección inmediata (+1 DRM escoltas).
+                </div>
+              </div>
+              <div style="background:rgba(59,130,246,0.15); border:1px solid #2563eb; border-radius:6px; padding:10px;">
+                <div style="color:#93c5fd; font-weight:bold; font-size:0.84rem; margin-bottom:4px;">🌙 MOMENTO: NOCHE (NIGHT)</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  Ataques en <strong>superficie</strong> autorizados y muy efectivos. Ventaja de sigilo visual frente a escoltas aliados (-1 DRM escoltas si no disponen de radar).
+                </div>
+              </div>
+            </div>
+            <div style="background:#071220; border:1px solid #334155; border-radius:6px; padding:8px 12px; font-size:0.78rem; color:#94a3b8; line-height:1.4;">
+              <strong style="color:var(--gold-300);">Tablas Oficiales de Blancos:</strong> <strong>T1:</strong> Mercante Pequeño (1–100) • <strong>T2:</strong> Mercante Grande / Petrolero (1–100) • <strong>T3:</strong> Buque de Guerra (1–100) • <strong>T4:</strong> Buques Capitales (Acorazados / Portaaviones) • <strong>T5:</strong> Buques Commonwealth.<br>
+              <span style="color:#f87171; font-weight:bold;">⚡ Regla Especial 8.2.9 (Submarino Aliado):</span> Si en T3 sale un submarino enemigo, se tira 1d10 para iniciativa: con <strong>1–3</strong> atacas tú primero; con <strong>4–10</strong> ¡el submarino enemigo dispara primero 4 torpedos!
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div style="background:#0b1329; border:1px solid #3b82f6; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#60a5fa; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#2563eb; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">2</span>
+                <span>Modo de Aproximación, Distancia y Selección de Armas [8.1.4 - 8.1.7]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#93c5fd; background:rgba(37,99,235,0.2); padding:2px 8px; border-radius:4px; border:1px solid #3b82f6;">Plan Táctico</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              El Comandante decide la distancia de combate y el armamento a emplear:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+              <div style="background:rgba(22,163,74,0.15); border:1px solid #16a34a; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#4ade80; font-size:0.82rem;">Corta Distancia (Close)</div>
+                <div style="font-size:0.78rem; font-weight:700; color:#fff; margin:2px 0;">+1 DRM a Impacto en B1</div>
+                <div style="font-size:0.73rem; color:#cbd5e1;">Máxima precisión de torpedos. Mayor cercanía a los escoltas (+1 en B5).</div>
+              </div>
+              <div style="background:rgba(30,58,138,0.25); border:1px solid #3b82f6; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#60a5fa; font-size:0.82rem;">Media Distancia (Medium)</div>
+                <div style="font-size:0.78rem; font-weight:700; color:#fff; margin:2px 0;">0 DRM (Estándar)</div>
+                <div style="font-size:0.73rem; color:#cbd5e1;">Distancia táctica equilibrada recomendada por la doctrina imperial.</div>
+              </div>
+              <div style="background:rgba(245,158,11,0.15); border:1px solid #f59e0b; border-radius:6px; padding:8px; text-align:center;">
+                <div style="font-weight:bold; color:#fbbf24; font-size:0.82rem;">Larga Distancia (Long)</div>
+                <div style="font-size:0.78rem; font-weight:700; color:#fff; margin:2px 0;">-1 DRM a Impacto en B1</div>
+                <div style="font-size:0.73rem; color:#cbd5e1;">Menor puntería pero máxima seguridad; facilita evadir a los escoltas (-1 en B5).</div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:0.78rem;">
+              <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; padding:6px 10px; border-radius:4px;">
+                <strong style="color:#38bdf8;">🚀 Salva de Torpedos:</strong> Asignar número de torpedos de Proa o Popa (según tubos cargados).
+              </div>
+              <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; padding:6px 10px; border-radius:4px;">
+                <strong style="color:#fbbf24;">💥 Cañón de Cubierta:</strong> Solo en superficie contra blancos sin escolta o dañados.
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div style="background:#0b1329; border:1px solid #eab308; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#fde047; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#ca8a04; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">3</span>
+                <span>Lanzamiento y Solución de Tiro [Tablas B1, B2 & B3]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#fef08a; background:rgba(234,179,8,0.2); padding:2px 8px; border-radius:4px; border:1px solid #eab308;">Tirada de Torpedos</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Se lanza <strong>2d6 por cada torpedo disparado</strong> en la Tabla [B1]:
+            </p>
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:0.80rem; color:#cbd5e1; margin-bottom:10px;">
+              <div style="background:rgba(0,0,0,0.3); padding:6px 10px; border-radius:4px; border-left:3px solid #38bdf8;">
+                <strong style="color:#7dd3fc;">Tipo 95 (Oxígeno):</strong> Máxima velocidad y potencia destructiva (+1 a daño en B4). Sin detonaciones prematuras.
+              </div>
+              <div style="background:rgba(0,0,0,0.3); padding:6px 10px; border-radius:4px; border-left:3px solid #10b981;">
+                <strong style="color:#6ee7b7;">Tipo 92 (Eléctrico):</strong> No deja estela de burbujas en el agua (+0 a detección de escoltas de día).
+              </div>
+              <div style="background:rgba(0,0,0,0.3); padding:6px 10px; border-radius:4px; border-left:3px solid #f59e0b;">
+                <strong style="color:#fbbf24;">Tipo 6 / Tipo 89 (Vapor):</strong> Deja estela visible de burbujas (+1 a la detección de escoltas durante el día).
+              </div>
+            </div>
+            <div style="background:#071220; border:1px solid #334155; border-radius:6px; padding:6px 10px; font-size:0.76rem; color:#94a3b8;">
+              <strong style="color:#fde047;">Tabla B3 (Dud Check):</strong> Si un torpedo impacta en periodos tempranos, se comprueba si la espoleta funciona o falla (torpedo defectuoso).
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div style="background:#0b1329; border:1px solid #ec4899; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#f472b6; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#db2777; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">4</span>
+                <span>Resolución de Daños y Hundimiento [Tabla B4]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#fbcfe8; background:rgba(236,72,153,0.2); padding:2px 8px; border-radius:4px; border:1px solid #ec4899;">Tabla [B4] 2d6</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Por cada torpedo que impacte con éxito en el casco del buque objetivo:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div style="background:rgba(22,163,74,0.18); border:1px solid #16a34a; border-radius:6px; padding:10px;">
+                <div style="color:#4ade80; font-weight:bold; font-size:0.85rem; margin-bottom:4px;">💥 SUNK (HUNDIDO)</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  El buque se va al fondo. Se anota su nombre y su tonelaje bruto (GRT) completo en el <strong>Rogu Bukku (Log de Patrulla)</strong>.
+                </div>
+              </div>
+              <div style="background:rgba(245,158,11,0.18); border:1px solid #f59e0b; border-radius:6px; padding:10px;">
+                <div style="color:#fbbf24; font-weight:bold; font-size:0.85rem; margin-bottom:4px;">⚠️ DAMAGED (DAÑADO)</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  El buque encaja averías pero permanece a flote. Puede requerir torpedos adicionales en una 2.ª ronda o remate con cañón si no hay escoltas.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div style="background:#0b1329; border:1px solid #ef4444; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#f87171; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#dc2626; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">5</span>
+                <span>Contraataque de Escoltas y Evasión [Regla 8.2 & Tabla B5]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#fca5a5; background:rgba(239,68,68,0.2); padding:2px 8px; border-radius:4px; border:1px solid #ef4444;">Tabla [B5] 2d6</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 10px 0; line-height:1.4;">
+              Si el convoy o buque contaba con escolta de destructores o corbetas, estos contraatacan con cargas de profundidad:
+            </p>
+            <div style="background:#071220; border:1px solid #334155; border-radius:6px; padding:8px 12px; font-size:0.78rem; color:#94a3b8; line-height:1.4;">
+              <strong style="color:var(--gold-300);">Modificadores de Ataque de Escolta (B5):</strong> Día: <span style="color:#f87171;">+1</span> • Noche: <span style="color:#4ade80;">-1</span> • Ataque a Corta Distancia: <span style="color:#f87171;">+1</span> • Ataque a Larga Distancia: <span style="color:#4ade80;">-1</span> • Cota Profunda / Inmersión Rápida: <span style="color:#4ade80;">-1 a -2</span> • Radar/Sonar avanzado enemigo: <span style="color:#f87171;">+1</span>.<br>
+              <strong style="color:#fca5a5;">Averías:</strong> Cada impacto en B5 genera daños de casco (*Hull Damage*), inundaciones (*Flooding*) o sistemas averiados en las Tablas B6 y B7.
+            </div>
+          </div>
+
+          <!-- STEP 6 -->
+          <div style="background:#0b1329; border:1px solid #a855f7; border-radius:8px; padding:14px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#c084fc; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                <span style="background:#7e22ce; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">6</span>
+                <span>2.ª Ronda de Combate o Ruptura de Contacto [Regla 8.4]</span>
+              </h4>
+              <span style="font-size:0.75rem; color:#d8b4fe; background:rgba(168,85,247,0.2); padding:2px 8px; border-radius:4px; border:1px solid #a855f7;">Decisión Táctica</span>
+            </div>
+            <p style="font-size:0.83rem; color:#e2e8f0; margin:0 0 8px 0; line-height:1.4;">
+              Tras sobrevivir a la respuesta de los escoltas (o si no los había), el Comandante elige:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div style="background:rgba(168,85,247,0.18); border:1px solid #a855f7; border-radius:6px; padding:10px;">
+                <div style="color:#d8b4fe; font-weight:bold; font-size:0.84rem; margin-bottom:4px;">⚔️ 2.ª RONDA DE COMBATE</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  Si quedan torpedos en los tubos, reatacar al blanco dañado o a un segundo mercante del convoy (los escoltas estarán más alertados).
+                </div>
+              </div>
+              <div style="background:rgba(59,130,246,0.18); border:1px solid #3b82f6; border-radius:6px; padding:10px;">
+                <div style="color:#93c5fd; font-weight:bold; font-size:0.84rem; margin-bottom:4px;">🌊 ROMPER CONTACTO Y EVASIÓN</div>
+                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.35;">
+                  Deslizarse a cota silenciosa y alejarse de la zona de patrulla para avanzar a la siguiente casilla del trayecto.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FOOTER ACTIONS -->
+        <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(16,185,129,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span>Ver Tablas B1–B6</span>
+            </button>
+            <button type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:var(--gold-500); color:var(--gold-300); background:rgba(202,138,4,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🗺️</span> <span>Carta de Secuencia</span>
+            </button>
+          </div>
+          <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
+            <span>✓</span> <span>Entendido (Cerrar)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 1: CHART K1 CAPTAIN & CREW SKILL STATUS (WARGAME MAT)
+         ==================================================================== -->
+    

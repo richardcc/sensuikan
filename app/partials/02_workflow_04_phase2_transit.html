@@ -1,0 +1,191 @@
+        <div id="phase-content-2" class="phase-body">
+          <div class="phase-header-banner">
+            <h2>
+              <span>🗺️</span>
+              <span id="p2-title">FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS</span>
+            
+            </h2>
+            <button type="button" onclick="openModalViewer('2: Patrol Transit', '', 'FLOW_2')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
+              <span>🗺️</span> <span>📋 Guía de Fase</span>
+            </button>
+            <span id="p2-rules-pill" class="rules-ref-pill">[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]</span>
+          </div>
+
+          <!-- DYNAMIC PATROL ROUTE TRACK STRIP -->
+          <div id="wf-sub-mat-tracks-wrapper" style="margin-bottom:20px; background:#f4eedb; border:2px solid #b89f68; border-radius:10px; padding:14px 16px; box-shadow:0 8px 24px rgba(0,0,0,0.6); color:#1e293b;">
+            <!-- Header bar for Patrol Track -->
+            <div style="background:#e4d8be; border:1px solid #c7b693; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.1rem;">⚓</span>
+                <strong id="p2-route-title" style="font-family:'Cinzel',serif; font-size:0.92rem; color:#422006; letter-spacing:1px; text-transform:uppercase;">RUTA DE PATRULLA (FASES DE TRÁNSITO Y ESTACIÓN)</strong>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span id="wf-route-badge-info" style="font-size:0.86rem; background:#422006; color:#fde047; padding:3px 8px; border-radius:4px; font-weight:700;">Ruta Operativa</span>
+              </div>
+            </div>
+
+            <!-- Patrol Track Grid of Graphical Cards -->
+            <div id="wf-route-stepper" style="display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; align-items:stretch;">
+              <!-- Populated dynamically by renderRouteBreadcrumbs() with submarine mat cards -->
+            </div>
+          </div>
+
+          <div class="workflow-grid-3">
+            <!-- Box Tracker -->
+            <div class="flow-card">
+              <h4 id="p2-c1-title">1. Progreso de Casillas de Navegación</h4>
+              <div style="text-align:center; padding:12px; background:var(--navy-900); border-radius:8px;">
+                <div id="p2-current-box-label" style="font-size:0.86rem; color:var(--slate-400); text-transform:uppercase; font-weight:700;">Casilla Actual:</div>
+                <div id="wf-current-box-lbl" style="font-size:1.25rem; font-weight:800; color:var(--gold-300); margin:4px 0;">
+                  Tránsito Inicial 1 / 2
+                </div>
+                <div id="wf-box-type-desc" style="font-size:0.86rem; color:#38bdf8;">(Aproximación naval)</div>
+              </div>
+
+              <div style="display:flex; gap:8px;">
+                <button id="p2-btn-back" class="action-btn" onclick="prevPatrolBox()" style="flex:1; justify-content:center;">◀ Retroceder</button>
+                <button id="p2-btn-advance" class="action-btn" onclick="nextPatrolBox()" style="flex:1; justify-content:center; border-color:var(--gold-500); color:var(--gold-300);">Avanzar Casilla ▶</button>
+              </div>
+
+              <div style="font-size:0.86rem; color:var(--slate-400); line-height:1.4;">
+                <span id="p2-transit-rule-hint">★ Hasta julio de 1942: No hay encuentros ordinarios en casillas de tránsito (sólo un 12 natural activa un Evento Aleatorio). A partir de agosto 1942 se aplican encuentros.</span>
+              </div>
+            </div>
+
+            <!-- Encounter Roll [A3] -->
+            <div class="flow-card">
+              <h4 id="p2-c2-title">2. Tirada de Encuentros en Tabla [A3]</h4>
+              <p id="p2-encounter-help" style="font-size:0.80rem; color:var(--slate-300);">Lanza 2d6 en cada casilla de estación o tránsito:</p>
+              
+              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px; border-radius:6px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <div id="p2-roll-result-label" style="font-size:0.84rem; color:var(--slate-400);">Resultado 2d6:</div>
+                  <div id="wf-encounter-roll-res" style="font-size:1.15rem; font-weight:800; color:var(--gold-300);">Sin Tirar</div>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                  <button id="p2-roll-btn" class="btn-dice" onclick="rollBoxEncounter()">🎲 Tirar 2d6 [A3]</button>
+                  <div style="display:flex; align-items:center; gap:4px; background:var(--slate-800); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
+                    <span style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
+                    <select id="sel-manual-a3-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.82rem; padding:2px 4px; border-radius:3px;">
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7" selected>7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <button type="button" onclick="rollBoxEncounter(parseInt(document.getElementById('sel-manual-a3-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Aplicar tirada física de mesa">Aplicar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="wf-encounter-detail-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem;">
+                <strong id="p2-status-label">Estado:</strong> <span id="wf-enc-status-text">Listo para tirar en esta casilla.</span>
+              </div>
+
+              <!-- Hidden container for backwards-compatibility -->
+              <div id="btn-engage-combat" style="display:none;"></div>
+            </div>
+
+            <!-- Special Mission / Random Events -->
+            <div class="flow-card">
+              <h4 id="p2-c3-title">3. Casilla de Misión y Eventos</h4>
+              <div style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
+                <p><strong id="p2-mission-box-label">Casilla de Misión:</strong> <span id="p2-mission-box-help">La primera casilla que no es de tránsito activa la Misión Especial:</span></p>
+                <ul style="margin-left:16px; margin-top:4px; font-size:0.86rem; color:var(--slate-400);">
+                  <li id="p2-mission-midget">Mini-Submarinos (Mapas M1-M7)</li>
+                  <li id="p2-mission-air">Reconocimiento Aéreo (Tablas P1-P6)</li>
+                  <li id="p2-mission-kaiten">Lanzamiento Kaiten (Mapas K2-K3)</li>
+                  <li id="p2-mission-mine">Minado o Transporte Tokio Express</li>
+                </ul>
+              </div>
+
+              <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:10px; border-radius:6px; font-size:0.86rem; color:#fde047;">
+                <strong id="p2-rule-818-label">Regla 8.1.8:</strong> <span id="p2-rule-818-text">Un 12 natural activa un <em>Evento Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHARTS A2 & A3: PATROL AREA & TRANSIT ENCOUNTERS (DIRECTAMENTE EN FASE 2) -->
+          <div style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
+            <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h4 style="margin:0; color:var(--gold-300); font-size:1.05rem; display:flex; align-items:center; gap:8px;">
+                  <span>⚓</span>
+                  <span id="p2-a3-title">CHART A3: PATROL AREA ENCOUNTERS (ENCUENTROS EN ÁREA - 2d6)</span>
+                </h4>
+                <span id="p2-a3-subtitle" style="font-size:0.86rem; color:var(--slate-400);">Tabla de contactos por zona de operaciones. Lanza 2d6 al entrar en cada casilla de patrulla o tránsito.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span id="p2-current-zone-badge" style="background:#065f46; border:1px solid #10b981; color:#a7f3d0; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.86rem;">Zona Actual: Transit</span>
+                <button type="button" onclick="rollBoxEncounter()" class="btn-dice" style="padding:6px 14px; font-size:0.82rem;">
+                  🎲 Tirar [A3]
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabla de la Zona Activa -->
+            <div style="overflow-x:auto; margin-bottom:12px;">
+              <table style="width:100%; border-collapse:collapse; font-size:0.86rem; text-align:center;">
+                <thead>
+                  <tr style="background:var(--navy-900); color:var(--gold-400); border-bottom:2px solid var(--gold-600);">
+                    <th id="p2-a3-roll-header" style="padding:6px; border:1px solid #334155; width:90px;">Tirada 2d6</th>
+                    <th id="th-p2-zone-name" style="padding:6px; border:1px solid #334155; width:220px;">Encuentro en Zona</th>
+                    <th id="p2-a3-effect-header" style="padding:6px; border:1px solid #334155; text-align:left;">Efecto Táctico / Procedimiento</th>
+                  </tr>
+                </thead>
+                <tbody id="phase2-a3-tbody">
+                  <!-- Generado por updatePhase2TableDisplay() -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Regla Rápida A2 Tránsito -->
+            <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; border-left:3px solid #38bdf8; font-size:0.86rem; margin-top:10px;">
+              <strong id="p2-a2-title" style="color:#38bdf8;">Chart A2: Regla Operativa de Tránsito (Transit Encounters):</strong>
+              <p id="p2-a2-text" style="margin:4px 0 0 0; color:var(--slate-300);">Hasta Julio 1942: Las casillas de tránsito no tienen encuentros ordinarios (solo un 12 natural activa Evento B11). Desde Agosto 1942 se aplican encuentros ordinarios de columna Transit. Cualquier contacto detectado se gestiona y resuelve en la pestaña <strong>Patrulla</strong>.</p>
+            </div>
+
+            <!-- Midget Sub Ko-hyoteki Reference (Charts M5, M6, M7) -->
+            <details style="margin-top:14px; background:var(--navy-900); border-radius:6px; border:1px solid rgba(56, 189, 248, 0.4); padding:10px;">
+              <summary style="cursor:pointer; font-weight:bold; color:#38bdf8; font-size:0.82rem; display:flex; align-items:center; gap:8px;">
+                <span>🚀</span> <span>Ver Tablas Especiales de Mini-Submarino Ko-hyoteki [Charts M5, M6, M7]</span>
+              </summary>
+              <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; font-size:0.86rem;">
+                <div style="background:rgba(0,0,0,0.25); padding:8px; border-radius:4px;">
+                  <strong style="color:var(--gold-300);">Chart M5: Encuentros Mini-Sub</strong>
+                  <p style="margin:4px 0; color:var(--slate-300);">Transit Circle: 2 Aircraft, 4/7/10 Event, 12 Warship.<br>Target Circle: 2 Ship, 3 2x Ships, 5 Warship+Ship, 10-12 Capital Ships.</p>
+                  <p style="margin:4px 0; color:#fca5a5;"><strong>Red Antisubmarina (2d6):</strong> 2 Capturado (Seppuku), 3 Capturado por ASV, 4-12 Cruza con éxito.</p>
+                </div>
+                <div style="background:rgba(0,0,0,0.25); padding:8px; border-radius:4px;">
+                  <strong style="color:var(--gold-300);">Chart M6: Eventos Mini-Sub (2d6)</strong>
+                  <button type="button" class="btn-dice" onclick="rollM6Event()" style="font-size:0.84rem; padding:3px 8px; margin:4px 0; width:100%; justify-content:center;">🎲 Tirar Evento [M6]</button>
+                  <div id="m6-event-res" style="color:var(--gold-200); font-size:0.84rem;">2 Encallar, 4 Superficie accidental, 5-6 Avería/Fuga, 9 Cartas superiores (+1 M7), 10 Maniobra perfecta, 12 ASV cercano.</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.25); padding:8px; border-radius:4px;">
+                  <strong style="color:var(--gold-300);">Chart M7: Recuperación (1d6)</strong>
+                  <button type="button" class="btn-dice" onclick="rollM7Recovery()" style="font-size:0.84rem; padding:3px 8px; margin:4px 0; width:100%; justify-content:center;">🎲 Tirar Recuperación [M7]</button>
+                  <div id="m7-recovery-res" style="color:#a7f3d0; font-size:0.84rem;">1-3: Perdido / Tripulación capturada.<br>4-6: Recuperado con éxito por Submarino Nodriza.<br>DRM: +1 Comms superiores (Escuela F2), -1 Radio inop.</div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+
+          <div class="action-bar-nav">
+            <button class="btn-step-prev" onclick="setWorkflowPhase(1)">
+              ◀ <span id="p2-btn-prev">Volver a Fase 1: Zarpe</span>
+            </button>
+            <button class="btn-step-next" onclick="setWorkflowPhase('patrol')">
+              <span id="p2-btn-next">Pasar a Patrulla: Gestión de Contactos ➔</span>
+            </button>
+          </div>
+        </div>
+
+                <!-- =================== FASE PATRULLA: ENCUENTROS ORDINARIOS (AIRCRAFT & SHIP) =================== -->
+                <!-- =================== FASE PATRULLA: ENCUENTROS ORDINARIOS (AIRCRAFT & SHIP) =================== -->

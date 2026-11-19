@@ -1,0 +1,198 @@
+        <div id="phase-content-5" class="phase-body">
+          <div class="phase-header-banner">
+            <h2>
+              <span>⚓</span>
+              <span id="p5-title">FASE 5: RETORNO A BASE, MANTENIMIENTO (REFIT) Y ASCENSOS</span>
+            
+            </h2>
+            <button type="button" onclick="openModalViewer('5: Post Mission', '', 'FLOW_5')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
+              <span>🗺️</span> <span>📋 Guía de Fase</span>
+            </button>
+            <span class="rules-ref-pill">[Reglas 6.0 Paso 3, 8.5.11, 8.7-8.9, 9.0]</span>
+          </div>
+
+          <div class="workflow-grid-2">
+            <!-- Refit Calculation -->
+            <div class="flow-card">
+              <h4>1. Cálculo del Periodo de Puesta a Punto (Meses "R")</h4>
+              
+              <div style="background:var(--navy-900); padding:12px; border-radius:8px;">
+                <div class="flow-field">
+                  <label>Mantenimiento Base Obligatorio:</label>
+                  <span style="font-weight:700; color:var(--gold-300);">1 Mes ("R")</span>
+                </div>
+                <div class="flow-field" style="margin-top:6px;">
+                  <label>Sistemas Inoperativos (INOP):</label>
+                  <select id="wf-inop-select" class="flow-select" onchange="recalculateRefitTime()">
+                    <option value="0">0 a 2 sistemas INOP (+0 meses)</option>
+                    <option value="1">3 o más sistemas INOP (+1 mes)</option>
+                  </select>
+                </div>
+                <div class="flow-field" style="margin-top:6px;">
+                  <label>Casillas de Casco Dañadas:</label>
+                  <select id="wf-hull-dmg-select" class="flow-select" onchange="recalculateRefitTime()">
+                    <option value="0">0 casillas dañadas (+0 meses)</option>
+                    <option value="1">1 a 3 casillas (+1 mes)</option>
+                    <option value="2">4 a 6 casillas (+2 meses)</option>
+                    <option value="3">7 a 8 casillas (+3 meses)</option>
+                  </select>
+                </div>
+                <div style="border-top:1px solid var(--navy-700); margin-top:10px; padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-weight:800; font-size:0.90rem;">TOTAL MESES EN DIQUE SECO (REFIT):</span>
+                  <span id="wf-total-refit-months" style="font-size:1.25rem; font-weight:800; color:#38bdf8;">1 Mes ("R")</span>
+                </div>
+
+                <!-- ALERTA AUTOMÁTICA REASIGNACIÓN POR REFIT >= 5 MESES [REGLA 9.2] -->
+                <div id="wf-refit-replacement-alert" style="display:none; margin-top:12px; background:linear-gradient(135deg, rgba(239,68,68,0.25), rgba(153,27,27,0.35)); border:1px solid #ef4444; border-radius:8px; padding:12px; box-shadow:0 4px 14px rgba(239,68,68,0.25);">
+                  <div style="display:flex; align-items:center; gap:8px; font-weight:bold; color:#fca5a5; font-size:0.88rem;">
+                    <span>🚨</span>
+                    <span id="wf-refit-alert-title">¡REASIGNACIÓN OBLIGATORIA POR REFIT PROLONGADO [REGLA 9.2]!</span>
+                  </div>
+                  <div id="wf-refit-alert-desc" style="font-size:0.82rem; color:var(--slate-200); margin-top:4px; line-height:1.4;">
+                    El submarino acumula <strong id="wf-refit-alert-months" style="color:#fde047;">5</strong> meses de dique seco (≥ 5 meses). Según la <strong>Regla 9.2</strong>, el buque entra en gran carena y el Comandante es transferido a un nuevo buque de reemplazo.
+                  </div>
+                  <button type="button" onclick="openSubUpgradeModal('replacement')" class="action-btn" style="width:100%; justify-content:center; margin-top:8px; background:#dc2626; border-color:#f87171; color:#fff; font-weight:bold; font-size:0.84rem; padding:6px 12px; box-shadow:0 2px 8px rgba(0,0,0,0.4);">
+                    <span id="wf-refit-alert-btn">⚓ Seleccionar Buque de Reemplazo [Regla 9.2]</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- CONTENEDOR INTERACTIVO INCURSIONES AÉREAS EN PUERTO [REGLA 4.7.6] -->
+              <div id="wf-air-raid-container" style="margin-top:10px;">
+                <!-- Rellenado dinámicamente por updateAirRaidUI() -->
+              </div>
+
+              <div style="font-size:0.86rem; color:var(--slate-400); line-height:1.4; margin-top:8px;">
+                ★ Regla 8.5.11.4: A partir de enero de 1944 se tira por Incursiones Aéreas en Puerto (2d6) [4.7.6] (excepto en Paramushiro). Si el refit total alcanza 5 o más meses, el comandante es reasignado a un nuevo submarino.
+              </div>
+            </div>
+
+            <!-- Advancement & Medals -->
+            <div class="flow-card">
+              <h4>2. Ascensos de Rango, Calidad de Dotación y Medallas [8.7 - 8.9]</h4>
+              
+              <div style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
+                <p><strong>Adquisición de Habilidades:</strong></p>
+                <p style="font-size:0.76rem; color:var(--slate-400);">Por cada 3 patrullas exitosas (o cada 2 si el Capitán posee la habilidad <em>Leadership</em>), se adquiere una nueva habilidad para el Capitán/Oficiales en Chart K1 o se asciende la calidad de la dotación (Trained ➔ Crack ➔ Elite).</p>
+                
+                <p style="margin-top:8px;"><strong>Ascenso Anual de Rango:</strong></p>
+                <p style="font-size:0.76rem; color:var(--slate-400);">Chequeo de promoción en diciembre de cada año según tonelaje acumulado y condecoraciones activas.</p>
+              </div>
+
+              <div style="display:flex; gap:8px; margin-top:6px;">
+                <button class="action-btn" onclick="switchTab('chart-k1')" style="flex:1; justify-content:center; border-color:var(--gold-500); color:var(--gold-300);">
+                  <span id="p5-go-k1">🎴 Ir al Tablero Chart K1</span>
+                </button>
+                <button class="action-btn" onclick="switchTab('rogu-bukku')" style="flex:1; justify-content:center; border-color:var(--gold-500); color:var(--gold-300);">
+                  <span id="p5-go-rogu">📜 Ir al Rogu Bukku</span>
+                </button>
+              </div>
+
+              <div style="margin-top:10px;">
+                <button type="button" class="action-btn" onclick="openSubUpgradeModal('upgrade')" style="width:100%; justify-content:center; background:linear-gradient(135deg, #065f46, #047857); border-color:#10b981; color:#ecfdf5; font-weight:bold; font-size:0.86rem; padding:8px 12px; box-shadow:0 2px 8px rgba(16,185,129,0.3);">
+                  <span>🔄</span> <span id="p5-btn-sub-upgrade">Canjear Mejora de Submarino (Sub Upgrade) [Regla 9.3]</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHART H3: REFIT DURATION, PUERTO Y CONDECORACIONES IMPERIALES (DIRECTAMENTE EN FASE 5) -->
+          <div style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
+            <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h4 style="margin:0; color:var(--gold-300); font-size:1.05rem; display:flex; align-items:center; gap:8px;">
+                  <span>⚓</span>
+                  <span>CHART H3: REFIT DURATION, PUERTO Y CONDECORACIONES IMPERIALES</span>
+                </h4>
+                <span style="font-size:0.86rem; color:var(--slate-400);">Cálculo oficial de permanencia en astillero, incursiones aéreas enemigas (1944+) y condecoraciones del Emperador.</span>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:12px;">
+              <!-- Left: Refit Duration & Port Air Raids -->
+              <div style="background:var(--navy-900); padding:12px; border-radius:8px; border:1px solid #334155; font-size:0.86rem;">
+                <div style="font-weight:bold; color:var(--gold-300); font-size:0.82rem; margin-bottom:6px;">
+                  CHART H3: REGLAS OFICIALES DE REFIT [8.5.11]
+                </div>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:8px;">
+                  <tr style="border-bottom:1px solid #334155;"><td style="padding:4px; font-weight:bold;">Mantenimiento Estándar:</td><td style="padding:4px; text-align:right; color:#38bdf8;">1 Mes ("R")</td></tr>
+                  <tr style="border-bottom:1px solid #334155;"><td style="padding:4px;">Sistemas Inoperativos (INOP):</td><td style="padding:4px; text-align:right;">3+ sistemas = <strong>+1 Mes</strong></td></tr>
+                  <tr style="border-bottom:1px solid #334155;"><td style="padding:4px;">Daños en el Casco (Hull):</td><td style="padding:4px; text-align:right;">1-3 = +1 Mes | 4-6 = +2 Meses | 7-8 = +3 Meses</td></tr>
+                  <tr style="border-bottom:1px solid #334155;"><td style="padding:4px; color:#fca5a5;">Reasignación de Comandante:</td><td style="padding:4px; text-align:right; color:#fca5a5;">Total Refit ≥ 5 meses = Nuevo submarino</td></tr>
+                </table>
+
+                <div style="margin-top:8px; padding-top:6px; border-top:1px solid #334155;">
+                  <strong style="color:#f87171;">[4.7.6] AIR RAIDS ON PORTS (Jan 1944+ - 2d6):</strong>
+                  <p style="margin:2px 0 4px 0; color:var(--slate-300); font-size:0.84rem;">En cada Refit desde 1/44, chequear daño aéreo en cualquier puerto <em>excepto Paramushiro</em> (2d6):</p>
+                  <table style="width:100%; border-collapse:collapse; font-size:0.84rem; margin-top:2px;">
+                    <tr style="border-bottom:1px solid #334155;"><td style="padding:2px 4px; color:#ef4444; font-weight:bold; width:35px;">2:</td><td style="padding:2px 4px; color:#fca5a5;">Submarino destruido. 1 mes para transferirse a nuevo buque en Yokosuka.</td></tr>
+                    <tr style="border-bottom:1px solid #334155;"><td style="padding:2px 4px; color:#f97316; font-weight:bold;">3:</td><td style="padding:2px 4px; color:#fdba74;">Daño severo en ataque aéreo. Añadir <strong>+2 meses</strong> al refit actual.</td></tr>
+                    <tr style="border-bottom:1px solid #334155;"><td style="padding:2px 4px; color:#f59e0b; font-weight:bold;">4:</td><td style="padding:2px 4px; color:#fde047;">Daño en ataque aéreo. Añadir <strong>+1 mes</strong> al refit actual.</td></tr>
+                    <tr><td style="padding:2px 4px; color:#10b981; font-weight:bold;">5-12:</td><td style="padding:2px 4px; color:#86efac;">Sin efecto (No effect).</td></tr>
+                  </table>
+                  <div style="margin-top:4px; font-size:0.82rem; color:#94a3b8;">
+                    🛡️ <em>Excepción:</em> Paramushiro inmune [4.7.6]. ⚠️ <em>Truk:</em> Cesa en 3/44; si está en refit se pierde [4.7.3].
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Promotions & Imperial Medals -->
+              <div style="background:var(--navy-900); padding:12px; border-radius:8px; border:1px solid #334155; font-size:0.86rem;">
+                <div style="font-weight:bold; color:var(--gold-300); font-size:0.82rem; margin-bottom:6px;">
+                  <span id="p5-awards-title">ASCENSOS Y CONDECORACIONES IMPERIALES [8.7 - 8.9]</span>
+                </div>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:8px;">
+                  <thead>
+                    <tr style="background:rgba(255,255,255,0.05); color:#f1f5f9;">
+                      <th id="p5-award-header" style="padding:3px; border:1px solid #334155; text-align:left;">Condecoración</th>
+                      <th id="p5-award-criteria-header" style="padding:3px; border:1px solid #334155;">Criterio de Concesión</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td id="p5-award-golden-name" style="padding:4px; border:1px solid #334155; font-weight:bold; color:var(--gold-300);">Orden del Milano Dorado (4.ª clase)<br><span style="font-size:0.78rem; color:var(--slate-400);">(Kinshi Kunsho) [8.8.1]</span></td>
+                      <td id="p5-award-golden-criteria" style="padding:4px; border:1px solid #334155;">Hundir un Buque Capital o lograr &gt;20.000 t en una sola patrulla. Concede 1 Upgrade.</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td style="padding:4px; border:1px solid #334155; font-weight:bold; color:#fde047;">Orden del Milano Dorado (5.ª clase)<br><span style="font-size:0.78rem; color:var(--slate-400);">(Kinshi Kunsho) [8.8.2]</span></td>
+                      <td style="padding:4px; border:1px solid #334155;">Hundir un Buque Capital o lograr &gt;15.000 t en una sola patrulla. Concede 1 Upgrade.</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td id="p5-award-rising-name" style="padding:4px; border:1px solid #334155; font-weight:bold; color:#f59e0b;">Orden del Sol Naciente (8.ª clase)<br><span style="font-size:0.78rem; color:var(--slate-400);">(Kyokujitsu-sho) [8.8.3]</span></td>
+                      <td id="p5-award-rising-criteria" style="padding:4px; border:1px solid #334155;">Acumular ≥ 20.000 toneladas totales de buques enemigos hundidos.</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td id="p5-award-sacred-name" style="padding:4px; border:1px solid #334155; font-weight:bold; color:#a7f3d0;">Orden del Tesoro Sagrado (8.ª clase)<br><span style="font-size:0.78rem; color:var(--slate-400);">(Zuiho-sho) [8.8.4]</span></td>
+                      <td id="p5-award-sacred-criteria" style="padding:4px; border:1px solid #334155;">Acumular ≥ 15.000 toneladas o completar 3 patrullas exitosas.</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td style="padding:4px; border:1px solid #334155; font-weight:bold; color:#f87171;">Medalla de Herido en Combate<br><span style="font-size:0.78rem; color:var(--slate-400);">(Sensho Kisho) [8.8.5]</span></td>
+                      <td style="padding:4px; border:1px solid #334155;">Otorgada al Capitán o dotación al recibir heridas graves (SW) en combate.</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #334155;">
+                      <td style="padding:4px; border:1px solid #334155; font-weight:bold; color:#e2e8f0;">Medalla Guerra Gran Asia Oriental<br><span style="font-size:0.78rem; color:var(--slate-400);">(Daitoa Senso Jugun Kisho) [8.8.6]</span></td>
+                      <td style="padding:4px; border:1px solid #334155;">Completar con éxito al menos 1 patrulla de combate en Dic-1941 o Ene-1942.</td>
+                    </tr>
+                    <tr>
+                      <td id="p5-award-sub-name" style="padding:4px; border:1px solid #334155; font-weight:bold; color:#38bdf8;">Insignia de Submarinos<br><span style="font-size:0.78rem; color:var(--slate-400);">(Sensuikan Kisho) [8.8.7]</span></td>
+                      <td id="p5-award-sub-criteria" style="padding:4px; border:1px solid #334155;">Graduarse en la Escuela de Kure [F1] o completar 1 patrulla exitosa.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="color:var(--slate-400); font-size:0.84rem;">
+                  <strong id="p5-promotion-label">Ascenso a Capitán (Kaigun Taisa):</strong> <span id="p5-promotion-text">En diciembre de cada año, con ≥3 patrullas o tonelaje distinguido, tira 1d6: con 1-3 el Comandante asciende a Capitán de Navío.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="action-bar-nav">
+            <button class="btn-step-prev" onclick="setWorkflowPhase(4)">
+              ◀ <span id="p5-btn-prev">Volver a Fase 4: Averías</span>
+            </button>
+            <button class="btn-step-next" onclick="resetWorkflowForNextPatrol()">
+              <span id="p5-btn-next">🔄 Iniciar Siguiente Patrulla (Fase 1) ➔</span>
+            </button>
+          </div>
+        </div>

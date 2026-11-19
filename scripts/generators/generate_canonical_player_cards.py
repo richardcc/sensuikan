@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import textwrap
 import numpy as np
@@ -39,14 +40,56 @@ def get_counters_db():
             _COUNTERS_DB = {'counters': {}}
     return _COUNTERS_DB
 
-def match_counter_spec(label, sublabel):
+def match_counter_spec(label, sublabel, raw_key=None):
     lbl = (label or '').strip()
     sub = (sublabel or '').strip()
+    rk = (raw_key or '').strip().lower()
     norm = (lbl + ' ' + sub).replace('\n', ' ').strip().lower()
+    norm_clean = norm.replace('-', ' ').replace('  ', ' ')
     lbl_clean = lbl.replace('\n', ' ').strip().lower()
 
     db = get_counters_db()
     counters = db.get('counters', {})
+
+    # 0. Direct canonical raw system mapping
+    if rk:
+        raw_to_id = {
+            'periscope': 'periscope_optics',
+            'hydrophones': 'hydrophone_sonar',
+            'wire cutters': 'wire_cutters',
+            'propeller': 'propeller',
+            'gyro compass': 'gyro_compass',
+            'radio': 'radio',
+            'dive planes': 'dive_planes',
+            'horiz. rudder': 'dive_planes',
+            'vertical rudder': 'dive_planes',
+            'hangar': 'hangar',
+            'crane': 'crane_hangar',
+            'fuel tanks': 'fuel_tank',
+            'cargo': 'supply_crates',
+            'fwd battery': 'battery_cells',
+            'aft battery': 'battery_cells',
+            'batteries': 'battery_cells',
+            'batteries 1': 'battery_cells',
+            'batteries 2': 'battery_cells',
+            'batteries 3': 'battery_cells',
+            'electric motor': 'electric_motor',
+            'electric motor 1': 'electric_motor',
+            'electric motor 2': 'electric_motor',
+            'electric motor 3': 'electric_motor',
+            'electric motor 4': 'electric_motor',
+            'diesel engine 1': 'diesel_engine',
+            'diesel engine 2': 'diesel_engine',
+            'diesel engine 3': 'diesel_engine',
+            'diesel engine 4': 'diesel_engine',
+            'f. torp. doors (odd)': 'watertight_door',
+            'f. torp. doors (even)': 'watertight_door',
+            'aft torp doors': 'watertight_door',
+            'type 22 radar': 'radio'
+        }
+        mapped_id = raw_to_id.get(rk)
+        if mapped_id and mapped_id in counters:
+            return counters[mapped_id]
 
     # 1. Torpedo tube digits
     if lbl.strip().isdigit() and 1 <= int(lbl.strip()) <= 8:
@@ -54,16 +97,18 @@ def match_counter_spec(label, sublabel):
     if lbl_clean.startswith('t-') or lbl_clean.startswith('tube'):
         return counters.get('torpedo_tube')
 
-    # 2. Exact flood level stages 1..8 ("flood 1" .. "flood 8")
-    if lbl_clean.startswith('flood '):
-        num_part = lbl_clean.replace('flood ', '').strip()
-        if num_part.isdigit() and f'flood_level_{num_part}' in counters:
+    # 2. Exact flood level stages 1..8 ("flood 1" .. "flood 8", "inund. 1", "inund 1")
+    m_flood = re.match(r'^(?:flood|inund\.?)\s*(\d+)$', lbl_clean)
+    if m_flood:
+        num_part = m_flood.group(1)
+        if f'flood_level_{num_part}' in counters:
             return counters[f'flood_level_{num_part}']
 
-    # 3. Exact hull damage stages 1..8 ("hull 1" .. "hull 8")
-    if lbl_clean.startswith('hull '):
-        num_part = lbl_clean.replace('hull ', '').strip()
-        if num_part.isdigit() and f'hull_damage_level_{num_part}' in counters:
+    # 3. Exact hull damage stages 1..8 ("hull 1" .. "hull 8", "casco 1")
+    m_hull = re.match(r'^(?:hull|casco)\s*(\d+)$', lbl_clean)
+    if m_hull:
+        num_part = m_hull.group(1)
+        if f'hull_damage_level_{num_part}' in counters:
             return counters[f'hull_damage_level_{num_part}']
 
     # 4. Match via parameterized keywords (pick longest/most specific keyword)
@@ -74,7 +119,7 @@ def match_counter_spec(label, sublabel):
             continue
         for kw in spec.get('keywords', []):
             kw_low = kw.lower()
-            if kw_low in norm and len(kw_low) > best_len:
+            if (kw_low in norm or kw_low in norm_clean) and len(kw_low) > best_len:
                 best_match = spec
                 best_len = len(kw_low)
     return best_match
@@ -90,8 +135,8 @@ def get_icon_for_slot(label, sublabel):
 
 _REALISTIC_COUNTER_IMGS = {}
 
-def get_realistic_counter_img(label, sublabel):
-    spec = match_counter_spec(label, sublabel)
+def get_realistic_counter_img(label, sublabel, raw_key=None):
+    spec = match_counter_spec(label, sublabel, raw_key=raw_key)
     if not spec:
         return None
     target_file = spec.get('image_file')
@@ -119,7 +164,7 @@ def get_realistic_counter_img(label, sublabel):
 
 def draw_card_slot(ax, cx, cy, label="", sublabel="", bg='#F8FAFC', border='#334155',
                    text_color='#0F172A', water_level=None, is_sunk=False, subcolor='#475569',
-                   icon=None, icon_color=None, icon_alpha=None, is_inactive=False):
+                   icon=None, icon_color=None, icon_alpha=None, is_inactive=False, raw_key=None):
     half = SLOT_SIZE / 2.0
 
     if is_inactive:
@@ -151,7 +196,7 @@ def draw_card_slot(ax, cx, cy, label="", sublabel="", bg='#F8FAFC', border='#334
         ax.add_patch(w_rect)
 
     # Realistic 3D Illustrated Counter Art (or Vector Watermark Fallback)
-    real_img = get_realistic_counter_img(label, sublabel) if (water_level is None or water_level == 0) else None
+    real_img = get_realistic_counter_img(label, sublabel, raw_key=raw_key) if (water_level is None or water_level == 0) else None
 
     # SUNK hazard cross (fallback only if no realistic art)
     if is_sunk and real_img is None:
@@ -530,7 +575,7 @@ SUBMARINE_ARMAMENT_MAP = {
     "Kaidai_KD3_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("7", "", "tube"), ("8", "", "tube")],
-        "r3": [("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld"), None, None],
+        "r3": [("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld"), ("Forward\nReload (8)", "", "rld"), ("Supplies", "", "sup")],
         "r4": [("120mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
         "r5": [None, None, None, None],
         "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
@@ -541,8 +586,8 @@ SUBMARINE_ARMAMENT_MAP = {
     "Kaidai_KD4_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld")],
-        "r3": [("120mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [None, None, None, None],
+        "r3": [("Forward\nReload (6)", "", "rld"), ("Supplies", "", "sup"), None, None],
+        "r4": [("120mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
         "r5": [None, None, None, None],
         "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
                 "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
@@ -552,9 +597,9 @@ SUBMARINE_ARMAMENT_MAP = {
     "Kaidai_KD5_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld")],
-        "r3": [("100mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
-        "r5": [None, None, None, None],
+        "r3": [("Forward\nReload (6)", "", "rld"), ("Supplies", "", "sup"), None, None],
+        "r4": [("100mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
+        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
         "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
                 "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
                 "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
@@ -563,8 +608,8 @@ SUBMARINE_ARMAMENT_MAP = {
     "Kaidai_KD6_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld")],
-        "r3": [("100mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("Daihatsu", "Landing", "cargo"), ("13.1mm\nStatus", "", "aa"), None, None],
+        "r3": [("Forward\nReload (6)", "", "rld"), ("Supplies", "", "sup"), ("Daihatsu", "Landing", "cargo"), None],
+        "r4": [("100mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), ("13.1mm\nStatus", "", "aa"), None],
         "r5": [None, None, None, None],
         "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
                 "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
@@ -573,9 +618,9 @@ SUBMARINE_ARMAMENT_MAP = {
     },
     "Kaidai_KD7_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("25mm AA\nStatus #1", "", "aa"), ("25mm AA\nStatus #2", "", "aa")],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (6)", "", "rld"), ("Supplies", "", "sup")],
         "r3": [("120mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [None, None, None, None],
+        "r4": [("25mm AA\nStatus #1", "", "aa"), ("25mm AA\nStatus #2", "", "aa"), None, None],
         "r5": [None, None, None, None],
         "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
                 "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
@@ -584,65 +629,65 @@ SUBMARINE_ARMAMENT_MAP = {
     },
     "Kirai_Sen_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("Aft Mine\nDoors", "", "mine_door"), ("Mines\nx42", "", "mines"), None, None],
+        "r2": [("Aft Mine\nDoors", "", "mine_door"), ("Mines\nx42", "", "mines"), ("Forward\nReload (8)", "", "rld"), ("Supplies", "", "sup")],
         "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
         "r4": [None, None, None, None],
         "r5": [None, None, None, None],
-        "sys": ["Mine Tunnels", "Mine Handling", "Radio", "Dive Planes",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries",
-                "Periscope", "Hydrophones", None, None]
+        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Dive Planes", "Radio",
+                "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
+                "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
+                None, None, None, None]
     },
     "Junsen_J_IM_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("140mm\nStatus #2", "", "gun"), ("Ammo\nx5", "", "ammo")],
-        "r3": [("140mm\nStatus #1", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (12)", "", "rld"), ("Supplies", "", "sup")],
+        "r3": [("140mm Status\n#1", "", "gun"), ("Ammo\nx5", "", "ammo"), ("140mm Status\n#2", "", "gun"), ("Ammo\nx5", "", "ammo")],
         "r4": [None, None, None, None],
         "r5": [None, None, None, None],
-        "sys": ["Radio", "Dive Planes", "Hangar", "Crane",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries",
-                "Periscope", "Hydrophones", None, None]
+        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
+                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
+                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
+                "Periscope", None, None, None]
     },
     "Junsen_J2_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("Aft\nReload", "", "rld"), ("Aft\nReload", "", "rld")],
-        "r3": [("127mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("13.1mm\nStatus", "", "aa"), None, None, None],
+        "r3": [("Forward\nReload (9)", "", "rld"), ("Supplies", "", "sup"), ("13.1mm\nStatus", "", "aa"), None],
+        "r4": [("127mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
         "r5": [None, None, None, None],
-        "sys": ["Crane", "Hangar", "Radio", "Dive Planes",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Aft Torp Doors", "Electric Motor 1",
+        "sys": ["Crane", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+                "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1",
                 "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
-                "Batteries", "Periscope", "Hydrophones", None]
+                "Hydrophones", "Batteries", "Periscope", None]
     },
     "Junsen_J3_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo")],
-        "r3": [("13.1mm\nStatus #1", "", "aa"), ("13.1mm\nStatus #2", "", "aa"), None, None],
-        "r4": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
-        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
-        "sys": ["Crane", "Hangar", "Radio", "Dive Planes",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Aft Torp Doors", "Electric Motor 1",
-                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
-                "Batteries", "Periscope", "Hydrophones", None]
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (15)", "", "rld"), ("Supplies", "", "sup")],
+        "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r4": [("13.1mm\nStatus #1", "", "aa"), ("13.1mm\nStatus #2", "", "aa"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r5": [None, None, None, None],
+        "sys": ["Crane", "Aft Torp Doors", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
+                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+                "Batteries", "Periscope", None, None]
     },
     "Type_A_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa")],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (12)", "", "rld"), ("Supplies", "", "sup")],
         "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [None, None, None, None],
+        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), None, None],
         "r5": [None, None, None, None],
-        "sys": ["Radio", "Dive Planes", "Hangar", "Crane",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries",
-                "Periscope", "Hydrophones", None, None]
+        "sys": ["Crane", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
+                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+                "Batteries", "Periscope", None, None]
     },
     "Type_B_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo")],
-        "r3": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), None, None],
-        "r4": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
-        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (11)", "", "rld"), ("Supplies", "", "sup")],
+        "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r5": [None, None, None, None],
         "sys": ["Radio", "Dive Planes", "Hangar", "Crane",
                 "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
                 "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
@@ -650,21 +695,21 @@ SUBMARINE_ARMAMENT_MAP = {
     },
     "Type_B_3_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo")],
-        "r3": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), None, None],
-        "r4": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
-        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
-        "sys": ["Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
-                "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
-                None, None, None, None]
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (13)", "", "rld"), ("Supplies", "", "sup")],
+        "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), None, None],
+        "sys": ["Type 22 Radar", "Crane", "Hangar", "F. Torp. Doors (Odd)",
+                "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1",
+                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
+                "Hydrophones", "Batteries", "Periscope", None]
     },
     "Type_C_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("7", "", "tube"), ("8", "", "tube")],
-        "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), None, None],
-        "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r3": [("Forward\nReload (12)", "", "rld"), ("Supplies", "", "sup"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r4": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
+        "r5": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
         "sys": ["Type 22 Radar", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
                 "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
                 "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
@@ -672,32 +717,32 @@ SUBMARINE_ARMAMENT_MAP = {
     },
     "Type_C3_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("140mm\nStatus #2", "", "gun"), ("Ammo\nx5", "", "ammo")],
-        "r3": [("140mm\nStatus #1", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), None, None],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (13)", "", "rld"), ("Supplies", "", "sup")],
+        "r3": [("140mm Status\n#1", "", "gun"), ("Ammo\nx5", "", "ammo"), ("140mm Status\n#2", "", "gun"), ("Ammo\nx5", "", "ammo")],
+        "r4": [("25mm Twin\nStatus #1", "", "aa"), ("25mm Twin\nStatus #2", "", "aa"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
         "r5": [("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai"), ("Kaiten\nSuicide Torpedo", "", "kai")],
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
-                "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
-                None, None, None, None]
+        "sys": ["Type 22 Radar", "Cargo", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
+                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+                "Batteries", "Periscope", None, None]
     },
     "Type_A_Modified": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [("5", "", "tube"), ("6", "", "tube"), ("25mm Single\nStatus", "", "aa"), None],
+        "r2": [("5", "", "tube"), ("6", "", "tube"), ("Forward\nReload (12)", "", "rld"), ("Supplies", "", "sup")],
         "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("25mm Triple\nStatus #1", "", "aa"), ("25mm Triple\nStatus #2", "", "aa"), None, None],
+        "r4": [("25mm Triple\nStatus #1", "", "aa"), ("25mm Triple\nStatus #2", "", "aa"), ("25mm Single\nStatus", "", "aa"), None],
         "r5": [None, None, None, None],
-        "sys": ["Radio", "Dive Planes", "Hangar", "Crane",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries",
-                "Periscope", "Hydrophones", None, None]
+        "sys": ["Type 22 Radar", "Crane", "Hangar", "F. Torp. Doors (Odd)",
+                "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1",
+                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
+                "Hydrophones", "Batteries", "Periscope", None]
     },
     "Sen_Toku_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
         "r2": [("5", "", "tube"), ("6", "", "tube"), ("7", "", "tube"), ("8", "", "tube")],
-        "r3": [("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo"), None, None],
-        "r4": [("25mm Triple\nStatus #1", "", "aa"), ("25mm Triple\nStatus #2", "", "aa"), None, None],
-        "r5": [("25mm Triple\nStatus #3", "", "aa"), ("25mm Single\nStatus", "", "aa"), ("Mk 3 M1\nAir Srch Radar", "", "radar"), ("Mk 2 M2\nSea Srch Radar", "", "radar")],
+        "r3": [("Forward\nReload (12)", "", "rld"), ("Supplies", "", "sup"), ("140mm\nStatus", "", "gun"), ("Ammo\nx5", "", "ammo")],
+        "r4": [("25mm Triple\nStatus #1", "", "aa"), ("25mm Triple\nStatus #2", "", "aa"), ("25mm Triple\nStatus #3", "", "aa"), ("25mm Single\nStatus", "", "aa")],
+        "r5": [("Mk 3 M1\nAir Srch Radar", "", "radar"), ("Mk 2 M2\nSea Srch Radar", "", "radar"), None, None],
         "sys": ["Crane", "Hangar", "Radio", "Periscope",
                 "Hydrophones", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Dive Planes",
                 "Batteries", "Fuel Tanks", "Electric Motor 1", "Electric Motor 2",
@@ -705,14 +750,14 @@ SUBMARINE_ARMAMENT_MAP = {
     },
     "Sen_Taka_Class": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), ("3", "", "tube"), ("4", "", "tube")],
-        "r2": [None, None, None, None],
+        "r2": [("Forward\nReload (6)", "", "rld"), ("Supplies", "", "sup"), None, None],
         "r3": [("25mm Single\nStatus", "", "aa"), None, None, None],
         "r4": [None, None, None, None],
         "r5": [None, None, None, None],
-        "sys": ["Snorkel", "Radar", "Radio", "Dive Planes",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries",
-                "Periscope", "Hydrophones", None, None]
+        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
+                "Electric Motor 1", "Electric Motor 2", "Electric Motor 3", "Electric Motor 4",
+                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+                "Batteries 1", "Batteries 2", "Batteries 3", "Periscope"]
     },
     "Type_A_Midget_Submarine___Ko_Hyoteki": {
         "r1": [("1", "", "tube"), ("2", "", "tube"), None, None],
@@ -720,101 +765,12 @@ SUBMARINE_ARMAMENT_MAP = {
         "r3": [None, None, None, None],
         "r4": [None, None, None, None],
         "r5": [None, None, None, None],
-        "sys": ["Periscope", "Rudder Control", "Batteries", "Electric Motor",
-                "Gyro Compass", "Trim Tanks", "Air System", "Ballast",
-                None, None, None, None,
+        "sys": ["Fwd Battery", "Aft Battery", "Wire Cutters", "Gyro Compass",
+                "Propeller", "Electric Motor", "Horiz. Rudder", "Vertical Rudder",
+                "Radio", "Hydrophones", "Periscope", None,
                 None, None, None, None]
     }
 }
-
-RELOAD_CAPACITIES = {
-    'Kaidai_KD3_Class': 8,
-    'Kaidai_KD4_Class': 6,
-    'Kaidai_KD5_Class': 6,
-    'Kaidai_KD6_Class': 6,
-    'Kaidai_KD7_Class': 6,
-    'Kirai_Sen_Class': 8,
-    'Junsen_J_IM_Class': 12,
-    'Junsen_J2_Class': 9,
-    'Junsen_J3_Class': 15,
-    'Type_A_Class': 12,
-    'Type_B_Class': 11,
-    'Type_B_3_Class': 13,
-    'Type_C_Class': 12,
-    'Type_C3_Class': 13,
-    'Type_A_Modified': 12,
-    'Sen_Toku_Class': 12,
-    'Sen_Taka_Class': 6,
-    'Type_A_Midget_Submarine___Ko_Hyoteki': 0
-}
-
-def draw_reload_supplies_bay(ax, cx, cy, capacity=8):
-    w_bay = 31.5 * BROTHER_COMP
-    h_bay = 31.8 * BROTHER_COMP
-    x0 = cx - w_bay / 2.0
-    y0 = cy - h_bay / 2.0
-
-    # Outer container box (warm drafting parchment with brass/steel technical border)
-    ax.add_patch(patches.Rectangle((x0, y0), w_bay, h_bay,
-                                   linewidth=1.1 * BROTHER_COMP, edgecolor='#9E782F',
-                                   facecolor='#FAF5EA', zorder=2.8))
-    # Inner subtle technical border
-    inner_gap = 0.5 * BROTHER_COMP
-    ax.add_patch(patches.Rectangle((x0 + inner_gap, y0 + inner_gap), w_bay - 2*inner_gap, h_bay - 2*inner_gap,
-                                   linewidth=0.4 * BROTHER_COMP, edgecolor='#C5A059',
-                                   facecolor='none', zorder=2.9))
-
-    # 4 Quadrant Ghost Guides (dashed lines dividing into 4 individual 15x15 counter zones)
-    mid_x = cx
-    mid_y = cy
-    ax.plot([mid_x, mid_x], [y0 + 1.0*BROTHER_COMP, y0 + h_bay - 1.0*BROTHER_COMP],
-            color='#C5A059', lw=0.6*BROTHER_COMP, linestyle='--', zorder=3.1, alpha=0.7)
-    ax.plot([x0 + 1.0*BROTHER_COMP, x0 + w_bay - 1.0*BROTHER_COMP], [mid_y, mid_y],
-            color='#C5A059', lw=0.6*BROTHER_COMP, linestyle='--', zorder=3.1, alpha=0.7)
-
-    # Realistic AI artwork in quadrants:
-    qw = w_bay / 4.0
-    qh = h_bay / 4.0
-    half_q = 6.2 * BROTHER_COMP
-
-    img_rack = get_realistic_counter_img("reload", "")
-    img_supp = get_realistic_counter_img("supplies", "")
-
-    if img_rack is not None:
-        ax.imshow(img_rack, extent=(cx - qw - half_q, cx - qw + half_q, cy + qh - 1.2*BROTHER_COMP - half_q, cy + qh - 1.2*BROTHER_COMP + half_q), zorder=3.0, alpha=0.55)
-        ax.imshow(img_rack, extent=(cx + qw - half_q, cx + qw + half_q, cy + qh - 1.2*BROTHER_COMP - half_q, cy + qh - 1.2*BROTHER_COMP + half_q), zorder=3.0, alpha=0.55)
-    else:
-        draw_watermark(ax, cx - qw, cy + qh - 1.5*BROTHER_COMP, "twin_torpedoes_rack", "#8C6D37", alpha=0.20, size=11.0*BROTHER_COMP)
-        draw_watermark(ax, cx + qw, cy + qh - 1.5*BROTHER_COMP, "twin_torpedoes_rack", "#8C6D37", alpha=0.20, size=11.0*BROTHER_COMP)
-
-    if img_supp is not None:
-        ax.imshow(img_supp, extent=(cx - qw - half_q, cx - qw + half_q, cy - qh - half_q, cy - qh + half_q), zorder=3.0, alpha=0.55)
-        ax.imshow(img_supp, extent=(cx + qw - half_q, cx + qw + half_q, cy - qh - half_q, cy - qh + half_q), zorder=3.0, alpha=0.55)
-    else:
-        draw_watermark(ax, cx - qw, cy - qh, "supply_crates", "#8C6D37", alpha=0.20, size=11.0*BROTHER_COMP)
-        draw_watermark(ax, cx + qw, cy - qh, "supply_crates", "#8C6D37", alpha=0.20, size=11.0*BROTHER_COMP)
-
-    # Header technical plaque at the top:
-    plaque_h = 4.6 * BROTHER_COMP
-    plaque_y = y0 + h_bay - plaque_h - 0.4 * BROTHER_COMP
-    ax.add_patch(patches.Rectangle((x0 + 0.6*BROTHER_COMP, plaque_y), w_bay - 1.2*BROTHER_COMP, plaque_h,
-                                   facecolor='#0D1520', edgecolor='#C5A059', lw=0.75*BROTHER_COMP, alpha=0.95, zorder=4.5))
-    # 4 micro gold rivets
-    rivet_r = 0.18 * BROTHER_COMP
-    for rx, ry in [(x0 + 1.3*BROTHER_COMP, plaque_y + 0.7*BROTHER_COMP),
-                   (x0 + w_bay - 1.3*BROTHER_COMP, plaque_y + 0.7*BROTHER_COMP),
-                   (x0 + 1.3*BROTHER_COMP, plaque_y + plaque_h - 0.7*BROTHER_COMP),
-                   (x0 + w_bay - 1.3*BROTHER_COMP, plaque_y + plaque_h - 0.7*BROTHER_COMP)]:
-        ax.add_patch(patches.Circle((rx, ry), rivet_r, facecolor='#E2B765', edgecolor='#45300E', lw=0.2*BROTHER_COMP, zorder=4.8))
-
-    ax.text(cx, plaque_y + plaque_h/2.0, "FORWARD RELOADS & SUPPLIES",
-            fontsize=4.4, weight='bold', color='#FAF6ED', ha='center', va='center', zorder=5)
-
-    # Central Capacity Badge
-    ax.text(cx, cy - 1.0 * BROTHER_COMP, f"CAPACITY: {capacity} COUNTERS",
-            fontsize=5.0, weight='bold', color='#784B05', ha='center', va='center', zorder=3.8)
-    ax.text(cx, cy - 5.0 * BROTHER_COMP, "(4 Quadrants • Stacks to Capacity)",
-            fontsize=3.6, weight='bold', color='#64748B', ha='center', va='center', zorder=3.8)
 
 def draw_armament_slot(ax, cx, cy, item, sub_key=None, sub_data=None):
     if item is None:

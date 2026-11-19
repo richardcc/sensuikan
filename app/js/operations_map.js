@@ -30,6 +30,12 @@ const OPMAP_COORDS = {
   "Europe": { x: 79, y: 907, nameEs: "Europa (Yanagi)", nameEn: "Europe (Yanagi)", type: "dest" }
 };
 
+const OPMAP_CANONICAL_DEST = {
+  "West Coast US": "US West Coast",
+  "Panama Canal": "Panama Canal**",
+  "Europe": "Europe*"
+};
+
 // Mapeo canónico de clases de submarino a sus fichas de barco oficiales (18 clases)
 const SUBMARINE_CHIT_MAP = {
   "Kaidai_KD3_Class": "Submarine - KD.3.jpg",
@@ -186,9 +192,9 @@ function initOperationsMapHotspots() {
   const container = document.getElementById('opmap-hotspots');
   if (!container || container.dataset.initialized === 'true') return;
 
-  container.innerHTML = '';
   const boxW = (68 / MAP_ORIGINAL_W) * 100;
   const boxH = (68 / MAP_ORIGINAL_H) * 100;
+  const fragment = document.createDocumentFragment();
 
   for (let key in OPMAP_COORDS) {
     const data = OPMAP_COORDS[key];
@@ -217,19 +223,39 @@ function initOperationsMapHotspots() {
     });
 
     spot.addEventListener('click', () => {
+      const isEn = (window.currentLang === 'en');
       if (data.type === 'base') {
         if (typeof handleBaseChange === 'function') handleBaseChange(key);
-        showToast(`⚓ Base establecida: ${data.nameEs}`);
+        showToast(isEn ? `⚓ Base assigned: ${data.nameEn || key}` : `⚓ Base establecida: ${data.nameEs || key}`);
       } else {
-        if (typeof onManualAreaSelected === 'function') onManualAreaSelected(key);
-        showToast(`🎯 Destino fijado: ${data.nameEs}`);
+        const canonicalKey = (OPMAP_CANONICAL_DEST && OPMAP_CANONICAL_DEST[key]) ? OPMAP_CANONICAL_DEST[key] : key;
+        if (typeof campaignState !== 'undefined' && campaignState.workflow) {
+          campaignState.workflow.assignedArea = canonicalKey;
+        }
+        if (typeof subBoardState !== 'undefined') {
+          subBoardState.assignedArea = canonicalKey;
+          if (typeof saveSubBoardState === 'function') saveSubBoardState();
+        }
+        if (typeof onManualAreaSelected === 'function') {
+          onManualAreaSelected(canonicalKey);
+        } else if (typeof window.onSensuikanDestinationChanged === 'function') {
+          window.onSensuikanDestinationChanged(canonicalKey);
+        }
+        if (typeof syncAreaSelectDropdown === 'function') {
+          syncAreaSelectDropdown(canonicalKey);
+        }
+        if (typeof recalculatePatrolTrack === 'function') recalculatePatrolTrack();
+        if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+        showToast(isEn ? `🎯 Destination assigned: ${data.nameEn || key}` : `🎯 Destino fijado: ${data.nameEs || key}`);
       }
       updateOperationsMap();
     });
 
-    container.appendChild(spot);
+    fragment.appendChild(spot);
   }
 
+  container.innerHTML = '';
+  container.appendChild(fragment);
   container.dataset.initialized = 'true';
 }
 

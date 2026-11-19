@@ -44,13 +44,27 @@ function normalizeBaseName(b) {
           htmlOpts += `<option value="${key}" disabled style="color:#64748b;">${(window.currentLang === 'en' ? (bData.labelEn || bData.label) : bData.label)} [${status.reason}]</option>`;
         }
       }
+      
       baseSelect.innerHTML = htmlOpts;
+      let isBaseValid = false;
+      for (const opt of baseSelect.options) {
+        if (opt.value === currentBase && !opt.disabled) {
+          isBaseValid = true;
+          break;
+        }
+      }
+      if (!isBaseValid) {
+        currentBase = 'Yokosuka';
+        campaignState.workflow.startingBase = 'Yokosuka';
+      }
       baseSelect.value = currentBase;
 
       const base0 = document.getElementById('wf-starting-base');
       if (base0 && base0.value !== currentBase) base0.value = currentBase;
 
       updateBaseDescriptionPill(currentBase);
+      if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+      if (typeof renderSubBoard === 'function') renderSubBoard();
     }
 
     function updateBaseDescriptionPill(base) {
@@ -144,17 +158,28 @@ function normalizeBaseName(b) {
       events.push({ val: "no", label: "No: Patrulla Estándar de Interdicción Mercante", isDefault: (events.length === 0) });
 
       meSelect.innerHTML = '';
-      let chosenVal = "no";
-      events.forEach(ev => {
-        const opt = document.createElement('option');
-        opt.value = ev.val;
-        opt.innerText = window.currentLang === 'en'
-          ? ev.label.replace(/^Sí:/, 'Yes:').replace(/^No:/, 'No:').replace(/Ataque/g, 'Attack').replace(/Invasión/g, 'Invasion').replace(/Misión/g, 'Mission').replace(/Patrulla Estándar de Interdicción Mercante/g, 'Standard Merchant Interdiction Patrol').replace(/Dic-/g, 'Dec-').replace(/May-/g, 'May-').replace(/Ago-/g, 'Aug-').replace(/Nov-/g, 'Nov-').replace(/Abr-Jun/g, 'Apr-Jun')
-          : ev.label;
-        if (ev.isDefault && chosenVal === "no") chosenVal = ev.val;
-        meSelect.appendChild(opt);
+      
+      // Categorizar: Disponibles (isDefault o en lista) y No Disponibles (Resto)
+      const allowedEvents = events.filter(e => e.val !== 'no');
+      
+      let html = '';
+      
+      // 1. Grupo Disponibles
+      html += `<optgroup label="${window.currentLang === 'en' ? 'Available Special Missions' : 'Misiones Especiales Disponibles'}">`;
+      allowedEvents.forEach(ev => {
+          html += `<option value="${ev.val}">${window.currentLang === 'en' ? ev.label.replace(/^Sí:/, 'Yes:').replace(/Ataque/g, 'Attack').replace(/Invasión/g, 'Invasion').replace(/Misión/g, 'Mission').replace(/Patrulla Estándar de Interdicción Mercante/g, 'Standard Merchant Interdiction Patrol').replace(/Dic-/g, 'Dec-').replace(/May-/g, 'May-').replace(/Ago-/g, 'Aug-').replace(/Nov-/g, 'Nov-').replace(/Abr-Jun/g, 'Apr-Jun') : ev.label}</option>`;
       });
+      html += `</optgroup>`;
 
+      // 2. Grupo Patrulla Estándar (La opción "no")
+      html += `<optgroup label="${window.currentLang === 'en' ? 'Standard Missions' : 'Misiones Estándar'}">`;
+      html += `<option value="no">${window.currentLang === 'en' ? 'Standard Merchant Interdiction Patrol' : 'Patrulla Estándar de Interdicción Mercante'}</option>`;
+      html += `</optgroup>`;
+
+      meSelect.innerHTML = html;
+
+      // Intentar mantener selección previa o por defecto
+      let chosenVal = allowedEvents.length > 0 ? allowedEvents[0].val : "no";
       meSelect.value = chosenVal;
       updateSpecialMissionCheck();
     }
@@ -636,20 +661,20 @@ function normalizeBaseName(b) {
 
       if (isEn) {
         const englishMissions = {
-          no: ["Standard Merchant Interdiction Patrol", "Search for and attack merchant convoys and warships in the operational area."],
-          yes_pearl: ["Attack on Pearl Harbor [Midget 1 / Recon 7 / Patrol]", "Operation Z: Ko-hyoteki midget submarines (Type C), night Glen flight (Type B), or surveillance patrol. Counts as TWO successful patrols (7.13)."],
-          yes_malaya: ["Invasion of Malaya [Picket / Recon 12 / Minelay]", "Picket line against the British Force Z, aerial reconnaissance, or minelaying. Counts as TWO successful patrols (7.13)."],
-          yes_philippines: ["Invasion of the Philippines [Minelay]", "Lay naval approach minefields. If the submarine carries no mines, conduct a standard patrol under Rule 6.0.1.C."],
-          yes_dutch: ["Offensive Patrol in the Dutch East Indies [Patrol]", "Great Event chit 'Dutch E. Indies (12/41 - 3/42)' with 'Patrol' reverse. Any submarine may conduct it and it counts as a Special Mission."],
-          yes_sydney: ["Midget 2 (Sydney Harbor Raid)", "Midget submarine infiltration into Port Jackson (Australia). Counts double for decorations."],
-          yes_diego: ["Midget 3 (Attack on Diego Suarez / Madagascar)", "Long-range attack in the Indian Ocean against capital ships."],
-          yes_midway: ["Midway Battle Patrol Line", "Interception patrol against enemy U.S. Navy carriers."],
-          yes_aleutians: ["Operation AL (Aleutian Islands Invasion)", "Reconnaissance and landing support around Kiska and Attu in the North Pacific."],
-          yes_guadalcanal: ["Guadalcanal and Solomon Islands Campaign (Tokyo Express)", "Interdiction and supply missions for the Imperial garrison."],
-          yes_leyte: ["Battle of Leyte Gulf / Operation Shō-1", "Massive offensive deployment against the U.S. 7th and 3rd Fleets in Philippine waters."],
-          yes_kaiten: ["Manned Kaiten Suicide Torpedo Mission", "Launch Type 1 Kaiten against anchorages and enemy fleets."],
-          yes_arashi: ["Operation Arashi (Ulithi Attack with M6A1 Seiran)", "Precision air-bombing raid using Seiran aircraft launched from the Sen-Toku."],
-          yes_okinawa: ["Operation Ten-Gō / Okinawa Waters Defense", "Submarine containment line against the Allied invasion fleet."]
+          no: [window.currentLang === 'en' ? "Standard Merchant Interdiction Patrol" : "Patrulla Estándar de Interdicción Mercante", window.currentLang === 'en' ? "Search for and attack merchant convoys and warships in the operational area." : "Buscar y atacar convoyes mercantes y buques de guerra en el área de operaciones."],
+          yes_pearl: [window.currentLang === 'en' ? "Attack on Pearl Harbor [Midget 1 / Recon 7 / Patrol]" : "Ataque a Pearl Harbor [Midget 1 / Recon 7 / Patrulla]", window.currentLang === 'en' ? "Operation Z: Ko-hyoteki midget submarines (Type C), night Glen flight (Type B), or surveillance patrol. Counts as TWO successful patrols (7.13)." : "Operación Z: minisubmarinos Ko-hyoteki (Tipo C), vuelo nocturno Glen (Tipo B) o patrulla de vigilancia. Cuenta como DOS patrullas exitosas (7.13)."],
+          yes_malaya: [window.currentLang === 'en' ? "Invasion of Malaya [Picket / Recon 12 / Minelay]" : "Invasión de Malaya [Piquete / Recon 12 / Minado]", window.currentLang === 'en' ? "Picket line against the British Force Z, aerial reconnaissance, or minelaying. Counts as TWO successful patrols (7.13)." : "Línea de piquete contra la Fuerza Z británica, reconocimiento aéreo o minado. Cuenta como DOS patrullas exitosas (7.13)."],
+          yes_philippines: [window.currentLang === 'en' ? "Invasion of the Philippines [Minelay]" : "Invasión de Filipinas [Minado]", window.currentLang === 'en' ? "Lay naval approach minefields. If the submarine carries no mines, conduct a standard patrol under Rule 6.0.1.C." : "Sembrar campos de minas en aproximaciones navales. Si el submarino no lleva minas, realiza una patrulla estándar según la Regla 6.0.1.C."],
+          yes_dutch: [window.currentLang === 'en' ? "Offensive Patrol in the Dutch East Indies [Patrol]" : "Patrulla Ofensiva en las Indias Orientales Neerlandesas [Patrulla]", window.currentLang === 'en' ? "Great Event chit 'Dutch E. Indies (12/41 - 3/42)' with 'Patrol' reverse. Any submarine may conduct it and it counts as a Special Mission." : "Ficha de Gran Evento 'Indias Orientales Holandesas (12/41 - 3/42)' con reverso 'Patrulla'. Cualquier submarino puede realizarla y cuenta como Misión Especial."],
+          yes_sydney: [window.currentLang === 'en' ? "Midget 2 (Sydney Harbor Raid)" : "Midget 2 (Incursión en el Puerto de Sídney)", window.currentLang === 'en' ? "Midget submarine infiltration into Port Jackson (Australia). Counts double for decorations." : "Infiltración de minisubmarinos en Port Jackson (Australia). Cuenta doble para condecoraciones."],
+          yes_diego: [window.currentLang === 'en' ? "Midget 3 (Attack on Diego Suarez / Madagascar)" : "Midget 3 (Ataque a Diego Suárez / Madagascar)", window.currentLang === 'en' ? "Long-range attack in the Indian Ocean against capital ships." : "Ataque de largo alcance en el Océano Índico contra buques capitales."],
+          yes_midway: [window.currentLang === 'en' ? "Midway Battle Patrol Line" : "Línea de Patrulla en la Batalla de Midway", window.currentLang === 'en' ? "Interception patrol against enemy U.S. Navy carriers." : "Patrulla de intercepción contra portaaviones enemigos de la Marina de EE.UU."],
+          yes_aleutians: [window.currentLang === 'en' ? "Operation AL (Aleutian Islands Invasion)" : "Operación AL (Invasión de las Islas Aleutianas)", window.currentLang === 'en' ? "Reconnaissance and landing support around Kiska and Attu in the North Pacific." : "Apoyo de reconocimiento y desembarco alrededor de Kiska y Attu en el Pacífico Norte."],
+          yes_guadalcanal: [window.currentLang === 'en' ? "Guadalcanal and Solomon Islands Campaign (Tokyo Express)" : "Campaña de Guadalcanal y las Islas Salomón (Tokyo Express)", window.currentLang === 'en' ? "Interdiction and supply missions for the Imperial garrison." : "Misiones de interdicción y suministros para la guarnición imperial."],
+          yes_leyte: [window.currentLang === 'en' ? "Battle of Leyte Gulf / Operation Shō-1" : "Batalla del Golfo de Leyte / Operación Shō-1", window.currentLang === 'en' ? "Massive offensive deployment against the U.S. 7th and 3rd Fleets in Philippine waters." : "Despliegue ofensivo masivo contra la 7.ª y 3.ª Flotas de EE.UU. en aguas filipinas."],
+          yes_kaiten: [window.currentLang === 'en' ? "Manned Kaiten Suicide Torpedo Mission" : "Misión de Torpedo Suicida Tripulado Kaiten", window.currentLang === 'en' ? "Launch Type 1 Kaiten against anchorages and enemy fleets." : "Lanzar Kaiten Tipo 1 contra fondeaderos y flotas enemigas."],
+          yes_arashi: [window.currentLang === 'en' ? "Operation Arashi (Ulithi Attack with M6A1 Seiran)" : "Operación Arashi (Ataque a Ulithi con M6A1 Seiran)", window.currentLang === 'en' ? "Precision air-bombing raid using Seiran aircraft launched from the Sen-Toku." : "Incursión de bombardeo aéreo de precisión usando aviones Seiran lanzados desde el Sen-Toku."],
+          yes_okinawa: [window.currentLang === 'en' ? "Operation Ten-Gō / Okinawa Waters Defense" : "Operación Ten-Gō / Defensa de las aguas de Okinawa", window.currentLang === 'en' ? "Submarine containment line against the Allied invasion fleet." : "Línea de contención submarina contra la flota de invasión aliada."]
         };
         if (englishMissions[val]) [missionName, missionDesc] = englishMissions[val];
       }

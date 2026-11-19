@@ -1,0 +1,969 @@
+{
+  "card_w_mm": 238.0,
+  "card_h_mm": 180.4,
+  "slot_size_mm": 15.0,
+  "slot_w_pct": 6.3025,
+  "slot_h_pct": 8.3149,
+  "slots": [
+    {
+      "id": "slot-base-current",
+      "category": "base",
+      "x_pct": 1.0504,
+      "y_pct": 10.255,
+      "cx_mm": 10.0,
+      "cy_mm": 26.0,
+      "label_es": "Base Actual",
+      "label_en": "Current Base"
+    },
+    {
+      "id": "slot-base-mission",
+      "category": "base",
+      "x_pct": 1.0504,
+      "y_pct": 20.2328,
+      "cx_mm": 10.0,
+      "cy_mm": 44.0,
+      "label_es": "Misi\u00f3n Asignada",
+      "label_en": "Assigned Mission"
+    },
+    {
+      "id": "slot-base-port",
+      "category": "base",
+      "x_pct": 1.0504,
+      "y_pct": 30.4878,
+      "cx_mm": 10.0,
+      "cy_mm": 62.5,
+      "label_es": "En Puerto",
+      "label_en": "At Port"
+    },
+    {
+      "id": "slot-patrol-1",
+      "category": "patrol",
+      "x_pct": 8.4034,
+      "y_pct": 30.4878,
+      "cx_mm": 27.5,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 1",
+      "label_en": "Patrol 1"
+    },
+    {
+      "id": "slot-patrol-2",
+      "category": "patrol",
+      "x_pct": 15.3782,
+      "y_pct": 30.4878,
+      "cx_mm": 44.1,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 2",
+      "label_en": "Patrol 2"
+    },
+    {
+      "id": "slot-patrol-3",
+      "category": "patrol",
+      "x_pct": 22.3529,
+      "y_pct": 30.4878,
+      "cx_mm": 60.7,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 3",
+      "label_en": "Patrol 3"
+    },
+    {
+      "id": "slot-patrol-4",
+      "category": "patrol",
+      "x_pct": 29.3277,
+      "y_pct": 30.4878,
+      "cx_mm": 77.3,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 4",
+      "label_en": "Patrol 4"
+    },
+    {
+      "id": "slot-patrol-5",
+      "category": "patrol",
+      "x_pct": 36.3025,
+      "y_pct": 30.4878,
+      "cx_mm": 93.9,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 5",
+      "label_en": "Patrol 5"
+    },
+    {
+      "id": "slot-patrol-6",
+      "category": "patrol",
+      "x_pct": 43.2773,
+      "y_pct": 30.4878,
+      "cx_mm": 110.5,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 6",
+      "label_en": "Patrol 6"
+    },
+    {
+      "id": "slot-patrol-7",
+      "category": "patrol",
+      "x_pct": 50.2521,
+      "y_pct": 30.4878,
+      "cx_mm": 127.1,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 7",
+      "label_en": "Patrol 7"
+    },
+    {
+      "id": "slot-patrol-8",
+      "category": "patrol",
+      "x_pct": 57.2269,
+      "y_pct": 30.4878,
+      "cx_mm": 143.7,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 8",
+      "label_en": "Patrol 8"
+    },
+    {
+      "id": "slot-patrol-9",
+      "category": "patrol",
+      "x_pct": 64.2017,
+      "y_pct": 30.4878,
+      "cx_mm": 160.3,
+      "cy_mm": 62.5,
+      "label_es": "Patrulla 9",
+      "label_en": "Patrol 9"
+    },
+    {
+      "id": "slot-flood-marker",
+      "category": "damage-flood",
+      "x_pct": 1.0504,
+      "y_pct": 42.1286,
+      "cx_mm": 10.0,
+      "cy_mm": 83.5,
+      "label_es": "Marcador Inundaci\u00f3n",
+      "label_en": "Flooding Marker"
+    },
+    {
+      "id": "slot-flood-1",
+      "category": "damage-flood",
+      "x_pct": 8.4034,
+      "y_pct": 42.1286,
+      "cx_mm": 27.5,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 1",
+      "label_en": "Flood 1"
+    },
+    {
+      "id": "slot-flood-2",
+      "category": "damage-flood",
+      "x_pct": 15.3782,
+      "y_pct": 42.1286,
+      "cx_mm": 44.1,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 2",
+      "label_en": "Flood 2"
+    },
+    {
+      "id": "slot-flood-3",
+      "category": "damage-flood",
+      "x_pct": 22.3529,
+      "y_pct": 42.1286,
+      "cx_mm": 60.7,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 3",
+      "label_en": "Flood 3"
+    },
+    {
+      "id": "slot-flood-4",
+      "category": "damage-flood",
+      "x_pct": 29.3277,
+      "y_pct": 42.1286,
+      "cx_mm": 77.3,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 4",
+      "label_en": "Flood 4"
+    },
+    {
+      "id": "slot-flood-5",
+      "category": "damage-flood",
+      "x_pct": 36.3025,
+      "y_pct": 42.1286,
+      "cx_mm": 93.9,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 5",
+      "label_en": "Flood 5"
+    },
+    {
+      "id": "slot-flood-6",
+      "category": "damage-flood",
+      "x_pct": 43.2773,
+      "y_pct": 42.1286,
+      "cx_mm": 110.5,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 6",
+      "label_en": "Flood 6"
+    },
+    {
+      "id": "slot-flood-7",
+      "category": "damage-flood",
+      "x_pct": 50.2521,
+      "y_pct": 42.1286,
+      "cx_mm": 127.1,
+      "cy_mm": 83.5,
+      "label_es": "Inundaci\u00f3n 7",
+      "label_en": "Flood 7"
+    },
+    {
+      "id": "slot-flood-8",
+      "category": "damage-flood",
+      "x_pct": 57.2269,
+      "y_pct": 42.1286,
+      "cx_mm": 143.7,
+      "cy_mm": 83.5,
+      "label_es": "Superficie",
+      "label_en": "Surface"
+    },
+    {
+      "id": "slot-flood-9",
+      "category": "damage-flood",
+      "x_pct": 64.2017,
+      "y_pct": 42.1286,
+      "cx_mm": 160.3,
+      "cy_mm": 83.5,
+      "label_es": "Inactivo",
+      "label_en": "Inactive"
+    },
+    {
+      "id": "slot-hull-marker",
+      "category": "damage-hull",
+      "x_pct": 1.0504,
+      "y_pct": 51.5521,
+      "cx_mm": 10.0,
+      "cy_mm": 100.5,
+      "label_es": "Marcador Casco",
+      "label_en": "Hull Damage Marker"
+    },
+    {
+      "id": "slot-hull-1",
+      "category": "damage-hull",
+      "x_pct": 8.4034,
+      "y_pct": 51.5521,
+      "cx_mm": 27.5,
+      "cy_mm": 100.5,
+      "label_es": "Casco 1",
+      "label_en": "Hull 1"
+    },
+    {
+      "id": "slot-hull-2",
+      "category": "damage-hull",
+      "x_pct": 15.3782,
+      "y_pct": 51.5521,
+      "cx_mm": 44.1,
+      "cy_mm": 100.5,
+      "label_es": "Casco 2",
+      "label_en": "Hull 2"
+    },
+    {
+      "id": "slot-hull-3",
+      "category": "damage-hull",
+      "x_pct": 22.3529,
+      "y_pct": 51.5521,
+      "cx_mm": 60.7,
+      "cy_mm": 100.5,
+      "label_es": "Casco 3",
+      "label_en": "Hull 3"
+    },
+    {
+      "id": "slot-hull-4",
+      "category": "damage-hull",
+      "x_pct": 29.3277,
+      "y_pct": 51.5521,
+      "cx_mm": 77.3,
+      "cy_mm": 100.5,
+      "label_es": "Casco 4",
+      "label_en": "Hull 4"
+    },
+    {
+      "id": "slot-hull-5",
+      "category": "damage-hull",
+      "x_pct": 36.3025,
+      "y_pct": 51.5521,
+      "cx_mm": 93.9,
+      "cy_mm": 100.5,
+      "label_es": "Casco 5",
+      "label_en": "Hull 5"
+    },
+    {
+      "id": "slot-hull-6",
+      "category": "damage-hull",
+      "x_pct": 43.2773,
+      "y_pct": 51.5521,
+      "cx_mm": 110.5,
+      "cy_mm": 100.5,
+      "label_es": "Casco 6",
+      "label_en": "Hull 6"
+    },
+    {
+      "id": "slot-hull-7",
+      "category": "damage-hull",
+      "x_pct": 50.2521,
+      "y_pct": 51.5521,
+      "cx_mm": 127.1,
+      "cy_mm": 100.5,
+      "label_es": "Casco 7",
+      "label_en": "Hull 7"
+    },
+    {
+      "id": "slot-hull-8",
+      "category": "damage-hull",
+      "x_pct": 57.2269,
+      "y_pct": 51.5521,
+      "cx_mm": 143.7,
+      "cy_mm": 100.5,
+      "label_es": "Hundido",
+      "label_en": "Sunk"
+    },
+    {
+      "id": "slot-hull-9",
+      "category": "damage-hull",
+      "x_pct": 64.2017,
+      "y_pct": 51.5521,
+      "cx_mm": 160.3,
+      "cy_mm": 100.5,
+      "label_es": "Inactivo",
+      "label_en": "Inactive"
+    },
+    {
+      "id": "slot-crew-capt",
+      "category": "crew",
+      "x_pct": 1.0504,
+      "y_pct": 63.7472,
+      "cx_mm": 10.0,
+      "cy_mm": 122.5,
+      "label_es": "Capit\u00e1n",
+      "label_en": "Captain"
+    },
+    {
+      "id": "slot-crew-eng",
+      "category": "crew",
+      "x_pct": 8.4034,
+      "y_pct": 63.7472,
+      "cx_mm": 27.5,
+      "cy_mm": 122.5,
+      "label_es": "Jefe M\u00e1q.",
+      "label_en": "Engineer"
+    },
+    {
+      "id": "slot-crew-xo",
+      "category": "crew",
+      "x_pct": 15.3782,
+      "y_pct": 63.7472,
+      "cx_mm": 44.1,
+      "cy_mm": 122.5,
+      "label_es": "2.\u00ba Cmdte.",
+      "label_en": "XO"
+    },
+    {
+      "id": "slot-crew-nav",
+      "category": "crew",
+      "x_pct": 22.3529,
+      "y_pct": 63.7472,
+      "cx_mm": 60.7,
+      "cy_mm": 122.5,
+      "label_es": "Navegante",
+      "label_en": "Navigator"
+    },
+    {
+      "id": "slot-crew-med",
+      "category": "crew",
+      "x_pct": 29.3277,
+      "y_pct": 63.7472,
+      "cx_mm": 77.3,
+      "cy_mm": 122.5,
+      "label_es": "M\u00e9dico",
+      "label_en": "Medic"
+    },
+    {
+      "id": "slot-crew-spec",
+      "category": "crew",
+      "x_pct": 36.3025,
+      "y_pct": 63.7472,
+      "cx_mm": 93.9,
+      "cy_mm": 122.5,
+      "label_es": "Especial / Piloto",
+      "label_en": "Specialist / Pilot"
+    },
+    {
+      "id": "slot-crew-crew-1",
+      "category": "crew",
+      "x_pct": 1.0504,
+      "y_pct": 73.1707,
+      "cx_mm": 10.0,
+      "cy_mm": 139.5,
+      "label_es": "Dotaci\u00f3n 1",
+      "label_en": "Crew 1"
+    },
+    {
+      "id": "slot-crew-crew-2",
+      "category": "crew",
+      "x_pct": 8.4034,
+      "y_pct": 73.1707,
+      "cx_mm": 27.5,
+      "cy_mm": 139.5,
+      "label_es": "Dotaci\u00f3n 2",
+      "label_en": "Crew 2"
+    },
+    {
+      "id": "slot-crew-crew-3",
+      "category": "crew",
+      "x_pct": 15.3782,
+      "y_pct": 73.1707,
+      "cx_mm": 44.1,
+      "cy_mm": 139.5,
+      "label_es": "Dotaci\u00f3n 3",
+      "label_en": "Crew 3"
+    },
+    {
+      "id": "slot-crew-crew-4",
+      "category": "crew",
+      "x_pct": 22.3529,
+      "y_pct": 73.1707,
+      "cx_mm": 60.7,
+      "cy_mm": 139.5,
+      "label_es": "Dotaci\u00f3n 4",
+      "label_en": "Crew 4"
+    },
+    {
+      "id": "slot-crew-crew-5",
+      "category": "crew",
+      "x_pct": 29.3277,
+      "y_pct": 73.1707,
+      "cx_mm": 77.3,
+      "cy_mm": 139.5,
+      "label_es": "Dotaci\u00f3n 5",
+      "label_en": "Crew 5"
+    },
+    {
+      "id": "slot-crew-quality",
+      "category": "crew",
+      "x_pct": 36.3025,
+      "y_pct": 73.1707,
+      "cx_mm": 93.9,
+      "cy_mm": 139.5,
+      "label_es": "Calidad Tripul.",
+      "label_en": "Crew Quality"
+    },
+    {
+      "id": "slot-sys-0",
+      "category": "system",
+      "x_pct": 43.2773,
+      "y_pct": 63.7472,
+      "cx_mm": 110.5,
+      "cy_mm": 122.5,
+      "label_es": "Sistema 1",
+      "label_en": "System 1"
+    },
+    {
+      "id": "slot-sys-1",
+      "category": "system",
+      "x_pct": 50.2521,
+      "y_pct": 63.7472,
+      "cx_mm": 127.1,
+      "cy_mm": 122.5,
+      "label_es": "Sistema 2",
+      "label_en": "System 2"
+    },
+    {
+      "id": "slot-sys-2",
+      "category": "system",
+      "x_pct": 57.2269,
+      "y_pct": 63.7472,
+      "cx_mm": 143.7,
+      "cy_mm": 122.5,
+      "label_es": "Sistema 3",
+      "label_en": "System 3"
+    },
+    {
+      "id": "slot-sys-3",
+      "category": "system",
+      "x_pct": 64.2017,
+      "y_pct": 63.7472,
+      "cx_mm": 160.3,
+      "cy_mm": 122.5,
+      "label_es": "Sistema 4",
+      "label_en": "System 4"
+    },
+    {
+      "id": "slot-sys-4",
+      "category": "system",
+      "x_pct": 43.2773,
+      "y_pct": 73.1707,
+      "cx_mm": 110.5,
+      "cy_mm": 139.5,
+      "label_es": "Sistema 5",
+      "label_en": "System 5"
+    },
+    {
+      "id": "slot-sys-5",
+      "category": "system",
+      "x_pct": 50.2521,
+      "y_pct": 73.1707,
+      "cx_mm": 127.1,
+      "cy_mm": 139.5,
+      "label_es": "Sistema 6",
+      "label_en": "System 6"
+    },
+    {
+      "id": "slot-sys-6",
+      "category": "system",
+      "x_pct": 57.2269,
+      "y_pct": 73.1707,
+      "cx_mm": 143.7,
+      "cy_mm": 139.5,
+      "label_es": "Sistema 7",
+      "label_en": "System 7"
+    },
+    {
+      "id": "slot-sys-7",
+      "category": "system",
+      "x_pct": 64.2017,
+      "y_pct": 73.1707,
+      "cx_mm": 160.3,
+      "cy_mm": 139.5,
+      "label_es": "Sistema 8",
+      "label_en": "System 8"
+    },
+    {
+      "id": "slot-sys-8",
+      "category": "system",
+      "x_pct": 43.2773,
+      "y_pct": 82.5942,
+      "cx_mm": 110.5,
+      "cy_mm": 156.5,
+      "label_es": "Sistema 9",
+      "label_en": "System 9"
+    },
+    {
+      "id": "slot-sys-9",
+      "category": "system",
+      "x_pct": 50.2521,
+      "y_pct": 82.5942,
+      "cx_mm": 127.1,
+      "cy_mm": 156.5,
+      "label_es": "Sistema 10",
+      "label_en": "System 10"
+    },
+    {
+      "id": "slot-sys-10",
+      "category": "system",
+      "x_pct": 57.2269,
+      "y_pct": 82.5942,
+      "cx_mm": 143.7,
+      "cy_mm": 156.5,
+      "label_es": "Sistema 11",
+      "label_en": "System 11"
+    },
+    {
+      "id": "slot-sys-11",
+      "category": "system",
+      "x_pct": 64.2017,
+      "y_pct": 82.5942,
+      "cx_mm": 160.3,
+      "cy_mm": 156.5,
+      "label_es": "Sistema 12",
+      "label_en": "System 12"
+    },
+    {
+      "id": "slot-sys-12",
+      "category": "system",
+      "x_pct": 43.2773,
+      "y_pct": 91.7406,
+      "cx_mm": 110.5,
+      "cy_mm": 173.0,
+      "label_es": "Sistema 13",
+      "label_en": "System 13"
+    },
+    {
+      "id": "slot-sys-13",
+      "category": "system",
+      "x_pct": 50.2521,
+      "y_pct": 91.7406,
+      "cx_mm": 127.1,
+      "cy_mm": 173.0,
+      "label_es": "Sistema 14",
+      "label_en": "System 14"
+    },
+    {
+      "id": "slot-sys-14",
+      "category": "system",
+      "x_pct": 57.2269,
+      "y_pct": 91.7406,
+      "cx_mm": 143.7,
+      "cy_mm": 173.0,
+      "label_es": "Sistema 15",
+      "label_en": "System 15"
+    },
+    {
+      "id": "slot-sys-15",
+      "category": "system",
+      "x_pct": 64.2017,
+      "y_pct": 91.7406,
+      "cx_mm": 160.3,
+      "cy_mm": 173.0,
+      "label_es": "Sistema 16",
+      "label_en": "System 16"
+    },
+    {
+      "id": "slot-air-1",
+      "category": "aircraft",
+      "x_pct": 71.5966,
+      "y_pct": 3.8248,
+      "cx_mm": 177.9,
+      "cy_mm": 14.4,
+      "label_es": "Hidroavi\u00f3n / Estado #1",
+      "label_en": "Aircraft Status #1"
+    },
+    {
+      "id": "slot-air-2",
+      "category": "aircraft",
+      "x_pct": 78.6134,
+      "y_pct": 3.8248,
+      "cx_mm": 194.6,
+      "cy_mm": 14.4,
+      "label_es": "Hidroavi\u00f3n / Estado #2",
+      "label_en": "Aircraft Status #2"
+    },
+    {
+      "id": "slot-event-1",
+      "category": "event",
+      "x_pct": 85.6303,
+      "y_pct": 3.8248,
+      "cx_mm": 211.3,
+      "cy_mm": 14.4,
+      "label_es": "Evento Aleatorio #1",
+      "label_en": "Random Event #1"
+    },
+    {
+      "id": "slot-event-2",
+      "category": "event",
+      "x_pct": 92.6471,
+      "y_pct": 3.8248,
+      "cx_mm": 228.0,
+      "cy_mm": 14.4,
+      "label_es": "Evento Aleatorio #2",
+      "label_en": "Random Event #2"
+    },
+    {
+      "id": "slot-tube-1",
+      "category": "tube-fwd",
+      "x_pct": 71.5966,
+      "y_pct": 15.7982,
+      "cx_mm": 177.9,
+      "cy_mm": 36.0,
+      "label_es": "Tubo Proa 1",
+      "label_en": "Bow Tube 1"
+    },
+    {
+      "id": "slot-tube-2",
+      "category": "tube-fwd",
+      "x_pct": 78.6134,
+      "y_pct": 15.7982,
+      "cx_mm": 194.6,
+      "cy_mm": 36.0,
+      "label_es": "Tubo Proa 2",
+      "label_en": "Bow Tube 2"
+    },
+    {
+      "id": "slot-tube-3",
+      "category": "tube-fwd",
+      "x_pct": 85.6303,
+      "y_pct": 15.7982,
+      "cx_mm": 211.3,
+      "cy_mm": 36.0,
+      "label_es": "Tubo Proa 3",
+      "label_en": "Bow Tube 3"
+    },
+    {
+      "id": "slot-tube-4",
+      "category": "tube-fwd",
+      "x_pct": 92.6471,
+      "y_pct": 15.7982,
+      "cx_mm": 228.0,
+      "cy_mm": 36.0,
+      "label_es": "Tubo Proa 4",
+      "label_en": "Bow Tube 4"
+    },
+    {
+      "id": "slot-tube-5",
+      "category": "tube-fwd",
+      "x_pct": 71.5966,
+      "y_pct": 25.4435,
+      "cx_mm": 177.9,
+      "cy_mm": 53.4,
+      "label_es": "Tubo Proa 5",
+      "label_en": "Bow Tube 5"
+    },
+    {
+      "id": "slot-tube-6",
+      "category": "tube-fwd",
+      "x_pct": 78.6134,
+      "y_pct": 25.4435,
+      "cx_mm": 194.6,
+      "cy_mm": 53.4,
+      "label_es": "Tubo Proa 6",
+      "label_en": "Bow Tube 6"
+    },
+    {
+      "id": "slot-tube-7",
+      "category": "tube-fwd",
+      "x_pct": 85.6303,
+      "y_pct": 25.4435,
+      "cx_mm": 211.3,
+      "cy_mm": 53.4,
+      "label_es": "Tubo Proa 7",
+      "label_en": "Bow Tube 7"
+    },
+    {
+      "id": "slot-tube-8",
+      "category": "tube-fwd",
+      "x_pct": 92.6471,
+      "y_pct": 25.4435,
+      "cx_mm": 228.0,
+      "cy_mm": 53.4,
+      "label_es": "Tubo Proa 8",
+      "label_en": "Bow Tube 8"
+    },
+    {
+      "id": "slot-aft-1",
+      "category": "tube-aft",
+      "x_pct": 71.5966,
+      "y_pct": 37.4169,
+      "cx_mm": 177.9,
+      "cy_mm": 75.0,
+      "label_es": "Popa / Recarga 1",
+      "label_en": "Stern / Reload 1"
+    },
+    {
+      "id": "slot-aft-2",
+      "category": "tube-aft",
+      "x_pct": 78.6134,
+      "y_pct": 37.4169,
+      "cx_mm": 194.6,
+      "cy_mm": 75.0,
+      "label_es": "Popa / Recarga 2",
+      "label_en": "Stern / Reload 2"
+    },
+    {
+      "id": "slot-aft-3",
+      "category": "tube-aft",
+      "x_pct": 85.6303,
+      "y_pct": 37.4169,
+      "cx_mm": 211.3,
+      "cy_mm": 75.0,
+      "label_es": "Popa / Recarga 3",
+      "label_en": "Stern / Reload 3"
+    },
+    {
+      "id": "slot-aft-4",
+      "category": "tube-aft",
+      "x_pct": 92.6471,
+      "y_pct": 37.4169,
+      "cx_mm": 228.0,
+      "cy_mm": 75.0,
+      "label_es": "Popa / Recarga 4",
+      "label_en": "Stern / Reload 4"
+    },
+    {
+      "id": "slot-artillery-1",
+      "category": "artillery",
+      "x_pct": 71.5966,
+      "y_pct": 49.3902,
+      "cx_mm": 177.9,
+      "cy_mm": 96.6,
+      "label_es": "Ca\u00f1\u00f3n Principal",
+      "label_en": "Deck Gun"
+    },
+    {
+      "id": "slot-artillery-2",
+      "category": "artillery",
+      "x_pct": 78.6134,
+      "y_pct": 49.3902,
+      "cx_mm": 194.6,
+      "cy_mm": 96.6,
+      "label_es": "Munici\u00f3n (x5)",
+      "label_en": "Ammo (x5)"
+    },
+    {
+      "id": "slot-artillery-3",
+      "category": "artillery",
+      "x_pct": 85.6303,
+      "y_pct": 49.3902,
+      "cx_mm": 211.3,
+      "cy_mm": 96.6,
+      "label_es": "Antia\u00e9reo 1",
+      "label_en": "AA Gun 1"
+    },
+    {
+      "id": "slot-artillery-4",
+      "category": "artillery",
+      "x_pct": 92.6471,
+      "y_pct": 49.3902,
+      "cx_mm": 228.0,
+      "cy_mm": 96.6,
+      "label_es": "Antia\u00e9reo 2 / Esp.",
+      "label_en": "AA Gun 2 / Spec"
+    },
+    {
+      "id": "slot-reload-1",
+      "category": "reload",
+      "x_pct": 71.5966,
+      "y_pct": 61.3636,
+      "cx_mm": 177.9,
+      "cy_mm": 118.2,
+      "label_es": "Recarga 1",
+      "label_en": "Reload 1"
+    },
+    {
+      "id": "slot-reload-2",
+      "category": "reload",
+      "x_pct": 78.6134,
+      "y_pct": 61.3636,
+      "cx_mm": 194.6,
+      "cy_mm": 118.2,
+      "label_es": "Recarga 2",
+      "label_en": "Reload 2"
+    },
+    {
+      "id": "slot-reload-3",
+      "category": "reload",
+      "x_pct": 85.6303,
+      "y_pct": 61.3636,
+      "cx_mm": 211.3,
+      "cy_mm": 118.2,
+      "label_es": "Recarga 3",
+      "label_en": "Reload 3"
+    },
+    {
+      "id": "slot-reload-4",
+      "category": "reload",
+      "x_pct": 92.6471,
+      "y_pct": 61.3636,
+      "cx_mm": 228.0,
+      "cy_mm": 118.2,
+      "label_es": "Recarga 4",
+      "label_en": "Reload 4"
+    },
+    {
+      "id": "slot-reload-5",
+      "category": "reload",
+      "x_pct": 71.5966,
+      "y_pct": 71.0089,
+      "cx_mm": 177.9,
+      "cy_mm": 135.6,
+      "label_es": "Recarga 5",
+      "label_en": "Reload 5"
+    },
+    {
+      "id": "slot-reload-6",
+      "category": "reload",
+      "x_pct": 78.6134,
+      "y_pct": 71.0089,
+      "cx_mm": 194.6,
+      "cy_mm": 135.6,
+      "label_es": "Recarga 6",
+      "label_en": "Reload 6"
+    },
+    {
+      "id": "slot-reload-7",
+      "category": "reload",
+      "x_pct": 85.6303,
+      "y_pct": 71.0089,
+      "cx_mm": 211.3,
+      "cy_mm": 135.6,
+      "label_es": "Recarga 7",
+      "label_en": "Reload 7"
+    },
+    {
+      "id": "slot-reload-8",
+      "category": "reload",
+      "x_pct": 92.6471,
+      "y_pct": 71.0089,
+      "cx_mm": 228.0,
+      "cy_mm": 135.6,
+      "label_es": "Recarga 8",
+      "label_en": "Reload 8"
+    },
+    {
+      "id": "slot-reload-9",
+      "category": "reload",
+      "x_pct": 71.5966,
+      "y_pct": 80.6541,
+      "cx_mm": 177.9,
+      "cy_mm": 153.0,
+      "label_es": "Recarga 9",
+      "label_en": "Reload 9"
+    },
+    {
+      "id": "slot-reload-10",
+      "category": "reload",
+      "x_pct": 78.6134,
+      "y_pct": 80.6541,
+      "cx_mm": 194.6,
+      "cy_mm": 153.0,
+      "label_es": "Recarga 10",
+      "label_en": "Reload 10"
+    },
+    {
+      "id": "slot-reload-11",
+      "category": "reload",
+      "x_pct": 85.6303,
+      "y_pct": 80.6541,
+      "cx_mm": 211.3,
+      "cy_mm": 153.0,
+      "label_es": "Recarga 11",
+      "label_en": "Reload 11"
+    },
+    {
+      "id": "slot-reload-12",
+      "category": "reload",
+      "x_pct": 92.6471,
+      "y_pct": 80.6541,
+      "cx_mm": 228.0,
+      "cy_mm": 153.0,
+      "label_es": "Recarga 12",
+      "label_en": "Reload 12"
+    },
+    {
+      "id": "slot-reload-13",
+      "category": "reload",
+      "x_pct": 71.5966,
+      "y_pct": 90.2993,
+      "cx_mm": 177.9,
+      "cy_mm": 170.4,
+      "label_es": "Recarga 13",
+      "label_en": "Reload 13"
+    },
+    {
+      "id": "slot-reload-14",
+      "category": "reload",
+      "x_pct": 78.6134,
+      "y_pct": 90.2993,
+      "cx_mm": 194.6,
+      "cy_mm": 170.4,
+      "label_es": "Recarga 14",
+      "label_en": "Reload 14"
+    },
+    {
+      "id": "slot-reload-15",
+      "category": "reload",
+      "x_pct": 85.6303,
+      "y_pct": 90.2993,
+      "cx_mm": 211.3,
+      "cy_mm": 170.4,
+      "label_es": "Recarga 15",
+      "label_en": "Reload 15"
+    },
+    {
+      "id": "slot-reload-16",
+      "category": "reload",
+      "x_pct": 92.6471,
+      "y_pct": 90.2993,
+      "cx_mm": 228.0,
+      "cy_mm": 170.4,
+      "label_es": "Recarga 16",
+      "label_en": "Reload 16"
+    }
+  ]
+}
