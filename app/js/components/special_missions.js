@@ -247,13 +247,13 @@ function getCurrentAssignedMissionKey() {
   // 1. Explicit assigned key
   if (wf.assignedSpecialMissionKey) return wf.assignedSpecialMissionKey;
   
-  // 2. Check specialMissionAssigned string
-  const str = (wf.specialMissionAssigned || '').toLowerCase();
+  // 2. Check specialMissionAssigned, assignedMissionLine, or assignedMissionType
+  const str = (wf.specialMissionAssigned || wf.assignedMissionLine || wf.assignedMissionType || '').toLowerCase();
   if (str) {
     for (const m of SPECIAL_MISSIONS_CONFIG) {
       if (str.includes(m.key)) return m.key;
     }
-    if (str.includes('recon') || str.includes('aéreo') || str.includes('glen')) return 'recon';
+    if (str.includes('recon') || str.includes('aéreo') || str.includes('glen') || str.includes('seiran') || str.includes('exploración')) return 'recon';
     if (str.includes('picket') || str.includes('piquete')) return 'picket';
     if (str.includes('midget') || str.includes('ko-hyoteki') || str.includes('mini')) return 'midget';
     if (str.includes('transport') || str.includes('tokyo') || str.includes('supply') || str.includes('suministro')) return 'transport';
@@ -262,25 +262,37 @@ function getCurrentAssignedMissionKey() {
     if (str.includes('bomb') || str.includes('panama') || str.includes('oregon')) return 'bombing';
     if (str.includes('kaiten')) return 'kaiten';
     if (str.includes('shore') || str.includes('bombard') || str.includes('costero')) return 'shore_bombardment';
-    if (str.includes('mine') || str.includes('mina')) return 'minelaying';
-    if (str.includes('pass') || str.includes('vip') || str.includes('agente')) return 'passenger';
+    if (str.includes('mine') || str.includes('mina') || str.includes('minador')) return 'minelaying';
+    if (str.includes('pass') || str.includes('vip') || str.includes('agente') || str.includes('pasajero')) return 'passenger';
   }
   
-  // 3. Check active major event chit
-  const chit = wf.currentChit || wf.majorEventChit;
-  if (chit && typeof determineMajorEventAssignedMission === 'function') {
+  // 3. Fallback: match by currentChit / majorEventChit / active area + month
+  let chit = wf.currentChit || wf.majorEventChit;
+  if (!chit && typeof MISSION_CHITS !== 'undefined' && Array.isArray(MISSION_CHITS)) {
+    const curMonth = wf.selectedMonth || '1941-12';
+    const area = (wf.assignedArea || wf.patrolArea || '').toLowerCase();
+    chit = MISSION_CHITS.find(c => c.validMonths && c.validMonths.includes(curMonth) && (
+      (c.redTitle && area.includes(c.redTitle.toLowerCase())) ||
+      (c.redSub && area.includes(c.redSub.toLowerCase()))
+    ));
+  }
+
+  if (chit && chit.whiteLines) {
     const subKey = campaignState.activeSubKey || 'Type_B_Class';
     const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines && SUB_DB.submarines[subKey]) ? SUB_DB.submarines[subKey] : {};
-    const assigned = determineMajorEventAssignedMission(chit, subData);
-    if (assigned && assigned.missionName) {
-      const aStr = assigned.missionName.toLowerCase();
-      if (aStr.includes('midget')) return 'midget';
-      if (aStr.includes('recon')) return 'recon';
-      if (aStr.includes('kaiten')) return 'kaiten';
-      if (aStr.includes('minelay') || aStr.includes('mine')) return 'minelaying';
-      if (aStr.includes('bomb')) return 'bombing';
-      if (aStr.includes('transport')) return 'transport';
-      if (aStr.includes('picket')) return 'picket';
+    
+    // Evaluate line compatibility
+    for (const line of chit.whiteLines) {
+      const l = line.toLowerCase();
+      if (l.includes('midget') && (subData.has_midget_carrier || subData.class_name?.includes("Type C") || subData.class_name?.includes("Type A"))) return 'midget';
+      if ((l.includes('recon') || l.includes('bomb')) && (subData.has_aircraft || subData.aircraft_type)) return 'recon';
+      if (l.includes('kaiten') && (subData.has_kaiten || subData.kaiten_note)) return 'kaiten';
+      if (l.includes('minelay') && (subData.has_mines || subData.class_name?.includes("Kirai"))) return 'minelaying';
+      if (l.includes('transport')) return 'transport';
+      if (l.includes('picket')) return 'picket';
+      if (l.includes('pass')) return 'passenger';
+      if (l.includes('evac')) return 'evacuation';
+      if (l.includes('shore')) return 'shore_bombardment';
     }
   }
 
@@ -354,6 +366,33 @@ function initSpecialMissionsTab() {
   const isEn = (window.currentLang === 'en');
   const subKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) ? campaignState.activeSubKey : 'Type_B_Class';
   const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines && SUB_DB.submarines[subKey]) ? SUB_DB.submarines[subKey] : {};
+
+  // Auto-detect assigned mission key
+  const currentAssignedKey = getCurrentAssignedMissionKey();
+
+  // If a mission is assigned, set filter to 'current' so player sees their assigned mission card!
+  // If NO mission is assigned, default to 'compatible' so player sees all missions their sub can do!
+  if (currentAssignedKey) {
+    specialMissionsFilter = 'current';
+  } else if (specialMissionsFilter === 'current') {
+    specialMissionsFilter = 'compatible';
+  }
+
+  // Update button active states
+  ['all', 'compatible', 'current'].forEach(k => {
+    const btn = document.getElementById(`btn-filter-spec-${k}`);
+    if (btn) {
+      const isActive = (k === specialMissionsFilter);
+      btn.classList.toggle('active', isActive);
+      if (isActive) {
+        btn.style.boxShadow = '0 0 10px rgba(234, 179, 8, 0.6)';
+        btn.style.borderWidth = '2px';
+      } else {
+        btn.style.boxShadow = 'none';
+        btn.style.borderWidth = '1px';
+      }
+    }
+  });
 
   // Render Submarine header
   const nameEl = document.getElementById('spec-active-sub-name');

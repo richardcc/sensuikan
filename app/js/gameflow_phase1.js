@@ -378,6 +378,14 @@ function normalizeBaseName(b) {
 
       if (!chit || !chit.whiteLines || chit.whiteLines.length === 0) {
         container.innerHTML = '';
+        if (typeof campaignState !== 'undefined' && campaignState.workflow) {
+          campaignState.workflow.assignedMissionType = null;
+          campaignState.workflow.assignedMissionLine = null;
+          campaignState.workflow.specialMissionAssigned = null;
+          campaignState.workflow.assignedSpecialMissionKey = null;
+          campaignState.workflow.isSpecialMission = false;
+          if (typeof saveState === 'function') saveState();
+        }
         return;
       }
 
@@ -487,7 +495,26 @@ function normalizeBaseName(b) {
       if (assignedEv) {
         campaignState.workflow.assignedMissionType = assignedEv.type;
         campaignState.workflow.assignedMissionLine = assignedEv.line;
+        campaignState.workflow.specialMissionAssigned = `${assignedEv.type} (${assignedEv.line})`;
         campaignState.workflow.isSpecialMission = (assignedEv.line !== 'Patrol');
+        campaignState.workflow.currentChit = chit;
+
+        if (assignedEv.line) {
+          const l = assignedEv.line.toLowerCase();
+          if (l.includes('midget')) campaignState.workflow.assignedSpecialMissionKey = 'midget';
+          else if (l.includes('recon')) campaignState.workflow.assignedSpecialMissionKey = 'recon';
+          else if (l.includes('picket')) campaignState.workflow.assignedSpecialMissionKey = 'picket';
+          else if (l.includes('bomb')) campaignState.workflow.assignedSpecialMissionKey = 'bombing';
+          else if (l.includes('kaiten')) campaignState.workflow.assignedSpecialMissionKey = 'kaiten';
+          else if (l.includes('minelay') || l.includes('mine')) campaignState.workflow.assignedSpecialMissionKey = 'minelaying';
+          else if (l.includes('transport')) campaignState.workflow.assignedSpecialMissionKey = 'transport';
+          else if (l.includes('pass')) campaignState.workflow.assignedSpecialMissionKey = 'passenger';
+          else if (l.includes('evac')) campaignState.workflow.assignedSpecialMissionKey = 'evacuation';
+          else if (l.includes('shore')) campaignState.workflow.assignedSpecialMissionKey = 'shore_bombardment';
+          else if (l.includes('yanagi')) campaignState.workflow.assignedSpecialMissionKey = 'yanagi';
+          else campaignState.workflow.assignedSpecialMissionKey = null;
+        }
+        if (typeof saveState === 'function') saveState();
       }
     }
 
