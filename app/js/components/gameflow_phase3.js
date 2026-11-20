@@ -140,15 +140,27 @@ function syncPhase3TorpedoOptions() {
   }
 
   // Update tubes fired dropdown and fire button
-  const tubesSelect = document.getElementById('wf-tubes-fired');
+  const tubesFwdSelect = document.getElementById('wf-tubes-fired');
+  const tubesAftSelect = document.getElementById('wf-tubes-aft-second-salvo');
+  const secondSalvoContainer = document.getElementById('p3-second-salvo-container');
+  const secondSalvoBadge = document.getElementById('p3-second-salvo-badge');
   const fireBtn = document.getElementById('p3-btn-fire');
-  const tubesLbl = document.getElementById('p3-tubes-lbl');
+  const tubesFwdLbl = document.getElementById('p3-tubes-fwd-lbl');
+  const fwdHint = document.getElementById('p3-fwd-salvo-hint');
+  const aftHint = document.getElementById('p3-aft-salvo-hint');
+  const nightBanner = document.getElementById('p3-night-salvo-banner');
+  const step4ModeBadge = document.getElementById('p3-step4-mode-badge');
 
   if (attackMode === 'gun') {
-    if (tubesLbl) tubesLbl.innerText = isEn ? "Gun Shots:" : "Disparos de Cañón:";
-    if (tubesSelect) {
-      tubesSelect.innerHTML = `<option value="1">1 ${isEn ? "Shot (Deck Gun)" : "Disparo (Cañón de Cubierta)"}</option>`;
-      tubesSelect.disabled = deckGunDmg || ammoCount <= 0;
+    if (nightBanner) nightBanner.style.display = 'none';
+    if (step4ModeBadge) step4ModeBadge.style.display = 'none';
+    if (tubesFwdLbl) tubesFwdLbl.innerText = isEn ? "Deck Gun Shots:" : "Disparos de Cañón:";
+    if (fwdHint) fwdHint.innerText = isEn ? "Deck Gun (1 shell per action)" : "Cañón de cubierta (1 disparo por acción)";
+    if (secondSalvoContainer) secondSalvoContainer.style.display = 'none';
+
+    if (tubesFwdSelect) {
+      tubesFwdSelect.innerHTML = `<option value="1">1 ${isEn ? "Shot (Deck Gun)" : "Disparo (Cañón de Cubierta)"}</option>`;
+      tubesFwdSelect.disabled = deckGunDmg || ammoCount <= 0;
     }
     if (fireBtn) {
       if (deckGunDmg) {
@@ -171,57 +183,196 @@ function syncPhase3TorpedoOptions() {
     return;
   }
 
-  // Torpedo modes: submerged vs surface_night
-  if (tubesLbl) tubesLbl.innerText = isEn ? "Tubes Fired:" : "Tubos Disparados:";
-  const maxAvailable = (attackMode === 'surface_night') ? (operFwd + operAft) : operFwd;
+  // Torpedo modes (submerged / surface_night)
+  const isNightSurface = (attackMode === 'surface_night');
 
-  if (tubesSelect) {
-    const curVal = parseInt(tubesSelect.value) || 4;
+  if (nightBanner) {
+    nightBanner.style.display = isNightSurface ? 'block' : 'none';
+  }
+  if (step4ModeBadge) {
+    step4ModeBadge.style.display = isNightSurface ? 'inline-block' : 'none';
+    step4ModeBadge.innerText = isEn ? "🌙 Night Surface (2 Salvos)" : "🌙 Superficie Nocturna (2 Salvas)";
+  }
+
+  if (tubesFwdLbl) tubesFwdLbl.innerText = isEn ? "▲ 1st Salvo (Bow Tubes):" : "▲ 1.ª Salva (Tubos de Proa):";
+  if (fwdHint) {
+    fwdHint.innerText = isNightSurface
+      ? (isEn ? "Optics bonus: -1 To-Hit DRM applied on Chart B1" : "Óptica de superficie: -1 DRM a impactar en Tabla B1")
+      : (isEn ? "Standard targeting on Chart B1" : "Puntería estándar en Tabla B1");
+  }
+
+  // 1. Bow Salvo options (0..operFwd)
+  if (tubesFwdSelect) {
+    const curVal = parseInt(tubesFwdSelect.value) || 4;
     let optsHtml = '';
-    if (maxAvailable === 0) {
-      optsHtml = `<option value="0">0 ${isEn ? "Torpedoes (No tubes available)" : "Torpedos (Sin tubos operativos)"}</option>`;
+    if (operFwd === 0) {
+      optsHtml = `<option value="0">0 ${isEn ? "Bow Torpedoes (None loaded/operative)" : "Torpedos de Proa (Ninguno disponible)"}</option>`;
     } else {
-      for (let n = 1; n <= maxAvailable; n++) {
+      optsHtml = `<option value="0">0 ${isEn ? "(Do not fire bow)" : "(No disparar proa)"}</option>`;
+      for (let n = 1; n <= operFwd; n++) {
         let tag = '';
         if (n === 2) tag = isEn ? " (Reduced Salvo)" : " (Salva Reducida)";
         else if (n === 4) tag = isEn ? " (Standard Salvo)" : " (Salva Estándar)";
         else if (n === 6) tag = isEn ? " (Full Bow Salvo)" : " (Salva Completa Proa)";
-        else if (n === 8) tag = isEn ? " (Maximum Salvo)" : " (Salva Máxima)";
+        else if (n === 8) tag = isEn ? " (Maximum Bow Salvo)" : " (Salva Máxima Proa)";
         optsHtml += `<option value="${n}">${n} ${isEn ? "Torpedoes" : "Torpedos"}${tag}</option>`;
       }
     }
-    tubesSelect.innerHTML = optsHtml;
-    tubesSelect.disabled = (maxAvailable === 0);
+    tubesFwdSelect.innerHTML = optsHtml;
+    tubesFwdSelect.disabled = (operFwd === 0);
 
-    // Try to preserve previous choice or pick nearest valid
-    if (maxAvailable > 0) {
-      if (curVal >= 1 && curVal <= maxAvailable) {
-        tubesSelect.value = String(curVal);
-      } else if (maxAvailable >= 4) {
-        tubesSelect.value = "4";
-      } else if (maxAvailable >= 2) {
-        tubesSelect.value = "2";
+    if (operFwd > 0) {
+      if (curVal >= 1 && curVal <= operFwd) {
+        tubesFwdSelect.value = String(curVal);
+      } else if (operFwd >= 4) {
+        tubesFwdSelect.value = "4";
+      } else if (operFwd >= 2) {
+        tubesFwdSelect.value = "2";
       } else {
-        tubesSelect.value = String(maxAvailable);
+        tubesFwdSelect.value = String(operFwd);
+      }
+    } else {
+      tubesFwdSelect.value = "0";
+    }
+  }
+
+  // 2. Stern Second Salvo options (0..operAft) [Regla 8.2.2 / 8.2.3]
+  if (secondSalvoContainer) {
+    if (cfg.aftTubes > 0) {
+      secondSalvoContainer.style.display = 'block';
+      if (isNightSurface) {
+        secondSalvoContainer.style.border = '1px solid #facc15';
+        secondSalvoContainer.style.boxShadow = '0 0 10px rgba(234, 179, 8, 0.3)';
+        secondSalvoContainer.style.background = 'rgba(30, 27, 75, 0.45)';
+      } else {
+        secondSalvoContainer.style.border = '1px solid #eab308';
+        secondSalvoContainer.style.boxShadow = 'none';
+        secondSalvoContainer.style.background = 'rgba(0, 0, 0, 0.25)';
+      }
+    } else {
+      secondSalvoContainer.style.display = 'none';
+    }
+  }
+
+  if (secondSalvoBadge) {
+    if (isNightSurface) {
+      secondSalvoBadge.innerText = isEn ? "🌙 Night 2nd Salvo (+1 DRM)" : "🌙 2.ª Salva Nocturna (+1 DRM)";
+      secondSalvoBadge.style.background = 'rgba(234, 179, 8, 0.3)';
+      secondSalvoBadge.style.color = '#fef08a';
+    } else {
+      secondSalvoBadge.innerText = isEn ? "+1 To-Hit DRM" : "+1 MTD Impacto";
+      secondSalvoBadge.style.background = 'rgba(234, 179, 8, 0.2)';
+      secondSalvoBadge.style.color = '#fde047';
+    }
+  }
+
+  if (aftHint) {
+    if (isNightSurface) {
+      aftHint.innerHTML = isEn
+        ? "🌙 <strong>Night Mode Active:</strong> Simultaneous stern salvo. Suffers +1 opposite-end DRM and gains -1 surface DRM (Net 0 DRM vs target)."
+        : "🌙 <strong>Modo Nocturno Activo:</strong> Disparo simultáneo desde popa. Recibe +1 DRM por extremo opuesto y -1 DRM de superficie (DRM neto 0).";
+    } else {
+      aftHint.innerText = isEn
+        ? "Fired from opposite end at +1 DRM (Rule 8.2.2). Permitted whenever stern tubes are loaded."
+        : "Disparada desde el extremo opuesto a +1 DRM (Regla 8.2.2). Se permite siempre que haya tubos de popa cargados.";
+    }
+  }
+
+  if (tubesAftSelect) {
+    const curAftVal = parseInt(tubesAftSelect.value) || 0;
+    let aftOpts = '';
+    aftOpts += `<option value="0">0 ${isEn ? "(No 2nd Stern Salvo)" : "(Sin 2.ª Salva de Popa)"}</option>`;
+    if (operAft > 0) {
+      for (let a = 1; a <= operAft; a++) {
+        aftOpts += `<option value="${a}">${a} ${isEn ? (a === 1 ? "Stern Torpedo (+1 DRM)" : "Stern Torpedoes (+1 DRM)") : (a === 1 ? "Torpedo de Popa (+1 DRM)" : "Torpedos de Popa (+1 DRM)")}</option>`;
+      }
+      tubesAftSelect.disabled = false;
+    } else {
+      tubesAftSelect.disabled = true;
+    }
+    tubesAftSelect.innerHTML = aftOpts;
+
+    if (operAft > 0) {
+      if (curAftVal >= 1 && curAftVal <= operAft) {
+        tubesAftSelect.value = String(curAftVal);
+      } else if (isNightSurface && curAftVal === 0) {
+        // Auto-select stern tubes on Night Surface attack so player sees 2nd salvo engaged!
+        tubesAftSelect.value = String(Math.min(operAft, 2));
+      } else if (curAftVal === 0) {
+        tubesAftSelect.value = "0";
+      } else {
+        tubesAftSelect.value = "0";
+      }
+    } else {
+      tubesAftSelect.value = "0";
+    }
+  }
+
+  onSalvoConfigChanged();
+}
+window.syncPhase3TorpedoOptions = syncPhase3TorpedoOptions;
+
+function onSalvoConfigChanged() {
+  const isEn = (window.currentLang === 'en');
+  const attackModeSelect = document.getElementById('wf-attack-mode-select');
+  const attackMode = attackModeSelect ? attackModeSelect.value : 'submerged';
+  const fireBtn = document.getElementById('p3-btn-fire');
+  if (!fireBtn) return;
+
+  if (attackMode === 'gun') return;
+
+  const fwdCount = parseInt(document.getElementById('wf-tubes-fired')?.value) || 0;
+  const aftCount = parseInt(document.getElementById('wf-tubes-aft-second-salvo')?.value) || 0;
+  const total = fwdCount + aftCount;
+
+  const priorSalvoCount = (typeof campaignState !== 'undefined' && campaignState.workflow && Array.isArray(campaignState.workflow.salvoHistory))
+    ? campaignState.workflow.salvoHistory.length
+    : 0;
+
+  if (total === 0) {
+    fireBtn.disabled = true;
+    fireBtn.style.background = '#475569';
+    fireBtn.style.borderColor = '#64748b';
+    fireBtn.innerText = isEn ? '⚠️ No Torpedoes Selected' : '⚠️ Ningún Torpedo Seleccionado';
+  } else {
+    fireBtn.disabled = false;
+    fireBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+    fireBtn.style.borderColor = '#10b981';
+
+    if (priorSalvoCount > 0) {
+      // 2.ª Salva (o Salva Adicional)
+      if (aftCount > 0 && fwdCount > 0) {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE 2nd SALVO! (${fwdCount} Bow + ${aftCount} Stern [+1 DRM])`
+          : `🚀 ¡FUEGO 2.ª SALVA! (${fwdCount} Proa + ${aftCount} Popa [+1 DRM])`;
+      } else if (aftCount > 0) {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE 2nd SALVO! (${aftCount} Stern [+1 DRM])`
+          : `🚀 ¡FUEGO 2.ª SALVA! (${aftCount} Popa [+1 DRM])`;
+      } else {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE 2nd SALVO! (${fwdCount} Bow Torpedo${fwdCount > 1 ? 'es' : ''})`
+          : `🚀 ¡FUEGO 2.ª SALVA! (${fwdCount} Torpedo${fwdCount > 1 ? 's' : ''} de Proa)`;
+      }
+    } else {
+      // 1.ª Salva
+      if (aftCount > 0 && fwdCount > 0) {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE! (1st: ${fwdCount} Bow + 2nd: ${aftCount} Stern [+1 DRM])`
+          : `🚀 ¡FUEGO! (1.ª: ${fwdCount} Proa + 2.ª: ${aftCount} Popa [+1 DRM])`;
+      } else if (aftCount > 0) {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE 2nd SALVO! (${aftCount} Stern [+1 DRM])`
+          : `🚀 ¡FUEGO 2.ª SALVA! (${aftCount} Popa [+1 DRM])`;
+      } else {
+        fireBtn.innerText = isEn 
+          ? `🚀 FIRE 1st SALVO! (${fwdCount} Bow Torpedo${fwdCount > 1 ? 'es' : ''})`
+          : `🚀 ¡FUEGO 1.ª SALVA! (${fwdCount} Torpedo${fwdCount > 1 ? 's' : ''} de Proa)`;
       }
     }
   }
-
-  if (fireBtn) {
-    if (maxAvailable === 0) {
-      fireBtn.disabled = true;
-      fireBtn.style.background = '#475569';
-      fireBtn.style.borderColor = '#64748b';
-      fireBtn.innerText = isEn ? '⚠️ No Loaded Operative Tubes' : '⚠️ Sin Torpedos Cargados en Tubos Operativos';
-    } else {
-      fireBtn.disabled = false;
-      fireBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
-      fireBtn.style.borderColor = '#10b981';
-      fireBtn.innerText = isEn ? '🚀 FIRE! (Launch Virtual Salvo)' : '🚀 ¡FUEGO! (Lanzar Salva Virtual)';
-    }
-  }
 }
-window.syncPhase3TorpedoOptions = syncPhase3TorpedoOptions;
+window.onSalvoConfigChanged = onSalvoConfigChanged;
 
 function resolveTorpedoSalvo() {
   const isEn = (window.currentLang === 'en');
@@ -240,8 +391,15 @@ function resolveTorpedoSalvo() {
 
   if (attackMode === 'gun') {
     // ----------------------------------------------------
-    // GUN ATTACK MODE (CAÑÓN DE CUBIERTA)
+    // GUN ATTACK MODE [REGLA 8.2.4] (CAÑÓN DE CUBIERTA)
     // ----------------------------------------------------
+    // Rule 8.2.4: Strictly against unescorted ships
+    const isEscorted = !!(target.escort || target.is_escort || target.escortShip || target.type === 'Warship' || target.type === 'Capital');
+    if (isEscorted) {
+      showToast(isEn ? "⚠️ Rule 8.2.4: Deck Gun firing is strictly forbidden against escorted targets!" : "⚠️ Regla 8.2.4: ¡El cañón de cubierta está estrictamente prohibido contra buques escoltados!");
+      return;
+    }
+
     if (subBoardState.deckGunDamaged) {
       showToast(isEn ? "⚠️ Deck Gun is damaged and cannot fire!" : "⚠️ ¡El cañón de cubierta está averiado y no puede disparar!");
       return;
@@ -249,6 +407,17 @@ function resolveTorpedoSalvo() {
     const currentAmmo = (subBoardState.ammo !== undefined) ? subBoardState.ammo : 5;
     if (currentAmmo <= 0) {
       showToast(isEn ? "⚠️ Out of Deck Gun ammunition!" : "⚠️ ¡Sin munición para el cañón de cubierta!");
+      return;
+    }
+
+    if (!campaignState.workflow) campaignState.workflow = {};
+    if (!Array.isArray(campaignState.workflow.salvoHistory)) campaignState.workflow.salvoHistory = [];
+    
+    // Count prior gun shots in this combat (Rule 8.2.4: max 2 shots per deck gun)
+    const priorGunShots = campaignState.workflow.salvoHistory.filter(s => s.isGun).length;
+    const maxGunShots = 2;
+    if (priorGunShots >= maxGunShots) {
+      showToast(isEn ? `⚠️ Rule 8.2.4: Maximum ${maxGunShots} deck gun shots per combat reached!` : `⚠️ Regla 8.2.4: ¡Alcanzado el máximo de ${maxGunShots} disparos de cañón en este combate!`);
       return;
     }
 
@@ -263,14 +432,13 @@ function resolveTorpedoSalvo() {
     let maxHitRoll = (range === 'close') ? 8 : (range === 'medium' ? 7 : 6);
     let drm = 0;
     if (campaignState.crewInjuries && campaignState.crewInjuries.captain) drm += 1;
-    if (target.is_escort || target.type === 'Warship') drm += 2;
 
     const d1 = Math.floor(Math.random() * 6) + 1;
     const d2 = Math.floor(Math.random() * 6) + 1;
     const roll = d1 + d2;
     const modRoll = roll + drm;
     const isHit = (modRoll <= maxHitRoll || roll === 2);
-    let totalDamage = 0;
+    let thisDamage = 0;
     let hitText = '';
 
     if (isHit) {
@@ -278,42 +446,77 @@ function resolveTorpedoSalvo() {
       const dmgDie = Math.floor(Math.random() * 6) + 1;
       let pts = (dmgDie === 1) ? 3 : (dmgDie <= 3 ? 2 : 1);
       if (roll === 2) pts += 2; // Critical
-      totalDamage = pts;
+      thisDamage = pts;
       hitText = `<span style="color:#4ade80; font-weight:bold;">¡IMPACTO DIRECTO!</span> (🎲 1d6=[${dmgDie}] ➔ +${pts} pts de daño)`;
     } else {
       hitText = `<span style="color:#94a3b8;">${isEn ? 'Miss' : 'Fallo'} (${modRoll} vs &le;${maxHitRoll})</span>`;
     }
 
-    const isSunk = (totalDamage >= reqPts);
-    let roguCategory = isSunk ? 'sunk' : (isHit ? 'damaged' : 'miss');
-    campaignState.workflow.lastCombatHits = isHit ? 1 : 0;
-    campaignState.workflow.lastCombatDamage = totalDamage;
+    const gunShotNum = priorGunShots + 1;
+    const gunDiceHtml = `
+      <div style="background:rgba(180, 83, 9, 0.25); border:1px solid #d97706; border-radius:5px; padding:6px 10px; font-size:0.75rem; margin-top:6px;">
+        <div style="font-weight:bold; color:#fde047; margin-bottom:4px; display:flex; justify-content:space-between;">
+          <span>💥 ${isEn ? `Deck Gun Action #${gunShotNum} [Rule 8.2.4] (Charts B1 & B3):` : `Disparo de Cañón #${gunShotNum} [Regla 8.2.4] (Tablas B1 y B3):`}</span>
+          <span style="color:#cbd5e1; font-weight:normal;">📦 ${isEn ? `Shells left: ${subBoardState.ammo} / 5` : `Proyectiles restantes: ${subBoardState.ammo} / 5`}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span>🎲 2d6 = [${d1}+${d2} = ${roll}]${drm ? ' (DRM ' + (drm>0?'+'+drm:drm) + ' = ' + modRoll + ')' : ''} ➔ ${hitText}</span>
+          <span style="font-size:0.72rem; color:${isHit ? '#6ee7b7' : '#94a3b8'}; font-weight:bold; background:${isHit ? '#065f46' : '#1e293b'}; padding:1px 6px; border-radius:3px;">
+            ${isHit ? `+${thisDamage} ${isEn ? 'Damage' : 'Daño'}` : (isEn ? 'Miss' : 'Fallo')}
+          </span>
+        </div>
+      </div>
+    `;
+
+    campaignState.workflow.salvoHistory.push({
+      salvoIndex: `Gun #${gunShotNum}`,
+      isGun: true,
+      hits: isHit ? 1 : 0,
+      duds: 0,
+      damage: thisDamage,
+      html: gunDiceHtml,
+      tubesFired: []
+    });
+
+    let accumHits = 0;
+    let accumDuds = 0;
+    let accumDamage = 0;
+    let combinedSalvoHtml = '';
+    for (let s of campaignState.workflow.salvoHistory) {
+      accumHits += s.hits;
+      accumDuds += s.duds;
+      accumDamage += s.damage;
+      combinedSalvoHtml += s.html;
+    }
+
+    const isSunk = (accumDamage >= reqPts);
+    let roguCategory = isSunk ? 'sunk' : (accumHits > 0 ? 'damaged' : 'miss');
+    campaignState.workflow.lastCombatHits = accumHits;
+    campaignState.workflow.lastCombatDamage = accumDamage;
     campaignState.workflow.lastCombatIsSunk = isSunk;
     campaignState.workflow.lastCombatStatus = roguCategory;
 
     const hitResEl = document.getElementById('wf-combat-hit-res');
     if (hitResEl) {
       hitResEl.innerText = isHit
-        ? (isEn ? `💥 GUN HIT! — ${totalDamage} damage pts (Ammo left: ${subBoardState.ammo})` : `💥 ¡IMPACTO DE CAÑÓN! — ${totalDamage} pts de daño (Munición restante: ${subBoardState.ammo})`)
-        : (isEn ? `💨 GUN MISSED (Ammo left: ${subBoardState.ammo})` : `💨 DISPARO DE CAÑÓN FALLIDO (Munición restante: ${subBoardState.ammo})`);
+        ? (isEn ? `💥 GUN HIT! — ${accumDamage} accumulated damage pts (Ammo left: ${subBoardState.ammo})` : `💥 ¡IMPACTO DE CAÑÓN! — ${accumDamage} pts de daño acumulados (Munición restante: ${subBoardState.ammo})`)
+        : (isEn ? `💨 GUN MISSED (Ammo left: ${subBoardState.ammo} • Accumulated damage: ${accumDamage} pts)` : `💨 DISPARO DE CAÑÓN FALLIDO (Munición restante: ${subBoardState.ammo} • Daño acumulado: ${accumDamage} pts)`);
     }
     const sinkStatusEl = document.getElementById('wf-combat-sink-status');
     if (sinkStatusEl) {
       sinkStatusEl.innerText = isSunk
-        ? (isEn ? `WARSHIP SUNK! (${totalDamage}/${reqPts} pts - ${(target.tons || 3000).toLocaleString()} tons)` : `¡BUQUE HUNDIDO! (${totalDamage}/${reqPts} pts - ${(target.tons || 3000).toLocaleString()} tons)`)
-        : (isHit ? (isEn ? `SHIP DAMAGED (${totalDamage}/${reqPts} pts required)` : `BUQUE DAÑADO (${totalDamage}/${reqPts} pts necesarios)`) : (isEn ? 'MISSED SHOT' : 'DISPARO FALLIDO'));
+        ? (isEn ? `WARSHIP SUNK! (${accumDamage}/${reqPts} pts - ${(target.tons || 3000).toLocaleString()} tons)` : `¡BUQUE HUNDIDO! (${accumDamage}/${reqPts} pts - ${(target.tons || 3000).toLocaleString()} tons)`)
+        : (accumHits > 0 ? (isEn ? `SHIP DAMAGED (${accumDamage}/${reqPts} pts required)` : `BUQUE DAÑADO (${accumDamage}/${reqPts} pts necesarios)`) : (isEn ? 'MISSED SHOT' : 'DISPARO FALLIDO'));
     }
 
     const diceBox = document.getElementById('wf-torpedo-dice-details');
     if (diceBox) {
       diceBox.innerHTML = `
-        <div style="background:rgba(180, 83, 9, 0.25); border:1px solid #d97706; border-radius:5px; padding:6px 10px; font-size:0.75rem;">
-          <div style="font-weight:bold; color:#fde047; margin-bottom:4px;">💥 ${isEn ? "Deck Gun Action (Chart B1 & B3):" : "Disparo de Cañón de Cubierta (Tablas B1 y B3):"}</div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span>🎲 2d6 = [${d1}+${d2} = ${roll}]${drm ? ' (DRM ' + (drm>0?'+'+drm:drm) + ' = ' + modRoll + ')' : ''} ➔ ${hitText}</span>
-            <span style="color:#cbd5e1; font-weight:bold;">📦 Proyectiles restantes: ${subBoardState.ammo} / 5</span>
-          </div>
+        <div style="font-size:0.7rem; font-weight:bold; color:var(--slate-400); margin-top:4px; margin-bottom:2px; display:flex; justify-content:space-between;">
+          <span>🎯 ${isEn ? 'Combat Action History (Charts B1 & B3):' : 'Historial de Acciones de Combate (Tablas B1 y B3):'}</span>
+          <span style="color:#fde047;">${isEn ? 'Deck Gun [Rule 8.2.4]' : 'Cañón de Cubierta [Regla 8.2.4]'}</span>
         </div>
+        ${combinedSalvoHtml}
       `;
     }
 
@@ -323,60 +526,83 @@ function resolveTorpedoSalvo() {
   }
 
   // ----------------------------------------------------
-  // TORPEDO ATTACK MODE
+  // TORPEDO ATTACK MODE (1.ª Salva Proa + 2.ª Salva Popa [Regla 8.2.2])
   // ----------------------------------------------------
-  const tubesToFire = parseInt(document.getElementById('wf-tubes-fired').value) || 0;
-  if (tubesToFire <= 0) {
-    showToast(isEn ? "⚠️ No torpedoes available to fire!" : "⚠️ ¡No hay torpedos disponibles para disparar!");
+  if (!campaignState.workflow) campaignState.workflow = {};
+  if (!Array.isArray(campaignState.workflow.salvoHistory)) {
+    campaignState.workflow.salvoHistory = [];
+  }
+  const priorSalvoCount = campaignState.workflow.salvoHistory.length;
+
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2 };
+
+  const fwdCount = parseInt(document.getElementById('wf-tubes-fired')?.value) || 0;
+  const aftCount = parseInt(document.getElementById('wf-tubes-aft-second-salvo')?.value) || 0;
+  const totalTubes = fwdCount + aftCount;
+
+  if (totalTubes <= 0) {
+    showToast(isEn ? "⚠️ No torpedoes selected to fire!" : "⚠️ ¡No hay torpedos seleccionados para disparar!");
     return;
   }
   const torpType = document.getElementById('wf-torp-type-select') ? document.getElementById('wf-torp-type-select').value : 'type95';
 
   // Fire tubes and deduct from subBoardState!
-  let firedTubes = [];
+  let fireRes = { fwdFired: [], aftFired: [], allFired: [] };
   if (typeof window.onSensuikanTorpedoFired === 'function') {
-    firedTubes = window.onSensuikanTorpedoFired(tubesToFire, { mode: attackMode, torpType });
+    fireRes = window.onSensuikanTorpedoFired(totalTubes, { fwdCount, aftCount, mode: attackMode, torpType }) || fireRes;
   }
+  const fwdFired = (fireRes && Array.isArray(fireRes.fwdFired)) ? fireRes.fwdFired : [];
+  const aftFired = (fireRes && Array.isArray(fireRes.aftFired)) ? fireRes.aftFired : [];
+  const allFired = (fireRes && Array.isArray(fireRes.allFired)) ? fireRes.allFired : [...fwdFired, ...aftFired];
 
-  // DRM calculations
+  // Base DRM calculations
   let maxHitRoll = (range === 'close') ? 8 : (range === 'medium' ? 7 : 6);
-  let drm = 0;
-  if (attackMode.includes('surf')) drm -= 1; // Surface Torpedo -1 DRM
-  if (campaignState.crewInjuries && campaignState.crewInjuries.captain) drm += 1; // Cmdte herido +1
-  if (subBoardState.systems && subBoardState.systems['periscope'] === 'dmg' && attackMode.includes('sub')) drm += 1; // Periscopio averiado +1
-  if (torpType === 'type92' && range !== 'close') drm += 2; // Type 92 Electric +2 DRM at medium/long
-  if (target.is_escort || target.type === 'Warship') drm += 2; // Escort / DD / DE +2
+  let baseDrm = 0;
+  if (attackMode.includes('surf')) baseDrm -= 1; // Surface Torpedo -1 DRM
+  if (campaignState.crewInjuries && campaignState.crewInjuries.captain) baseDrm += 1; // Cmdte herido +1
+  if (subBoardState.systems && subBoardState.systems['periscope'] === 'dmg' && attackMode.includes('sub')) baseDrm += 1; // Periscopio averiado +1
+  if (torpType === 'type92' && range !== 'close') baseDrm += 2; // Type 92 Electric +2 DRM at medium/long
+  if (target.is_escort || target.type === 'Warship') baseDrm += 2; // Escort / DD / DE +2
 
-  let hits = 0;
-  let duds = 0;
-  let totalDamage = 0;
-  let diceRowsHtml = '';
+  let thisHits = 0;
+  let thisDuds = 0;
+  let thisDamage = 0;
 
-  const tubesActualCount = firedTubes.length > 0 ? firedTubes.length : tubesToFire;
-
-  for (let idx = 0; idx < tubesActualCount; idx++) {
-    const tubeId = firedTubes[idx] !== undefined ? firedTubes[idx] : (idx + 1);
+  // Single torpedo roller
+  function rollTorpedoShot(tubeId, isSecondSalvo) {
     const d1 = Math.floor(Math.random() * 6) + 1;
     const d2 = Math.floor(Math.random() * 6) + 1;
     const roll = d1 + d2;
+    // Rule 8.2.2: Second salvo suffers +1 DRM
+    const drm = baseDrm + (isSecondSalvo ? 1 : 0);
     const modRoll = roll + drm;
     const isCrit = (roll === 2);
 
-    let itemBg = 'rgba(15, 23, 42, 0.6)';
-    let itemBorder = '#334155';
+    let itemBg = isSecondSalvo ? 'rgba(30, 27, 75, 0.4)' : 'rgba(15, 23, 42, 0.6)';
+    let itemBorder = isSecondSalvo ? '#ca8a04' : '#334155';
     let hitBadge = '';
     let dudBadge = '';
     let damageBadge = '';
     let outcomeText = isEn ? 'Miss' : 'Fallo';
     let outcomeBg = '#1e293b';
     let outcomeColor = '#94a3b8';
+
+    const salvoBadge = isSecondSalvo
+      ? `<span style="font-size:0.67rem; background:rgba(234,179,8,0.2); color:#fde047; border:1px solid #ca8a04; padding:0 4px; border-radius:3px;">${isEn ? '2nd Salvo [+1 DRM]' : '2.ª Salva [+1 DRM]'}</span>`
+      : `<span style="font-size:0.67rem; background:rgba(59,130,246,0.15); color:#93c5fd; border:1px solid #3b82f6; padding:0 4px; border-radius:3px;">${isEn ? '1st Salvo' : '1.ª Salva'}</span>`;
+
     let drmBadge = drm !== 0 ? `<span style="font-size:0.67rem; color:${drm < 0 ? '#4ade80' : '#f87171'};">DRM(${drm > 0 ? '+'+drm : drm})=${modRoll}</span>` : '';
 
     if (modRoll <= maxHitRoll || isCrit) {
       // Dud roll (1d6 == 1)
       const dudDie = Math.floor(Math.random() * 6) + 1;
       if (dudDie === 1) {
-        duds++;
+        thisDuds++;
         itemBg = 'rgba(180, 83, 9, 0.25)';
         itemBorder = '#d97706';
         hitBadge = `<span style="color:#fde047; font-weight:bold;">${isEn ? 'Hit!' : '¡Impacto!'}</span>`;
@@ -385,12 +611,12 @@ function resolveTorpedoSalvo() {
         outcomeBg = 'rgba(120, 53, 15, 0.6)';
         outcomeColor = '#fde68a';
       } else {
-        hits++;
+        thisHits++;
         // Damage roll (1d6)
         const dmgDie = Math.floor(Math.random() * 6) + 1;
         let pts = (dmgDie === 1) ? 4 : (dmgDie <= 3 ? 3 : (dmgDie === 4 ? 2 : 1));
         if (isCrit) pts += 3; // Crit natural 2
-        totalDamage += pts;
+        thisDamage += pts;
 
         itemBg = 'rgba(6, 78, 59, 0.4)';
         itemBorder = '#059669';
@@ -407,10 +633,11 @@ function resolveTorpedoSalvo() {
       hitBadge = `<span style="color:#94a3b8;">${isEn ? 'Miss' : 'Fallo'} (${modRoll} vs &le;${maxHitRoll})</span>`;
     }
 
-    diceRowsHtml += `
-      <div style="display:flex; justify-content:space-between; align-items:center; background:${itemBg}; border:1px solid ${itemBorder}; border-radius:5px; padding:4px 8px; font-size:0.73rem; gap:6px;">
+    return `
+      <div style="display:flex; justify-content:space-between; align-items:center; background:${itemBg}; border:1px solid ${itemBorder}; border-radius:5px; padding:4px 8px; font-size:0.73rem; gap:6px; margin-bottom:3px;">
         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
           <span style="font-weight:bold; color:var(--gold-400); font-size:0.74rem;">🚀 ${isEn ? 'Tube' : 'Tubo'} #${tubeId}:</span>
+          ${salvoBadge}
           <span style="background:#0f172a; padding:1px 5px; border-radius:3px; border:1px solid #334155; color:#fde047; font-weight:bold;">🎲 2d6: [${d1}+${d2}=${roll}]</span>
           ${drmBadge}
           ${hitBadge}
@@ -426,47 +653,127 @@ function resolveTorpedoSalvo() {
     `;
   }
 
-  const isSunk = (totalDamage >= reqPts);
+  // 1. Roll Bow Salvo
+  const fwdRows = [];
+  const isBowSecondSalvo = (priorSalvoCount > 0);
+  const actualFwdList = (fwdFired.length > 0) ? fwdFired : Array.from({length: fwdCount}, (_, i) => i + 1);
+  for (let tubeId of actualFwdList) {
+    fwdRows.push(rollTorpedoShot(tubeId, isBowSecondSalvo));
+  }
+
+  // 2. Roll Stern Salvo (always second salvo [Regla 8.2.2])
+  const aftRows = [];
+  const actualAftList = (aftFired.length > 0) ? aftFired : Array.from({length: aftCount}, (_, i) => cfg.fwdTubes + i + 1);
+  for (let tubeId of actualAftList) {
+    aftRows.push(rollTorpedoShot(tubeId, true));
+  }
+
+  let executionHtml = '';
+  if (fwdRows.length > 0) {
+    const salvoTitle = isBowSecondSalvo
+      ? (isEn ? '▼ 2nd Salvo (Bow Tubes)' : '▼ 2.ª Salva (Tubos de Proa)')
+      : (isEn ? '▲ 1st Salvo (Bow Tubes)' : '▲ 1.ª Salva (Tubos de Proa)');
+    const salvoColor = isBowSecondSalvo ? '#fde047' : '#93c5fd';
+    const effectiveDrm = baseDrm + (isBowSecondSalvo ? 1 : 0);
+    executionHtml += `
+      <div style="margin-top:6px; margin-bottom:3px; font-weight:bold; color:${salvoColor}; font-size:0.73rem;">
+        ${salvoTitle} [${fwdRows.length} ${isEn ? 'torpedoes' : 'torpedos'} • DRM ${effectiveDrm >= 0 ? '+'+effectiveDrm : effectiveDrm}]:
+      </div>
+      ${fwdRows.join('')}
+    `;
+  }
+  if (aftRows.length > 0) {
+    const aftDrmVal = baseDrm + 1;
+    executionHtml += `
+      <div style="margin-top:6px; margin-bottom:3px; font-weight:bold; color:#fde047; font-size:0.73rem;">
+        ▼ ${isEn ? '2nd Salvo [Rule 8.2.2] (Stern Tubes)' : '2.ª Salva [Regla 8.2.2] (Tubos de Popa)'} [${aftRows.length} ${isEn ? 'torpedoes' : 'torpedos'} • +1 To-Hit DRM ➔ Total DRM ${aftDrmVal >= 0 ? '+'+aftDrmVal : aftDrmVal}]:
+      </div>
+      ${aftRows.join('')}
+    `;
+  }
+
+  // Record this salvo into history (DO NOT ERASE PREVIOUS SALVOS!)
+  campaignState.workflow.salvoHistory.push({
+    salvoIndex: priorSalvoCount + 1,
+    isSecondSalvo: (priorSalvoCount > 0 || (fwdCount === 0 && aftCount > 0)),
+    fwdCount,
+    aftCount,
+    allFired,
+    hits: thisHits,
+    duds: thisDuds,
+    damage: thisDamage,
+    html: executionHtml
+  });
+
+  // Calculate cumulative hits, duds, and damage across ALL salvos in current encounter
+  let accumHits = 0;
+  let accumDuds = 0;
+  let accumDamage = 0;
+  let combinedSalvoHtml = '';
+  let allFiredTubesList = [];
+
+  for (let s of campaignState.workflow.salvoHistory) {
+    accumHits += s.hits;
+    accumDuds += s.duds;
+    accumDamage += s.damage;
+    combinedSalvoHtml += s.html;
+    if (Array.isArray(s.allFired)) {
+      allFiredTubesList.push(...s.allFired);
+    }
+  }
+
+  const isSunk = (accumDamage >= reqPts);
   let status = isSunk
-    ? (isEn ? `WARSHIP SUNK! (${totalDamage}/${reqPts} pts accumulated - ${(target.tons || 3000).toLocaleString()} tons)` : `¡BUQUE HUNDIDO! (${totalDamage}/${reqPts} pts acumulados - ${(target.tons || 3000).toLocaleString()} tons)`)
-    : (hits > 0 ? (isEn ? `SHIP DAMAGED (${totalDamage}/${reqPts} pts required to sink)` : `BUQUE DAÑADO (${totalDamage}/${reqPts} pts necesarios para hundir)`) : (isEn ? `MISSED SALVO (0 hits)` : `SALVA FALLIDA (0 impactos)`));
+    ? (isEn ? `WARSHIP SUNK! (${accumDamage}/${reqPts} pts accumulated - ${(target.tons || 3000).toLocaleString()} tons)` : `¡BUQUE HUNDIDO! (${accumDamage}/${reqPts} pts acumulados - ${(target.tons || 3000).toLocaleString()} tons)`)
+    : (accumHits > 0 ? (isEn ? `SHIP DAMAGED (${accumDamage}/${reqPts} pts required to sink)` : `BUQUE DAÑADO (${accumDamage}/${reqPts} pts necesarios para hundir)`) : (isEn ? `MISSED SALVO (0 hits)` : `SALVA FALLIDA (0 impactos)`));
 
   let roguCategory = 'miss';
   if (isSunk) {
     if (target.type === 'Capital' || reqPts >= 5) roguCategory = 'capital_sunk';
     else if (campaignState.workflow.isSpecialMission || target.isSpecial) roguCategory = 'special_sunk';
     else roguCategory = 'sunk';
-  } else if (hits > 0) {
+  } else if (accumHits > 0) {
     roguCategory = 'damaged';
   }
 
-  campaignState.workflow.lastCombatHits = hits;
-  campaignState.workflow.lastCombatDamage = totalDamage;
+  campaignState.workflow.lastCombatHits = accumHits;
+  campaignState.workflow.lastCombatDamage = accumDamage;
   campaignState.workflow.lastCombatIsSunk = isSunk;
   campaignState.workflow.lastCombatStatus = roguCategory;
 
   const hitResEl = document.getElementById('wf-combat-hit-res');
   if (hitResEl) {
+    const salvoTag = campaignState.workflow.salvoHistory.length > 1 
+      ? (isEn ? ` [Across ${campaignState.workflow.salvoHistory.length} Salvos]` : ` [En ${campaignState.workflow.salvoHistory.length} Salvas]`) 
+      : '';
     hitResEl.innerText = isEn 
-      ? `${hits} EFFECTIVE HITS! (Duds: ${duds}) — ${totalDamage} damage pts`
-      : `¡${hits} IMPACTOS EFECTIVOS! (Defectuosos: ${duds}) — ${totalDamage} pts de daño`;
+      ? `${accumHits} EFFECTIVE HITS! (Duds: ${accumDuds}) — ${accumDamage} damage pts${salvoTag}`
+      : `¡${accumHits} IMPACTOS EFECTIVOS! (Defectuosos: ${accumDuds}) — ${accumDamage} pts de daño${salvoTag}`;
   }
   const sinkStatusEl = document.getElementById('wf-combat-sink-status');
   if (sinkStatusEl) {
     sinkStatusEl.innerText = status;
   }
 
+  // Display ALL cumulative salvo details in diceBox (never overwrite prior salvo!)
   const diceBox = document.getElementById('wf-torpedo-dice-details');
   if (diceBox) {
-    const tubesSummary = firedTubes.length > 0 ? `• Tubos: ${firedTubes.map(t => 'T#'+t).join(', ')}` : '';
+    const summaryList = allFiredTubesList.length > 0 ? allFiredTubesList.map(t => 'T#'+t).join(', ') : `${totalTubes} tubes`;
+    const tubesSummary = `• Tubos: ${summaryList}`;
     diceBox.innerHTML = `
       <div style="font-size:0.7rem; font-weight:bold; color:var(--slate-400); margin-top:4px; margin-bottom:2px; display:flex; justify-content:space-between;">
         <span>🎯 ${isEn ? 'Torpedo Tube Dice Breakdown (Charts B1, B2, B3):' : 'Desglose de Tiradas por Tubo (Charts B1, B2, B3):'} <span style="color:#a7f3d0;">${tubesSummary}</span></span>
         <span style="color:#93c5fd;">${isEn ? 'LOW roll hits' : 'Tirada BAJA impacta'} (&le; ${maxHitRoll})</span>
       </div>
-      ${diceRowsHtml}
+      ${combinedSalvoHtml}
     `;
   }
+
+  if (thisHits > 0) {
+    logCombatToRoguBukku(false);
+  }
+
+  showToast((isEn ? "Salvo resolved: " : "Salva resuelta: ") + status);
 
   if (hits > 0) {
     logCombatToRoguBukku(false);
@@ -492,6 +799,21 @@ function resolveTorpedoSalvo() {
       let drm = (range === 'close') ? 1 : (range === 'long' ? -1 : 0);
       const total = sum + drm;
       const el = document.getElementById('wf-escort-res-text');
+
+      // =========================================================================
+      // RULE 8.2.7: AUTOMATIC ESCAPE (SNAKE EYES)
+      // Regardless of how bad the die roll modifiers get for the detection cycle,
+      // a roll of a natural "2" (snake eyes) results automatically in a result
+      // of "not detected" and the Submarine escapes.
+      // =========================================================================
+      if (sum === 2) {
+        el.style.color = '#34d399';
+        el.innerHTML = isEn
+          ? `<span style="color:#fde047; font-weight:800;">🎲 Chart B4: 2d6 = [1 + 1 = 2 (Snake Eyes!)]</span> ➔ <strong style="color:#22c55e;">★ AUTOMATIC ESCAPE [RULE 8.2.7]!</strong> Submarine evades unconditionally regardless of DRMs.`
+          : `<span style="color:#fde047; font-weight:800;">🎲 Chart B4: 2d6 = [1 + 1 = 2 (¡Ojos de Serpiente!)]</span> ➔ <strong style="color:#22c55e;">★ ¡ESCAPE AUTOMÁTICO [REGLA 8.2.7]!</strong> El submarino escapa incondicionalmente sin importar los modificadores.`;
+        showToast(isEn ? "★ Rule 8.2.7: Automatic Escape! (Natural 2)" : "★ ¡Regla 8.2.7: Escape Automático! (2 Natural)");
+        return;
+      }
 
       if (total <= 8) {
         el.style.color = '#34d399';
@@ -723,9 +1045,12 @@ function applyManualTorpedoHits() {
     }
   } else {
     // Deduct selected tubes from subBoardState!
-    const tubesToFire = parseInt(document.getElementById('wf-tubes-fired').value) || 0;
-    if (tubesToFire > 0 && typeof window.onSensuikanTorpedoFired === 'function') {
-      const firedList = window.onSensuikanTorpedoFired(tubesToFire, { mode: attackMode, torpType });
+    const fwdTubes = parseInt(document.getElementById('wf-tubes-fired')?.value) || 0;
+    const aftTubes = parseInt(document.getElementById('wf-tubes-aft-second-salvo')?.value) || 0;
+    const totalTubes = fwdTubes + aftTubes;
+    if (totalTubes > 0 && typeof window.onSensuikanTorpedoFired === 'function') {
+      const fireRes = window.onSensuikanTorpedoFired(totalTubes, { fwdCount: fwdTubes, aftCount: aftTubes, mode: attackMode, torpType });
+      const firedList = (fireRes && Array.isArray(fireRes.allFired)) ? fireRes.allFired : (Array.isArray(fireRes) ? fireRes : []);
       if (firedList && firedList.length > 0) {
         firedInfo = isEn ? `(${firedList.length} torpedoes spent on sub card: ${firedList.map(t=>'T#'+t).join(', ')})` : `(${firedList.length} torpedos gastados y marcados en la ficha: ${firedList.map(t=>'T#'+t).join(', ')})`;
       }
@@ -865,3 +1190,109 @@ function followConvoyNextRound() {
     sinkEl.innerText = msg;
   }
 }
+
+// =========================================================================
+// RULE 8.2.8: ADDITIONAL ROUNDS OF COMBAT (UNESCORTED SHIPS)
+// =========================================================================
+function rollAdditionalRound828() {
+  const isEn = (window.currentLang === 'en');
+  const target = (campaignState && campaignState.workflow && campaignState.workflow.currentTarget) || {};
+  const resEl = document.getElementById('wf-additional-round-res');
+
+  // Rule 8.2.8: Additional Rounds of Combat are not allowed vs escorted ships!
+  // Instead, the player must use the "Following" game mechanic [Rule 8.4].
+  const isEscorted = !!(target.escort || target.is_escort || target.escortShip || target.type === 'Warship' || target.type === 'Capital');
+  if (isEscorted) {
+    const warn = isEn
+      ? "⚠️ Rule 8.2.8: Additional Rounds of Combat are forbidden against escorted targets! Use 'Follow Convoy' [Rule 8.4] instead."
+      : "⚠️ Regla 8.2.8: ¡Las Rondas Adicionales de Combate no están permitidas contra buques escoltados! Usa 'Seguir Convoy' [Regla 8.4].";
+    showToast(warn);
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.background = 'rgba(239,68,68,0.15)';
+      resEl.style.border = '1px solid #ef4444';
+      resEl.style.color = '#fca5a5';
+      resEl.innerText = warn;
+    }
+    return;
+  }
+
+  // Track additional rounds in the current travel box (maximum 2 additional rounds allowed per Rule 8.2.8)
+  if (!campaignState.workflow) campaignState.workflow = {};
+  if (!campaignState.workflow.additionalRoundsCount) {
+    campaignState.workflow.additionalRoundsCount = 0;
+  }
+  if (campaignState.workflow.additionalRoundsCount >= 2) {
+    const limitMsg = isEn
+      ? "⚠️ Rule 8.2.8 Limit: Maximum 2 Additional Rounds of Combat permitted in the same travel box! You must advance the travel box to continue."
+      : "⚠️ Límite Regla 8.2.8: ¡Máximo 2 Rondas Adicionales permitidas en la misma casilla! Debes avanzar de casilla para continuar.";
+    showToast(limitMsg);
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.background = 'rgba(245,158,11,0.15)';
+      resEl.style.border = '1px solid #f59e0b';
+      resEl.style.color = '#fde047';
+      resEl.innerText = limitMsg;
+    }
+    return;
+  }
+
+  campaignState.workflow.additionalRoundsCount++;
+
+  // Roll 2d6 on Chart A3 under "Additional Round of Combat" / Special Mission column
+  const d1 = Math.floor(Math.random() * 6) + 1;
+  const d2 = Math.floor(Math.random() * 6) + 1;
+  const sum = d1 + d2;
+
+  let msg = '';
+  if (sum === 2) {
+    // 2: Escort arrives! Roll detection on B4
+    target.escort = true;
+    target.is_escort_arrived = true;
+    msg = isEn
+      ? `🚨 Chart A3 [Additional Round: 2d6 = ${d1}+${d2}=2]: <strong>AN ESCORT ARRIVES!</strong> Target is now escorted. Roll acoustic detection on Chart B4 immediately [Rule 8.2.8]!`
+      : `🚨 Tabla A3 [Ronda Adicional: 2d6 = ${d1}+${d2}=2]: <strong>¡LLEGA UNA ESCOLTA!</strong> El blanco está ahora escoltado. ¡Tira detección en Tabla B4 inmediatamente [Regla 8.2.8]!`;
+    showToast(isEn ? "Alert! Escort arrives on scene [Rule 8.2.8]!" : "¡Alerta! Llega una escolta al sector [Regla 8.2.8]!");
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.background = 'rgba(239,68,68,0.18)';
+      resEl.style.border = '1px solid #ef4444';
+      resEl.style.color = '#fca5a5';
+      resEl.innerHTML = msg;
+    }
+  } else if (sum === 3) {
+    // 3: Aircraft arrives! Abort attack and crash dive
+    msg = isEn
+      ? `🚨 Chart A3 [Additional Round: 2d6 = ${d1}+${d2}=3]: <strong>ENEMY AIRCRAFT ARRIVES!</strong> You must abort attack, dive immediately, and resolve air attack [Rule 8.3 / Chart A4].`
+      : `🚨 Tabla A3 [Ronda Adicional: 2d6 = ${d1}+${d2}=3]: <strong>¡AVIÓN ENEMIGO EN APROXIMACIÓN!</strong> Debes abortar el ataque, iniciar inmersión de emergencia y resolver ataque aéreo [Regla 8.3 / Tabla A4].`;
+    showToast(isEn ? "Aircraft incoming! Crash dive [Rule 8.2.8]!" : "¡Avión aproximándose! Inmersión rápida [Regla 8.2.8]!");
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.background = 'rgba(239,68,68,0.18)';
+      resEl.style.border = '1px solid #ef4444';
+      resEl.style.color = '#fca5a5';
+      resEl.innerHTML = msg;
+    }
+  } else {
+    // 4-12: Clear waters!
+    // Player may again fire torpedoes and/or up to 2x deck gun shots from close range per normal combat procedure.
+    const rangeSelect = document.getElementById('wf-range-select');
+    if (rangeSelect) rangeSelect.value = 'close';
+    msg = isEn
+      ? `🌊 Chart A3 [Additional Round: 2d6 = ${d1}+${d2}=${sum}]: <strong>CLEAR WATERS!</strong> No escorts or aircraft arrived. Initiating <strong>2nd Combat Round at CLOSE RANGE (+1 To-Hit)</strong>! You may fire reloaded torpedoes or up to 2 Deck Gun shots [Rule 8.2.8] (Round ${campaignState.workflow.additionalRoundsCount}/2 in this box).`
+      : `🌊 Tabla A3 [Ronda Adicional: 2d6 = ${d1}+${d2}=${sum}]: <strong>¡AGUAS DESPEJADAS!</strong> No llegan escoltas ni aviones. ¡Iniciando <strong>2.ª Ronda de Combate a CORTA DISTANCIA (+1 Puntería)</strong>! Puedes disparar torpedos recargados o hasta 2 cañonazos de cubierta [Regla 8.2.8] (Ronda ${campaignState.workflow.additionalRoundsCount}/2 en esta casilla).`;
+    showToast(isEn ? "Clear waters! 2nd Round at Close Range granted." : "¡Aguas despejadas! Concedida 2.ª Ronda a Corta Distancia.");
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.background = 'rgba(34,197,94,0.18)';
+      resEl.style.border = '1px solid #22c55e';
+      resEl.style.color = '#86efac';
+      resEl.innerHTML = msg;
+    }
+  }
+
+  const hitRes = document.getElementById('wf-combat-hit-res');
+  if (hitRes) hitRes.innerHTML = msg;
+}
+window.rollAdditionalRound828 = rollAdditionalRound828;
+

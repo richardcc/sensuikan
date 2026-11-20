@@ -12,7 +12,7 @@ let campaignState = {
   workflow: {
     currentPhase: 0,
     selectedMonth: "1941-12",
-    currentBoxIndex: 0,
+    currentBoxIndex: -1,
     boxList: ["Tránsito 1", "Casilla de Misión", "En Estación 1", "En Estación 2", "En Estación 3", "Retorno 1"],
     encounterStatus: "none",
     currentTarget: null,

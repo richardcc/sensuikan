@@ -15,7 +15,4033 @@ window.RANKS = RANKS;
 // =========================================================================
 // SENSUiKAN: STATIC GAME DATABASES & CHART TEMPLATES
 // =========================================================================
-const SUB_DB = {"metadata": {"game_title": "Sensuikan: Japanese Fleet Submarines, 1941-45", "publisher": "Compass Games", "errata_version": "Official Errata and Clarifications (as of 31 Aug 2026)", "official_errata_applied": ["Submarine Mats (correction): Junsen J.3 includes Aft Torpedo Doors damage box in Systems Status.", "Submarine Mats - Sen-Toku (correction): All 8 tubes are Forward (none aft). Aft torpedo damage hits treated as No Effect.", "Submarine Patrol Log (correction): Sen-Toku availability updated to December 1944 (not September 1944).", "Submarine Mats - Kaiten Installation (clarification): Conversion occurs automatically on date (typically removes deck gun), but Kaiten carried ONLY on Kaiten missions.", "Countersheet (clarification): Daihatsu landing craft counter used on Transport Missions [7.4] as reminder."], "canonical_dimensions_mm": {"card_width": 240.0, "card_height": 198.0, "tray_outer_width": 247.6, "tray_outer_height": 205.6, "tray_pocket_width": 240.6, "tray_pocket_height": 198.6, "slot_size": 15.0, "sub_profile_frame_mm": {"x": 48.5, "y": 23.6, "width": 131.5, "height": 33.1}}, "canonical_duplex_structure": [{"sheet_number": 1, "family": "Kaidai (Inicios)", "pairing_logic": "Primeros submarinos de flota de entreguerras.", "side_a_key": "Kaidai KD3 Class", "side_b_key": "Kaidai KD4 Class"}, {"sheet_number": 2, "family": "Kaidai (Evolución)", "pairing_logic": "Estandarización de la espina dorsal de la flota.", "side_a_key": "Kaidai KD5 Class", "side_b_key": "Kaidai KD6 Class"}, {"sheet_number": 3, "family": "Kaidai Final & Especial", "pairing_logic": "Último Kaidai de la guerra + el único minador especializado.", "side_a_key": "Kaidai KD7 Class", "side_b_key": "Kirai-Sen Class"}, {"sheet_number": 4, "family": "Junsen (Cruceros I)", "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión.", "side_a_key": "Junsen J IM Class", "side_b_key": "Junsen J2 Class"}, {"sheet_number": 5, "family": "Junsen II & Mando", "pairing_logic": "Submarinos insignia de escuadrilla de largo radio.", "side_a_key": "Junsen J3 Class", "side_b_key": "Type A Class"}, {"sheet_number": 6, "family": "Familia Type B", "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía).", "side_a_key": "Type B Class", "side_b_key": "Type B-3 Class"}, {"sheet_number": 7, "family": "Ataque Pesado (Nodrizas)", "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío.", "side_a_key": "Type C Class", "side_b_key": "Type A Modified"}, {"sheet_number": 8, "family": "Supertecnología 44-45", "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad.", "side_a_key": "Sen-Toku Class", "side_b_key": "Sen-Taka Class"}, {"sheet_number": 9, "family": "Operaciones Especiales", "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa.", "side_a_key": "Type C3 Class", "side_b_key": "Type A Midget Submarine - Ko-Hyoteki"}], "total_classes": 18, "total_physical_sheets": 9}, "submarines": {"Kaidai_KD3_Class": {"class_name": "Kaidai KD3 Class", "full_title": "Kaidai KD3a / KD3b Class", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 6, "aft": 2, "reloads_fwd": 8, "reloads_aft": 2}, "deck_guns": {"main": "100mm Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "330 Feet (100.6m)", "displacement": "1,800 tons", "speed": "20 knots", "range": "10,000 nm", "crew": 60, "produced": 9}, "special_rules": "Fast fleet attack submarine without aircraft. 8 total torpedo tubes (6 forward, 2 aft), 10 reloads (8 forward, 2 aft). Total capacity: 18 torpedoes.", "vassal_filename": "Kaidai KD3 Class.jpg", "vassal_image_path": "images/vassal/Kaidai KD3 Class.jpg", "profile_image_path": "images/subs/remastered/01_Kaidai_KD3.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 7, "hull": 7}, "crew_counters": 4, "duplex_print": {"sheet_number": 1, "side": "Side A (Front)", "page_number": 1, "family": "Early Kaidai Fleet Submarines", "paired_with": "Kaidai KD4 Class", "pairing_logic": "Primeros submarinos de flota de entreguerras."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["7", "", "tube"], ["8", "", "tube"]], "r3": [["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"], null, null], "r4": [["120mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r5": [null, null, null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null]}, "shipyard_metadata": {"title": "KAIDAI  KD.3  CLASS", "subtitle": "FLEET SUBMARINE  |  KD3A / KD3B TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-53..I-60, I-63"]}, "reload_capacity": 10, "kaiten_note": null}, "Kaidai_KD4_Class": {"class_name": "Kaidai KD4 Class", "full_title": "Kaidai KD4 Class", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 6, "reloads_aft": 2}, "deck_guns": {"main": "100mm Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "320 Feet (97.5m)", "displacement": "1,720 tons", "speed": "20 knots", "range": "10,000 nm", "crew": 58, "produced": 3}, "special_rules": "Compact Kaidai variant. 6 torpedo tubes total (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.", "vassal_filename": "Kaidai KD4 Class.jpg", "vassal_image_path": "images/vassal/Kaidai KD4 Class.jpg", "profile_image_path": "images/subs/remastered/02_Kaidai_KD4.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 7, "hull": 7}, "crew_counters": 4, "duplex_print": {"sheet_number": 1, "side": "Side B (Reverse)", "page_number": 2, "family": "Early Kaidai Fleet Submarines", "paired_with": "Kaidai KD3 Class", "pairing_logic": "Primeros submarinos de flota de entreguerras."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"]], "r3": [["120mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null]}, "shipyard_metadata": {"title": "KAIDAI  KD.4  CLASS", "subtitle": "FLEET SUBMARINE  |  KD4 TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-61, I-62, I-64"]}, "reload_capacity": 8, "kaiten_note": null}, "Kaidai_KD5_Class": {"class_name": "Kaidai KD5 Class", "full_title": "Kaidai KD5 Class", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 6, "reloads_aft": 2}, "deck_guns": {"main": "100mm Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "320 Feet (97.5m)", "displacement": "1,730 tons", "speed": "20.5 knots", "range": "10,000 nm", "crew": 62, "produced": 3}, "special_rules": "Improved diving depth (75m). High speed fleet attack boat. 6 torpedo tubes (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.", "vassal_filename": "Kaidai KD5 Class.jpg", "vassal_image_path": "images/vassal/Kaidai KD5 Class.jpg", "profile_image_path": "images/subs/remastered/03_Kaidai_KD5.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 7, "hull": 7}, "crew_counters": 4, "duplex_print": {"sheet_number": 2, "side": "Side A (Front)", "page_number": 3, "family": "Evolved Kaidai Fleet Submarines", "paired_with": "Kaidai KD6 Class", "pairing_logic": "Estandarización de la espina dorsal de la flota."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"]], "r3": [["100mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "r5": [null, null, null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null]}, "shipyard_metadata": {"title": "KAIDAI  KD.5  CLASS", "subtitle": "FLEET SUBMARINE  |  KD5 TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-65..I-67"]}, "reload_capacity": 8, "kaiten_note": "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions."}, "Kaidai_KD6_Class": {"class_name": "Kaidai KD6 Class", "full_title": "Kaidai KD6a / KD6b Class", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 6, "reloads_aft": 2}, "deck_guns": {"main": "100mm Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": true, "kaiten_note": "In 1945 may convert to Kaiten carrier (removes deck gun). Kaiten carried ONLY on Kaiten missions.", "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "344 Feet (104.9m)", "displacement": "1,400 tons", "speed": "23 knots", "range": "14,000 nm", "crew": 70, "produced": 8}, "special_rules": "Fastest pre-war IJN submarines (23 knots surface). 6 torpedo tubes (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.\nCargo Conversion: In 1/43, conversion to a cargo submarine may occur and a Daihatsu landing craft carried. If so, remove the deck gun.", "vassal_filename": "Kaidai KD6 Class.jpg", "vassal_image_path": "images/vassal/Kaidai KD6 Class.jpg", "profile_image_path": "images/subs/remastered/04_Kaidai_KD6.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 7, "hull": 7}, "crew_counters": 4, "duplex_print": {"sheet_number": 2, "side": "Side B (Reverse)", "page_number": 4, "family": "Evolved Kaidai Fleet Submarines", "paired_with": "Kaidai KD5 Class", "pairing_logic": "Estandarización de la espina dorsal de la flota."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"]], "r3": [["100mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [["Daihatsu", "Landing", "cargo"], ["13.1mm\nStatus", "", "aa"], null, null], "r5": [null, null, null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null]}, "shipyard_metadata": {"title": "KAIDAI  KD.6  CLASS", "subtitle": "FLEET SUBMARINE  |  KD6A / KD6B TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-68..I-75, I-176"]}, "reload_capacity": 8}, "Kaidai_KD7_Class": {"class_name": "Kaidai KD7 Class", "full_title": "Kaidai KD7 Class", "available_date": "Available 1942", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 6, "reloads_aft": 0}, "deck_guns": {"main": "120mm Status", "ammo": 5, "aa": "25mm AA Status (x2)"}, "has_kaiten": true, "kaiten_note": null, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "346 Feet (105.5m)", "displacement": "1,630 tons", "speed": "23 knots", "range": "8,000 nm", "crew": 86, "produced": 10}, "special_rules": "Wartime standardized attack class. 6 torpedo tubes (4 forward, 2 aft), 6 forward reloads. Total capacity: 12 torpedoes. Powerful 25mm AA guns.", "vassal_filename": "Kaidai KD7 Class.jpg", "vassal_image_path": "images/vassal/Kaidai KD7 Class.jpg", "profile_image_path": "images/subs/remastered/05_Kaidai_KD7.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 7, "hull": 7}, "crew_counters": 4, "duplex_print": {"sheet_number": 3, "side": "Side A (Front)", "page_number": 5, "family": "Late Kaidai & Minelayer Class", "paired_with": "Kirai-Sen Class", "pairing_logic": "Último Kaidai de la guerra + el único minador especializado."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["25mm AA\nStatus #1", "", "aa"], ["25mm AA\nStatus #2", "", "aa"]], "r3": [["120mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null, null]}, "shipyard_metadata": {"title": "KAIDAI  KD.7  CLASS", "subtitle": "FINAL FLEET SUBMARINE  |  KD7 TYPE", "badges": ["AVAILABLE: SEP 1942", "PATROLS: 2 MONTHS", "HULLS: I-177..I-185"]}, "reload_capacity": 6}, "Kirai_Sen_Class": {"class_name": "Kirai-Sen Class", "full_title": "Kirai-Sen Submarine Minelayer (I-121 Class)", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 0, "reloads_fwd": 8, "reloads_aft": 0}, "mines": {"dispensers": "Aft Mine Dispenser Tubes", "doors": "Aft Mine Doors", "capacity": 42}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "None"}, "has_kaiten": false, "systems_status": ["F.Doors (Odd)", "F.Doors (Even)", "Radio", "Dive Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "279.5 Feet (85.2m)", "displacement": "1,383 tons", "speed": "14.5 knots", "range": "10,500 nm", "crew": 75, "produced": 4}, "special_rules": "Specialized minelayer (I-121..I-124). 4 bow torpedo tubes + 8 forward reloads (12 torpedoes total). Carries 42 naval mines in aft internal tubes. Every patrol is automatically a minelaying mission.\nSpecial Damage Routing: Damage to 'Aft Torpedo Doors' on Chart [E6] instead causes damage to the Aft Mine Doors.", "vassal_filename": "Kirai-Sen Class.jpg", "vassal_image_path": "images/vassal/Kirai-Sen Class.jpg", "profile_image_path": "images/subs/remastered/06_Kirai_Sen.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 4, "duplex_print": {"sheet_number": 3, "side": "Side B (Reverse)", "page_number": 6, "family": "Late Kaidai & Minelayer Class", "paired_with": "Kaidai KD7 Class", "pairing_logic": "Último Kaidai de la guerra + el único minador especializado."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["Aft Mine\nDoors", "", "mine_door"], ["Mines\nx42", "", "mines"], null, null], "r3": [["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["Mine Tunnels", "Mine Handling", "Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null, null]}, "shipyard_metadata": {"title": "KIRAI-SEN  CLASS  (I-121)", "subtitle": "SUBMARINE MINELAYER  |  KRS TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-121, 122, 123, 124"]}, "reload_capacity": 8, "kaiten_note": null}, "Junsen_J_IM_Class": {"class_name": "Junsen J. 1M Class", "full_title": "Junsen J. 1 Modified Class", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 Glen", "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 12, "reloads_aft": 2}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "320 Feet (97.5m)", "displacement": "2,135 tons", "speed": "18 knots", "range": "14,000 nm", "crew": 80, "produced": 1}, "special_rules": "Junsen I modified with seaplane hangar. 6 torpedo tubes (4 forward, 2 aft), 14 reloads (12 forward, 2 aft). Total capacity: 20 torpedoes. Twin 140mm deck guns.", "vassal_filename": "Junsen J IM Class.jpg", "vassal_image_path": "images/vassal/Junsen J IM Class.jpg", "profile_image_path": "images/subs/remastered/07_Junsen_J1M.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Stat 6", "Transit", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 4, "side": "Side A (Front)", "page_number": 7, "family": "Junsen Cruiser Submarines I", "paired_with": "Junsen J2 Class", "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"]], "r3": [["140mm\nStatus #1", "", "gun"], ["Ammo\nx5", "", "ammo"], ["140mm\nStatus #2", "", "gun"], ["Ammo\nx5", "", "ammo"]], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["Radio", "Dive Planes", "Hangar", "Crane", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null, null]}, "shipyard_metadata": {"title": "JUNSEN  J.1M  CLASS  (I-5)", "subtitle": "AIRCRAFT CRUISER SUBMARINE  |  J1M TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-5 (MODIFIED)"]}, "reload_capacity": 14, "kaiten_note": null}, "Junsen_J2_Class": {"class_name": "Junsen J. 2 Class", "full_title": "Junsen J. 2 Class (I-6)", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": true, "aircraft_type": "Watanabe E9W1 Slim / Yokosuka E14Y1", "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 9, "reloads_aft": 2}, "deck_guns": {"main": "127mm Gun Status", "ammo": 5, "aa": "13.1mm MG Status (x1)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "323 Feet (98.5m)", "displacement": "2,243 tons", "speed": "20 knots", "range": "20,000 nm", "crew": 92, "produced": 1}, "special_rules": "Equipped with aircraft hangar forward of conning tower. 6 torpedo tubes (4 forward, 2 aft), 11 reloads (9 forward, 2 aft). Total capacity: 17 torpedoes. 127mm dual-purpose deck gun.", "vassal_filename": "Junsen J2 Class.jpg", "vassal_image_path": "images/vassal/Junsen J2 Class.jpg", "profile_image_path": "images/subs/remastered/08_Junsen_J2.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Stat 6", "Transit", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 4, "side": "Side B (Reverse)", "page_number": 8, "family": "Junsen Cruiser Submarines I", "paired_with": "Junsen J IM Class", "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["Aft\nReload", "", "rld"], ["Aft\nReload", "", "rld"]], "r3": [["127mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [["13.1mm\nStatus", "", "aa"], null, null, null], "r5": [null, null, null, null], "sys": ["Crane", "Hangar", "Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null]}, "shipyard_metadata": {"title": "JUNSEN  J.2  CLASS  (I-6)", "subtitle": "AIRCRAFT CRUISER SUBMARINE  |  J2 TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-6"]}, "reload_capacity": 11, "kaiten_note": null}, "Junsen_J3_Class": {"class_name": "Junsen J. 3 Class", "full_title": "Junsen J. 3 Class (I-7, I-8)", "available_date": "Available December 1941", "patrol_length": "2 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 Status", "torpedo_tubes": {"fwd": 4, "aft": 2, "reloads_fwd": 15, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "13.1mm MG Status (x2)"}, "has_kaiten": true, "kaiten_note": "In 10/44 Kaiten may be installed. If so, remove aircraft. Kaiten carried ONLY on Kaiten missions.", "systems_status": ["F.Doors", "Aft.Doors", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "323 Feet (98.5m)", "displacement": "2,243 tons", "speed": "23 knots", "range": "14,000 nm", "crew": 100, "produced": 2}, "special_rules": "Equipped with aircraft hangar forward of conning tower. 6 torpedo tubes (4 forward, 2 aft), 15 forward reloads. Total capacity: 21 torpedoes. Systems Status includes Aft Torpedo Doors damage box.", "vassal_filename": "Junsen J3 Class.jpg", "vassal_image_path": "images/vassal/Junsen J3 Class.jpg", "profile_image_path": "images/subs/remastered/09_Junsen_J3.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 5, "side": "Side A (Front)", "page_number": 9, "family": "Junsen II & Command Submarines", "paired_with": "Type A Class", "pairing_logic": "Submarinos insignia de escuadrilla de largo radio."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"]], "r3": [["13.1mm\nStatus #1", "", "aa"], ["13.1mm\nStatus #2", "", "aa"], null, null], "r4": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "r5": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "sys": ["Crane", "Hangar", "Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null]}, "shipyard_metadata": {"title": "JUNSEN  J.3  CLASS  (I-7)", "subtitle": "FLAGSHIP CRUISER SUBMARINE  |  J3 TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 2 MONTHS", "HULLS: I-7, I-8"]}, "reload_capacity": 15}, "Type_A_Class": {"class_name": "Type A Class", "full_title": "Type A (Ko-gata) Command Submarine (I-9 Class)", "available_date": "Available December 1941", "patrol_length": "3 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 Glen", "torpedo_tubes": {"fwd": 6, "aft": 0, "reloads_fwd": 12, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm Twin AA (x2)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "373 Feet (113.7m)", "displacement": "2,434 tons", "speed": "23.5 knots", "range": "16,000 nm", "crew": 104, "produced": 3}, "special_rules": "Squadron flagship with extended command facilities, scout seaplane, and 140mm deck gun. 6 forward torpedo tubes, 12 forward reloads. Total capacity: 18 torpedoes.", "vassal_filename": "Type A Class.jpg", "vassal_image_path": "images/vassal/Type A Class.jpg", "profile_image_path": "images/subs/remastered/10_Type_A.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 5, "side": "Side B (Reverse)", "page_number": 10, "family": "Junsen II & Command Submarines", "paired_with": "Junsen J3 Class", "pairing_logic": "Submarinos insignia de escuadrilla de largo radio."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["25mm Twin\nStatus #1", "", "aa"], ["25mm Twin\nStatus #2", "", "aa"]], "r3": [["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["Radio", "Dive Planes", "Hangar", "Crane", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null, null]}, "shipyard_metadata": {"title": "TYPE  A  CLASS  (I-9)", "subtitle": "SQUADRON FLAGSHIP SUBMARINE  |  KO-GATA TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 3 MONTHS", "HULLS: I-9, I-10, I-11"]}, "reload_capacity": 12, "kaiten_note": null}, "Type_B_Class": {"class_name": "Type B Class", "full_title": "Type B (Otsu-gata) Cruiser Submarine (I-15 Class)", "available_date": "Available December 1941", "patrol_length": "3 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 Glen", "torpedo_tubes": {"fwd": 6, "aft": 0, "reloads_fwd": 11, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm Twin AA (x2)"}, "has_kaiten": true, "kaiten_note": "In 12/44 Kaiten may be installed with a second 25mm Twin AA Gun. If so, remove Deck Gun and aircraft. Kaiten carried ONLY on Kaiten missions.", "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "357 Feet (108.7m)", "displacement": "2,198 tons", "speed": "23.6 knots", "range": "14,000 nm", "crew": 94, "produced": 20}, "special_rules": "Most numerous and successful Japanese cruiser submarine class. Carries 1 Yokosuka E14Y1 scout seaplane. 6 forward torpedo tubes, 11 forward reloads. Total capacity: 17 torpedoes.", "vassal_filename": "Type B Class.jpg", "vassal_image_path": "images/vassal/Type B Class.jpg", "profile_image_path": "images/subs/remastered/12_Type_B.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 6, "side": "Side A (Front)", "page_number": 11, "family": "Type B Fleet Submarines", "paired_with": "Type B-3 Class", "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía)."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"]], "r3": [["25mm Twin\nStatus #1", "", "aa"], ["25mm Twin\nStatus #2", "", "aa"], null, null], "r4": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "r5": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "sys": ["Radio", "Dive Planes", "Hangar", "Crane", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null]}, "shipyard_metadata": {"title": "TYPE  B  CLASS  (I-15)", "subtitle": "OCEAN CRUISER SUBMARINE  |  OTSU-GATA TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 3 MONTHS", "HULLS: I-15..I-39 (20 BUILT)"]}, "reload_capacity": 11}, "Type_B_3_Class": {"class_name": "Type B-3 Class", "full_title": "Type B-3 Cruiser Submarine (I-56 / I-58 Class)", "available_date": "Available 1944", "patrol_length": "3 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 / 6 Kaiten", "torpedo_tubes": {"fwd": 6, "aft": 0, "reloads_fwd": 13, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm Triple AA (x2)"}, "has_kaiten": true, "kaiten_note": "In 12/44 Kaiten may be installed with a second 25mm Twin AA Gun. If so, remove Deck Gun and aircraft. Kaiten carried ONLY on Kaiten missions.", "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "357 Feet (108.7m)", "displacement": "2,144 tons", "speed": "17.7 knots", "range": "21,000 nm", "crew": 94, "produced": 3}, "special_rules": "Late-war Kaiten carrier. Famous for sinking USS Indianapolis (I-58). 6 forward torpedo tubes, 13 forward reloads. Total capacity: 19 torpedoes. Equipped with Type 22 Radar.", "vassal_filename": "Type B-3 Class.jpg", "vassal_image_path": "images/vassal/Type B-3 Class.jpg", "profile_image_path": "images/subs/remastered/13_Type_B3.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 6, "side": "Side B (Reverse)", "page_number": 12, "family": "Type B Fleet Submarines", "paired_with": "Type B Class", "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía)."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"]], "r3": [["25mm Twin\nStatus #1", "", "aa"], ["25mm Twin\nStatus #2", "", "aa"], ["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"]], "r4": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "r5": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "sys": ["Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null, null]}, "shipyard_metadata": {"title": "TYPE  B.3  CLASS  (I-56)", "subtitle": "LATE CRUISER SUBMARINE  |  OTSU-KAI TYPE", "badges": ["AVAILABLE: JUL 1944", "PATROLS: 3 MONTHS", "HULLS: I-56, I-58"]}, "reload_capacity": 13}, "Type_C_Class": {"class_name": "Type C Class", "full_title": "Type C (Hei-gata) Attack Submarine (I-16 Class)", "available_date": "Available December 1941", "patrol_length": "3 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 8, "aft": 0, "reloads_fwd": 12, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm Twin AA (x2)"}, "has_kaiten": true, "kaiten_note": null, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "358 Feet (109.3m)", "displacement": "2,184 tons", "speed": "23.6 knots", "range": "14,000 nm", "crew": 95, "produced": 8}, "special_rules": "Heavy torpedo attack boat: 8 forward torpedo tubes, 12 forward reloads (20 Type 95 torpedoes total). Carries 1 Type A Midget Submarine (Ko-Hyoteki) with 2 Type 97 midget torpedoes on aft deck.\nRadar: Type 22 AS/SS Radar available Dec. 1944 onwards.", "vassal_filename": "Type C Class.jpg", "vassal_image_path": "images/vassal/Type C Class.jpg", "profile_image_path": "images/subs/remastered/14_Type_C.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 7, "side": "Side A (Front)", "page_number": 13, "family": "Heavy Attack & Carrier Submarines", "paired_with": "Type A Modified", "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["7", "", "tube"], ["8", "", "tube"]], "r3": [["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], ["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"]], "r4": [["25mm Twin\nStatus #1", "", "aa"], ["25mm Twin\nStatus #2", "", "aa"], null, null], "r5": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "sys": ["Type 22 Radar", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null]}, "shipyard_metadata": {"title": "TYPE  C  CLASS  (I-16)", "subtitle": "HEAVY ATTACK SUBMARINE  |  HEI-GATA TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: 3 MONTHS", "HULLS: I-16, 18, 20, 22, 24"]}, "reload_capacity": 12}, "Type_A_Modified": {"class_name": "Type A Modified", "full_title": "Type A Modified 2 (I-12 Class)", "available_date": "Available 1943", "patrol_length": "3 month patrols", "has_aircraft": true, "aircraft_type": "Yokosuka E14Y1 Glen", "torpedo_tubes": {"fwd": 6, "aft": 0, "reloads_fwd": 6, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm AA (x2)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "373 Feet (113.7m)", "displacement": "2,934 tons", "speed": "17.7 knots", "range": "22,000 nm", "crew": 110, "produced": 1}, "special_rules": "Extended long-range cruiser submarine with enlarged hangar for 2 Aichi M6A1 Seiran bombers. 6 forward torpedo tubes, 6 forward reloads. Total capacity: 12 torpedoes. Equipped with Type 22 Radar.", "vassal_filename": "Type A Modified.jpg", "vassal_image_path": "images/vassal/Type A Modified.jpg", "profile_image_path": "images/subs/remastered/11_Type_A_Mod.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Stat 6", "Transit", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 7, "side": "Side B (Reverse)", "page_number": 14, "family": "Heavy Attack & Carrier Submarines", "paired_with": "Type C Class", "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["25mm Single\nStatus", "", "aa"], null], "r3": [["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], null, null], "r4": [["25mm Triple\nStatus #1", "", "aa"], ["25mm Triple\nStatus #2", "", "aa"], null, null], "r5": [null, null, null, null], "sys": ["Radio", "Dive Planes", "Hangar", "Crane", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null, null]}, "shipyard_metadata": {"title": "TYPE  A  MODIFIED  (I-12)", "subtitle": "LATE COMMAND SUBMARINE  |  KO-GATA MOD TYPE", "badges": ["AVAILABLE: MAY 1945", "PATROLS: 3 MONTHS", "HULLS: I-12, I-13, I-14"]}, "reload_capacity": 6, "kaiten_note": null}, "Sen_Toku_Class": {"class_name": "Sen-Toku Class", "full_title": "Sen-Toku Submarine Aircraft Carrier (I-400 Class)", "available_date": "Available December 1944", "patrol_length": "4 month patrols", "has_aircraft": true, "aircraft_type": "Aichi M6A1 Seiran (x3)", "torpedo_tubes": {"fwd": 8, "aft": 0, "reloads_fwd": 12, "reloads_aft": 0}, "deck_guns": {"main": "140mm Status", "ammo": 5, "aa": "25mm Triple AA (x3)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Crane", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "400 Feet (122.0m)", "displacement": "5,223 tons", "speed": "18.7 knots", "range": "37,500 nm", "crew": 144, "produced": 3}, "special_rules": "Availability December 1944. Massive aircraft carrier submarine carrying 3 Aichi M6A1 Seiran bombers.\nArmament: All 8 torpedo tubes are Forward (12 forward reloads, 20 torpedoes total); any aft torpedo tube damage hits on Chart [E6] are treated as No Effect. Heavy gun armament with Ammo x6, 4x 25mm Triple AA guns, Mk 3 M1 Air Search and Mk 2 M2 Sea Search Radar.", "vassal_filename": "Sen-Toku Class.jpg", "vassal_image_path": "images/vassal/Sen-Toku Class.jpg", "profile_image_path": "images/subs/remastered/16_Sen_Toku.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Stat 6", "Stat 7", "Transit"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 8, "side": "Side A (Front)", "page_number": 15, "family": "Advanced Naval Technology (1944–1945)", "paired_with": "Sen-Taka Class", "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["7", "", "tube"], ["8", "", "tube"]], "r3": [["140mm\nStatus", "", "gun"], ["Ammo\nx5", "", "ammo"], ["Mk 3 M1\nAir Srch Radar", "", "radar"], ["Mk 2 M2\nSea Srch Radar", "", "radar"]], "r4": [["25mm Triple\nStatus #1", "", "aa"], ["25mm Triple\nStatus #2", "", "aa"], null, null], "r5": [["25mm Triple\nStatus #3", "", "aa"], ["25mm Single\nStatus", "", "aa"], null, null], "sys": ["Crane", "Hangar", "Radio", "Periscope", "Hydrophones", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Dive Planes", "Batteries", "Fuel Tanks", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Diesel Engine 3", "Diesel Engine 4"]}, "shipyard_metadata": {"title": "SEN-TOKU  CLASS  (I-400)", "subtitle": "SUBMARINE AIRCRAFT CARRIER  |  STO TYPE", "badges": ["AVAILABLE: DEC 1944", "PATROLS: 4 MONTHS", "HULLS: I-400, I-401, I-402"]}, "reload_capacity": 12, "kaiten_note": null}, "Sen_Taka_Class": {"class_name": "Sen-Taka Class", "full_title": "Sen-Taka High-Speed Submarine (I-201 Class)", "available_date": "Available 1945", "patrol_length": "1 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 4, "aft": 0, "reloads_fwd": 6, "reloads_aft": 0}, "deck_guns": {"main": "None", "ammo": 0, "aa": "25mm AA Status (x2)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Snorkel", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "259 Feet (79.0m)", "displacement": "1,291 tons", "speed": "19 knots (Submerged!)", "range": "5,800 nm", "crew": 31, "produced": 3}, "special_rules": "Revolutionary high-speed submarine (19 knots submerged). 4 forward torpedo tubes, 6 forward reloads (10 torpedoes total). Streamlined hull, snorkel, high capacity batteries.\n• High Speed Underwater: Due to very high underwater speed, this class never gets a +1 modifier for previous detection.\n• Electric Motor Hits: Second Electric Motor 1 hit goes against Electric Motor 3; second Electric Motor 2 hit goes against Electric Motor 4. All penalties for electric motor hits on Chart [E3] are reduced by 1.\n• Battery Damage: Does not suffer a +1 drm for battery damage until all three have been damaged.", "vassal_filename": "Sen-Taka Class.jpg", "vassal_image_path": "images/vassal/Sen-Taka Class.jpg", "profile_image_path": "images/subs/remastered/17_Sen_Taka.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 6, "hull": 6}, "crew_counters": 4, "duplex_print": {"sheet_number": 8, "side": "Side B (Reverse)", "page_number": 16, "family": "Advanced Naval Technology (1944–1945)", "paired_with": "Sen-Toku Class", "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [null, null, null, null], "r3": [["25mm Single\nStatus", "", "aa"], null, null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["Snorkel", "Radar", "Radio", "Dive Planes", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Batteries", "Periscope", "Hydrophones", null, null]}, "shipyard_metadata": {"title": "SEN-TAKA  CLASS  (I-201)", "subtitle": "HIGH-SPEED SUBMARINE  |  STK TYPE", "badges": ["AVAILABLE: JUL 1945", "PATROLS: 1 MONTH", "HULLS: I-201, I-202, I-203"]}, "reload_capacity": 6, "kaiten_note": null}, "Type_C3_Class": {"class_name": "Type C-3 Class", "full_title": "Type C-3 Heavy Attack Submarine (I-52 Class)", "available_date": "Available 1943", "patrol_length": "4 month patrols", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 6, "aft": 0, "reloads_fwd": 13, "reloads_aft": 0}, "deck_guns": {"main": "140mm Twin Status", "ammo": 5, "aa": "25mm Triple AA (x2)"}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Cargo", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "356 Feet (108.7m)", "displacement": "2,095 tons", "speed": "17.7 knots", "range": "27,000 nm", "crew": 94, "produced": 3}, "special_rules": "Extra long-range cargo submarine (Yanagi missions to Germany). 6 forward torpedo tubes, 13 forward reloads (19 torpedoes total). Twin 140mm deck guns.\nRadar: Type 22 AS/SS Radar available Dec. 1944 onwards.", "vassal_filename": "Type C3 Class.jpg", "vassal_image_path": "images/vassal/Type C3 Class.jpg", "profile_image_path": "images/subs/remastered/15_Type_C3.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Stat 5", "Transit", "N/A", "N/A"], "damage_capacity": {"flooding": 8, "hull": 8}, "crew_counters": 5, "duplex_print": {"sheet_number": 9, "side": "Side A (Front)", "page_number": 17, "family": "Special Operations Submersibles", "paired_with": "Type A Midget Submarine - Ko-Hyoteki", "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], ["3", "", "tube"], ["4", "", "tube"]], "r2": [["5", "", "tube"], ["6", "", "tube"], ["140mm\nStatus #2", "", "gun"], ["Ammo\nx5", "", "ammo"]], "r3": [["140mm\nStatus #1", "", "gun"], ["Ammo\nx5", "", "ammo"], ["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"]], "r4": [["25mm Twin\nStatus #1", "", "aa"], ["25mm Twin\nStatus #2", "", "aa"], null, null], "r5": [["Kaiten\nSuicide Torpedo", "", "kai"], ["Kaiten\nSuicide Torpedo", "", "kai"], null, null], "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries", "Periscope", null, null, null, null]}, "shipyard_metadata": {"title": "TYPE  C.3  CLASS  (I-52)", "subtitle": "OCEAN CARGO ATTACK SUBMARINE  |  HEI-KAI TYPE", "badges": ["AVAILABLE: MAY 1944", "PATROLS: 4 MONTHS", "HULLS: I-52, I-53, I-55"]}, "reload_capacity": 13, "kaiten_note": "In 12/44 Kaiten are installed. Remove second Deck Gun and its ammunition. Kaiten carried ONLY on Kaiten missions."}, "Type_A_Midget_Submarine___Ko_Hyoteki": {"class_name": "Type A Midget Submarine", "full_title": "Ko-Hyoteki Type A Midget Carrier Submarine", "available_date": "Available December 1941", "patrol_length": "Special Operations", "has_aircraft": false, "aircraft_type": null, "torpedo_tubes": {"fwd": 2, "aft": 0, "reloads_fwd": 0, "reloads_aft": 0}, "deck_guns": {"main": null, "ammo": 0, "aa": null}, "has_kaiten": false, "systems_status": ["F.Doors", "Planes", "Radio", "Clamp", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"], "stats": {"length": "78.5 Feet (23.9m)", "displacement": "46 tons", "speed": "19 knots (Subm)", "range": "100 nm (Batt)", "crew": 2, "produced": "100+"}, "special_rules": "Two-man midget submarine carried by fleet submarine mothership for harbour penetration missions [7.16]. 2 forward torpedo tubes, 0 reloads (2x Type 97 45cm torpedoes total). Specialized 600 hp electric drive with forward and aft battery banks, gyro compass, and hull wire cutters.", "vassal_filename": "Type A Midget Submarine - Ko-Hyoteki.jpg", "vassal_image_path": "images/vassal/Type A Midget Submarine - Ko-Hyoteki.jpg", "profile_image_path": "images/subs/remastered/18_Type_A_Midget_Ko_Hyoteki.jpg", "is_remastered": true, "patrol_phases": ["Transit", "Penetrate", "Attack", "Egress", "Recover", "N/A", "N/A", "N/A", "N/A"], "damage_capacity": {"flooding": 2, "hull": 2}, "crew_counters": 0, "duplex_print": {"sheet_number": 9, "side": "Side B (Reverse)", "page_number": 18, "family": "Special Operations Submersibles", "paired_with": "Type C3 Class", "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa."}, "armament_layout": {"r1": [["1", "", "tube"], ["2", "", "tube"], null, null], "r2": [null, null, null, null], "r3": [null, null, null, null], "r4": [null, null, null, null], "r5": [null, null, null, null], "sys": ["Periscope", "Rudder Control", "Batteries", "Electric Motor", "Gyro Compass", "Trim Tanks", "Air System", "Ballast", null, null, null, null, null, null, null, null]}, "shipyard_metadata": {"title": "TYPE  A  MIDGET  (KO-HYOTEKI)", "subtitle": "SPECIAL ATTACK SUBMERSIBLE  |  TARGET A TYPE", "badges": ["AVAILABLE: DEC 1941", "PATROLS: SPECIAL OPS", "HULLS: HA-19 ETC. (100+ BUILT)"]}, "reload_capacity": 0, "kaiten_note": null}}};
+const SUB_DB = {
+  "metadata": {
+    "game_title": "Sensuikan: Japanese Fleet Submarines, 1941-45",
+    "publisher": "Compass Games",
+    "errata_version": "Official Errata and Clarifications (as of 31 Aug 2026)",
+    "official_errata_applied": [
+      "Submarine Mats (correction): Junsen J.3 includes Aft Torpedo Doors damage box in Systems Status.",
+      "Submarine Mats - Sen-Toku (correction): All 8 tubes are Forward (none aft). Aft torpedo damage hits treated as No Effect.",
+      "Submarine Patrol Log (correction): Sen-Toku availability updated to December 1944 (not September 1944).",
+      "Submarine Mats - Kaiten Installation (clarification): Conversion occurs automatically on date (typically removes deck gun), but Kaiten carried ONLY on Kaiten missions.",
+      "Countersheet (clarification): Daihatsu landing craft counter used on Transport Missions [7.4] as reminder."
+    ],
+    "canonical_dimensions_mm": {
+      "card_width": 240.0,
+      "card_height": 198.0,
+      "tray_outer_width": 247.6,
+      "tray_outer_height": 205.6,
+      "tray_pocket_width": 240.6,
+      "tray_pocket_height": 198.6,
+      "slot_size": 15.0,
+      "sub_profile_frame_mm": {
+        "x": 48.5,
+        "y": 23.6,
+        "width": 131.5,
+        "height": 33.1
+      }
+    },
+    "canonical_duplex_structure": [
+      {
+        "sheet_number": 1,
+        "family": "Kaidai (Inicios)",
+        "pairing_logic": "Primeros submarinos de flota de entreguerras.",
+        "side_a_key": "Kaidai KD3 Class",
+        "side_b_key": "Kaidai KD4 Class"
+      },
+      {
+        "sheet_number": 2,
+        "family": "Kaidai (Evolución)",
+        "pairing_logic": "Estandarización de la espina dorsal de la flota.",
+        "side_a_key": "Kaidai KD5 Class",
+        "side_b_key": "Kaidai KD6 Class"
+      },
+      {
+        "sheet_number": 3,
+        "family": "Kaidai Final & Especial",
+        "pairing_logic": "Último Kaidai de la guerra + el único minador especializado.",
+        "side_a_key": "Kaidai KD7 Class",
+        "side_b_key": "Kirai-Sen Class"
+      },
+      {
+        "sheet_number": 4,
+        "family": "Junsen (Cruceros I)",
+        "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión.",
+        "side_a_key": "Junsen J IM Class",
+        "side_b_key": "Junsen J2 Class"
+      },
+      {
+        "sheet_number": 5,
+        "family": "Junsen II & Mando",
+        "pairing_logic": "Submarinos insignia de escuadrilla de largo radio.",
+        "side_a_key": "Junsen J3 Class",
+        "side_b_key": "Type A Class"
+      },
+      {
+        "sheet_number": 6,
+        "family": "Familia Type B",
+        "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía).",
+        "side_a_key": "Type B Class",
+        "side_b_key": "Type B-3 Class"
+      },
+      {
+        "sheet_number": 7,
+        "family": "Ataque Pesado (Nodrizas)",
+        "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío.",
+        "side_a_key": "Type C Class",
+        "side_b_key": "Type A Modified"
+      },
+      {
+        "sheet_number": 8,
+        "family": "Supertecnología 44-45",
+        "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad.",
+        "side_a_key": "Sen-Toku Class",
+        "side_b_key": "Sen-Taka Class"
+      },
+      {
+        "sheet_number": 9,
+        "family": "Operaciones Especiales",
+        "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa.",
+        "side_a_key": "Type C3 Class",
+        "side_b_key": "Type A Midget Submarine - Ko-Hyoteki"
+      }
+    ],
+    "total_classes": 24,
+    "total_physical_sheets": 9,
+    "official_classes": 18,
+    "fanmade_classes": 6
+  },
+  "submarines": {
+    "Kaidai_KD3_Class": {
+      "class_name": "Kaidai KD3 Class",
+      "full_title": "Kaidai KD3a / KD3b Class",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 2,
+        "reloads_fwd": 8,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "100mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "330 Feet (100.6m)",
+        "displacement": "1,800 tons",
+        "speed": "20 knots",
+        "range": "10,000 nm",
+        "crew": 60,
+        "produced": 9
+      },
+      "special_rules": "Fast fleet attack submarine without aircraft. 8 total torpedo tubes (6 forward, 2 aft), 10 reloads (8 forward, 2 aft). Total capacity: 18 torpedoes.",
+      "vassal_filename": "Kaidai KD3 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD3 Class.jpg",
+      "profile_image_path": "images/subs/remastered/01_Kaidai_KD3.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 1,
+        "side": "Side A (Front)",
+        "page_number": 1,
+        "family": "Early Kaidai Fleet Submarines",
+        "paired_with": "Kaidai KD4 Class",
+        "pairing_logic": "Primeros submarinos de flota de entreguerras."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "7",
+            "",
+            "tube"
+          ],
+          [
+            "8",
+            "",
+            "tube"
+          ]
+        ],
+        "r3": [
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "120mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KAIDAI  KD.3  CLASS",
+        "subtitle": "FLEET SUBMARINE  |  KD3A / KD3B TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-53..I-60, I-63"
+        ]
+      },
+      "reload_capacity": 10,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - KD.3.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Kaidai_KD4_Class": {
+      "class_name": "Kaidai KD4 Class",
+      "full_title": "Kaidai KD4 Class",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 6,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "100mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "320 Feet (97.5m)",
+        "displacement": "1,720 tons",
+        "speed": "20 knots",
+        "range": "10,000 nm",
+        "crew": 58,
+        "produced": 3
+      },
+      "special_rules": "Compact Kaidai variant. 6 torpedo tubes total (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.",
+      "vassal_filename": "Kaidai KD4 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD4 Class.jpg",
+      "profile_image_path": "images/subs/remastered/02_Kaidai_KD4.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 1,
+        "side": "Side B (Reverse)",
+        "page_number": 2,
+        "family": "Early Kaidai Fleet Submarines",
+        "paired_with": "Kaidai KD3 Class",
+        "pairing_logic": "Primeros submarinos de flota de entreguerras."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ]
+        ],
+        "r3": [
+          [
+            "120mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KAIDAI  KD.4  CLASS",
+        "subtitle": "FLEET SUBMARINE  |  KD4 TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-61, I-62, I-64"
+        ]
+      },
+      "reload_capacity": 8,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - KD.4.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Kaidai_KD5_Class": {
+      "class_name": "Kaidai KD5 Class",
+      "full_title": "Kaidai KD5 Class",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 6,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "100mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "320 Feet (97.5m)",
+        "displacement": "1,730 tons",
+        "speed": "20.5 knots",
+        "range": "10,000 nm",
+        "crew": 62,
+        "produced": 3
+      },
+      "special_rules": "Improved diving depth (75m). High speed fleet attack boat. 6 torpedo tubes (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.",
+      "vassal_filename": "Kaidai KD5 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD5 Class.jpg",
+      "profile_image_path": "images/subs/remastered/03_Kaidai_KD5.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 2,
+        "side": "Side A (Front)",
+        "page_number": 3,
+        "family": "Evolved Kaidai Fleet Submarines",
+        "paired_with": "Kaidai KD6 Class",
+        "pairing_logic": "Estandarización de la espina dorsal de la flota."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ]
+        ],
+        "r3": [
+          [
+            "100mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KAIDAI  KD.5  CLASS",
+        "subtitle": "FLEET SUBMARINE  |  KD5 TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-65..I-67"
+        ]
+      },
+      "reload_capacity": 8,
+      "kaiten_note": "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions.",
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - KD.5.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Kaidai_KD6_Class": {
+      "class_name": "Kaidai KD6 Class",
+      "full_title": "Kaidai KD6a / KD6b Class",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 6,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "100mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "In 1945 may convert to Kaiten carrier (removes deck gun). Kaiten carried ONLY on Kaiten missions.",
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "344 Feet (104.9m)",
+        "displacement": "1,400 tons",
+        "speed": "23 knots",
+        "range": "14,000 nm",
+        "crew": 70,
+        "produced": 8
+      },
+      "special_rules": "Fastest pre-war IJN submarines (23 knots surface). 6 torpedo tubes (4 forward, 2 aft), 8 reloads (6 forward, 2 aft). Total capacity: 14 torpedoes.\nCargo Conversion: In 1/43, conversion to a cargo submarine may occur and a Daihatsu landing craft carried. If so, remove the deck gun.",
+      "vassal_filename": "Kaidai KD6 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD6 Class.jpg",
+      "profile_image_path": "images/subs/remastered/04_Kaidai_KD6.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 2,
+        "side": "Side B (Reverse)",
+        "page_number": 4,
+        "family": "Evolved Kaidai Fleet Submarines",
+        "paired_with": "Kaidai KD5 Class",
+        "pairing_logic": "Estandarización de la espina dorsal de la flota."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ]
+        ],
+        "r3": [
+          [
+            "100mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "Daihatsu",
+            "Landing",
+            "cargo"
+          ],
+          [
+            "13.1mm\nStatus",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KAIDAI  KD.6  CLASS",
+        "subtitle": "FLEET SUBMARINE  |  KD6A / KD6B TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-68..I-75, I-176"
+        ]
+      },
+      "reload_capacity": 8,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - KD.6.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Kaidai_KD7_Class": {
+      "class_name": "Kaidai KD7 Class",
+      "full_title": "Kaidai KD7 Class",
+      "available_date": "Available 1942",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "120mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": null,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "346 Feet (105.5m)",
+        "displacement": "1,630 tons",
+        "speed": "23 knots",
+        "range": "8,000 nm",
+        "crew": 86,
+        "produced": 10
+      },
+      "special_rules": "Wartime standardized attack class. 6 torpedo tubes (4 forward, 2 aft), 6 forward reloads. Total capacity: 12 torpedoes. Powerful 25mm AA guns.",
+      "vassal_filename": "Kaidai KD7 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD7 Class.jpg",
+      "profile_image_path": "images/subs/remastered/05_Kaidai_KD7.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 3,
+        "side": "Side A (Front)",
+        "page_number": 5,
+        "family": "Late Kaidai & Minelayer Class",
+        "paired_with": "Kirai-Sen Class",
+        "pairing_logic": "Último Kaidai de la guerra + el único minador especializado."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "25mm AA\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm AA\nStatus #2",
+            "",
+            "aa"
+          ]
+        ],
+        "r3": [
+          [
+            "120mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KAIDAI  KD.7  CLASS",
+        "subtitle": "FINAL FLEET SUBMARINE  |  KD7 TYPE",
+        "badges": [
+          "AVAILABLE: SEP 1942",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-177..I-185"
+        ]
+      },
+      "reload_capacity": 6,
+      "start_month": "1942-09",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - KD.7.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Kirai_Sen_Class": {
+      "class_name": "Kirai-Sen Class",
+      "full_title": "Kirai-Sen Submarine Minelayer (I-121 Class)",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 0,
+        "reloads_fwd": 8,
+        "reloads_aft": 0
+      },
+      "mines": {
+        "dispensers": "Aft Mine Dispenser Tubes",
+        "doors": "Aft Mine Doors",
+        "capacity": 42
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "None"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors (Odd)",
+        "F.Doors (Even)",
+        "Radio",
+        "Dive Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "279.5 Feet (85.2m)",
+        "displacement": "1,383 tons",
+        "speed": "14.5 knots",
+        "range": "10,500 nm",
+        "crew": 75,
+        "produced": 4
+      },
+      "special_rules": "Specialized minelayer (I-121..I-124). 4 bow torpedo tubes + 8 forward reloads (12 torpedoes total). Carries 42 naval mines in aft internal tubes. Every patrol is automatically a minelaying mission.\nSpecial Damage Routing: Damage to 'Aft Torpedo Doors' on Chart [E6] instead causes damage to the Aft Mine Doors.",
+      "vassal_filename": "Kirai-Sen Class.jpg",
+      "vassal_image_path": "images/vassal/Kirai-Sen Class.jpg",
+      "profile_image_path": "images/subs/remastered/06_Kirai_Sen.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 3,
+        "side": "Side B (Reverse)",
+        "page_number": 6,
+        "family": "Late Kaidai & Minelayer Class",
+        "paired_with": "Kaidai KD7 Class",
+        "pairing_logic": "Último Kaidai de la guerra + el único minador especializado."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "Aft Mine\nDoors",
+            "",
+            "mine_door"
+          ],
+          [
+            "Mines\nx42",
+            "",
+            "mines"
+          ],
+          null,
+          null
+        ],
+        "r3": [
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Mine Tunnels",
+          "Mine Handling",
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "KIRAI-SEN  CLASS  (I-121)",
+        "subtitle": "SUBMARINE MINELAYER  |  KRS TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-121, 122, 123, 124"
+        ]
+      },
+      "reload_capacity": 8,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Kirai-Sen.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": true,
+      "mine_capacity": 42,
+      "has_daihatsu": false
+    },
+    "Junsen_J_IM_Class": {
+      "class_name": "Junsen J. 1M Class",
+      "full_title": "Junsen J. 1 Modified Class",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Glen",
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 12,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "320 Feet (97.5m)",
+        "displacement": "2,135 tons",
+        "speed": "18 knots",
+        "range": "14,000 nm",
+        "crew": 80,
+        "produced": 1
+      },
+      "special_rules": "Junsen I modified with seaplane hangar. 6 torpedo tubes (4 forward, 2 aft), 14 reloads (12 forward, 2 aft). Total capacity: 20 torpedoes. Twin 140mm deck guns.",
+      "vassal_filename": "Junsen J IM Class.jpg",
+      "vassal_image_path": "images/vassal/Junsen J IM Class.jpg",
+      "profile_image_path": "images/subs/remastered/07_Junsen_J1M.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 4,
+        "side": "Side A (Front)",
+        "page_number": 7,
+        "family": "Junsen Cruiser Submarines I",
+        "paired_with": "Junsen J2 Class",
+        "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ]
+        ],
+        "r3": [
+          [
+            "140mm\nStatus #1",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          [
+            "140mm\nStatus #2",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ]
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "JUNSEN  J.1M  CLASS  (I-5)",
+        "subtitle": "AIRCRAFT CRUISER SUBMARINE  |  J1M TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-5 (MODIFIED)"
+        ]
+      },
+      "reload_capacity": 14,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Junsen J1M.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Junsen_J2_Class": {
+      "class_name": "Junsen J. 2 Class",
+      "full_title": "Junsen J. 2 Class (I-6)",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Watanabe E9W1 Slim / Yokosuka E14Y1",
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 9,
+        "reloads_aft": 2
+      },
+      "deck_guns": {
+        "main": "127mm Gun Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x1)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "323 Feet (98.5m)",
+        "displacement": "2,243 tons",
+        "speed": "20 knots",
+        "range": "20,000 nm",
+        "crew": 92,
+        "produced": 1
+      },
+      "special_rules": "Equipped with aircraft hangar forward of conning tower. 6 torpedo tubes (4 forward, 2 aft), 11 reloads (9 forward, 2 aft). Total capacity: 17 torpedoes. 127mm dual-purpose deck gun.",
+      "vassal_filename": "Junsen J2 Class.jpg",
+      "vassal_image_path": "images/vassal/Junsen J2 Class.jpg",
+      "profile_image_path": "images/subs/remastered/08_Junsen_J2.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 4,
+        "side": "Side B (Reverse)",
+        "page_number": 8,
+        "family": "Junsen Cruiser Submarines I",
+        "paired_with": "Junsen J IM Class",
+        "pairing_logic": "Submarinos de crucero de gran alcance con hidroavión."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "",
+            "rld"
+          ]
+        ],
+        "r3": [
+          [
+            "127mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "13.1mm\nStatus",
+            "",
+            "aa"
+          ],
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Crane",
+          "Hangar",
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "JUNSEN  J.2  CLASS  (I-6)",
+        "subtitle": "AIRCRAFT CRUISER SUBMARINE  |  J2 TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-6"
+        ]
+      },
+      "reload_capacity": 11,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Junsen J2.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Junsen_J3_Class": {
+      "class_name": "Junsen J. 3 Class",
+      "full_title": "Junsen J. 3 Class (I-7, I-8)",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Status",
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 2,
+        "reloads_fwd": 15,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "13.1mm MG Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "In 10/44 Kaiten may be installed. If so, remove aircraft. Kaiten carried ONLY on Kaiten missions.",
+      "systems_status": [
+        "F.Doors",
+        "Aft.Doors",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "323 Feet (98.5m)",
+        "displacement": "2,243 tons",
+        "speed": "23 knots",
+        "range": "14,000 nm",
+        "crew": 100,
+        "produced": 2
+      },
+      "special_rules": "Equipped with aircraft hangar forward of conning tower. 6 torpedo tubes (4 forward, 2 aft), 15 forward reloads. Total capacity: 21 torpedoes. Systems Status includes Aft Torpedo Doors damage box.",
+      "vassal_filename": "Junsen J3 Class.jpg",
+      "vassal_image_path": "images/vassal/Junsen J3 Class.jpg",
+      "profile_image_path": "images/subs/remastered/09_Junsen_J3.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 5,
+        "side": "Side A (Front)",
+        "page_number": 9,
+        "family": "Junsen II & Command Submarines",
+        "paired_with": "Type A Class",
+        "pairing_logic": "Submarinos insignia de escuadrilla de largo radio."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ]
+        ],
+        "r3": [
+          [
+            "13.1mm\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "13.1mm\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "Crane",
+          "Hangar",
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "JUNSEN  J.3  CLASS  (I-7)",
+        "subtitle": "FLAGSHIP CRUISER SUBMARINE  |  J3 TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-7, I-8"
+        ]
+      },
+      "reload_capacity": 15,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Junsen J3.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_A_Class": {
+      "class_name": "Type A Class",
+      "full_title": "Type A (Ko-gata) Command Submarine (I-9 Class)",
+      "available_date": "Available December 1941",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Glen",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 12,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA (x2)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "373 Feet (113.7m)",
+        "displacement": "2,434 tons",
+        "speed": "23.5 knots",
+        "range": "16,000 nm",
+        "crew": 104,
+        "produced": 3
+      },
+      "special_rules": "Squadron flagship with extended command facilities, scout seaplane, and 140mm deck gun. 6 forward torpedo tubes, 12 forward reloads. Total capacity: 18 torpedoes.",
+      "vassal_filename": "Type A Class.jpg",
+      "vassal_image_path": "images/vassal/Type A Class.jpg",
+      "profile_image_path": "images/subs/remastered/10_Type_A.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 5,
+        "side": "Side B (Reverse)",
+        "page_number": 10,
+        "family": "Junsen II & Command Submarines",
+        "paired_with": "Junsen J3 Class",
+        "pairing_logic": "Submarinos insignia de escuadrilla de largo radio."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "25mm Twin\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Twin\nStatus #2",
+            "",
+            "aa"
+          ]
+        ],
+        "r3": [
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  A  CLASS  (I-9)",
+        "subtitle": "SQUADRON FLAGSHIP SUBMARINE  |  KO-GATA TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-9, I-10, I-11"
+        ]
+      },
+      "reload_capacity": 12,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Type A.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_B_Class": {
+      "class_name": "Type B Class",
+      "full_title": "Type B (Otsu-gata) Cruiser Submarine (I-15 Class)",
+      "available_date": "Available December 1941",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Glen",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 11,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "In 12/44 Kaiten may be installed with a second 25mm Twin AA Gun. If so, remove Deck Gun and aircraft. Kaiten carried ONLY on Kaiten missions.",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "357 Feet (108.7m)",
+        "displacement": "2,198 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 94,
+        "produced": 20
+      },
+      "special_rules": "Most numerous and successful Japanese cruiser submarine class. Carries 1 Yokosuka E14Y1 scout seaplane. 6 forward torpedo tubes, 11 forward reloads. Total capacity: 17 torpedoes.",
+      "vassal_filename": "Type B Class.jpg",
+      "vassal_image_path": "images/vassal/Type B Class.jpg",
+      "profile_image_path": "images/subs/remastered/12_Type_B.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 6,
+        "side": "Side A (Front)",
+        "page_number": 11,
+        "family": "Type B Fleet Submarines",
+        "paired_with": "Type B-3 Class",
+        "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía)."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ]
+        ],
+        "r3": [
+          [
+            "25mm Twin\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Twin\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  B  CLASS  (I-15)",
+        "subtitle": "OCEAN CRUISER SUBMARINE  |  OTSU-GATA TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-15..I-39 (20 BUILT)"
+        ]
+      },
+      "reload_capacity": 11,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Type B.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_B_3_Class": {
+      "class_name": "Type B-3 Class",
+      "full_title": "Type B-3 Cruiser Submarine (I-56 / I-58 Class)",
+      "available_date": "Available 1944",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 / 6 Kaiten",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 13,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Triple AA (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "In 12/44 Kaiten may be installed with a second 25mm Twin AA Gun. If so, remove Deck Gun and aircraft. Kaiten carried ONLY on Kaiten missions.",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "357 Feet (108.7m)",
+        "displacement": "2,144 tons",
+        "speed": "17.7 knots",
+        "range": "21,000 nm",
+        "crew": 94,
+        "produced": 3
+      },
+      "special_rules": "Late-war Kaiten carrier. Famous for sinking USS Indianapolis (I-58). 6 forward torpedo tubes, 13 forward reloads. Total capacity: 19 torpedoes. Equipped with Type 22 Radar.",
+      "vassal_filename": "Type B-3 Class.jpg",
+      "vassal_image_path": "images/vassal/Type B-3 Class.jpg",
+      "profile_image_path": "images/subs/remastered/13_Type_B3.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 6,
+        "side": "Side B (Reverse)",
+        "page_number": 12,
+        "family": "Type B Fleet Submarines",
+        "paired_with": "Type B Class",
+        "pairing_logic": "Submarinos oceánicos con hidroavión (versión inicial y tardía)."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ]
+        ],
+        "r3": [
+          [
+            "25mm Twin\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Twin\nStatus #2",
+            "",
+            "aa"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ]
+        ],
+        "r4": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  B.3  CLASS  (I-56)",
+        "subtitle": "LATE CRUISER SUBMARINE  |  OTSU-KAI TYPE",
+        "badges": [
+          "AVAILABLE: JUL 1944",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-56, I-58"
+        ]
+      },
+      "reload_capacity": 13,
+      "start_month": "1944-06",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": true,
+        "model": "Type 22 Surface Radar",
+        "model_es": "Radar Tipo 22 Superficie",
+        "available_month": "1944-06"
+      },
+      "chit_filename": "Submarine - Type B.3.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": true
+    },
+    "Type_C_Class": {
+      "class_name": "Type C Class",
+      "full_title": "Type C (Hei-gata) Attack Submarine (I-16 Class)",
+      "available_date": "Available December 1941",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 8,
+        "aft": 0,
+        "reloads_fwd": 12,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": null,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "358 Feet (109.3m)",
+        "displacement": "2,184 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 95,
+        "produced": 8
+      },
+      "special_rules": "Heavy torpedo attack boat: 8 forward torpedo tubes, 12 forward reloads (20 Type 95 torpedoes total). Carries 1 Type A Midget Submarine (Ko-Hyoteki) with 2 Type 97 midget torpedoes on aft deck.\nRadar: Type 22 AS/SS Radar available Dec. 1944 onwards.",
+      "vassal_filename": "Type C Class.jpg",
+      "vassal_image_path": "images/vassal/Type C Class.jpg",
+      "profile_image_path": "images/subs/remastered/14_Type_C.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 7,
+        "side": "Side A (Front)",
+        "page_number": 13,
+        "family": "Heavy Attack & Carrier Submarines",
+        "paired_with": "Type A Modified",
+        "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "7",
+            "",
+            "tube"
+          ],
+          [
+            "8",
+            "",
+            "tube"
+          ]
+        ],
+        "r3": [
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ]
+        ],
+        "r4": [
+          [
+            "25mm Twin\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Twin\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "Type 22 Radar",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  C  CLASS  (I-16)",
+        "subtitle": "HEAVY ATTACK SUBMARINE  |  HEI-GATA TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-16, 18, 20, 22, 24"
+        ]
+      },
+      "reload_capacity": 12,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "retrofit_month": "1944-12",
+        "model": "Type 22 AS/SS (Retrofit 12/44)",
+        "model_es": "Radar Tipo 22 AS/SS (Refit 12/44)"
+      },
+      "chit_filename": "Submarine - Type C.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": true,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_A_Modified": {
+      "class_name": "Type A Modified",
+      "full_title": "Type A Modified 2 (I-12 Class)",
+      "available_date": "Available 1943",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Glen",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA (x2)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "373 Feet (113.7m)",
+        "displacement": "2,934 tons",
+        "speed": "17.7 knots",
+        "range": "22,000 nm",
+        "crew": 110,
+        "produced": 1
+      },
+      "special_rules": "Extended long-range cruiser submarine with enlarged hangar for 2 Aichi M6A1 Seiran bombers. 6 forward torpedo tubes, 6 forward reloads. Total capacity: 12 torpedoes. Equipped with Type 22 Radar.",
+      "vassal_filename": "Type A Modified.jpg",
+      "vassal_image_path": "images/vassal/Type A Modified.jpg",
+      "profile_image_path": "images/subs/remastered/11_Type_A_Mod.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 7,
+        "side": "Side B (Reverse)",
+        "page_number": 14,
+        "family": "Heavy Attack & Carrier Submarines",
+        "paired_with": "Type C Class",
+        "pairing_logic": "El Type C (nodriza del Midget) emparejado con mando tardío."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "25mm Single\nStatus",
+            "",
+            "aa"
+          ],
+          null
+        ],
+        "r3": [
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "r4": [
+          [
+            "25mm Triple\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Triple\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  A  MODIFIED  (I-12)",
+        "subtitle": "LATE COMMAND SUBMARINE  |  KO-GATA MOD TYPE",
+        "badges": [
+          "AVAILABLE: MAY 1945",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-12, I-13, I-14"
+        ]
+      },
+      "reload_capacity": 6,
+      "kaiten_note": null,
+      "start_month": "1945-05",
+      "commander_rank_required": "Commander",
+      "radar": {
+        "equipped": true,
+        "model": "Type 22 Surface Radar",
+        "model_es": "Radar Tipo 22 Superficie",
+        "available_month": "1945-05"
+      },
+      "chit_filename": "Submarine - Type A(M).jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Sen_Toku_Class": {
+      "class_name": "Sen-Toku Class",
+      "full_title": "Sen-Toku Submarine Aircraft Carrier (I-400 Class)",
+      "available_date": "Available December 1944",
+      "patrol_length": "4 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Aichi M6A1 Seiran (x3)",
+      "torpedo_tubes": {
+        "fwd": 8,
+        "aft": 0,
+        "reloads_fwd": 12,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Triple AA (x3)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "400 Feet (122.0m)",
+        "displacement": "5,223 tons",
+        "speed": "18.7 knots",
+        "range": "37,500 nm",
+        "crew": 144,
+        "produced": 3
+      },
+      "special_rules": "Availability December 1944. Massive aircraft carrier submarine carrying 3 Aichi M6A1 Seiran bombers.\nArmament: All 8 torpedo tubes are Forward (12 forward reloads, 20 torpedoes total); any aft torpedo tube damage hits on Chart [E6] are treated as No Effect. Heavy gun armament with Ammo x6, 4x 25mm Triple AA guns, Mk 3 M1 Air Search and Mk 2 M2 Sea Search Radar.",
+      "vassal_filename": "Sen-Toku Class.jpg",
+      "vassal_image_path": "images/vassal/Sen-Toku Class.jpg",
+      "profile_image_path": "images/subs/remastered/16_Sen_Toku.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Stat 7",
+        "Transit"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 8,
+        "side": "Side A (Front)",
+        "page_number": 15,
+        "family": "Advanced Naval Technology (1944–1945)",
+        "paired_with": "Sen-Taka Class",
+        "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "7",
+            "",
+            "tube"
+          ],
+          [
+            "8",
+            "",
+            "tube"
+          ]
+        ],
+        "r3": [
+          [
+            "140mm\nStatus",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          [
+            "Mk 3 M1\nAir Srch Radar",
+            "",
+            "radar"
+          ],
+          [
+            "Mk 2 M2\nSea Srch Radar",
+            "",
+            "radar"
+          ]
+        ],
+        "r4": [
+          [
+            "25mm Triple\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Triple\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "25mm Triple\nStatus #3",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Single\nStatus",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "Crane",
+          "Hangar",
+          "Radio",
+          "Periscope",
+          "Hydrophones",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Dive Planes",
+          "Batteries",
+          "Fuel Tanks",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Diesel Engine 3",
+          "Diesel Engine 4"
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "SEN-TOKU  CLASS  (I-400)",
+        "subtitle": "SUBMARINE AIRCRAFT CARRIER  |  STO TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1944",
+          "PATROLS: 4 MONTHS",
+          "HULLS: I-400, I-401, I-402"
+        ]
+      },
+      "reload_capacity": 12,
+      "kaiten_note": null,
+      "start_month": "1944-12",
+      "commander_rank_required": "Commander",
+      "radar": {
+        "equipped": true,
+        "model": "Mk 3 M1 Air / Mk 2 M2 Surface",
+        "model_es": "Mk 3 M1 Aéreo / Mk 2 M2 Superficie",
+        "available_month": "1944-12"
+      },
+      "chit_filename": "Submarine - Sen-Toku.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Sen_Taka_Class": {
+      "class_name": "Sen-Taka Class",
+      "full_title": "Sen-Taka High-Speed Submarine (I-201 Class)",
+      "available_date": "Available 1945",
+      "patrol_length": "1 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 0,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "None",
+        "ammo": 0,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Snorkel",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "259 Feet (79.0m)",
+        "displacement": "1,291 tons",
+        "speed": "19 knots (Submerged!)",
+        "range": "5,800 nm",
+        "crew": 31,
+        "produced": 3
+      },
+      "special_rules": "Revolutionary high-speed submarine (19 knots submerged). 4 forward torpedo tubes, 6 forward reloads (10 torpedoes total). Streamlined hull, snorkel, high capacity batteries.\n• High Speed Underwater: Due to very high underwater speed, this class never gets a +1 modifier for previous detection.\n• Electric Motor Hits: Second Electric Motor 1 hit goes against Electric Motor 3; second Electric Motor 2 hit goes against Electric Motor 4. All penalties for electric motor hits on Chart [E3] are reduced by 1.\n• Battery Damage: Does not suffer a +1 drm for battery damage until all three have been damaged.",
+      "vassal_filename": "Sen-Taka Class.jpg",
+      "vassal_image_path": "images/vassal/Sen-Taka Class.jpg",
+      "profile_image_path": "images/subs/remastered/17_Sen_Taka.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 6,
+        "hull": 6
+      },
+      "crew_counters": 4,
+      "duplex_print": {
+        "sheet_number": 8,
+        "side": "Side B (Reverse)",
+        "page_number": 16,
+        "family": "Advanced Naval Technology (1944–1945)",
+        "paired_with": "Sen-Toku Class",
+        "pairing_logic": "Los 2 colosos finales: el superportaviones I-400 y el de alta velocidad."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r3": [
+          [
+            "25mm Single\nStatus",
+            "",
+            "aa"
+          ],
+          null,
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Snorkel",
+          "Radar",
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Batteries",
+          "Periscope",
+          "Hydrophones",
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "SEN-TAKA  CLASS  (I-201)",
+        "subtitle": "HIGH-SPEED SUBMARINE  |  STK TYPE",
+        "badges": [
+          "AVAILABLE: JUL 1945",
+          "PATROLS: 1 MONTH",
+          "HULLS: I-201, I-202, I-203"
+        ]
+      },
+      "reload_capacity": 6,
+      "kaiten_note": null,
+      "start_month": "1945-07",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": true,
+        "model": "Advanced Air/Surface Radar",
+        "model_es": "Radar Avanzado Aéreo/Superficie",
+        "available_month": "1945-07"
+      },
+      "chit_filename": "Submarine - Sen-Taka.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_C3_Class": {
+      "class_name": "Type C-3 Class",
+      "full_title": "Type C-3 Heavy Attack Submarine (I-52 Class)",
+      "available_date": "Available 1943",
+      "patrol_length": "4 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 13,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Twin Status",
+        "ammo": 5,
+        "aa": "25mm Triple AA (x2)"
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Cargo",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "356 Feet (108.7m)",
+        "displacement": "2,095 tons",
+        "speed": "17.7 knots",
+        "range": "27,000 nm",
+        "crew": 94,
+        "produced": 3
+      },
+      "special_rules": "Extra long-range cargo submarine (Yanagi missions to Germany). 6 forward torpedo tubes, 13 forward reloads (19 torpedoes total). Twin 140mm deck guns.\nRadar: Type 22 AS/SS Radar available Dec. 1944 onwards.",
+      "vassal_filename": "Type C3 Class.jpg",
+      "vassal_image_path": "images/vassal/Type C3 Class.jpg",
+      "profile_image_path": "images/subs/remastered/15_Type_C3.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "duplex_print": {
+        "sheet_number": 9,
+        "side": "Side A (Front)",
+        "page_number": 17,
+        "family": "Special Operations Submersibles",
+        "paired_with": "Type A Midget Submarine - Ko-Hyoteki",
+        "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          [
+            "3",
+            "",
+            "tube"
+          ],
+          [
+            "4",
+            "",
+            "tube"
+          ]
+        ],
+        "r2": [
+          [
+            "5",
+            "",
+            "tube"
+          ],
+          [
+            "6",
+            "",
+            "tube"
+          ],
+          [
+            "140mm\nStatus #2",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ]
+        ],
+        "r3": [
+          [
+            "140mm\nStatus #1",
+            "",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "",
+            "ammo"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ]
+        ],
+        "r4": [
+          [
+            "25mm Twin\nStatus #1",
+            "",
+            "aa"
+          ],
+          [
+            "25mm Twin\nStatus #2",
+            "",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "r5": [
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          [
+            "Kaiten\nSuicide Torpedo",
+            "",
+            "kai"
+          ],
+          null,
+          null
+        ],
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  C.3  CLASS  (I-52)",
+        "subtitle": "OCEAN CARGO ATTACK SUBMARINE  |  HEI-KAI TYPE",
+        "badges": [
+          "AVAILABLE: MAY 1944",
+          "PATROLS: 4 MONTHS",
+          "HULLS: I-52, I-53, I-55"
+        ]
+      },
+      "reload_capacity": 13,
+      "kaiten_note": "In 12/44 Kaiten are installed. Remove second Deck Gun and its ammunition. Kaiten carried ONLY on Kaiten missions.",
+      "start_month": "1944-05",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "retrofit_month": "1944-12",
+        "model": "Type 22 AS/SS (Retrofit 12/44)",
+        "model_es": "Radar Tipo 22 AS/SS (Refit 12/44)"
+      },
+      "chit_filename": "Submarine - Type C.3.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": true
+    },
+    "Type_A_Midget_Submarine___Ko_Hyoteki": {
+      "class_name": "Type A Midget Submarine",
+      "full_title": "Ko-Hyoteki Type A Midget Carrier Submarine",
+      "available_date": "Available December 1941",
+      "patrol_length": "Special Operations",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 2,
+        "aft": 0,
+        "reloads_fwd": 0,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": null,
+        "ammo": 0,
+        "aa": null
+      },
+      "has_kaiten": false,
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Clamp",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "78.5 Feet (23.9m)",
+        "displacement": "46 tons",
+        "speed": "19 knots (Subm)",
+        "range": "100 nm (Batt)",
+        "crew": 2,
+        "produced": "100+"
+      },
+      "special_rules": "Two-man midget submarine carried by fleet submarine mothership for harbour penetration missions [7.16]. 2 forward torpedo tubes, 0 reloads (2x Type 97 45cm torpedoes total). Specialized 600 hp electric drive with forward and aft battery banks, gyro compass, and hull wire cutters.",
+      "vassal_filename": "Type A Midget Submarine - Ko-Hyoteki.jpg",
+      "vassal_image_path": "images/vassal/Type A Midget Submarine - Ko-Hyoteki.jpg",
+      "profile_image_path": "images/subs/remastered/18_Type_A_Midget_Ko_Hyoteki.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Penetrate",
+        "Attack",
+        "Egress",
+        "Recover",
+        "N/A",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 2,
+        "hull": 2
+      },
+      "crew_counters": 0,
+      "duplex_print": {
+        "sheet_number": 9,
+        "side": "Side B (Reverse)",
+        "page_number": 18,
+        "family": "Special Operations Submersibles",
+        "paired_with": "Type C3 Class",
+        "pairing_logic": "La pareja oficial perfecta sin conflicto de mesa."
+      },
+      "armament_layout": {
+        "r1": [
+          [
+            "1",
+            "",
+            "tube"
+          ],
+          [
+            "2",
+            "",
+            "tube"
+          ],
+          null,
+          null
+        ],
+        "r2": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r3": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r4": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "r5": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "sys": [
+          "Periscope",
+          "Rudder Control",
+          "Batteries",
+          "Electric Motor",
+          "Gyro Compass",
+          "Trim Tanks",
+          "Air System",
+          "Ballast",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "shipyard_metadata": {
+        "title": "TYPE  A  MIDGET  (KO-HYOTEKI)",
+        "subtitle": "SPECIAL ATTACK SUBMERSIBLE  |  TARGET A TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: SPECIAL OPS",
+          "HULLS: HA-19 ETC. (100+ BUILT)"
+        ]
+      },
+      "reload_capacity": 0,
+      "kaiten_note": null,
+      "start_month": "1941-12",
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Midget.jpg",
+      "is_midget_sub": true,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false
+    },
+    "Type_B2_Class": {
+        "base_card_key": "Type_B_Class",
+      "class_name": "Type B2 Class",
+      "full_title": "Type B2 (I-40 Series) Cruiser Submarine",
+      "available_date": "Available July 1943",
+      "start_month": "1943-07",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "1x Yokosuka E14Y Glen",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 11,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 11,
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "Carries 4 Type 1 Kaiten from 1945 onwards (I-44 conversion).",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "356 Feet (108.7m)",
+        "displacement": "2,230 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 94,
+        "produced": 6
+      },
+      "special_rules": "Real IJN class (I-40 to I-45). Fast cruiser submarine with reconnaissance floatplane. 6 forward torpedo tubes, 11 reloads (17 total). Simplified wartime construction.",
+      "vassal_filename": "Type B Class.jpg",
+      "vassal_image_path": "images/vassal/Type B Class.jpg",
+      "profile_image_path": "images/subs/remastered/11_Type_B.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "retrofit_month": "1944-12",
+        "model": "Type 22 Surface Radar",
+        "model_es": "Radar Tipo 22 Superficie"
+      },
+      "chit_filename": "Submarine - Type B.2.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false,
+      "is_fanmade": true
+    },
+    "Type_C2_Class": {
+        "base_card_key": "Type_C_Class",
+      "class_name": "Type C2 Class",
+      "full_title": "Type C2 (I-46 Series) Heavy Attack Submarine",
+      "available_date": "Available February 1944",
+      "start_month": "1944-02",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 13,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 13,
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "Carries 4–6 Type 1 Kaiten on deck clamps (I-47 sank USS Mississinewa at Ulithi).",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "358 Feet (109.3m)",
+        "displacement": "2,564 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 94,
+        "produced": 3
+      },
+      "special_rules": "Real IJN class (I-46 to I-48). Heavy attack submarine without midget sub clamp: maximized endurance and torpedo loadout (6 tubes, 13 reloads = 19 total). Historic Kaiten carrier.",
+      "vassal_filename": "Type C Class.jpg",
+      "vassal_image_path": "images/vassal/Type C Class.jpg",
+      "profile_image_path": "images/subs/remastered/12_Type_C.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "retrofit_month": "1944-12",
+        "model": "Type 22 AS/SS (Retrofit 12/44)",
+        "model_es": "Radar Tipo 22 AS/SS (Refit 12/44)"
+      },
+      "chit_filename": "Submarine - Type C.2.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false,
+      "is_fanmade": true
+    },
+    "Type_A2_Class": {
+        "base_card_key": "Type_A_Modified",
+      "class_name": "Type A2 Class",
+      "full_title": "Type A2 (I-13 Series) Seiran Aircraft Carrier Submarine",
+      "available_date": "Available December 1944",
+      "start_month": "1944-12",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "2x Aichi M6A1 Seiran Attack Bombers",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 6,
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x7)"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "Does not carry Kaiten; enlarged hangar houses 2 Seiran strike bombers.",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "373 Feet (113.7m)",
+        "displacement": "4,762 tons",
+        "speed": "16.7 knots",
+        "range": "21,000 nm",
+        "crew": 108,
+        "produced": 2
+      },
+      "special_rules": "Real IJN class (I-13, I-14). Attack aircraft carrier submarine sister to Sen-Toku. Enlarged hangar carries 2 Aichi M6A1 Seiran bombers. Equipped with radar. Requires Commander rank.",
+      "vassal_filename": "Type A Class.jpg",
+      "vassal_image_path": "images/vassal/Type A Class.jpg",
+      "profile_image_path": "images/subs/remastered/10_Type_A.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "commander_rank_required": "Commander",
+      "radar": {
+        "equipped": true,
+        "available_month": "1944-12",
+        "model": "Type 22 & Type 13 Radar",
+        "model_es": "Radar Tipo 22 y Tipo 13 Superficie/Aéreo"
+      },
+      "chit_filename": "Submarine - Type A.2.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false,
+      "is_fanmade": true
+    },
+    "Type_D1_Class": {
+        "base_card_key": "Type_C3_Class",
+      "class_name": "Type D1 Class",
+      "full_title": "Type D1 (I-361 Series) Transport & Kaiten Submarine",
+      "available_date": "Available May 1944",
+      "start_month": "1944-05",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 2,
+        "aft": 0,
+        "reloads_fwd": 0,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 0,
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "Carries 5 Type 1 Kaiten in late-war Kaiten Special Missions (deck gun removed).",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "241 Feet (73.5m)",
+        "displacement": "2,215 tons",
+        "speed": "13 knots",
+        "range": "15,000 nm",
+        "crew": 60,
+        "produced": 12
+      },
+      "special_rules": "Real IJN class (I-361 to I-372). Dedicated supply submarine carrying 1 Daihatsu 14m landing craft and 82t cargo. 2 bow torpedoes (0 reloads). Converted to 5 Kaiten in late 1944.",
+      "vassal_filename": "Type C.3 Class.jpg",
+      "vassal_image_path": "images/vassal/Type C.3 Class.jpg",
+      "profile_image_path": "images/subs/remastered/17_Type_C3.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 4,
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "retrofit_month": "1944-12",
+        "model": "Type 22 AS/SS (Retrofit 12/44)",
+        "model_es": "Radar Tipo 22 AS/SS (Refit 12/44)"
+      },
+      "chit_filename": "Submarine - Type D.1.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": true,
+      "is_fanmade": true
+    },
+    "Kaichu_VII_Class": {
+        "base_card_key": "Kaidai_KD6_Class",
+      "class_name": "Kaichu VII Class",
+      "full_title": "Kaichu VII (Ro-35 Series) Medium Fleet Submarine",
+      "available_date": "Available March 1943",
+      "start_month": "1943-03",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 0,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 6,
+      "deck_guns": {
+        "main": "76.2mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "Does not carry Kaiten; medium coastal hull.",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "264 Feet (80.5m)",
+        "displacement": "1,447 tons",
+        "speed": "19.8 knots",
+        "range": "5,000 nm",
+        "crew": 61,
+        "produced": 18
+      },
+      "special_rules": "Real IJN class (Ro-35 to Ro-56). Medium coastal fleet submarine (Ro-gata). Fast diving time, high maneuverability in island waters. 4 bow tubes, 6 reloads (10 total). 1x 76.2mm gun.",
+      "vassal_filename": "Kaidai KD6 Class.jpg",
+      "vassal_image_path": "images/vassal/Kaidai KD6 Class.jpg",
+      "profile_image_path": "images/subs/remastered/04_Kaidai_KD6.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 6,
+        "hull": 6
+      },
+      "crew_counters": 3,
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Kaichu VII.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false,
+      "is_fanmade": true
+    },
+    "Junsen_J1_Class": {
+        "base_card_key": "Junsen_J_IM_Class",
+      "class_name": "Junsen J1 Class",
+      "full_title": "Junsen J1 (I-1 Series) Twin Deck Gun Cruiser Submarine",
+      "available_date": "Available December 1941",
+      "start_month": "1941-12",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": null,
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 14,
+        "reloads_aft": 0
+      },
+      "reload_capacity": 14,
+      "deck_guns": {
+        "main": "2x 140mm Status",
+        "ammo": 8,
+        "aa": "13.2mm AA Status"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "Does not carry Kaiten.",
+      "systems_status": [
+        "F.Doors",
+        "Radio",
+        "Planes",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "320 Feet (97.5m)",
+        "displacement": "2,791 tons",
+        "speed": "18 knots",
+        "range": "24,400 nm",
+        "crew": 92,
+        "produced": 4
+      },
+      "special_rules": "Real IJN class (I-1 to I-4). Original cruiser submarine without aircraft hangar. Heavily armed with twin 140mm (5.5\") deck guns (fore and aft) and 20 torpedoes. Massive 24,400 nm range.",
+      "vassal_filename": "Junsen J IM Class.jpg",
+      "vassal_image_path": "images/vassal/Junsen J IM Class.jpg",
+      "profile_image_path": "images/subs/remastered/07_Junsen_J1M.jpg",
+      "is_remastered": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "commander_rank_required": "Lt. Commander",
+      "radar": {
+        "equipped": false,
+        "model": "None",
+        "model_es": "Ninguno"
+      },
+      "chit_filename": "Submarine - Junsen J1.jpg",
+      "is_midget_sub": false,
+      "has_midget_carrier": false,
+      "has_mines": false,
+      "mine_capacity": 0,
+      "has_daihatsu": false,
+      "is_fanmade": true
+    }
+  }
+};
 
     // Bilingual Dictionary
     // i18n is defined in i18n.js
@@ -339,11 +4365,109 @@ const SUB_START_MONTHS = {
   "Type_A_Modified": "1945-05",
   "Sen_Toku_Class": "1944-12",
   "Sen_Taka_Class": "1945-07",
-  "Type_A_Midget_Submarine___Ko_Hyoteki": "1941-12"
+  "Type_A_Midget_Submarine___Ko_Hyoteki": "1941-12",
+  "Type_B2_Class": "1943-07",
+  "Type_C2_Class": "1944-02",
+  "Type_A2_Class": "1944-12",
+  "Type_D1_Class": "1944-05",
+  "Kaichu_VII_Class": "1943-03",
+  "Junsen_J1_Class": "1941-12"
 };
 
 function getSubmarineStartMonth(subKey) {
+  if (typeof SUB_DB !== 'undefined' && SUB_DB.submarines && SUB_DB.submarines[subKey] && SUB_DB.submarines[subKey].start_month) {
+    return SUB_DB.submarines[subKey].start_month;
+  }
   return SUB_START_MONTHS[subKey] || "1941-12";
+}
+
+/**
+ * Register a new submarine class dynamically into the database.
+ * Allows adding new submarines without modifying core logic.
+ * @param {string} subKey - Unique identifier (e.g., 'Custom_I99_Class')
+ * @param {object} subConfig - Submarine configuration parameters
+ */
+function registerSubmarine(subKey, subConfig) {
+  if (!subKey || typeof subKey !== 'string' || !subConfig) {
+    console.warn("[SUB_DB] registerSubmarine: invalid subKey or subConfig", subKey);
+    return false;
+  }
+  if (typeof SUB_DB === 'undefined' || !SUB_DB.submarines) {
+    console.error("[SUB_DB] registerSubmarine: SUB_DB.submarines not available");
+    return false;
+  }
+
+  const defaultPhases = ["Transit", "Stat 1", "Stat 2", "Stat 3", "Stat 4", "Transit", "N/A", "N/A", "N/A"];
+  const fullConfig = Object.assign({
+    class_name: subKey.replace(/_/g, ' '),
+    full_title: subConfig.class_name || subKey.replace(/_/g, ' '),
+    available_date: subConfig.start_month ? `Available ${subConfig.start_month}` : "Available December 1941",
+    start_month: "1941-12",
+    patrol_length: "2 month patrols",
+    has_aircraft: false,
+    aircraft_type: null,
+    torpedo_tubes: { fwd: 6, aft: 0, reloads_fwd: 6, reloads_aft: 0 },
+    deck_guns: { main: "140mm Status", ammo: 5, aa: "25mm AA Status" },
+    has_kaiten: false,
+    systems_status: ["F.Doors", "Radio", "Planes", "Mtr 1", "Mtr 2", "Eng 1", "Eng 2", "Fuel", "Hydro", "Batt", "Perisc"],
+    stats: { length: "300 Feet", displacement: "2,000 tons", speed: "18 knots", range: "12,000 nm", crew: 70, produced: 1 },
+    special_rules: "",
+    vassal_filename: `${subKey}.jpg`,
+    vassal_image_path: `images/vassal/${subKey}.jpg`,
+    profile_image_path: "",
+    is_remastered: true,
+    patrol_phases: defaultPhases,
+    damage_capacity: { flooding: 7, hull: 7 },
+    crew_counters: 4,
+    commander_rank_required: "Lt. Commander",
+    radar: { equipped: false, model: "None", model_es: "Ninguno" },
+    chit_filename: "Submarine - Type B.jpg",
+    is_midget_sub: false,
+    has_midget_carrier: false,
+    has_mines: false,
+    mine_capacity: 0,
+    has_daihatsu: false
+  }, subConfig);
+
+  SUB_DB.submarines[subKey] = fullConfig;
+  SUB_START_MONTHS[subKey] = fullConfig.start_month;
+
+  if (typeof SUB_CHITS_MAP !== 'undefined') {
+    SUB_CHITS_MAP[subKey] = fullConfig.chit_filename;
+  }
+  if (typeof CARD_ARMAMENT_CFG !== 'undefined') {
+    CARD_ARMAMENT_CFG[subKey] = {
+      fwdTubes: fullConfig.torpedo_tubes.fwd || 0,
+      aftTubes: fullConfig.torpedo_tubes.aft || 0,
+      aftReloads: fullConfig.torpedo_tubes.reloads_aft || 0,
+      fwdReloads: fullConfig.torpedo_tubes.reloads_fwd || fullConfig.reload_capacity || 0,
+      hasAircraft: !!fullConfig.has_aircraft
+    };
+  }
+
+  if (SUB_DB.metadata) {
+    SUB_DB.metadata.total_classes = Object.keys(SUB_DB.submarines).length;
+  }
+
+  // Populate any active HTML select dropdowns
+  if (typeof document !== 'undefined') {
+    ['wf-sub-class-select', 'sub-profile-select', 'dock-sub-select'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.querySelector(`option[value="${subKey}"]`)) {
+        const opt = document.createElement('option');
+        opt.value = subKey;
+        opt.textContent = fullConfig.class_name;
+        el.appendChild(opt);
+      }
+    });
+  }
+
+  console.log(`[SUB_DB] Submarine "${subKey}" successfully registered.`);
+  return true;
+}
+if (typeof window !== 'undefined') {
+  window.registerSubmarine = registerSubmarine;
+  window.getSubmarineStartMonth = getSubmarineStartMonth;
 }
 
 // 46 Months
@@ -476,5 +4600,48 @@ if (typeof window !== 'undefined') {
   window.SUB_DB = SUB_DB;
   window.SUBMARINES_DB = SUB_DB.submarines;
   window.SUB_DESCRIPTIONS = SUB_DESCRIPTIONS;
+  window.getDefaultHullForSubmarine = getDefaultHullForSubmarine;
 }
+
+function getDefaultHullForSubmarine(subKey) {
+  if (!subKey) return 'I-19';
+  const DEFAULT_HULLS = {
+    'Kaidai_KD3_Class': 'I-53',
+    'Kaidai_KD4_Class': 'I-61',
+    'Kaidai_KD5_Class': 'I-65',
+    'Kaidai_KD6_Class': 'I-68',
+    'Kaidai_KD7_Class': 'I-177',
+    'Kirai_Sen_Class': 'I-121',
+    'Junsen_J_IM_Class': 'I-5',
+    'Junsen_J2_Class': 'I-6',
+    'Junsen_J3_Class': 'I-7',
+    'Type_A_Class': 'I-9',
+    'Type_B_Class': 'I-19',
+    'Type_B_3_Class': 'I-58',
+    'Type_C_Class': 'I-16',
+    'Type_A_Modified': 'I-12',
+    'Sen_Toku_Class': 'I-400',
+    'Sen_Taka_Class': 'I-201',
+    'Type_C3_Class': 'I-52',
+    'Type_A_Midget_Submarine___Ko_Hyoteki': 'HA-19',
+    'Type_B2_Class': 'I-40',
+    'Type_C2_Class': 'I-46',
+    'Type_D1_Class': 'I-361',
+    'Type_D2_Class': 'I-373',
+    'Kaichu_VII_Class': 'Ro-35',
+    'Type_DX_Class': 'Ha-101',
+    'Type_STS_Class': 'Ha-201',
+    'Yu_1_Class': 'Yu-1'
+  };
+  if (DEFAULT_HULLS[subKey]) return DEFAULT_HULLS[subKey];
+  const sub = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines[subKey] : null;
+  if (sub) {
+    if (sub.hulls && sub.hulls.length) return sub.hulls[0];
+    if (sub.default_hull) return sub.default_hull;
+    const match = (sub.full_title || sub.class_name || '').match(/\b(I-\d+|Ro-\d+|Ha-\d+|HA-\d+|Yu-\d+)\b/i);
+    if (match) return match[1].toUpperCase();
+  }
+  return 'I-19';
+}
+
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensuikan-v2';
+const CACHE_NAME = 'sensuikan-v3';
 const STATIC_ASSETS = [
   './',
   './index.html',

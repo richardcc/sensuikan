@@ -470,15 +470,30 @@
       const selVal = document.getElementById('wf-sub-class-select').value;
       if (!selVal) {
         campaignState.activeSubKey = null;
+        if (campaignState.workflow) {
+          campaignState.workflow.hullNumber = "";
+          delete campaignState.workflow.torpedoPeriodOverride;
+        }
+        const hullInput = document.getElementById('wf-sub-hull-number');
+        if (hullInput) {
+          hullInput.value = "";
+          hullInput.placeholder = (window.currentLang === 'en') ? "e.g. I-19" : "ej. I-19";
+        }
         if (typeof changeBoardSubmarine === 'function') {
           changeBoardSubmarine('');
         }
         updateWorkflowSubmarineSpecs();
+        updateTorpedoDoctrineDisplay();
         buildWorkflowMonthSelect();
         saveState();
         return;
       }
       campaignState.activeSubKey = selVal;
+      const defHull = (typeof getDefaultHullForSubmarine === 'function') ? getDefaultHullForSubmarine(selVal) : 'I-19';
+      const hullInput = document.getElementById('wf-sub-hull-number');
+      if (hullInput) hullInput.value = defHull;
+      if (campaignState.workflow) campaignState.workflow.hullNumber = defHull;
+
       selectSubmarine(selVal);
       if (typeof changeBoardSubmarine === 'function') {
         changeBoardSubmarine(selVal);
@@ -552,37 +567,54 @@
       const subKey = campaignState.activeSubKey || "Type_B_Class";
       const monthStr = (campaignState.workflow && campaignState.workflow.selectedMonth) ? campaignState.workflow.selectedMonth : "1941-12";
       const isEn = window.currentLang === 'en';
+      const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines[subKey] : null;
 
       let isEquipped = false;
       let radarModel = "";
 
-      // 1. Fixed Submarines with Radar
-      if (subKey === "Sen_Toku_Class") {
-        isEquipped = true;
-        radarModel = isEn ? "Mk 3 M1 Air / Mk 2 M2 Surface" : "Mk 3 M1 Aéreo / Mk 2 M2 Superficie";
-      } else if (subKey === "Type_B3_Class" || subKey === "Type_B_3_Class" || subKey.includes("B3") || subKey.includes("B_3")) {
-        isEquipped = true;
-        radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
-      } else if (subKey === "Type_A_Modified") {
-        isEquipped = true;
-        radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
-      } else if (subKey === "Sen_Taka_Class") {
-        isEquipped = true;
-        radarModel = isEn ? "Advanced Air/Surface Radar" : "Radar Avanzado Aéreo/Superficie";
-      }
-
-      // 2. Submarines with Radar retrofit available from Dec. 1944 onwards
-      if (!isEquipped && (subKey === "Type_C_Class" || subKey === "Type_C3_Class" || subKey === "Type_C_3_Class")) {
-        const parts = monthStr.split('-');
-        const y = parseInt(parts[0], 10) || 1941;
-        const m = parseInt(parts[1], 10) || 12;
-        if (y > 1944 || (y === 1944 && m >= 12)) {
+      // 1. Check parameterized radar object first
+      if (subData && subData.radar) {
+        if (subData.radar.equipped) {
           isEquipped = true;
-          radarModel = isEn ? "Type 22 AS/SS (Retrofit 12/44)" : "Radar Tipo 22 AS/SS (Refit 12/44)";
+          radarModel = isEn ? subData.radar.model : (subData.radar.model_es || subData.radar.model);
+        } else if (subData.radar.retrofit_month) {
+          const parts = monthStr.split('-');
+          const y = parseInt(parts[0], 10) || 1941;
+          const m = parseInt(parts[1], 10) || 12;
+          const [reqY, reqM] = subData.radar.retrofit_month.split('-').map(v => parseInt(v, 10));
+          if (y > reqY || (y === reqY && m >= reqM)) {
+            isEquipped = true;
+            radarModel = isEn ? subData.radar.model : (subData.radar.model_es || subData.radar.model);
+          }
+        }
+      } else {
+        // Fallback to legacy checks if radar property missing
+        if (subKey === "Sen_Toku_Class") {
+          isEquipped = true;
+          radarModel = isEn ? "Mk 3 M1 Air / Mk 2 M2 Surface" : "Mk 3 M1 Aéreo / Mk 2 M2 Superficie";
+        } else if (subKey === "Type_B3_Class" || subKey === "Type_B_3_Class" || subKey.includes("B3") || subKey.includes("B_3")) {
+          isEquipped = true;
+          radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
+        } else if (subKey === "Type_A_Modified") {
+          isEquipped = true;
+          radarModel = isEn ? "Type 22 Surface Radar" : "Radar Tipo 22 Superficie";
+        } else if (subKey === "Sen_Taka_Class") {
+          isEquipped = true;
+          radarModel = isEn ? "Advanced Air/Surface Radar" : "Radar Avanzado Aéreo/Superficie";
+        }
+
+        if (!isEquipped && (subKey === "Type_C_Class" || subKey === "Type_C3_Class" || subKey === "Type_C_3_Class")) {
+          const parts = monthStr.split('-');
+          const y = parseInt(parts[0], 10) || 1941;
+          const m = parseInt(parts[1], 10) || 12;
+          if (y > 1944 || (y === 1944 && m >= 12)) {
+            isEquipped = true;
+            radarModel = isEn ? "Type 22 AS/SS (Retrofit 12/44)" : "Radar Tipo 22 AS/SS (Refit 12/44)";
+          }
         }
       }
 
-      // 3. Check damage status
+      // 2. Check damage status
       const isDamaged = !!(campaignState.damage && campaignState.damage.radar);
       const isOperational = isEquipped && !isDamaged;
 
@@ -600,7 +632,7 @@
     }
     window.checkSubmarineRadarStatus = checkSubmarineRadarStatus;
 
-    const SUB_CHITS_MAP = {
+    const SUB_CHITS_MAP = new Proxy({
       'Kaidai_KD3_Class': 'Submarine - KD.3.jpg',
       'Kaidai_KD4_Class': 'Submarine - KD.4.jpg',
       'Kaidai_KD5_Class': 'Submarine - KD.5.jpg',
@@ -619,7 +651,15 @@
       'Sen_Taka_Class': 'Submarine - Sen-Taka.jpg',
       'Type_C3_Class': 'Submarine - Type C.3.jpg',
       'Type_A_Midget_Submarine___Ko_Hyoteki': 'Submarine - Midget.jpg'
-    };
+    }, {
+      get: function(target, prop) {
+        if (typeof prop === 'string' && prop in target) return target[prop];
+        if (typeof SUB_DB !== 'undefined' && SUB_DB.submarines && SUB_DB.submarines[prop] && SUB_DB.submarines[prop].chit_filename) {
+          return SUB_DB.submarines[prop].chit_filename;
+        }
+        return 'Submarine - Type B.jpg';
+      }
+    });
     window.SUB_CHITS_MAP = SUB_CHITS_MAP;
 
     function updateWorkflowSubmarineSpecs() {
@@ -631,8 +671,27 @@
 
       const selEl = document.getElementById('wf-sub-class-select');
       const activeKey = campaignState.activeSubKey || (selEl ? selEl.value : null);
+      const specsBox = document.getElementById('wf-sub-specs-box');
+      const torpBox = document.getElementById('wf-torpedo-doctrine-box');
+      const emptyPrompt = document.getElementById('wf-sub-empty-prompt');
+      const hullInput = document.getElementById('wf-sub-hull-number');
 
       if (!activeKey) {
+        if (specsBox) specsBox.style.display = 'none';
+        if (torpBox) torpBox.style.display = 'none';
+        if (emptyPrompt) {
+          emptyPrompt.style.display = 'block';
+          const promptSpan = emptyPrompt.querySelector('span');
+          if (promptSpan) {
+            promptSpan.innerText = isEn
+              ? "⚓ Select an Imperial submarine class above to view specifications and regulatory torpedo loadout."
+              : "⚓ Selecciona una clase de submarino imperial arriba para ver sus especificaciones y dotación reglamentaria de torpedos.";
+          }
+        }
+        if (hullInput && (!campaignState.workflow || !campaignState.workflow.hullNumber)) {
+          hullInput.value = "";
+          hullInput.placeholder = isEn ? "e.g. I-19" : "ej. I-19";
+        }
         setT('wf-spec-class-name', isEn ? "-- Select Submarine --" : "-- Selecciona Submarino --");
         setT('wf-spec-entry-date', "--");
         setT('wf-spec-tubes', "--");
@@ -648,6 +707,10 @@
         if (chitImg) chitImg.style.display = 'none';
         return;
       }
+
+      if (emptyPrompt) emptyPrompt.style.display = 'none';
+      if (specsBox) specsBox.style.display = 'block';
+      if (torpBox) torpBox.style.display = 'block';
 
       const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
       const sub = subs[activeKey];
@@ -1132,9 +1195,18 @@
     window.syncTorpedoAllocationToSubBoard = syncTorpedoAllocationToSubBoard;
 
     function updateTorpedoDoctrineDisplay() {
+      const torpBox = document.getElementById('wf-torpedo-doctrine-box');
+      if (!campaignState.activeSubKey) {
+        if (torpBox) torpBox.style.display = 'none';
+        return;
+      }
       const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
-      const sub = subs[campaignState.activeSubKey] || subs[Object.keys(subs)[0]];
-      if (!sub) return;
+      const sub = subs[campaignState.activeSubKey];
+      if (!sub) {
+        if (torpBox) torpBox.style.display = 'none';
+        return;
+      }
+      if (torpBox) torpBox.style.display = 'block';
       const isEn = window.currentLang === 'en';
 
       const tt = sub.torpedo_tubes || {};
@@ -1514,8 +1586,9 @@
       const notesEl = document.getElementById('wf-torp-special-notes');
       if (notesEl) {
         let notesHtml = [];
-        const isTypeC = (campaignState.activeSubKey === 'Type_C_Class');
-        const isMidget = (campaignState.activeSubKey === 'Type_A_Midget_Submarine___Ko_Hyoteki');
+        const isTypeC = (sub && sub.has_midget_carrier) || (campaignState.activeSubKey === 'Type_C_Class');
+        const isMidget = (sub && sub.is_midget_sub) || (campaignState.activeSubKey === 'Type_A_Midget_Submarine___Ko_Hyoteki');
+        const isMinelayer = (sub && sub.has_mines) || (campaignState.activeSubKey === 'Kirai_Sen_Class');
         if (isTypeC) {
           notesHtml.push(isEn 
             ? `<div>⚓ <strong>Ko-Hyoteki Midget Submarine [4.5.11 & 7.16]:</strong> Carries 1 Type A Midget on aft deck armed with 2x Type 97 18" (45cm) torpedoes in bow tubes (no reloads).</div>`
@@ -1525,15 +1598,16 @@
             ? `<div>⚓ <strong>Ko-Hyoteki Midget Submarine [4.5.11 & 7.16]:</strong> Armed with 2x Type 97 18" (45cm) torpedoes in bow tubes (no reloads).</div>`
             : `<div>⚓ <strong>Minisubmarino Ko-Hyoteki [4.5.11 & 7.16]:</strong> Armado con 2x torpedos Tipo 97 de 18" (45 cm) en proa (sin recargas).</div>`);
         }
-        if (sub.has_kaiten) {
+        if (sub && sub.has_kaiten) {
           notesHtml.push(isEn
             ? `<div>⚡ <strong>Manned Kaiten Suicide Torpedoes [4.8.4 & 7.18]:</strong> Carries 4–6 Type 1 Kaiten on deck clamps on Kaiten Special Missions (late 1944+).</div>`
             : `<div>⚡ <strong>Torpedos Suicidas Tripulados Kaiten [4.8.4 & 7.18]:</strong> Transporta de 4 a 6 Kaiten Tipo 1 en soportes de cubierta en Misiones Kaiten (1944+).</div>`);
         }
-        if (campaignState.activeSubKey === 'Kirai_Sen_Class') {
+        if (isMinelayer) {
+          const mineCount = (sub && sub.mine_capacity) || 42;
           notesHtml.push(isEn
-            ? `<div>💣 <strong>Minelaying Missions [4.5.8 & 7.10]:</strong> Dedicated minelayer carrying 42 naval mines in aft internal tubes (Chart E6 aft torpedo damage applies to mine doors). 4 bow torpedo tubes + 8 reloads carry standard torpedoes.</div>`
-            : `<div>💣 <strong>Misiones de Minado [4.5.8 & 7.10]:</strong> Minador especializado que transporta 42 minas navales en tubos internos de popa (las averías de torpedos de popa en E6 van a compuertas de minas). Los 4 tubos de proa + 8 recargas llevan torpedos estándar.</div>`);
+            ? `<div>💣 <strong>Minelaying Missions [4.5.8 & 7.10]:</strong> Dedicated minelayer carrying ${mineCount} naval mines in aft internal tubes (Chart E6 aft torpedo damage applies to mine doors). 4 bow torpedo tubes + 8 reloads carry standard torpedoes.</div>`
+            : `<div>💣 <strong>Misiones de Minado [4.5.8 & 7.10]:</strong> Minador especializado que transporta ${mineCount} minas navales en tubos internos de popa (las averías de torpedos de popa en E6 van a compuertas de minas). Los 4 tubos de proa + 8 recargas llevan torpedos estándar.</div>`);
         } else if (!isMidget) {
           notesHtml.push(isEn
             ? `<div>⚠️ <strong>Special Missions [4.5.8]:</strong> <em>Mine-laying [7.10]:</em> Mines loaded in tubes reduce initial torpedo load by tube count. <em>Transport/Evacuation [7.4/7.6]:</em> Tubes loaded, but carries <strong>0 reloads</strong> (stowage used for cargo/passengers).</div>`
@@ -1587,6 +1661,11 @@
     }
 
     function commissionSubmarineAndProceed() {
+      if (!campaignState.activeSubKey) {
+        const isEn = window.currentLang === 'en';
+        showToast(isEn ? "Please select a submarine class before commissioning." : "Por favor, selecciona una clase de submarino antes de comisionar.");
+        return;
+      }
       const hull = document.getElementById('wf-sub-hull-number').value || "I-19";
       const cmdr = document.getElementById('wf-commander-name').value || "Hashimoto Mochitsura";
       const rank = document.getElementById('wf-commander-rank').value || "Lt Cdr";
@@ -1616,21 +1695,58 @@
       const isEn = window.currentLang === 'en';
       const subs = (SUB_DB && SUB_DB.submarines) ? SUB_DB.submarines : {};
       const keys = Object.keys(subs);
-      const targetSub = campaignState.activeSubKey;
+      const targetSub = campaignState.activeSubKey || (typeof currentBoardSubKey !== 'undefined' ? currentBoardSubKey : null);
 
       select.innerHTML = `<option value="">${isEn ? "-- Select Submarine --" : "-- Selecciona Submarino --"}</option>`;
       
+      const officialGroup = document.createElement('optgroup');
+      officialGroup.label = isEn ? "⚓ Official Submarines (Compass Games)" : "⚓ Submarinos Oficiales (Compass Games)";
+      
+      const fanmadeGroup = document.createElement('optgroup');
+      fanmadeGroup.label = isEn ? "⭐ Real Historical Variants [Fanmade]" : "⭐ Variantes Históricas Reales [Fanmade]";
+
       keys.forEach((k) => {
         const sub = subs[k];
         const dateMatch = sub.available_date || '1941';
+        const isFan = !!sub.is_fanmade;
         const option = document.createElement('option');
         option.value = k;
-        option.textContent = `${sub.class_name || k} (${dateMatch})`;
+        option.textContent = isFan 
+          ? `${sub.class_name || k} [Fanmade] (${dateMatch})`
+          : `${sub.class_name || k} (${dateMatch})`;
+        
+        if (isFan) {
+          option.style.color = '#fbbf24';
+          fanmadeGroup.appendChild(option);
+        } else {
+          officialGroup.appendChild(option);
+        }
+
         if (k === targetSub) option.selected = true;
-        select.appendChild(option);
       });
+
+      if (officialGroup.children.length > 0) select.appendChild(officialGroup);
+      if (fanmadeGroup.children.length > 0) select.appendChild(fanmadeGroup);
+
+      if (targetSub) {
+        select.value = targetSub;
+        const hullInput = document.getElementById('wf-sub-hull-number');
+        if (hullInput && (!hullInput.value || (campaignState.workflow && !campaignState.workflow.hullNumber))) {
+          const defHull = (typeof getDefaultHullForSubmarine === 'function') ? getDefaultHullForSubmarine(targetSub) : 'I-19';
+          hullInput.value = defHull;
+          if (campaignState.workflow) campaignState.workflow.hullNumber = defHull;
+        }
+      } else {
+        select.value = "";
+        const hullInput = document.getElementById('wf-sub-hull-number');
+        if (hullInput && (!campaignState.workflow || !campaignState.workflow.hullNumber)) {
+          hullInput.value = "";
+          hullInput.placeholder = isEn ? "e.g. I-19" : "ej. I-19";
+        }
+      }
       
       updateWorkflowSubmarineSpecs();
+      updateTorpedoDoctrineDisplay();
     }
 
 

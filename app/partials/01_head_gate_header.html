@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif+JP:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261120_02">
   <!-- PWA MANIFEST & ICONS -->
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icon-192.png">
@@ -65,32 +65,32 @@
     <!-- Row 2: Dedicated Navigation Tabs Bar -->
     <div class="header-nav-row">
       <nav class="nav-tabs" aria-label="Navegación principal">
-        <button class="tab-btn active" onclick="switchTab('workflow')" title="Atajo: [1]">
-          <span id="tab-nav-workflow">🎮 Game Flow</span>
+        <button class="tab-btn active" onclick="switchTab('workflow')" title="Game Flow: Fases de Campaña (0 a 5) [1]">
+          <span id="tab-nav-workflow" data-i18n="navWorkflow">🎮 Game Flow</span>
           <kbd class="nav-kbd-hint">1</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('chart-k1')" title="Atajo: [2]">
-          <span id="tab-nav-chartk1">🎴 Habilidades (Tabla K1)</span>
+        <button class="tab-btn" onclick="switchTab('chart-k1')" title="Habilidades y Rangos del Comandante (Tabla K1) [2]">
+          <span id="tab-nav-chartk1" data-i18n="navChartK1">🎴 Habilidades</span>
           <kbd class="nav-kbd-hint">2</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Atajo: [3]">
-          <span id="tab-nav-rogubukku">📜 Rogu Bukku (Log)</span>
+        <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Rogu Bukku: Cuaderno de Bitácora Oficial [3]">
+          <span id="tab-nav-rogubukku" data-i18n="navRoguBukku">📜 Rogu Bukku</span>
           <kbd class="nav-kbd-hint">3</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('operations-map')" title="Atajo: [4]">
-          <span id="tab-nav-opmap">🗺️ Mapa de Operaciones</span>
+        <button class="tab-btn" onclick="switchTab('operations-map')" title="Mapa de Operaciones y Teatros de Guerra [4]">
+          <span id="tab-nav-opmap" data-i18n="tabNavOpMap">🗺️ Operaciones</span>
           <kbd class="nav-kbd-hint">4</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('sub-board')" title="Atajo: [5]">
-          <span id="tab-nav-subboard">📋 Hoja de Submarino</span>
+        <button class="tab-btn" onclick="switchTab('sub-board')" title="Hoja Canónica Oficial del Submarino [5]">
+          <span id="tab-nav-subboard" data-i18n="tabNavSubBoard">📋 Submarino</span>
           <kbd class="nav-kbd-hint">5</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('dock')" title="Atajo: [6]">
-          <span id="tab-nav-dock">⚓ Submarines (18)</span>
+        <button class="tab-btn" onclick="switchTab('dock')" title="Flota Imperial: 24 Submarinos (18 Oficiales + 6 Fanmade) [6]">
+          <span id="tab-nav-dock" data-i18n="navDock">⚓ Flota (24)</span>
           <kbd class="nav-kbd-hint">6</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('compendium')" title="Atajo: [7]">
-          <span id="tab-nav-compendium">📚 Todas las Tablas</span>
+        <button class="tab-btn" onclick="switchTab('compendium')" title="Todas las Tablas Oficiales de Consulta [7]">
+          <span id="tab-nav-compendium" data-i18n="navCompendium">📚 Tablas</span>
           <kbd class="nav-kbd-hint">7</kbd>
         </button>
       </nav>

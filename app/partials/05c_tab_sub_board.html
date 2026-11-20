@@ -25,15 +25,6 @@
         <button type="button" class="action-btn" onclick="loadActiveCampaignSubmarine()" style="padding:5px 10px; font-size:0.82rem; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;" title="Cargar el submarino actualmente comisionado en tu campaña">
           <span>⚓ Mi Submarino Activo</span>
         </button>
-        <button type="button" class="action-btn" onclick="loadAllTorpedoes()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#93c5fd; border:1px solid #3b82f6; border-radius:5px; font-weight:bold; cursor:pointer;" title="Reabastecer al 100% todos los tubos y reservas de torpedos">
-          <span>⚡ Llenar Torpedos</span>
-        </button>
-        <button type="button" class="action-btn" onclick="reloadAllEmptyTubesFromReserves()" style="padding:5px 10px; font-size:0.82rem; background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:5px; font-weight:bold; cursor:pointer;" title="Recargar todos los tubos vacíos consumiendo las reservas de torpedos de la ficha">
-          <span>🔄 Recargar Tubos (Usar Reservas)</span>
-        </button>
-        <button type="button" class="action-btn" onclick="openTorpedoDistributionDialog()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#fde047; border:1px solid #eab308; border-radius:5px; font-weight:bold; cursor:pointer;" title="Repartir torpedos delante (proa) y detrás (popa)">
-          <span>📍 Repartir Proa / Popa</span>
-        </button>
       </div>
       <div id="subboard-torpedo-summary-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.80rem; font-weight:bold; padding:4px 10px; border-radius:5px; background:rgba(15,23,42,0.95); border:1px solid #334155; color:#fde047;"></div>
     </div>
@@ -42,7 +33,7 @@
   <!-- Interactive Board Viewport Container -->
   <div class="sub-board-viewport" id="sub-board-viewport">
     <!-- Layer 1: Submarine Background Printed Card Image -->
-    <img id="sub-board-bg-img" src="assets/submarines_cards/Type_B_Class_es.webp" alt="Submarine Player Card" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:1;" />
+    <img id="sub-board-bg-img" src="" alt="Submarine Player Card" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:1; display:none;" />
 
     <!-- Layer 2: 3D Acrylic/Plastic Top Overlay (Toggled with display mode) -->
     <img id="sub-board-3d-overlay" src="assets/submarines_cards/overlay_3d_es.webp" alt="3D Double Layer Overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; pointer-events:none; z-index:5; display:none;" />

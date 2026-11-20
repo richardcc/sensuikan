@@ -272,7 +272,78 @@
         ]
       },
       "reload_capacity": 8,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          [
+            "7",
+            "stern",
+            "tube"
+          ],
+          [
+            "8",
+            "stern",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ]
+        ],
+        "artillery": [
+          [
+            "120mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.1mm",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 8,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Fast fleet attack submarine without aircraft. 8 total torpedo tubes (6 forward, 2 aft).",
+          null
+        ],
+        "es": [
+          "Submarino de ataque de escuadra rápido sin hidroavión. 8 tubos lanzatorpedos en total (6 a proa, 2 a popa).",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Kaidai_KD4_Class": {
       "class_name": "Kaidai KD4 Class",
@@ -444,7 +515,78 @@
         ]
       },
       "reload_capacity": 6,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          [
+            "5",
+            "stern",
+            "tube"
+          ],
+          [
+            "6",
+            "stern",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ]
+        ],
+        "artillery": [
+          [
+            "120mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.1mm",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Compact Kaidai variant. 6 torpedo tubes total (4 forward, 2 aft).",
+          null
+        ],
+        "es": [
+          "Variante Kaidai compacta. 6 tubos lanzatorpedos en total (4 a proa, 2 a popa).",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Kaidai_KD5_Class": {
       "class_name": "Kaidai KD5 Class",
@@ -624,7 +766,81 @@
         ]
       },
       "reload_capacity": 6,
-      "kaiten_note": "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions."
+      "kaiten_note": "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions.",
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          [
+            "5",
+            "stern",
+            "tube"
+          ],
+          [
+            "6",
+            "stern",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ]
+        ],
+        "artillery": [
+          [
+            "100mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.1mm",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Improved diving depth (75m). High speed fleet attack boat.",
+          "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Profundidad de inmersión mejorada (75 m). Alta velocidad en superficie.",
+          "En 4/45 puede instalar Kaiten (elimina el cañón de cubierta). Embarcados SOLO en misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Kaidai_KD6_Class": {
       "class_name": "Kaidai KD6 Class",
@@ -804,7 +1020,81 @@
           "HULLS: I-68..I-75, I-176"
         ]
       },
-      "reload_capacity": 6
+      "reload_capacity": 6,
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          [
+            "5",
+            "stern",
+            "tube"
+          ],
+          [
+            "6",
+            "stern",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ]
+        ],
+        "artillery": [
+          [
+            "100mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.1mm",
+            "aa"
+          ],
+          [
+            "Daihatsu",
+            "cargo"
+          ]
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Fastest pre-war IJN submarines (23 knots surface). High torpedo endurance.\nCargo: In 1/43, conversion to cargo submarine may occur (carries Daihatsu craft; remove deck gun).",
+          "In 1945 may convert to Kaiten carrier (removes deck gun). Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Submarinos más veloces de preguerra (23 nudos). Gran autonomía de torpedos.\nCarga: En 1/43 puede convertirse en transporte (lleva lancha Daihatsu; retira cañón de cubierta).",
+          "En 1945 puede convertirse en portador Kaiten (retira cañón). Solo en misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Kaidai_KD7_Class": {
       "class_name": "Kaidai KD7 Class",
@@ -976,7 +1266,65 @@
           "HULLS: I-177..I-185"
         ]
       },
-      "reload_capacity": 6
+      "reload_capacity": 6,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "artillery": [
+          [
+            "120mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "25mm AA\n#1",
+            "aa"
+          ],
+          [
+            "25mm AA\n#2",
+            "aa"
+          ]
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Wartime standardized attack class. All 6 torpedo tubes forward, powerful 25mm AA guns.",
+          null
+        ],
+        "es": [
+          "Clase de ataque estandarizada de guerra. Los 6 tubos a proa, potente artillería AA de 25 mm.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Kirai_Sen_Class": {
       "class_name": "Kirai-Sen Class",
@@ -1145,7 +1493,67 @@
         ]
       },
       "reload_capacity": 8,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          [
+            "Aft Mine\nDoors",
+            "stern",
+            "mine_door"
+          ],
+          [
+            "Mines\nx42",
+            "cargo",
+            "mines"
+          ],
+          null,
+          null
+        ],
+        "artillery": [
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "fwd_reloads": 8,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Dive Planes",
+          "Radio",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Specialized minelayer (I-121..I-124). Carries 42 naval mines in aft internal tubes. Every patrol is automatically a minelaying mission.\nSpecial Damage: Damage to 'Aft Torpedo Doors' on Chart [E6] instead affects Aft Mine Doors.",
+          null
+        ],
+        "es": [
+          "Minador especializado (I-121..I-124). Lleva 42 minas navales en tubos de popa. Cada patrulla es misión de minado.\nDaño Especial: Daño en 'Compuertas Popa' en Tabla [E6] afecta a Compuertas de Minas de Popa.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Junsen_J_IM_Class": {
       "class_name": "Junsen J. 1M Class",
@@ -1317,7 +1725,73 @@
         ]
       },
       "reload_capacity": 12,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          [
+            "5",
+            "stern",
+            "tube"
+          ],
+          [
+            "6",
+            "stern",
+            "tube"
+          ],
+          [
+            "140mm\n#2",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "140mm\n#1",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Junsen I modified with seaplane hangar. 6 forward torpedo tubes, no aft tubes. Twin 140mm deck guns.",
+          null
+        ],
+        "es": [
+          "Junsen I modificado con hangar para hidroavión. 6 tubos a proa, sin tubos a popa. Dos cañones de 140 mm.",
+          null
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Junsen_J2_Class": {
       "class_name": "Junsen J. 2 Class",
@@ -1493,7 +1967,78 @@
         ]
       },
       "reload_capacity": 9,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          [
+            "7",
+            "stern",
+            "tube"
+          ],
+          [
+            "8",
+            "stern",
+            "tube"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ],
+          [
+            "Aft\nReload",
+            "stern",
+            "rld"
+          ]
+        ],
+        "artillery": [
+          [
+            "127mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.1mm",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 10,
+        "sys": [
+          "Crane",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Equipped with aircraft hangar forward of conning tower. Dedicated aft reloads on tubes 3 & 4. 127mm dual-purpose deck gun.",
+          null
+        ],
+        "es": [
+          "Equipado con hangar para hidroavión a proa de la torre. Recargas dedicadas para tubos 3 y 4. Cañón de 127 mm.",
+          null
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Junsen_J3_Class": {
       "class_name": "Junsen J. 3 Class",
@@ -1681,7 +2226,79 @@
           "HULLS: I-7, I-8"
         ]
       },
-      "reload_capacity": 15
+      "reload_capacity": 15,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          [
+            "7",
+            "stern",
+            "tube"
+          ],
+          [
+            "8",
+            "stern",
+            "tube"
+          ],
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "13.1mm\n#1",
+            "aa"
+          ],
+          [
+            "13.1mm\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 11,
+        "sys": [
+          "Crane",
+          "Aft Torp Doors",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Equipped with aircraft hangar forward of conning tower. Systems Status includes Aft Torpedo Doors damage box.",
+          "In 10/44 Kaiten may be installed. If so, remove aircraft. Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Equipado con hangar para hidroavión a proa de la torre. El estado de sistemas incluye casilla de compuertas de popa.",
+          "En 10/44 puede instalar Kaiten (retira el avión). Embarcados SOLO en misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Type_A_Class": {
       "class_name": "Type A Class",
@@ -1853,7 +2470,65 @@
         ]
       },
       "reload_capacity": 12,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ],
+          null,
+          null
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "Crane",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Squadron flagship with extended command facilities, scout seaplane, and 140mm deck gun.",
+          null
+        ],
+        "es": [
+          "Buque insignia de flotilla con puesto de mando ampliado, hidroavión de exploración y cañón de 140 mm.",
+          null
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Type_B_Class": {
       "class_name": "Type B Class",
@@ -2041,7 +2716,71 @@
           "HULLS: I-15..I-39 (20 BUILT)"
         ]
       },
-      "reload_capacity": 11
+      "reload_capacity": 11,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 11,
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Most numerous and successful Japanese cruiser submarine class. Carries 1 Yokosuka E14Y1 scout seaplane.",
+          "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "La clase de crucero submarino más numerosa y exitosa de la AIJ. Lleva 1 hidroavión Yokosuka E14Y1.",
+          "En 12/44 puede instalar Kaiten y segundo AA doble de 25 mm (retira cañón y avión). Solo misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Type_B_3_Class": {
       "class_name": "Type B-3 Class",
@@ -2237,7 +2976,71 @@
           "HULLS: I-56, I-58"
         ]
       },
-      "reload_capacity": 13
+      "reload_capacity": 13,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Triple\n#1",
+            "aa"
+          ],
+          [
+            "25mm Triple\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 11,
+        "sys": [
+          "Type 22 Radar",
+          "Crane",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Late-war Kaiten carrier. Sunk USS Indianapolis (I-58). Equipped with Type 22 Radar.",
+          "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Portador Kaiten de final de guerra. Famoso por hundir el USS Indianapolis (I-58). Equipado con Radar Tipo 22.",
+          "En 12/44 puede instalar Kaiten y segundo AA doble de 25 mm (retira cañón y avión). Solo misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Type_C_Class": {
       "class_name": "Type C Class",
@@ -2433,7 +3236,71 @@
           "HULLS: I-16, 18, 20, 22, 24"
         ]
       },
-      "reload_capacity": 12
+      "reload_capacity": 12,
+      "armament_config": {
+        "bow_tubes": 8,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "Type 22 Radar",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Heavy torpedo attack boat: 8 bow tubes, 20 Type 95 torpedoes. Carries 1 Type A Midget Submarine (Ko-Hyoteki) on aft deck.\nRadar: Type 22 Radar available from Dec. 1944.",
+          null
+        ],
+        "es": [
+          "Submarino de ataque pesado: 8 tubos a proa, 20 torpedos Tipo 95. Transporta 1 submarino enano Tipo A en cubierta de popa.\nRadar: Radar Tipo 22 disponible desde dic. 1944.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Type_A_Modified": {
       "class_name": "Type A Modified",
@@ -2609,7 +3476,68 @@
         ]
       },
       "reload_capacity": 12,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Triple\n#1",
+            "aa"
+          ],
+          [
+            "25mm Triple\n#2",
+            "aa"
+          ],
+          [
+            "25mm Single",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "Type 22 Radar",
+          "Crane",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Extended long-range cruiser sub with improved diesel endurance, scout plane, and 25mm AA suites. Type 22 Radar equipped.",
+          null
+        ],
+        "es": [
+          "Crucero submarino de muy largo alcance con autonomía diésel mejorada, hidroavión y baterías AA de 25 mm. Con Radar Tipo 22.",
+          null
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
     },
     "Sen_Toku_Class": {
       "class_name": "Sen-Toku Class",
@@ -2805,7 +3733,71 @@
         ]
       },
       "reload_capacity": 12,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 8,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Triple\n#1",
+            "aa"
+          ],
+          [
+            "25mm Triple\n#2",
+            "aa"
+          ],
+          [
+            "25mm Triple\n#3",
+            "aa"
+          ],
+          [
+            "25mm Single",
+            "aa"
+          ]
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "Crane",
+          "Hangar",
+          "Radio",
+          "Periscope",
+          "Hydrophones",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Dive Planes",
+          "Batteries",
+          "Fuel Tanks",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Diesel Engine 3",
+          "Diesel Engine 4"
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Available Dec 1944. Massive carrier sub carrying 3 Aichi M6A1 Seiran bombers.\nArmament: All 8 tubes are Forward; Chart [E6] aft tube hits treat as No Effect. Heavy gun armament (Ammo x6), 4x 25mm Triple AA, Mk 3 M1 / Mk 2 M2 Radar.",
+          null
+        ],
+        "es": [
+          "Disponible en dic. 1944. Submarino portaviones gigante con 3 bombarderos Aichi M6A1 Seiran.\nArmamento: Los 8 tubos están a proa; impactos a tubos de popa en [E6] sin efecto. Cañón con munición x6, 4x AA triples de 25 mm, Radares Mk 3 M1 y Mk 2 M2.",
+          null
+        ]
+      },
+      "aircraft_count": 3,
+      "is_midget": false
     },
     "Sen_Taka_Class": {
       "class_name": "Sen-Taka Class",
@@ -2957,7 +3949,56 @@
         ]
       },
       "reload_capacity": 6,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "25mm Single",
+            "aa"
+          ],
+          null
+        ],
+        "artillery": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Electric Motor 3",
+          "Electric Motor 4",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries 1",
+          "Batteries 2",
+          "Batteries 3",
+          "Periscope"
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "High-speed sub (19 kt submerged). Streamlined hull, snorkel, high capacity batteries.\n• High Speed: Never suffers +1 DRM for previous detection.\n• Motors: 2nd hit on Motor 1 -> Motor 3; 2nd on Motor 2 -> Motor 4. [E3] motor penalties reduced by 1.\n• Batteries: Suffers +1 DRM only when all 3 banks are damaged.",
+          null
+        ],
+        "es": [
+          "Submarino rápido revolucionario (19 nudos en inmersión). Casco hidrodinámico, esnórquel y baterías de gran capacidad.\n• Alta Velocidad: Nunca sufre penalización +1 DRM por detección previa.\n• Motores: 2.º impacto en Motor 1 -> Motor 3; 2.º en Motor 2 -> Motor 4. Penalizaciones en [E3] reducidas en 1.\n• Baterías: Sufre +1 DRM solo si los 3 bancos están dañados.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Type_C3_Class": {
       "class_name": "Type C-3 Class",
@@ -3153,7 +4194,71 @@
         ]
       },
       "reload_capacity": 13,
-      "kaiten_note": "In 12/44 Kaiten are installed. Remove second Deck Gun and its ammunition. Kaiten carried ONLY on Kaiten missions."
+      "kaiten_note": "In 12/44 Kaiten are installed. Remove second Deck Gun and its ammunition. Kaiten carried ONLY on Kaiten missions.",
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm\n#1",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "140mm\n#2",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ]
+        ],
+        "fwd_reloads": 13,
+        "sys": [
+          "Type 22 Radar",
+          "Cargo",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Extra long-range cargo submarine (Yanagi missions to Germany). Twin 140mm deck guns.\nRadar: Type 22 Radar available from Dec. 1944.",
+          "In 12/44 Kaiten are installed. Remove 2nd Deck Gun & ammo. Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Submarino de transporte de alcance oceánico extremo (misiones Yanagi a Alemania). Dos cañones de 140 mm.\nRadar: Radar Tipo 22 disponible desde dic. 1944.",
+          "En 12/44 instala Kaiten (retira segundo cañón y munición). Embarcados SOLO en misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
     },
     "Type_A_Midget_Submarine___Ko_Hyoteki": {
       "class_name": "Type A Midget Submarine",
@@ -3293,7 +4398,862 @@
         ]
       },
       "reload_capacity": 0,
-      "kaiten_note": null
+      "kaiten_note": null,
+      "armament_config": {
+        "bow_tubes": 2,
+        "aft_r3": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "artillery": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "fwd_reloads": 0,
+        "sys": [
+          "Fwd Battery",
+          "Aft Battery",
+          "Wire Cutters",
+          "Gyro Compass",
+          "Propeller",
+          "Electric Motor",
+          "Horiz. Rudder",
+          "Vertical Rudder",
+          "Radio",
+          "Hydrophones",
+          "Periscope",
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Two-man midget submarine launched from mothership for harbour penetration [7.16]. 600 hp electric drive, forward/aft battery banks, gyro compass, wire cutters. 2x 45cm Type 97 torpedoes.",
+          null
+        ],
+        "es": [
+          "Submarino enano biplaza lanzado desde submarino nodriza para incursiones en puertos [7.16]. Motor eléctrico de 600 hp, bancos de baterías proa/popa, girocompás y cortacables. 2x torpedos Tipo 97 de 45 cm.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": true
+    },
+    "Junsen_J1_Class": {
+      "class_name": "Junsen J1 Class",
+      "full_title": "Junsen J1 (I-1 Series) Long-Range Cruiser Submarine",
+      "available_date": "Available December 1941",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": "None",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 14,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "Twin 140mm Status",
+        "ammo": 5,
+        "aa": "13.2mm AA Status"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc",
+        "Aft Torp Doors"
+      ],
+      "stats": {
+        "length": "320 Feet (97.5m)",
+        "displacement": "2,791 tons",
+        "speed": "18 knots",
+        "range": "24,400 nm",
+        "crew": 92,
+        "produced": 4
+      },
+      "special_rules": "Cruiser submarine without aircraft hangar. Heavily armed with twin 140mm (5.5\") deck guns (fore and aft). 6 forward torpedo tubes (14 reloads = 20 torpedoes). Massive 24,400 nm operational range.",
+      "profile_image_path": "images/subs/remastered/19_Junsen_J1.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Stat 6",
+        "Transit",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 4,
+      "reload_capacity": 14,
+      "shipyard_metadata": {
+        "title": "JUNSEN  J1  CLASS  (I-1)",
+        "subtitle": "LONG-RANGE CRUISER SUBMARINE  |  TWIN 140MM GUNS",
+        "badges": [
+          "AVAILABLE: DEC 1941",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-1..I-4 (4 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          [
+            "140mm #2",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "13.2mm AA",
+            "aa"
+          ],
+          null
+        ],
+        "artillery": [
+          [
+            "140mm #1",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          null,
+          null
+        ],
+        "fwd_reloads": 14,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Aft Torp Doors",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Cruiser submarine without aircraft hangar. Heavily armed with twin 140mm (5.5\") deck guns (fore and aft). 6 forward torpedo tubes (14 reloads = 20 torpedoes). Massive 24,400 nm operational range.",
+          null
+        ],
+        "es": [
+          "Submarino crucero sin hangar para hidroavión. Potente artillería con doble cañón de 140 mm (proa y popa). 6 tubos lanzatorpedos a proa con 14 recargas (20 torpedos en total). Autonomía oceánica masiva de 24.400 millas.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
+    },
+    "Kaichu_VII_Class": {
+      "class_name": "Kaichu VII Class",
+      "full_title": "Kaichu VII (Ro-35 Series) Medium Fleet Submarine",
+      "available_date": "Available March 1943",
+      "patrol_length": "1 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": "None",
+      "torpedo_tubes": {
+        "fwd": 4,
+        "aft": 0,
+        "reloads_fwd": 6,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "76.2mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA Status"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "264 Feet (80.5m)",
+        "displacement": "1,447 tons",
+        "speed": "19.8 knots",
+        "range": "5,000 nm",
+        "crew": 61,
+        "produced": 18
+      },
+      "special_rules": "Medium coastal fleet submarine (Ro-gata). Fast diving time, high maneuverability in island waters. 4 bow tubes, 6 reloads (10 total). Armed with 1x 76.2mm gun and twin 25mm AA.",
+      "profile_image_path": "images/subs/remastered/20_Kaichu_VII.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 3,
+      "reload_capacity": 6,
+      "shipyard_metadata": {
+        "title": "KAICHU  VII  CLASS  (RO-35)",
+        "subtitle": "MEDIUM COASTAL FLEET SUBMARINE  |  RO-GATA TYPE",
+        "badges": [
+          "AVAILABLE: MAR 1943",
+          "PATROLS: 1 MONTH",
+          "HULLS: RO-35..56 (18 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 4,
+        "aft_r3": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "artillery": [
+          [
+            "76.2mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ],
+          [
+            "25mm Twin AA",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 6,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          null,
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Medium coastal fleet submarine (Ro-gata). Fast diving time, high maneuverability in island waters. 4 bow tubes, 6 reloads (10 total). Armed with 1x 76.2mm gun and twin 25mm AA.",
+          null
+        ],
+        "es": [
+          "Submarino medio costero de flotilla (Ro-gata). Rápida inmersión de emergencia y alta maniobrabilidad en aguas insulares. 4 tubos a proa con 6 recargas (10 torpedos). Cañón de 76.2 mm y afuste doble de 25 mm AA.",
+          null
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
+    },
+    "Type_B2_Class": {
+      "class_name": "Type B2 Class",
+      "full_title": "Type B2 (Otsu-gata Kai-1) Cruiser Submarine (I-40 Series)",
+      "available_date": "Available July 1943",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Yokosuka E14Y1 Glen",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 11,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions.",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "356 Feet (108.7m)",
+        "displacement": "2,230 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 94,
+        "produced": 6
+      },
+      "special_rules": "Fast cruiser submarine with reconnaissance floatplane. 6 forward torpedo tubes, 11 reloads (17 total). 140mm deck gun. Simplified wartime construction. Carries 4 Kaiten from 1945 (I-44).",
+      "profile_image_path": "images/subs/remastered/21_Type_B2.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "reload_capacity": 11,
+      "shipyard_metadata": {
+        "title": "TYPE  B2  CLASS  (I-40)",
+        "subtitle": "RECONNAISSANCE CRUISER SUBMARINE  |  OTSU-GATA TYPE",
+        "badges": [
+          "AVAILABLE: JUL 1943",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-40..I-45 (6 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 11,
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "Hangar",
+          "Crane",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Fast cruiser submarine with reconnaissance floatplane. 6 forward torpedo tubes, 11 reloads (17 total). 140mm deck gun. Simplified wartime construction. Carries 4 Kaiten from 1945 (I-44).",
+          "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions."
+        ],
+        "es": [
+          "Crucero submarino rápido con hidroavión de exploración Yokosuka E14Y Glen. 6 tubos a proa con 11 recargas (17 torpedos). Cañón de 140 mm. Construcción simplificada de guerra. Porta 4 torpedos Kaiten desde 1945.",
+          "En 12/44 puede instalar Kaiten y segundo AA doble de 25 mm (retira cañón y avión). Solo en misiones Kaiten."
+        ]
+      },
+      "aircraft_count": 1,
+      "is_midget": false
+    },
+    "Type_C2_Class": {
+      "class_name": "Type C2 Class",
+      "full_title": "Type C2 (Hei-gata Kai) Heavy Attack Submarine (I-46 Series)",
+      "available_date": "Available February 1944",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": "None",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 13,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm AA Status (x2)"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "Fitted with clamps for 4 Kaiten human torpedoes. Historic Kaiten carrier: I-47 launched Kaitens sinking USS Mississinewa.",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "358 Feet (109.3m)",
+        "displacement": "2,564 tons",
+        "speed": "23.6 knots",
+        "range": "14,000 nm",
+        "crew": 94,
+        "produced": 3
+      },
+      "special_rules": "Heavy attack submarine: maximized endurance and torpedo loadout (6 tubes, 13 reloads = 19 total). Historic Kaiten carrier (I-47 sank USS Mississinewa at Ulithi). No midget submarine clamp.",
+      "profile_image_path": "images/subs/remastered/22_Type_C2.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "reload_capacity": 13,
+      "shipyard_metadata": {
+        "title": "TYPE  C2  CLASS  (I-46)",
+        "subtitle": "HEAVY ATTACK SUBMARINE  |  HEI-GATA TYPE",
+        "badges": [
+          "AVAILABLE: FEB 1944",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-46..I-48 (3 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm AA\n#1",
+            "aa"
+          ],
+          [
+            "25mm AA\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 13,
+        "sys": [
+          "Radio",
+          "Dive Planes",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Heavy attack submarine: maximized endurance and torpedo loadout (6 tubes, 13 reloads = 19 total). Historic Kaiten carrier (I-47 sank USS Mississinewa at Ulithi). No midget submarine clamp.",
+          "Fitted with clamps for 4 Kaiten human torpedoes. Historic Kaiten carrier (I-47 launched Kaitens sinking USS Mississinewa)."
+        ],
+        "es": [
+          "Submarino de ataque pesado: máxima autonomía y dotación de torpedos (6 tubos a proa, 13 recargas = 19 torpedos en total). Histórico portador Kaiten (el I-47 hundió al USS Mississinewa en Ulithi). Sin anclaje para submarino enano.",
+          "Equipado con anclajes para 4 torpedos tripulados Kaiten. Histórico portador Kaiten (el I-47 lanzó los Kaiten que hundieron al USS Mississinewa)."
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
+    },
+    "Type_D1_Class": {
+      "class_name": "Type D1 Class",
+      "full_title": "Type D1 (Sen-Yu-Sho) Supply Transport Submarine (I-361 Series)",
+      "available_date": "Available May 1944",
+      "patrol_length": "2 month patrols",
+      "has_aircraft": false,
+      "aircraft_type": "None",
+      "torpedo_tubes": {
+        "fwd": 2,
+        "aft": 0,
+        "reloads_fwd": 0,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Twin AA Status"
+      },
+      "has_kaiten": true,
+      "kaiten_note": "Converted from late 1944 to carry 5 Kaiten human torpedoes for Special Attack missions. When fitted with Kaitens, Daihatsu is removed.",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Supply Cargo",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "241 Feet (73.5m)",
+        "displacement": "2,215 tons",
+        "speed": "13 knots",
+        "range": "15,000 nm",
+        "crew": 60,
+        "produced": 12
+      },
+      "special_rules": "Dedicated supply submarine carrying 1 Daihatsu 14m landing craft and 82t cargo. 2 bow torpedoes (0 reloads). Converted to carry 5 Type 1 Kaiten in late 1944 for Special Attack missions.",
+      "profile_image_path": "images/subs/remastered/23_Type_D1.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Transit",
+        "N/A",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 7,
+        "hull": 7
+      },
+      "crew_counters": 3,
+      "reload_capacity": 0,
+      "shipyard_metadata": {
+        "title": "TYPE  D1  CLASS  (I-361)",
+        "subtitle": "SEN-YU-SHO SUPPLY TRANSPORT  |  TEI-GATA TYPE",
+        "badges": [
+          "AVAILABLE: MAY 1944",
+          "PATROLS: 2 MONTHS",
+          "HULLS: I-361..372 (12 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 2,
+        "aft_r3": [
+          [
+            "Daihatsu",
+            "cargo"
+          ],
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Twin\n#1",
+            "aa"
+          ],
+          [
+            "25mm Twin\n#2",
+            "aa"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ],
+          [
+            "Kaiten",
+            "kai"
+          ]
+        ],
+        "fwd_reloads": 0,
+        "sys": [
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Cargo",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null,
+          null,
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Dedicated supply submarine carrying 1 Daihatsu 14m landing craft and 82t cargo. 2 bow torpedoes (0 reloads). Converted to carry 5 Type 1 Kaiten in late 1944 for Special Attack missions.",
+          "Converted from late 1944 to carry 5 Kaiten human torpedoes for Special Attack missions. When fitted with Kaitens, Daihatsu is removed."
+        ],
+        "es": [
+          "Submarino dedicado al suministro logístico para guarniciones insulares aisladas. Lleva 1 barcaza de desembarco Daihatsu de 14 m y 82 t de carga. 2 tubos a proa (0 recargas). Modificado para portar 5 torpedos Kaiten a finales de 1944.",
+          "A partir de finales de 1944 puede modificarse para portar 5 torpedos suicidas Kaiten para misiones de Ataque Especial. Al portar Kaitens se retira la barcaza Daihatsu."
+        ]
+      },
+      "aircraft_count": 0,
+      "is_midget": false
+    },
+    "Type_A2_Class": {
+      "class_name": "Type A2 Class",
+      "full_title": "Type A2 (Ko-gata Kai-2) Attack Carrier Submarine (I-13 Series)",
+      "available_date": "Available December 1944",
+      "patrol_length": "3 month patrols",
+      "has_aircraft": true,
+      "aircraft_type": "Aichi M6A1 Seiran (x2)",
+      "torpedo_tubes": {
+        "fwd": 6,
+        "aft": 0,
+        "reloads_fwd": 12,
+        "reloads_aft": 0
+      },
+      "deck_guns": {
+        "main": "140mm Status",
+        "ammo": 5,
+        "aa": "25mm Triple AA Status (x2)"
+      },
+      "has_kaiten": false,
+      "kaiten_note": "",
+      "systems_status": [
+        "F.Doors",
+        "Planes",
+        "Radio",
+        "Hangar",
+        "Crane",
+        "Mtr 1",
+        "Mtr 2",
+        "Eng 1",
+        "Eng 2",
+        "Fuel",
+        "Hydro",
+        "Batt",
+        "Perisc"
+      ],
+      "stats": {
+        "length": "372 Feet (113.7m)",
+        "displacement": "4,762 tons",
+        "speed": "16.7 knots",
+        "range": "21,000 nm",
+        "crew": 108,
+        "produced": 2
+      },
+      "special_rules": "Attack aircraft carrier submarine sister to Sen-Toku. Enlarged hangar carries 2 Aichi M6A1 Seiran bombers. Equipped with radar and 7x 25mm AA guns. Requires Commander rank.",
+      "profile_image_path": "images/subs/remastered/24_Type_A2.jpg",
+      "is_remastered": true,
+      "is_fanmade": true,
+      "patrol_phases": [
+        "Transit",
+        "Stat 1",
+        "Stat 2",
+        "Stat 3",
+        "Stat 4",
+        "Stat 5",
+        "Transit",
+        "N/A",
+        "N/A"
+      ],
+      "damage_capacity": {
+        "flooding": 8,
+        "hull": 8
+      },
+      "crew_counters": 5,
+      "reload_capacity": 12,
+      "shipyard_metadata": {
+        "title": "TYPE  A2  CLASS  (I-13)",
+        "subtitle": "ATTACK CARRIER SUBMARINE  |  KO-GATA TYPE",
+        "badges": [
+          "AVAILABLE: DEC 1944",
+          "PATROLS: 3 MONTHS",
+          "HULLS: I-13, I-14 (2 BUILT)"
+        ]
+      },
+      "armament_config": {
+        "bow_tubes": 6,
+        "aft_r3": [
+          null,
+          null,
+          [
+            "140mm",
+            "gun"
+          ],
+          [
+            "Ammo\nx5",
+            "ammo"
+          ]
+        ],
+        "artillery": [
+          [
+            "25mm Triple\n#1",
+            "aa"
+          ],
+          [
+            "25mm Triple\n#2",
+            "aa"
+          ],
+          [
+            "25mm Single",
+            "aa"
+          ],
+          null
+        ],
+        "fwd_reloads": 12,
+        "sys": [
+          "Type 22 Radar",
+          "Crane",
+          "Hangar",
+          "F. Torp. Doors (Odd)",
+          "F. Torp. Doors (Even)",
+          "Radio",
+          "Dive Planes",
+          "Electric Motor 1",
+          "Electric Motor 2",
+          "Diesel Engine 1",
+          "Diesel Engine 2",
+          "Fuel Tanks",
+          "Hydrophones",
+          "Batteries",
+          "Periscope",
+          null
+        ]
+      },
+      "special_rules_i18n": {
+        "en": [
+          "Attack aircraft carrier submarine sister to Sen-Toku. Enlarged hangar carries 2 Aichi M6A1 Seiran bombers. Equipped with radar and 7x 25mm AA guns. Requires Commander rank.",
+          null
+        ],
+        "es": [
+          "Submarino portaaviones de ataque clase hermana del Sen-Toku. Hangar ampliado con capacidad para 2 bombarderos Aichi M6A1 Seiran. Equipado con radar de superficie y 7 cañones AA de 25 mm. Requiere rango de Capitán de Fragata.",
+          null
+        ]
+      },
+      "aircraft_count": 2,
+      "is_midget": false
     }
   }
 }

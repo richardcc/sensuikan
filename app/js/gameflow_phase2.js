@@ -166,13 +166,72 @@ function recalculatePatrolTrack() {
 
       const isEn = (typeof currentLang !== "undefined" && currentLang === "en") || (typeof window !== "undefined" && window.currentLang === "en");
       const list = campaignState.workflow.boxList || [];
-      const curIdx = campaignState.workflow.currentBoxIndex || 0;
+      const curIdx = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
+      const startingBase = campaignState.workflow.startingBase || "Yokosuka";
 
       stepper.style.display = 'flex';
       stepper.style.flexWrap = 'nowrap';
       stepper.style.overflowX = 'auto';
       stepper.style.gap = '8px';
       stepper.style.padding = '4px 2px 8px 2px';
+
+      // 0. PUERTO DE SALIDA / DEPARTURE PORT (Casilla de Puerto inicial [Regla 6.0])
+      const isPortActive = (curIdx === -1);
+      const isPortDone = (curIdx >= 0);
+
+      const portCard = document.createElement('div');
+      portCard.style.cssText = `
+        flex: 0 0 98px;
+        min-width: 92px;
+        max-width: 105px;
+        height: 136px;
+        background: #0f172a;
+        border: 2px solid ${isPortActive ? '#facc15' : (isPortDone ? '#10b981' : '#38bdf8')};
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 4px;
+        box-shadow: ${isPortActive ? '0 0 14px rgba(250, 204, 21, 0.9), 0 4px 10px rgba(0,0,0,0.6)' : '0 3px 8px rgba(0,0,0,0.4)'};
+        box-sizing: border-box;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        position: relative;
+        ${isPortDone ? 'opacity: 0.72; filter: saturate(0.85);' : ''}
+        ${isPortActive ? 'transform: translateY(-2px); z-index: 2;' : ''}
+      `;
+      portCard.title = `${isEn ? 'Port of Departure' : 'Puerto de Salida'}: ${startingBase} (${isEn ? 'Click to stay in port' : 'Clic para situar en puerto'})`;
+      portCard.onclick = () => jumpToPatrolBox(-1);
+
+      let portBadgeHtml = '';
+      if (isPortActive) {
+        portBadgeHtml = `<div style="position:absolute; top:3px; left:3px; background:#facc15; color:#0f172a; font-size:0.6rem; font-weight:900; border-radius:3px; padding:1px 4px; line-height:1; z-index:3; box-shadow:0 1px 3px rgba(0,0,0,0.5);">▶ ACT</div>`;
+      } else if (isPortDone) {
+        portBadgeHtml = `<div style="position:absolute; top:3px; left:3px; background:#10b981; color:#ffffff; font-size:0.6rem; font-weight:900; border-radius:3px; padding:1px 4px; line-height:1; z-index:3; box-shadow:0 1px 3px rgba(0,0,0,0.5);">✓</div>`;
+      }
+
+      const portImgSrc = (typeof resolveAsset === 'function' ? resolveAsset('assets/tracks/track_transit.jpg') : 'assets/tracks/track_transit.jpg');
+
+      portCard.innerHTML = `
+        ${portBadgeHtml}
+        <div style="height:84px; position:relative; border-radius:4px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); background:#1e293b; display:flex; align-items:center; justify-content:center;">
+          <img src="${portImgSrc}" onerror="this.style.display='none'" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block; filter:hue-rotate(180deg) brightness(0.85);" alt="Port">
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(15,23,42,0.65);">
+            <span style="font-size:1.6rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.9));">⚓</span>
+            <span style="font-size:0.68rem; font-weight:800; color:#38bdf8; text-transform:uppercase; text-shadow:0 1px 2px #000; margin-top:2px;">${startingBase}</span>
+          </div>
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(14,116,144,0.9); font-size:0.6rem; color:#e0f2fe; font-weight:800; text-align:center; padding:2px 0; letter-spacing:0.5px; z-index:2; text-shadow:0 1px 2px #000;">
+            ${isEn ? 'DEPARTURE' : 'SALIDA'}
+          </div>
+        </div>
+        <div style="background:${isPortActive ? '#1e293b' : '#0b1320'}; border:1px solid ${isPortActive ? '#facc15' : '#0284c7'}; border-radius:4px; padding:3px 2px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.6); margin-top:3px;">
+          <span style="font-family:'Cinzel', serif; font-size:0.68rem; font-weight:800; color:${isPortActive ? '#fde047' : '#bae6fd'}; text-transform:uppercase; letter-spacing:0.3px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${isEn ? 'At Port' : 'En Puerto'}
+          </span>
+        </div>
+      `;
+      stepper.appendChild(portCard);
 
       list.forEach((boxName, i) => {
         const isActive = (i === curIdx);
@@ -294,7 +353,27 @@ function recalculatePatrolTrack() {
     }
 
     function jumpToPatrolBox(idx) {
+      const isEn = (typeof currentLang !== "undefined" && currentLang === "en") || (typeof window !== "undefined" && window.currentLang === "en");
       const list = campaignState.workflow.boxList || [];
+      const base = campaignState.workflow.startingBase || "Yokosuka";
+
+      if (idx === -1) {
+        campaignState.workflow.currentBoxIndex = -1;
+        campaignState.workflow.patrolBoxesCompleted = false;
+        updateBoxDisplay();
+        updatePhase2TableDisplay();
+        renderRouteBreadcrumbs();
+        if (typeof subBoardState !== 'undefined') {
+          subBoardState.patrolIndex = -1;
+          if (typeof saveSubBoardState === 'function') saveSubBoardState();
+          if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+        }
+        if (typeof updateTrayectoCompletionStatus === 'function') updateTrayectoCompletionStatus();
+        saveState();
+        showToast(isEn ? `Station: In Port (${base})` : `Estación: En Puerto (${base})`);
+        return;
+      }
+
       if (idx >= 0 && idx < list.length) {
         campaignState.workflow.currentBoxIndex = idx;
         if (idx === list.length - 1) {
@@ -312,7 +391,7 @@ function recalculatePatrolTrack() {
         }
         if (typeof updateTrayectoCompletionStatus === 'function') updateTrayectoCompletionStatus();
         saveState();
-        showToast("Navegando a: " + list[idx]);
+        showToast((isEn ? "Navigating to: " : "Navegando a: ") + list[idx]);
       }
     }
 
@@ -406,19 +485,72 @@ function recalculatePatrolTrack() {
     }
 
     function updateBoxDisplay() {
-      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
-      const idx = campaignState.workflow.currentBoxIndex || 0;
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      const idx = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
       if (typeof window.onSensuikanPatrolMoved === 'function') {
         window.onSensuikanPatrolMoved(idx);
       }
       const list = campaignState.workflow.boxList || [];
-      const boxName = list[idx] || (isEn ? "Box " + (idx + 1) : "Casilla " + (idx + 1));
+      const base = campaignState.workflow.startingBase || "Yokosuka";
+      const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
+
       const boxLblEl = document.getElementById('wf-current-box-lbl');
+      const descEl = document.getElementById('wf-box-type-desc');
+      const rollResEl = document.getElementById('wf-encounter-roll-res');
+      const encStatusEl = document.getElementById('wf-enc-status-text');
+      const btnCombat = document.getElementById('btn-engage-combat');
+
+      const a3Wrapper = document.getElementById('p2-a3-controls-wrapper');
+      const portWrapper = document.getElementById('p2-port-controls-wrapper');
+      const c2Title = document.getElementById('p2-c2-title');
+      const c2Help = document.getElementById('p2-encounter-help');
+      const btnBack = document.getElementById('p2-btn-back');
+      const btnNextText = document.getElementById('p2-btn-next');
+      const btnPrevText = document.getElementById('p2-btn-prev');
+
+      if (idx === -1) {
+        if (boxLblEl) boxLblEl.innerText = isEn ? `⚓ In Port: ${base} (Departure Station)` : `⚓ En Puerto: ${base} (Estación de Salida)`;
+        if (descEl) descEl.innerText = isEn ? `(Moored at naval base ${base}. Ready to depart on patrol towards ${assignedArea} [Rule 6.0])` : `(Amarrado en la base naval de ${base}. Listo para zarpar en patrulla hacia ${assignedArea} [Regla 6.0])`;
+        if (rollResEl) rollResEl.innerHTML = `<span style="color:#38bdf8; font-weight:800;">⚓ ${isEn ? "In Port (Departure)" : "En Puerto (Salida)"}</span>`;
+        if (encStatusEl) encStatusEl.innerText = isEn ? "Submarine is moored in port. Click 'Depart on Patrol' to begin transit." : "El submarino está amarrado en puerto. Pulsa 'Zarpar a la Mar' para iniciar el tránsito.";
+        if (btnCombat) btnCombat.style.display = "none";
+
+        if (a3Wrapper) a3Wrapper.style.display = 'none';
+        if (portWrapper) portWrapper.style.display = 'block';
+        const a3MainContainer = document.getElementById('p2-a3-main-container');
+        if (a3MainContainer) a3MainContainer.style.display = 'none';
+        if (c2Title) c2Title.innerText = isEn ? "2. Naval Base Status [Rule 4.7.6]" : "2. Estado en Base Naval [Regla 4.7.6]";
+        if (c2Help) c2Help.innerText = isEn ? "Submarine is moored in port. Chart [A3] does not apply in port." : "El submarino está amarrado en puerto. La Tabla [A3] no se aplica en puerto.";
+
+        if (btnBack) {
+          btnBack.disabled = true;
+          btnBack.style.opacity = '0.4';
+          btnBack.style.cursor = 'not-allowed';
+        }
+        if (btnNextText) btnNextText.innerText = isEn ? "Depart on Patrol" : "Zarpar a la Mar";
+        if (btnPrevText) btnPrevText.innerText = isEn ? "Moored" : "Amarrado";
+
+        renderRouteBreadcrumbs();
+        return;
+      }
+
+      if (a3Wrapper) a3Wrapper.style.display = 'block';
+      if (portWrapper) portWrapper.style.display = 'none';
+      const a3MainContainer = document.getElementById('p2-a3-main-container');
+      if (a3MainContainer) a3MainContainer.style.display = 'block';
+      if (c2Title) c2Title.innerText = isEn ? "2. Encounter Roll on Chart [A3]" : "2. Tirada de Encuentros en Tabla [A3]";
+      if (c2Help) c2Help.innerText = isEn ? "Roll 2d6 in each patrol station or transit box:" : "Lanza 2d6 en cada casilla de estación o tránsito:";
+      if (btnBack) {
+        btnBack.disabled = false;
+        btnBack.style.opacity = '1';
+        btnBack.style.cursor = 'pointer';
+      }
+      if (btnNextText) btnNextText.innerText = isEn ? "Advance Box" : "Avanzar Casilla";
+      if (btnPrevText) btnPrevText.innerText = (idx === 0) ? (isEn ? "Back to Port" : "Volver a Puerto") : (isEn ? "Previous Box" : "Retroceder");
+
+      const boxName = list[idx] || (isEn ? "Box " + (idx + 1) : "Casilla " + (idx + 1));
       if (boxLblEl) boxLblEl.innerText = `${boxName} (${idx + 1}/${list.length})`;
       
-      const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
-      const base = campaignState.workflow.startingBase || "Yokosuka";
-
       let desc = isEn ? `(On active patrol in ${assignedArea})` : `(En patrulla activa en ${assignedArea})`;
       if (boxName.includes("Transit") || boxName.includes("Tránsito")) {
         desc = isEn ? `(Naval transit approach towards ${assignedArea})` : `(Aproximación naval hacia ${assignedArea})`;
@@ -428,15 +560,68 @@ function recalculatePatrolTrack() {
         desc = isEn ? `(⭐ Special Mission box in ${assignedArea})` : `(⭐ Casilla de Misión Especial en ${assignedArea})`;
       }
       
-      const descEl = document.getElementById('wf-box-type-desc');
       if (descEl) descEl.innerText = desc;
+
+      const c3Dynamic = document.getElementById('p2-c3-dynamic-content');
+      if (c3Dynamic) {
+        if (boxName.includes("Mission") || boxName.includes("Misión")) {
+          const missionName = (campaignState.workflow && campaignState.workflow.assignedMissionType) 
+            || (isEn ? "Major Fleet Operation" : "Operación Mayor de Flota");
+          const missionLine = (campaignState.workflow && campaignState.workflow.assignedMissionLine) || "Patrol";
+          const isDone = !!(campaignState.workflow && campaignState.workflow.specialMissionCompleted);
+          
+          c3Dynamic.innerHTML = `
+            <div style="background:#0a0f1d; border:1px solid #38bdf8; border-radius:6px; padding:10px; margin-bottom:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                <span style="color:#fde047; font-weight:bold; font-size:0.86rem;">🎯 ${isEn ? 'ACTIVE SPECIAL MISSION' : 'MISIÓN ESPECIAL ACTIVA'}</span>
+                <span style="font-size:0.70rem; background:#0284c7; color:#fff; padding:2px 6px; border-radius:3px; font-weight:800;">${isEn ? 'RULE 7.0 - 7.14' : 'REGLA 7.0 - 7.14'}</span>
+              </div>
+              <div style="font-size:0.82rem; color:#f8fafc; font-weight:bold; margin-bottom:4px;">
+                ${missionName} (${missionLine})
+              </div>
+              <p style="font-size:0.76rem; color:#cbd5e1; margin:0 0 8px 0; line-height:1.4;">
+                ${isEn 
+                  ? 'Your boat executes this operation in the first On-Station box. Use the Area Chart [A3] for fleet contacts or launch specialized modules (Ko-Hyoteki, Floatplane Glen, Kaiten). Grants 2 successful patrols on completion!'
+                  : 'Tu buque ejecuta esta operación en la primera casilla de estación. Usa la Tabla de Área [A3] para contactos de flota o lanza módulos especializados (Ko-Hyoteki, Hidroavión Glen, Kaiten). ¡Otorga 2 patrullas exitosas al completarse!'}
+              </p>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" onclick="triggerSpecialMissionAction()" class="action-btn" style="background:${isDone ? '#15803d' : '#0284c7'}; color:#fff; font-size:0.78rem; padding:5px 12px; font-weight:bold; flex:1; justify-content:center; border:none; cursor:pointer;">
+                  ${isDone ? (isEn ? '✓ Mission Completed [Rule 7.13]' : '✓ Misión Completada [Regla 7.13]') : (isEn ? '🎯 Resolve Special Mission ➔' : '🎯 Resolver Misión Especial ➔')}
+                </button>
+                <button type="button" onclick="switchTab('special-missions')" class="action-btn" style="border-color:#38bdf8; background:rgba(2,132,199,0.2); color:#7dd3fc; font-size:0.75rem; padding:4px 8px; cursor:pointer;" title="${isEn ? 'Open Special Missions Center' : 'Abrir Centro de Misiones Especiales'}">
+                  📋 ${isEn ? 'Tab 8' : 'Pestaña 8'}
+                </button>
+              </div>
+            </div>
+            <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:8px 10px; border-radius:6px; font-size:0.78rem; color:#fde047;">
+              <strong>${isEn ? 'Rule 8.1.8:' : 'Regla 8.1.8:'}</strong> ${isEn ? 'A natural 12 triggers a <em>Random Event [Chart B11]</em> (max 1 per patrol).' : 'Un 12 natural activa un <em>Suceso Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).'}
+            </div>
+          `;
+        } else {
+          c3Dynamic.innerHTML = `
+            <p><strong id="p2-mission-box-label">${isEn ? 'Mission Box:' : 'Casilla de Misión:'}</strong> <span id="p2-mission-box-help">${isEn ? 'The first non-transit box activates the Special Mission:' : 'La primera casilla que no es de tránsito activa la Misión Especial:'}</span></p>
+            <ul style="margin-left:16px; margin-top:4px; font-size:0.86rem; color:var(--slate-400);">
+              <li id="p2-mission-midget">${isEn ? 'Midget Submarines (Maps M1-M7)' : 'Mini-Submarinos (Mapas M1-M7)'}</li>
+              <li id="p2-mission-air">${isEn ? 'Air Reconnaissance (Charts P1-P6)' : 'Reconocimiento Aéreo (Tablas P1-P6)'}</li>
+              <li id="p2-mission-kaiten">${isEn ? 'Kaiten Launch (Maps K2-K3)' : 'Lanzamiento Kaiten (Mapas K2-K3)'}</li>
+              <li id="p2-mission-mine">${isEn ? 'Mining or Tokyo Express Transport' : 'Minado o Transporte Tokio Express'}</li>
+            </ul>
+            <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:8px 10px; border-radius:6px; font-size:0.78rem; color:#fde047;">
+              <strong>${isEn ? 'Rule 8.1.8:' : 'Regla 8.1.8:'}</strong> ${isEn ? 'A natural 12 triggers a <em>Random Event [Chart B11]</em> (max 1 per patrol).' : 'Un 12 natural activa un <em>Suceso Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).'}
+            </div>
+          `;
+        }
+      }
+
       renderRouteBreadcrumbs();
     }
 
     function nextPatrolBox() {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
       const max = campaignState.workflow.boxList.length - 1;
-      if (campaignState.workflow.currentBoxIndex < max) {
-        campaignState.workflow.currentBoxIndex++;
+      const cur = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
+      if (cur < max) {
+        campaignState.workflow.currentBoxIndex = cur + 1;
         if (campaignState.workflow.currentBoxIndex === max) {
           campaignState.workflow.patrolBoxesCompleted = true;
         }
@@ -447,22 +632,23 @@ function recalculatePatrolTrack() {
           if (typeof saveSubBoardState === 'function') saveSubBoardState();
           if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
         }
-        document.getElementById('wf-encounter-roll-res').innerText = "Sin Tirar";
+        document.getElementById('wf-encounter-roll-res').innerText = isEn ? "Unrolled" : "Sin Tirar";
         document.getElementById('btn-engage-combat').style.display = "none";
-        document.getElementById('wf-enc-status-text').innerText = "Listo para tirar en esta casilla.";
+        document.getElementById('wf-enc-status-text').innerText = isEn ? "Ready to roll on this box." : "Listo para tirar en esta casilla.";
         if (typeof updateTrayectoCompletionStatus === 'function') updateTrayectoCompletionStatus();
         saveState();
       } else {
         campaignState.workflow.patrolBoxesCompleted = true;
         if (typeof updateTrayectoCompletionStatus === 'function') updateTrayectoCompletionStatus();
-        showToast("¡Ha completado todas las casillas de trayecto! Retorno a base.");
+        showToast(isEn ? "All patrol boxes completed! Return to base." : "¡Ha completado todas las casillas de trayecto! Retorno a base.");
         setWorkflowPhase(4);
       }
     }
 
     function prevPatrolBox() {
-      if (campaignState.workflow.currentBoxIndex > 0) {
-        campaignState.workflow.currentBoxIndex--;
+      const cur = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
+      if (cur > -1) {
+        campaignState.workflow.currentBoxIndex = cur - 1;
         const max = (campaignState.workflow.boxList.length - 1);
         if (campaignState.workflow.currentBoxIndex < max) {
           campaignState.workflow.patrolBoxesCompleted = false;
@@ -480,14 +666,21 @@ function recalculatePatrolTrack() {
     }
 
     function rollBoxEncounter(manualRoll) {
-      const idx = campaignState.workflow.currentBoxIndex || 0;
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      const idx = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
+      if (idx === -1) {
+        showToast(isEn ? "The submarine is moored in port. Click 'Advance' to set sail on Box 1!" : "El submarino está amarrado en puerto. ¡Pulsa 'Avanzar' para zarpar hacia la Casilla 1!");
+        return;
+      }
       const list = campaignState.workflow.boxList || [];
       const boxName = list[idx] || "Patrulla";
       const isTransit = boxName.includes("Transit") || boxName.includes("Tránsito") || boxName.includes("Return") || boxName.includes("Retorno");
       const isSpecialBox = boxName.includes("Mission") || boxName.includes("Misión");
       
       const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
-      const targetZone = isTransit ? "Transit" : (isSpecialBox ? "Special Mission" : mapA1ToA3Zone(assignedArea));
+      const mappedAreaZone = (typeof mapA1ToA3Zone === 'function') ? mapA1ToA3Zone(assignedArea) : "Pearl Harbor";
+      const useSpecialCol = !!(isSpecialBox && campaignState.workflow.useA3SpecialMissionColumn);
+      const targetZone = isTransit ? "Transit" : (useSpecialCol ? "Special Mission" : mappedAreaZone);
 
       let d1, d2, sum, isManual = false;
       if (typeof manualRoll === 'number' && manualRoll >= 2 && manualRoll <= 12) {
@@ -509,7 +702,6 @@ function recalculatePatrolTrack() {
       const btnCombat = document.getElementById('btn-engage-combat');
       const ppatrolRollEl = document.getElementById('ppatrol-last-roll-display');
 
-      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
       const zoneLabel = isEn ? targetZone : (targetZone === "Transit" ? "Tránsito" : targetZone === "Special Mission" ? "Misión Especial" : targetZone);
 
       if (resEl) {
@@ -600,9 +792,35 @@ function recalculatePatrolTrack() {
         campaignState.workflow.encounterType = "None";
         campaignState.workflow.encounterDetails = isEn ? "Clear sea. No contacts in this sector." : "Mar despejado. Sin contactos en este sector.";
         if (detEl) {
-          detEl.innerHTML = isEn
-            ? `<span style="color:#94a3b8;">🌊 Clear sea. No contacts in this sector. Use <strong>Advance Box ▶</strong> to continue transit.</span>`
-            : `<span style="color:#94a3b8;">🌊 Mar despejado. Sin contactos en este sector. Usa <strong>Avanzar Casilla ▶</strong> para continuar.</span>`;
+          if (isSpecialBox) {
+            detEl.innerHTML = isEn
+              ? `<div style="background:rgba(2,132,199,0.15); border:1px solid #0284c7; border-radius:6px; padding:10px; margin-top:6px;">
+                  <div style="color:#38bdf8; font-weight:800; font-size:0.90rem;">
+                    🎯 Clear approach! No enemy naval interception in this sector.
+                  </div>
+                  <p style="margin:4px 0 8px 0; font-size:0.80rem; color:#cbd5e1;">
+                    Your submarine has reached the target area. Execute your Special Mission using its dedicated tactical tables or claim Rule 7.14 combat patrol credit:
+                  </p>
+                  <button type="button" onclick="triggerSpecialMissionAction()" class="action-btn" style="background:#0284c7; color:#fff; font-weight:bold; border:none; padding:6px 12px; font-size:0.82rem; cursor:pointer;">
+                    🎯 Resolve Special Mission [Rule 7.0 - 7.14] ➔
+                  </button>
+                </div>`
+              : `<div style="background:rgba(2,132,199,0.15); border:1px solid #0284c7; border-radius:6px; padding:10px; margin-top:6px;">
+                  <div style="color:#38bdf8; font-weight:800; font-size:0.90rem;">
+                    🎯 ¡Aproximación limpia! Sin intercepción naval hostil en este sector.
+                  </div>
+                  <p style="margin:4px 0 8px 0; font-size:0.80rem; color:#cbd5e1;">
+                    El submarino ha alcanzado el objetivo. Ejecuta ahora tu Misión Especial en sus tablas tácticas correspondientes o registra el crédito de combate [Regla 7.14]:
+                  </p>
+                  <button type="button" onclick="triggerSpecialMissionAction()" class="action-btn" style="background:#0284c7; color:#fff; font-weight:bold; border:none; padding:6px 12px; font-size:0.82rem; cursor:pointer;">
+                    🎯 Resolver Misión Especial [Reglas 7.0 - 7.14] ➔
+                  </button>
+                </div>`;
+          } else {
+            detEl.innerHTML = isEn
+              ? `<span style="color:#94a3b8;">🌊 Clear sea. No contacts in this sector. Use <strong>Advance Box ▶</strong> to continue transit.</span>`
+              : `<span style="color:#94a3b8;">🌊 Mar despejado. Sin contactos en este sector. Usa <strong>Avanzar Casilla ▶</strong> para continuar.</span>`;
+          }
         }
         if (btnCombat) btnCombat.style.display = "none";
         showToast(isEn ? `🎲 Chart [A3]: 2d6 = ${sum} ➔ No Contact (Clear Sea)` : `🎲 Tabla [A3]: 2d6 = ${sum} ➔ Mar Despejado (Sin Contacto)`);
@@ -1601,6 +1819,59 @@ function recalculatePatrolTrack() {
       showToast(`Avería Ko-Hyoteki: ${desc}`);
     }
 
+    function triggerSpecialMissionAction() {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      const subKey = (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ? currentBoardSubKey : (campaignState.activeSubKey || "Type_B_Class");
+      const sub = ((typeof SUB_DB !== 'undefined' && SUB_DB.submarines) || {})[subKey] || {};
+      const missionLine = (campaignState.workflow && campaignState.workflow.assignedMissionLine) || "";
+      const area = (campaignState.workflow && campaignState.workflow.assignedArea) || "Pearl Harbor";
+
+      const isMidget = missionLine.includes("Midget") || (sub.special_rules && sub.special_rules.includes("Ko-Hyoteki"));
+      const isRecon = missionLine.includes("Recon") || (sub.aircraft && sub.aircraft > 0);
+      const isKaiten = missionLine.includes("Kaiten") || (sub.special_rules && sub.special_rules.includes("Kaiten"));
+
+      if (isMidget) {
+        if (typeof switchTab === 'function') {
+          switchTab('special-missions');
+          setTimeout(() => {
+            if (typeof openSpecialMissionResolver === 'function') openSpecialMissionResolver('midget1');
+          }, 150);
+          showToast(isEn ? "Opening Ko-Hyoteki Midget Submarine Module [Charts M5, M6, M7]" : "Abriendo Módulo de Mini-Submarinos Ko-Hyoteki [Tablas M5, M6, M7]");
+        }
+      } else if (isRecon) {
+        if (typeof switchTab === 'function') {
+          switchTab('special-missions');
+          setTimeout(() => {
+            if (typeof openSpecialMissionResolver === 'function') openSpecialMissionResolver('recon7');
+          }, 150);
+          showToast(isEn ? "Opening Aerial Reconnaissance Module [Charts P1-P6]" : "Abriendo Módulo de Reconocimiento Aéreo [Tablas P1-P6]");
+        }
+      } else if (isKaiten) {
+        if (typeof switchTab === 'function') {
+          switchTab('special-missions');
+          setTimeout(() => {
+            if (typeof openSpecialMissionResolver === 'function') openSpecialMissionResolver('kaiten');
+          }, 150);
+          showToast(isEn ? "Opening Kaiten Tactical Attack Module [Charts K2, K3]" : "Abriendo Módulo de Torpedos Suicidas Kaiten [Tablas K2, K3]");
+        }
+      } else {
+        if (!campaignState.workflow.specialMissionCompleted) {
+          campaignState.workflow.specialMissionCompleted = true;
+          if (typeof recordPatrolInRoguBukku === 'function') {
+            recordPatrolInRoguBukku(2, isEn ? `Major Event Special Mission (${area})` : `Misión Especial Gran Evento (${area})`);
+          }
+        }
+        const msg = isEn
+          ? `⭐ FLEET SPECIAL MISSION COMPLETED!\nSubmarine conducted perimeter combat operations in ${area} [Rule 7.14].\nOfficial Reward: Two (2) successful patrols awarded towards promotions and decorations [Rule 7.13]!`
+          : `⭐ ¡MISIÓN ESPECIAL DE FLOTA COMPLETADA!\nEl submarino ha ejecutado la patrulla de combate perimetral en ${area} [Regla 7.14].\n¡Recompensa Oficial: Dos (2) patrullas exitosas otorgadas para ascensos y condecoraciones [Regla 7.13]!`;
+        alert(msg);
+        showToast(isEn ? "⭐ Rule 7.13: 2 Successful Patrols Awarded!" : "⭐ Regla 7.13: ¡2 Patrullas Exitosas Otorgadas!");
+        if (typeof updateBoxDisplay === 'function') updateBoxDisplay();
+        if (typeof saveState === 'function') saveState();
+      }
+    }
+    window.triggerSpecialMissionAction = triggerSpecialMissionAction;
+
 
 window.addEventListener('DOMContentLoaded', () => {
   if (typeof updateBoxDisplay === 'function') updateBoxDisplay();
@@ -1615,7 +1886,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const isTransit = boxName.includes("Transit") || boxName.includes("Tránsito") || boxName.includes("Return") || boxName.includes("Retorno");
       const isSpecialBox = boxName.includes("Mission") || boxName.includes("Misión");
       const assignedArea = campaignState.workflow.assignedArea || "Yokosuka / Kure";
-      const targetZone = isTransit ? "Transit" : (isSpecialBox ? "Special Mission" : mapA1ToA3Zone(assignedArea));
+      const mappedAreaZone = (typeof mapA1ToA3Zone === 'function') ? mapA1ToA3Zone(assignedArea) : "Yokosuka / Kure";
+      const useSpecialCol = !!(isSpecialBox && campaignState.workflow.useA3SpecialMissionColumn);
+      const targetZone = isTransit ? "Transit" : (useSpecialCol ? "Special Mission" : mappedAreaZone);
       const zoneLabel = isEn
         ? (targetZone === "Special Mission" ? "Special Mission" : (targetZone === "Transit" ? "Transit" : targetZone))
         : (targetZone === "Transit" ? "Tránsito" : targetZone === "Special Mission" ? "Misión Especial" : targetZone);

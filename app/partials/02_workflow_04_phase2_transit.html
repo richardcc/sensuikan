@@ -1,14 +1,20 @@
         <div id="phase-content-2" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>🗺️</span>
-              <span id="p2-title">FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('2: Patrol Transit', '', 'FLOW_2')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span>📋 Guía de Fase</span>
-            </button>
-            <span id="p2-rules-pill" class="rules-ref-pill">[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🗺️</span>
+                <span id="p2-title">FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS</span>
+              </h2>
+              <div id="p2-sub-desc" class="phase-subtitle" data-i18n="p2Subtitle">
+                Navegación secuencial por casillas de tránsito y estación • Contactos de patrulla y encuentros [Tablas A2, A3 / B11]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('2: Patrol Transit', '', 'FLOW_2')" class="action-btn">
+                <span>🗺️</span> <span id="p2-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p2-rules-pill" class="rules-ref-pill">[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]</span>
+            </div>
           </div>
 
           <!-- DYNAMIC PATROL ROUTE TRACK STRIP -->
@@ -52,40 +58,59 @@
               </div>
             </div>
 
-            <!-- Encounter Roll [A3] -->
+            <!-- Encounter Roll [A3] & Port Status [4.7.6] -->
             <div class="flow-card">
               <h4 id="p2-c2-title">2. Tirada de Encuentros en Tabla [A3]</h4>
               <p id="p2-encounter-help" style="font-size:0.80rem; color:var(--slate-300);">Lanza 2d6 en cada casilla de estación o tránsito:</p>
               
-              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px; border-radius:6px; flex-wrap:wrap; gap:8px;">
-                <div>
-                  <div id="p2-roll-result-label" style="font-size:0.84rem; color:var(--slate-400);">Resultado 2d6:</div>
-                  <div id="wf-encounter-roll-res" style="font-size:1.15rem; font-weight:800; color:var(--gold-300);">Sin Tirar</div>
-                </div>
-                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                  <button id="p2-roll-btn" class="btn-dice" onclick="rollBoxEncounter()">🎲 Tirar 2d6 [A3]</button>
-                  <div style="display:flex; align-items:center; gap:4px; background:var(--slate-800); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
-                    <span style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
-                    <select id="sel-manual-a3-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.82rem; padding:2px 4px; border-radius:3px;">
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7" selected>7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </select>
-                    <button type="button" onclick="rollBoxEncounter(parseInt(document.getElementById('sel-manual-a3-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Aplicar tirada física de mesa">Aplicar</button>
+              <div id="p2-a3-controls-wrapper">
+                <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px; border-radius:6px; flex-wrap:wrap; gap:8px;">
+                  <div>
+                    <div id="p2-roll-result-label" style="font-size:0.84rem; color:var(--slate-400);">Resultado 2d6:</div>
+                    <div id="wf-encounter-roll-res" style="font-size:1.15rem; font-weight:800; color:var(--gold-300);">Sin Tirar</div>
                   </div>
+                  <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                    <button id="p2-roll-btn" class="btn-dice" onclick="rollBoxEncounter()">🎲 Tirar 2d6 [A3]</button>
+                    <div style="display:flex; align-items:center; gap:4px; background:var(--slate-800); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
+                      <span style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
+                      <select id="sel-manual-a3-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.82rem; padding:2px 4px; border-radius:3px;">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7" selected>7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                      </select>
+                      <button type="button" onclick="rollBoxEncounter(parseInt(document.getElementById('sel-manual-a3-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Aplicar tirada física de mesa">Aplicar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="wf-encounter-detail-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem; margin-top:8px;">
+                  <strong id="p2-status-label">Estado:</strong> <span id="wf-enc-status-text">Listo para tirar en esta casilla.</span>
                 </div>
               </div>
 
-              <div id="wf-encounter-detail-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem;">
-                <strong id="p2-status-label">Estado:</strong> <span id="wf-enc-status-text">Listo para tirar en esta casilla.</span>
+              <!-- Dedicated Port View (Only shown when currentBoxIndex === -1) -->
+              <div id="p2-port-controls-wrapper" style="display:none; background:rgba(15,23,42,0.85); border:1px solid #0284c7; border-radius:6px; padding:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <span style="font-size:1.4rem;">⚓</span>
+                  <div>
+                    <div id="p2-port-status-title" style="font-weight:800; color:#38bdf8; font-size:0.95rem;">BUQUE AMARRADO EN BASE NAVAL</div>
+                    <div id="p2-port-status-sub" style="font-size:0.75rem; color:#94a3b8;">Sin navegación activa • No aplica Tabla [A3]</div>
+                  </div>
+                </div>
+                <div id="p2-port-status-desc" style="font-size:0.80rem; color:var(--slate-300); line-height:1.45; margin-bottom:12px;">
+                  En puerto <strong>no se aplican encuentros navales (Tabla A3)</strong>. La tripulación se encuentra aprovisionando torpedos, combustible y órdenes de patrulla. La única amenaza operativa contemplada en puerto son las <strong>Incursiones Aéreas [Regla 4.7.6]</strong> (evaluadas durante el Refit a partir de enero de 1944).
+                </div>
+                <button type="button" class="action-btn" onclick="nextPatrolBox()" style="width:100%; justify-content:center; background:linear-gradient(135deg, #0284c7, #0369a1); border-color:#38bdf8; color:#fff; font-weight:800; padding:8px 12px; font-size:0.88rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+                  <span id="p2-btn-sail-text">⚓ Zarpar a la Mar ➔ Iniciar Tránsito 1</span>
+                </button>
               </div>
 
               <!-- Hidden container for backwards-compatibility -->
@@ -95,7 +120,7 @@
             <!-- Special Mission / Random Events -->
             <div class="flow-card">
               <h4 id="p2-c3-title">3. Casilla de Misión y Eventos</h4>
-              <div style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
+              <div id="p2-c3-dynamic-content" style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
                 <p><strong id="p2-mission-box-label">Casilla de Misión:</strong> <span id="p2-mission-box-help">La primera casilla que no es de tránsito activa la Misión Especial:</span></p>
                 <ul style="margin-left:16px; margin-top:4px; font-size:0.86rem; color:var(--slate-400);">
                   <li id="p2-mission-midget">Mini-Submarinos (Mapas M1-M7)</li>
@@ -112,7 +137,7 @@
           </div>
 
           <!-- CHARTS A2 & A3: PATROL AREA & TRANSIT ENCOUNTERS (DIRECTAMENTE EN FASE 2) -->
-          <div style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
+          <div id="p2-a3-main-container" style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
             <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
               <div>
                 <h4 style="margin:0; color:var(--gold-300); font-size:1.05rem; display:flex; align-items:center; gap:8px;">
@@ -121,8 +146,9 @@
                 </h4>
                 <span id="p2-a3-subtitle" style="font-size:0.86rem; color:var(--slate-400);">Tabla de contactos por zona de operaciones. Lanza 2d6 al entrar en cada casilla de patrulla o tránsito.</span>
               </div>
-              <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <span id="p2-current-zone-badge" style="background:#065f46; border:1px solid #10b981; color:#a7f3d0; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.86rem;">Zona Actual: Transit</span>
+                <span id="p2-zone-toggle-btn-container"></span>
                 <button type="button" onclick="rollBoxEncounter()" class="btn-dice" style="padding:6px 14px; font-size:0.82rem;">
                   🎲 Tirar [A3]
                 </button>

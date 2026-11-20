@@ -99,22 +99,22 @@
           <div>
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <h3 style="margin:0; color:#fca5a5; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
-                <span>✈️</span> <span>PROCEDIMIENTO TÁCTICO: ATAQUE AÉREO EN PATRULLA</span>
+                <span>✈️</span> <span id="modal-air-title" data-i18n="modalAirTitle">PROCEDIMIENTO TÁCTICO: ATAQUE AÉREO EN PATRULLA</span>
               </h3>
-              <span style="background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fecaca; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLA OFICIAL 8.3</span>
+              <span id="modal-air-rule-badge" data-i18n="modalAirBadge" style="background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fecaca; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLA OFICIAL 8.3</span>
             </div>
-            <div style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+            <div id="modal-air-subtitle" data-i18n="modalAirSubtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
               Protocolo completo de combate aeronaval: Detección [A3], Inmersión Obligatoria [A4], Defensa Antiaérea [A2], Torpedo FIDO (5/44+) [8.3.3], Bombardeo [B5] y Acoso [8.3.4].
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
-            <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">✕ Cerrar</button>
+            <span id="modal-air-esc-lbl" data-i18n="modalEscClose" style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button id="modal-air-close-btn" type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);"><span id="modal-air-close-btn-lbl" data-i18n="modalBtnClose">✕ Cerrar</span></button>
           </div>
         </div>
 
         <!-- SCROLLABLE CONTENT BODY -->
-        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+        <div id="modal-air-workflow-content" style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
           
           <!-- RESUMEN OPERATIVO -->
           <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
@@ -295,15 +295,15 @@
         <!-- FOOTER ACTIONS -->
         <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(239,68,68,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <button type="button" onclick="openModalViewer('Tablas B1 a B6 (Combate y Ataque Aéreo)', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🎯</span> <span>Ver Tabla [B5] en Visor Oficial</span>
+            <button id="modal-air-b5-btn" type="button" onclick="openModalViewer('Tablas B1 a B6 (Combate y Ataque Aéreo)', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span id="modal-air-b5-lbl" data-i18n="modalAirB5Btn">Ver Tabla [B5] en Visor Oficial</span>
             </button>
-            <button type="button" onclick="openModalViewer('Tabla [B7]: Heridas de Tripulación', '', 'B7')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#f59e0b; color:#fde047; background:rgba(245,158,11,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🩸</span> <span>Ver Tabla [B7]</span>
+            <button id="modal-air-b7-btn" type="button" onclick="openModalViewer('Tabla [B7]: Heridas de Tripulación', '', 'B7')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#f59e0b; color:#fde047; background:rgba(245,158,11,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🩸</span> <span id="modal-air-b7-lbl" data-i18n="modalAirB7Btn">Ver Tabla [B7]</span>
             </button>
           </div>
-          <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#1e293b; border-color:#64748b; color:#e2e8f0; font-weight:bold;">
-            <span>✓</span> <span>Entendido (Cerrar)</span>
+          <button id="modal-air-ack-btn" type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#1e293b; border-color:#64748b; color:#e2e8f0; font-weight:bold;">
+            <span>✓</span> <span id="modal-air-ack-lbl" data-i18n="modalBtnAck">Entendido (Cerrar)</span>
           </button>
         </div>
 
@@ -321,22 +321,22 @@
           <div>
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <h3 style="margin:0; color:#a7f3d0; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
-                <span>🚢</span> <span id="modal-ship-title">PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA</span>
+                <span>🚢</span> <span id="modal-ship-title" data-i18n="modalShipTitle">PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA</span>
               </h3>
-              <span id="modal-ship-rule-badge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#a7f3d0; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLAS OFICIALES 8.1 - 8.2</span>
+              <span id="modal-ship-rule-badge" data-i18n="modalShipBadge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#a7f3d0; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLAS OFICIALES 8.1 - 8.2</span>
             </div>
-            <div id="modal-ship-subtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+            <div id="modal-ship-subtitle" data-i18n="modalShipSubtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
               Protocolo completo de combate de superficie y submarino: Detección [A3/T1-T5], Modo y Distancia [8.1.3-8.1.10], Solución de Torpedos [B1/B2/B3], Daño al Objetivo [B4] y Contraataque de Escoltas [B5].
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
-            <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.2);">✕ Cerrar</button>
+            <span id="modal-ship-esc-lbl" data-i18n="modalEscClose" style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button id="modal-ship-close-btn" type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.2);"><span id="modal-ship-close-btn-lbl" data-i18n="modalBtnClose">✕ Cerrar</span></button>
           </div>
         </div>
 
         <!-- SCROLLABLE CONTENT BODY -->
-        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+        <div id="modal-ship-workflow-content" style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
           
           <!-- RESUMEN OPERATIVO -->
           <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-left:4px solid #10b981; border-radius:6px; padding:10px 14px; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
@@ -521,15 +521,15 @@
         <!-- FOOTER ACTIONS -->
         <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(16,185,129,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <button type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🎯</span> <span>Ver Tablas B1–B6</span>
+            <button id="modal-ship-b1b6-btn" type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span id="modal-ship-b1b6-lbl" data-i18n="modalShipB1B6Btn">Ver Tablas B1–B6</span>
             </button>
-            <button type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:var(--gold-500); color:var(--gold-300); background:rgba(202,138,4,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🗺️</span> <span>Carta de Secuencia</span>
+            <button id="modal-ship-flow-btn" type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:var(--gold-500); color:var(--gold-300); background:rgba(202,138,4,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🗺️</span> <span id="modal-ship-flow-lbl" data-i18n="modalShipSeqBtn">Carta de Secuencia</span>
             </button>
           </div>
-          <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
-            <span>✓</span> <span>Entendido (Cerrar)</span>
+          <button id="modal-ship-ack-btn" type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
+            <span>✓</span> <span id="modal-ship-ack-lbl" data-i18n="modalBtnAck">Entendido (Cerrar)</span>
           </button>
         </div>
 

@@ -1,0 +1,102 @@
+<!-- ====================================================================
+     WORKFLOW PHASE 7.14: CRONOLOGÍA DE MAYORES EVENTOS HISTÓRICOS
+     Las 28 Fichas Oficiales de Eventos Mayores de Sensuikan (1941–1945)
+     ==================================================================== -->
+<div id="phase-content-major-events" class="phase-body">
+  <div id="tab-major-events">
+    <!-- Toolbar: Título y Filtros de Mayores Eventos -->
+    <div class="phase-header-banner">
+      <div class="phase-header-info">
+        <h2>
+          <span class="phase-header-icon">🚩</span>
+          <span id="lbl-major-events-title">MAYORES EVENTOS: CRONOLOGÍA HISTÓRICA IJN [REGLA 7.14]</span>
+        </h2>
+        <div id="lbl-major-events-sub" class="phase-subtitle" data-i18n="pMajorEventsSubtitle">
+          28 Fichas Oficiales de Eventos Mayores • Asignación Prioritaria de Misiones según Fecha y Teatro Naval
+        </div>
+      </div>
+
+      <!-- Acciones Rápidas -->
+      <div class="phase-header-actions">
+        <span class="rules-ref-pill" style="border-color:#ef4444; color:#fca5a5;">
+          [Regla 7.14 • 28 Fichas Históricas]
+        </span>
+        <button type="button" id="btn-toggle-event-chits-flip" class="action-btn" onclick="toggleMajorEventsFlip()" style="border-color:var(--gold-500); color:var(--gold-300);" title="Alterna entre la cara roja (Anverso Histórico) y la cara blanca (Reverso con Misiones Especiales)">
+          <span>🔄</span> <span id="lbl-major-events-flip-btn" data-i18n="pMajorFlipBtn">Voltear Fichas</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('special-missions')" style="border-color:#22c55e; color:#86efac;">
+          <span>🎯</span> <span id="lbl-major-to-spec-btn" data-i18n="pMajorToSpecMissions">Misiones Especiales ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Filtros Multifunción -->
+    <div style="background:rgba(30,41,59,0.7); border:1px solid #334155; border-radius:8px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <!-- Filtros de Año -->
+      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <span style="font-size:0.78rem; color:#94a3b8; font-weight:bold; margin-right:4px;">AÑO:</span>
+        <button type="button" class="action-btn event-filter-year active" onclick="filterMajorEventsByYear('all', this)" style="padding:3px 9px; font-size:0.75rem;">TODOS</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1941', this)" style="padding:3px 9px; font-size:0.75rem;">1941</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1942', this)" style="padding:3px 9px; font-size:0.75rem;">1942</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1943', this)" style="padding:3px 9px; font-size:0.75rem;">1943</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1944', this)" style="padding:3px 9px; font-size:0.75rem;">1944</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1945', this)" style="padding:3px 9px; font-size:0.75rem;">1945</button>
+      </div>
+
+      <!-- Filtro de Teatro / Zona y Botón Mes Actual -->
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <select id="event-filter-zone-select" onchange="filterMajorEventsByZone(this.value)" style="background:#0f172a; color:#f8fafc; border:1px solid #475569; padding:4px 8px; border-radius:4px; font-size:0.78rem;">
+          <option value="all">Todas las Zonas Navales</option>
+          <option value="Pearl Harbor">Pearl Harbor</option>
+          <option value="Marshall">Marshall</option>
+          <option value="Midway">Midway</option>
+          <option value="Aleutians">Aleutians</option>
+          <option value="Solomon">Solomons / Guadalcanal</option>
+          <option value="Mariana">Marianas / Filipinas</option>
+          <option value="Japan">Japan / Iwo Jima / Okinawa</option>
+        </select>
+        <button type="button" class="action-btn" onclick="filterMajorEventsToCurrentCampaign()" style="font-size:0.78rem; padding:4px 10px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; font-weight:bold; border:none;" title="Filtra los eventos que coinciden con la fecha actual de tu campaña">
+          📅 Mes Actual de Campaña
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel Informativo de Asignación de Misión por Evento Mayor -->
+    <div id="major-event-active-banner" style="background:rgba(239,68,68,0.12); border:1px solid #ef4444; border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">⚡</span>
+          <div>
+            <strong style="color:#fca5a5; font-size:0.88rem; display:block;">REGLA 7.14: EVENTOS MAYORES EN TU FECHA DE PATRULLA</strong>
+            <span id="major-event-active-msg" style="font-size:0.80rem; color:#fecaca;">
+              Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. Si estás en la zona indicada, consulta el reverso para determinar si tu submarino participa en la misión histórica.
+            </span>
+          </div>
+        </div>
+        <button type="button" id="btn-apply-campaign-event" class="action-btn" onclick="assignActiveCampaignEventMission()" style="background:#ef4444; color:#fff; font-weight:bold; border:none; padding:6px 12px; font-size:0.80rem; box-shadow:0 2px 6px rgba(239,68,68,0.4);">
+          ⭐ Asignar a Patrulla Actual
+        </button>
+      </div>
+    </div>
+
+    <!-- Catálogo de las 28 Fichas de Eventos Mayores (Grid) -->
+    <div id="major-events-chits-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px;">
+      <!-- Rellenado dinámicamente por major_events.js -->
+    </div>
+
+    <!-- Navegación Inferior de Fase -->
+    <div class="action-bar-nav" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:14px; border-top:1px solid #334155;">
+      <button type="button" class="action-btn" onclick="setWorkflowPhase('special-missions')" style="padding:8px 16px;">
+        <span>← Ver Misiones Especiales</span>
+      </button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="padding:8px 16px; background:rgba(30,41,59,0.8);">
+          <span>Fase 1: Zarpe</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(2)" style="padding:8px 16px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;">
+          <span>Continuar a Fase 2: Trayecto ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

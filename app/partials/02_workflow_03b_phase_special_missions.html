@@ -1,0 +1,109 @@
+<!-- ====================================================================
+     WORKFLOW PHASE 7.1-7.13: CENTRO DE MISIONES ESPECIALES
+     Misiones Estratégicas y Operaciones Especiales de la Flota Imperial
+     ==================================================================== -->
+<div id="phase-content-special-missions" class="phase-body">
+  <div id="tab-special-missions">
+    <!-- Toolbar: Título y Control de Misiones Especiales -->
+    <div class="phase-header-banner">
+      <div class="phase-header-info">
+        <h2>
+          <span class="phase-header-icon">🎯</span>
+          <span id="lbl-spec-missions-title">MISIONES ESPECIALES: OPERACIONES ESTRATÉGICAS IJN [REGLAS 7.1 - 7.13]</span>
+        </h2>
+        <div id="lbl-spec-missions-sub" class="phase-subtitle" data-i18n="pSpecMissionsSubtitle">
+          Infiltración Ko-Hyoteki, Vuelos Glen/Seiran, Líneas de Piquete, Misión Yanagi a Europa, Ataques Kaiten y Minado
+        </div>
+      </div>
+
+      <!-- Regla Oficial 7.13 Badge & Navegación -->
+      <div class="phase-header-actions">
+        <span id="spec-missions-rules-pill" class="rules-ref-pill" title="Regla Oficial 7.13">
+          ⭐ Regla 7.13: Misión Especial = 2 Patrullas
+        </span>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="border-color:#38bdf8; color:#7dd3fc;">
+          <span>⚓</span> <span id="spec-missions-back-btn" data-i18n="pSpecBackSortie">Volver a Zarpe (F1)</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('major-events')" style="border-color:#ef4444; color:#fca5a5;">
+          <span>🚩</span> <span id="spec-missions-to-major-btn" data-i18n="pSpecToMajorEvents">Mayores Eventos [7.14] ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel Resumen del Submarino Activo y Capacidades Operativas -->
+    <div id="spec-sub-capabilities-panel" style="background:rgba(30,41,59,0.7); border:1px solid #475569; border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid #334155; padding-bottom:8px; margin-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:1.2rem;">🚢</span>
+          <div>
+            <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;" data-i18n="specSubCommissionedLabel">Buque Comisionado Activo</span>
+            <h4 id="spec-active-sub-name" style="margin:0; color:#f8fafc; font-size:1.02rem; font-family:'Cinzel', serif;">--</h4>
+          </div>
+        </div>
+        <div id="spec-active-sub-badges" style="display:flex; gap:6px; flex-wrap:wrap;">
+          <!-- Se rellena dinámicamente con badges (Avión, Minisub, Kaiten, Minas, Gran Radio) -->
+        </div>
+      </div>
+      <div id="spec-active-sub-desc" style="font-size:0.80rem; color:#cbd5e1; line-height:1.4;">
+        Selecciona una misión especial a continuación para comprobar si tu buque está equipado para ejecutarla y simular su resolución táctica.
+      </div>
+    </div>
+
+    <!-- Contenedor Principal: Selector de Misiones (Grid de Tarjetas) -->
+    <div id="spec-missions-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px; margin-bottom:20px;">
+      <!-- Las tarjetas de misiones se renderizan dinámicamente por JS o estáticas bilingües -->
+    </div>
+
+    <!-- Modal / Drawer Interactivo de Resolución de Misión Especial -->
+    <div id="spec-mission-resolver-panel" style="display:none; background:#0f172a; border:2px solid var(--gold-500); border-radius:8px; padding:16px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.6);">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="spec-res-icon" style="font-size:1.4rem;">🎯</span>
+          <div>
+            <h3 id="spec-res-title" style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; color:var(--gold-300);">RESOLUCIÓN DE MISIÓN</h3>
+            <span id="spec-res-rule" style="font-size:0.75rem; color:#94a3b8;">Regla Oficial Sensuikan</span>
+          </div>
+        </div>
+        <button type="button" class="btn-dice" onclick="closeSpecialMissionResolver()" style="padding:4px 10px; font-size:0.78rem;">✕ Cerrar</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start;">
+        <!-- Columna Izquierda: Instrucciones y Modificadores -->
+        <div>
+          <div id="spec-res-briefing" style="font-size:0.82rem; color:#cbd5e1; margin-bottom:12px; line-height:1.45; background:rgba(30,41,59,0.5); padding:10px; border-radius:6px; border-left:3px solid var(--gold-500);"></div>
+          <div id="spec-res-controls" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <!-- Columna Derecha: Resultado Interactivo y Concesión de Recompensa -->
+        <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:12px;">
+          <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:6px; text-transform:uppercase;">Resultado Táctico de la Misión</div>
+          <div id="spec-res-output" style="min-height:70px; background:#020617; border:1px dashed #475569; border-radius:4px; padding:10px; font-size:0.84rem; color:#e2e8f0; line-height:1.4; margin-bottom:12px;">
+            Pulsa el botón de tirada para resolver la misión según sus tablas oficiales.
+          </div>
+          <div id="spec-res-reward-box" style="display:none; background:rgba(34,197,94,0.15); border:1px solid #22c55e; border-radius:6px; padding:10px; text-align:center;">
+            <strong style="color:#86efac; font-size:0.88rem; display:block; margin-bottom:4px;">🎉 ¡MISIÓN ESPECIAL COMPLETADA CON ÉXITO!</strong>
+            <span style="font-size:0.78rem; color:#cbd5e1; display:block; margin-bottom:8px;">Regla 7.13: Se otorgan 2 Patrullas Exitosas para condecoraciones y promociones.</span>
+            <button type="button" id="btn-claim-spec-reward" class="action-btn" onclick="claimSpecialMissionReward()" style="background:#22c55e; color:#0f172a; font-weight:bold; border:none; padding:6px 14px; font-size:0.82rem; box-shadow:0 2px 6px rgba(34,197,94,0.4);">
+              ⭐ Registrar 2 Patrullas en Rogu Bukku [Regla 7.13]
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación Inferior de Fase -->
+    <div class="action-bar-nav" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:14px; border-top:1px solid #334155;">
+      <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="padding:8px 16px;">
+        <span>← Volver a Fase 1: Zarpe</span>
+      </button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('major-events')" style="padding:8px 16px; background:rgba(239,68,68,0.2); border-color:#ef4444; color:#fca5a5;">
+          <span>🚩 Mayores Eventos [7.14] ➔</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(2)" style="padding:8px 16px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;">
+          <span>Continuar a Fase 2: Trayecto ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

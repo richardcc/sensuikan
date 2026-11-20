@@ -9,7 +9,7 @@ let boardDisplayMode = "paper"; // "paper" or "3d"
 
 let subBoardState = {
   activeSubKey: null,
-  patrolIndex: 0,
+  patrolIndex: -1, // -1 = Moored in Port (En Puerto [slot-base-port])
   flooding: 0,
   hullDamage: 0,
   crew: {
@@ -329,7 +329,13 @@ const SUB_COUNTER_CHITS = {
   "Sen_Toku_Class": "Submarine - Sen-Toku.jpg",
   "Sen_Taka_Class": "Submarine - Sen-Taka.jpg",
   "Type_C3_Class": "Submarine - Type C.3.jpg",
-  "Type_A_Midget_Submarine___Ko_Hyoteki": "Submarine - Midget.jpg"
+  "Type_A_Midget_Submarine___Ko_Hyoteki": "Submarine - Midget.jpg",
+  "Type_B2_Class": "Submarine - Type B.2.jpg",
+  "Type_C2_Class": "Submarine - Type C.2.jpg",
+  "Type_A2_Class": "Submarine - Type A.2.jpg",
+  "Type_D1_Class": "Submarine - Type D.1.jpg",
+  "Kaichu_VII_Class": "Submarine - Kaichu VII.jpg",
+  "Junsen_J1_Class": "Submarine - Junsen J1.jpg"
 };
 
 const TORPEDO_CHIT_MAP = {
@@ -472,6 +478,42 @@ const SUB_SYSTEMS_MAP = {
     "Propeller", "Electric Motor", "Horiz. Rudder", "Vertical Rudder",
     "Radio", "Hydrophones", "Periscope", null,
     null, null, null, null
+  ],
+  "Type_B2_Class": [
+    "Radio", "Dive Planes", "Hangar", "Crane",
+    "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
+    "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+    "Batteries", "Periscope", null, null
+  ],
+  "Type_C2_Class": [
+    "Type 22 Radar", null, "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+    "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
+    "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+    "Batteries", "Periscope", null, null
+  ],
+  "Type_A2_Class": [
+    "Type 22 Radar", "Crane", "Hangar", "F. Torp. Doors (Odd)",
+    "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1",
+    "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
+    "Hydrophones", "Batteries", "Periscope", null
+  ],
+  "Type_D1_Class": [
+    "Cargo", null, "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
+    "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
+    "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
+    "Batteries", "Periscope", null, null
+  ],
+  "Kaichu_VII_Class": [
+    "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
+    "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
+    "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
+    null, null, null, null
+  ],
+  "Junsen_J1_Class": [
+    "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
+    "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
+    "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
+    "Periscope", null, null, null
   ]
 };
 
@@ -723,7 +765,13 @@ const SUB_CLASS_NAMES_ES = {
   "Sen_Toku_Class": "Clase Sen-Toku I-400 (Submarino Portaaviones Gigante)",
   "Sen_Taka_Class": "Clase Sen-Taka I-201 (Submarino de Alta Velocidad)",
   "Type_C3_Class": "Clase Tipo C-3 (Submarino de Transporte de Carga I-52)",
-  "Type_A_Midget_Submarine___Ko_Hyoteki": "Tipo A Midget / Ko-Hyoteki (Sumergible Especial)"
+  "Type_A_Midget_Submarine___Ko_Hyoteki": "Tipo A Midget / Ko-Hyoteki (Sumergible Especial)",
+  "Type_B2_Class": "Clase Type B2 (Crucero Submarino Serie I-40)",
+  "Type_C2_Class": "Clase Type C2 (Submarino Ataque Pesado Serie I-46)",
+  "Type_A2_Class": "Clase Type A2 (Submarino Portaaviones Seiran Serie I-13)",
+  "Type_D1_Class": "Clase Type D1 (Submarino Transporte y Kaiten Serie I-361)",
+  "Kaichu_VII_Class": "Clase Kaichu VII (Submarino Medio Flotilla Serie Ro-35)",
+  "Junsen_J1_Class": "Clase Junsen J1 (Crucero Doble Cañón 140mm Serie I-1)"
 };
 
 const SUB_CLASS_NAMES_EN = {
@@ -744,7 +792,13 @@ const SUB_CLASS_NAMES_EN = {
   "Sen_Toku_Class": "Sen-Toku I-400 Class (Giant Carrier Submarine)",
   "Sen_Taka_Class": "Sen-Taka I-201 Class (High-Speed Submarine)",
   "Type_C3_Class": "Type C-3 Class (Long-Range Cargo Submarine I-52)",
-  "Type_A_Midget_Submarine___Ko_Hyoteki": "Type A Midget / Ko-Hyoteki (Special Attack Submersible)"
+  "Type_A_Midget_Submarine___Ko_Hyoteki": "Type A Midget / Ko-Hyoteki (Special Attack Submersible)",
+  "Type_B2_Class": "Type B2 Class (Cruiser Submarine I-40 Series)",
+  "Type_C2_Class": "Type C2 Class (Heavy Attack Submarine I-46 Series)",
+  "Type_A2_Class": "Type A2 Class (Seiran Carrier Submarine I-13 Series)",
+  "Type_D1_Class": "Type D1 Class (Transport & Kaiten Submarine I-361 Series)",
+  "Kaichu_VII_Class": "Kaichu VII Class (Medium Fleet Submarine Ro-35 Series)",
+  "Junsen_J1_Class": "Junsen J1 Class (Twin 140mm Guns Cruiser Submarine I-1 Series)"
 };
 
 function initSubBoard() {
@@ -821,7 +875,7 @@ function populateBoardSubSelect() {
   const sel = document.getElementById('board-sub-select');
   if (!sel) return;
   const isEn = (window.currentLang === 'en');
-  const names = isEn ? SUB_CLASS_NAMES_EN : SUB_CLASS_NAMES_ES;
+  const subs = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines : {};
 
   sel.innerHTML = '';
   const placeholderOpt = document.createElement('option');
@@ -830,13 +884,38 @@ function populateBoardSubSelect() {
   if (!currentBoardSubKey) placeholderOpt.selected = true;
   sel.appendChild(placeholderOpt);
 
-  for (const [k, name] of Object.entries(names)) {
+  const officialGroup = document.createElement('optgroup');
+  officialGroup.label = isEn ? "⚓ Official Submarines (Compass Games)" : "⚓ Submarinos Oficiales (Compass Games)";
+
+  const fanmadeGroup = document.createElement('optgroup');
+  fanmadeGroup.label = isEn ? "⭐ Real Historical Variants [Fanmade]" : "⭐ Variantes Históricas Reales [Fanmade]";
+
+  for (const [k, sub] of Object.entries(subs)) {
     const opt = document.createElement('option');
     opt.value = k;
-    opt.textContent = name;
+    const isFan = !!sub.is_fanmade;
+    
+    let label = isEn 
+      ? (SUB_CLASS_NAMES_EN[k] || sub.full_title || sub.class_name)
+      : (SUB_CLASS_NAMES_ES[k] || sub.full_title || sub.class_name);
+    
+    if (isFan && !label.includes('[Fanmade]')) {
+      label += " [Fanmade]";
+    }
+    opt.textContent = label;
+    if (isFan) opt.style.color = '#fbbf24';
     if (k === currentBoardSubKey) opt.selected = true;
-    sel.appendChild(opt);
+
+    if (isFan) {
+      fanmadeGroup.appendChild(opt);
+    } else {
+      officialGroup.appendChild(opt);
+    }
   }
+
+  if (officialGroup.children.length > 0) sel.appendChild(officialGroup);
+  if (fanmadeGroup.children.length > 0) sel.appendChild(fanmadeGroup);
+  sel.value = currentBoardSubKey || "";
 }
 
 function changeBoardSubmarine(subKey) {
@@ -852,6 +931,7 @@ function changeBoardSubmarine(subKey) {
   }
 
   currentBoardSubKey = subKey;
+  const subChanged = (subBoardState.activeSubKey !== subKey);
   if (typeof window !== 'undefined') window.currentBoardSubKey = subKey;
   subBoardState.activeSubKey = subKey;
 
@@ -861,28 +941,62 @@ function changeBoardSubmarine(subKey) {
     subBoardState.patrolIndex = Math.max(-1, maxPatrolBoxes - 1);
   }
 
-  // Ensure tubes and reloads are fully loaded and allocated for the commissioned submarine
-  if (!subBoardState.tubes) subBoardState.tubes = {};
-  if (!subBoardState.reloads) subBoardState.reloads = {};
-  for (let i = 1; i <= 8; i++) subBoardState.tubes[i] = true;
-  for (let i = 1; i <= 16; i++) subBoardState.reloads[i] = true;
-  subBoardState.reloads['aft_1'] = true;
-  subBoardState.reloads['aft_2'] = true;
+  // Ensure tubes and reloads exist (initialize fresh ONLY if sub changed or uninitialized)
+  if (!subBoardState.tubes || Object.keys(subBoardState.tubes).length === 0 || subChanged) {
+    subBoardState.tubes = {};
+    const cfg = getSubmarineArmamentConfig(subKey);
+    for (let i = 1; i <= 8; i++) subBoardState.tubes[i] = (i <= (cfg.fwdTubes + cfg.aftTubes));
+  }
+  if (!subBoardState.reloads || Object.keys(subBoardState.reloads).length === 0 || subChanged) {
+    subBoardState.reloads = {};
+    for (let i = 1; i <= 16; i++) subBoardState.reloads[i] = true;
+    subBoardState.reloads['aft_1'] = true;
+    subBoardState.reloads['aft_2'] = true;
+  }
 
   const alloc = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.torpedoAllocation)
     ? campaignState.workflow.torpedoAllocation
     : (subBoardState.torpedoAllocation || { fwdT92: 4, aftT92: 2 });
   applyTorpedoAllocation(alloc.fwdT92 !== undefined ? alloc.fwdT92 : 4, alloc.aftT92 !== undefined ? alloc.aftT92 : 2);
 
+  const defHull = (typeof getDefaultHullForSubmarine === 'function')
+    ? getDefaultHullForSubmarine(subKey)
+    : 'I-19';
+
   // Sync to campaignState and dock if needed
-  if (typeof campaignState !== 'undefined' && campaignState.activeSubKey !== subKey) {
+  if (typeof campaignState !== 'undefined') {
     campaignState.activeSubKey = subKey;
+    if (campaignState.workflow) {
+      campaignState.workflow.hullNumber = defHull;
+    }
     if (typeof saveState === 'function') saveState();
   }
 
   // Sync dock and phase 0 UI controls if active
   const selClass = document.getElementById('wf-sub-class-select');
   if (selClass && selClass.value !== subKey) selClass.value = subKey;
+
+  const hullInput = document.getElementById('wf-sub-hull-number');
+  if (hullInput) hullInput.value = defHull;
+
+  // Sync Phase 0 specs & views immediately
+  if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
+  if (typeof buildWorkflowMonthSelect === 'function') buildWorkflowMonthSelect();
+  if (typeof updateSchoolEquipDisplay === 'function') updateSchoolEquipDisplay();
+  if (typeof updateBasesForDate === 'function') {
+    const m = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.selectedMonth)
+      ? campaignState.workflow.selectedMonth
+      : "1941-12";
+    updateBasesForDate(m);
+  }
+  if (typeof updateSpecialEventsForMonthArea === 'function') updateSpecialEventsForMonthArea();
+  if (typeof renderMissionChits === 'function') renderMissionChits();
+
+  // Sync Rogu Bukku & Commander Dossier & Dock preview
+  if (typeof updateRoguBukkuSubProfile === 'function') updateRoguBukkuSubProfile();
+  if (typeof renderSubmarinePatrolTrack === 'function') renderSubmarinePatrolTrack(subKey);
+  if (typeof renderCommanderDossier === 'function') renderCommanderDossier();
+
   document.querySelectorAll('.sub-select-btn').forEach(el => el.classList.remove('active'));
   const activeBtn = document.getElementById('btn-sub-' + subKey);
   if (activeBtn) activeBtn.classList.add('active');
@@ -977,10 +1091,23 @@ function renderSubBoard() {
     placeholder.style.display = 'none';
   }
 
-  // 1. Update Card Image
+  // 1. Update Card Image with asset resolution & resilient fallback
   if (bgImg) {
     bgImg.style.display = 'block';
-    bgImg.src = `assets/submarines_cards/${currentBoardSubKey}_${langSuffix}.webp`;
+    const subObj = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines[currentBoardSubKey] : null;
+    const baseKey = (subObj && subObj.base_card_key) ? subObj.base_card_key : currentBoardSubKey;
+    const primaryRaw = `assets/submarines_cards/${currentBoardSubKey}_${langSuffix}.webp`;
+    const fallbackRaw = `assets/submarines_cards/${baseKey}_${langSuffix}.webp`;
+    const primarySrc = (typeof resolveAsset === 'function') ? resolveAsset(primaryRaw) : primaryRaw;
+    const fallbackSrc = (typeof resolveAsset === 'function') ? resolveAsset(fallbackRaw) : fallbackRaw;
+
+    bgImg.onerror = function() {
+      if (this.src !== fallbackSrc) {
+        console.warn(`[SubBoard] Failed to load card for ${currentBoardSubKey}, falling back to ${baseKey}`);
+        this.src = fallbackSrc;
+      }
+    };
+    bgImg.src = primarySrc;
   }
 
   // Ensure patrolIndex does not exceed submarine's active patrol track
@@ -1037,6 +1164,7 @@ function renderInteractiveSlots() {
 
     container.innerHTML = '';
     container.appendChild(fragment);
+    if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
   } else {
     container.innerHTML = '';
   }
@@ -1060,21 +1188,30 @@ const CARD_ARMAMENT_CFG = {
   "Sen_Toku_Class": { fwdTubes: 8, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true },
   "Sen_Taka_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false },
   "Type_C3_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false },
-  "Type_A_Midget_Submarine___Ko_Hyoteki": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false }
+  "Type_A_Midget_Submarine___Ko_Hyoteki": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false },
+  "Type_B2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 11, hasAircraft: true },
+  "Type_C2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false },
+  "Type_A2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: true },
+  "Type_D1_Class": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false },
+  "Kaichu_VII_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false },
+  "Junsen_J1_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 14, hasAircraft: false }
 };
 
 function getSubmarineArmamentConfig(subKey) {
-  if (subKey && CARD_ARMAMENT_CFG[subKey]) {
-    return CARD_ARMAMENT_CFG[subKey];
-  }
   if (!subKey) return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false };
   const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines[subKey] : null;
-  const fwdTubes = subData && subData.torpedo_tubes ? (subData.torpedo_tubes.fwd || 0) : 6;
-  const aftTubes = subData && subData.torpedo_tubes ? (subData.torpedo_tubes.aft || 0) : 2;
-  const fwdReloads = subData && (subData.reload_capacity || (subData.torpedo_tubes && subData.torpedo_tubes.reloads_fwd)) ? (subData.reload_capacity || subData.torpedo_tubes.reloads_fwd) : 8;
-  const aftReloads = subData && subData.torpedo_tubes && subData.torpedo_tubes.reloads_aft ? subData.torpedo_tubes.reloads_aft : (aftTubes > 0 ? 2 : 0);
-  const hasAircraft = subData ? !!subData.has_aircraft : false;
-  return { fwdTubes, aftTubes, aftReloads, fwdReloads, hasAircraft };
+  if (subData) {
+    const fwdTubes = subData.torpedo_tubes ? (typeof subData.torpedo_tubes.fwd === 'number' ? subData.torpedo_tubes.fwd : (subData.torpedo_tubes.bow || 0)) : (CARD_ARMAMENT_CFG[subKey]?.fwdTubes || 6);
+    const aftTubes = subData.torpedo_tubes ? (typeof subData.torpedo_tubes.aft === 'number' ? subData.torpedo_tubes.aft : (subData.torpedo_tubes.stern || 0)) : (CARD_ARMAMENT_CFG[subKey]?.aftTubes || 0);
+    const fwdReloads = (typeof subData.reload_capacity === 'number') ? subData.reload_capacity : ((subData.torpedo_tubes && typeof subData.torpedo_tubes.reloads_fwd === 'number') ? subData.torpedo_tubes.reloads_fwd : (CARD_ARMAMENT_CFG[subKey]?.fwdReloads || 0));
+    const aftReloads = (subData.torpedo_tubes && typeof subData.torpedo_tubes.reloads_aft === 'number') ? subData.torpedo_tubes.reloads_aft : (CARD_ARMAMENT_CFG[subKey]?.aftReloads || (aftTubes > 0 ? 2 : 0));
+    const hasAircraft = (typeof subData.has_aircraft === 'boolean') ? subData.has_aircraft : !!(CARD_ARMAMENT_CFG[subKey]?.hasAircraft);
+    return { fwdTubes, aftTubes, aftReloads, fwdReloads, hasAircraft };
+  }
+  if (CARD_ARMAMENT_CFG[subKey]) {
+    return CARD_ARMAMENT_CFG[subKey];
+  }
+  return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false };
 }
 
 function getSubmarinePatrolBoxCount(subKey) {
@@ -1102,7 +1239,13 @@ function getSubmarinePatrolBoxCount(subKey) {
     "Sen_Toku_Class": 9,
     "Sen_Taka_Class": 6,
     "Type_C3_Class": 7,
-    "Type_A_Midget_Submarine___Ko_Hyoteki": 5
+    "Type_A_Midget_Submarine___Ko_Hyoteki": 5,
+    "Type_B2_Class": 6,
+    "Type_C2_Class": 6,
+    "Type_A2_Class": 8,
+    "Type_D1_Class": 6,
+    "Kaichu_VII_Class": 6,
+    "Junsen_J1_Class": 8
   };
   return classBoxCounts[subKey] || 6;
 }
@@ -1134,7 +1277,13 @@ function getSubmarineDamageCapacity(subKey) {
     "Sen_Toku_Class": { flooding: 8, hull: 8 },
     "Sen_Taka_Class": { flooding: 6, hull: 6 },
     "Type_C3_Class": { flooding: 8, hull: 8 },
-    "Type_A_Midget_Submarine___Ko_Hyoteki": { flooding: 2, hull: 2 }
+    "Type_A_Midget_Submarine___Ko_Hyoteki": { flooding: 2, hull: 2 },
+    "Type_B2_Class": { flooding: 8, hull: 8 },
+    "Type_C2_Class": { flooding: 8, hull: 8 },
+    "Type_A2_Class": { flooding: 8, hull: 8 },
+    "Type_D1_Class": { flooding: 7, hull: 7 },
+    "Kaichu_VII_Class": { flooding: 6, hull: 6 },
+    "Junsen_J1_Class": { flooding: 8, hull: 8 }
   };
   return capacities[subKey] || { flooding: 7, hull: 7 };
 }
@@ -1454,9 +1603,9 @@ function decorateAndBindSlot(el, slot) {
   else if (slot.category === 'crew') {
     const crewId = id.replace('slot-crew-', '');
     const subObj = (SUB_DB.submarines && SUB_DB.submarines[currentBoardSubKey]) ? SUB_DB.submarines[currentBoardSubKey] : null;
-    const crewCount = subObj ? (subObj.crew_counters ?? (currentBoardSubKey === 'Type_C3_Class' ? 5 : 4)) : (currentBoardSubKey === 'Type_C3_Class' ? 5 : 4);
+    const crewCount = (subObj && typeof subObj.crew_counters === 'number') ? subObj.crew_counters : 4;
     const hasAir = subObj ? !!subObj.has_aircraft : false;
-    const isMidget = (currentBoardSubKey === 'Type_A_Midget_Submarine___Ko_Hyoteki');
+    const isMidget = !!(subObj && subObj.is_midget_sub);
 
     if (crewId === 'quality') {
       const q = subBoardState.crewQuality || 'trained';
@@ -1636,7 +1785,7 @@ function decorateAndBindSlot(el, slot) {
       const tubeNum = parseInt(match[1]);
       const cfg = getSubmarineArmamentConfig(currentBoardSubKey);
       if (tubeNum > cfg.fwdTubes) {
-        // Inactive forward tube on this submarine! 100% clean, let PDF card show through!
+        // Inactive forward tube on this submarine!
         el.innerHTML = '';
         el.style.pointerEvents = 'none';
         return;
@@ -1646,18 +1795,31 @@ function decorateAndBindSlot(el, slot) {
       const torpType = (subBoardState.tubeTypes && subBoardState.tubeTypes[tubeNum]) || 'type95';
       const typeLabel = getTorpedoTypeLabel(torpType, isEn);
       const chitName = getTorpedoChit(torpType, false);
+      const typeShort = (torpType === 'type95') ? 'T-95 Oxíg' : ((torpType === 'type92') ? 'T-92 Eléc' : ((torpType === 'type6') ? 'T-6 Vapor' : 'T-89'));
 
       if (!isLoaded) {
         el.innerHTML = `
-          <div class="slot-badge-overlay badge-tube-discharged" style="position:absolute; inset:0; background:rgba(15,23,42,0.65); border:1.5px solid #ef4444; border-radius:3px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fca5a5; font-size:0.60rem; font-weight:bold; pointer-events:none;">
-            <span style="font-size:0.85rem; line-height:1;">💥</span>
-            <span>${isEn ? "FIRED" : "DISPARADO"}</span>
+          <div class="slot-badge-overlay badge-tube-discharged" style="position:absolute; inset:0; background:rgba(15,23,42,0.94); border:2px solid #ef4444; border-radius:4px; box-shadow:0 0 10px rgba(239,68,68,0.85); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fca5a5; cursor:pointer;" title="${isEn ? 'Bow Tube' : 'Tubo Proa'} ${tubeNum}: ${isEn ? 'DISCHARGED / EMPTY (Click to reload from reserve)' : 'DISPARADO / VACÍO (Clic para recargar desde reserva)'}">
+            <div style="position:absolute; top:0; left:0; right:0; background:rgba(153,27,27,0.95); border-bottom:1px solid #ef4444; color:#fecaca; font-family:'Cinzel', serif; font-size:0.58rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.4px; line-height:1.1;">
+              T${tubeNum} • ${isEn ? "EMPTY" : "VACÍO"}
+            </div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+              <span style="font-size:1.15rem; line-height:1;">💥</span>
+              <span style="font-size:0.56rem; font-weight:bold; color:#f87171; letter-spacing:0.4px;">${isEn ? "DISCHARGED" : "DISPARADO"}</span>
+              <span style="font-size:0.50rem; color:#a7f3d0; margin-top:1px; background:rgba(6,95,70,0.7); padding:1px 4px; border-radius:2px; font-weight:bold;">${isEn ? "Click: Reload" : "Clic: Recargar"}</span>
+            </div>
           </div>
         `;
       } else {
         el.innerHTML = `
-          <div class="active-counter-marker torpedo-tube-marker" title="${isEn ? 'Bow Tube' : 'Tubo Proa'} ${tubeNum}: ${typeLabel} [${isEn ? 'Click: Fire/Load | Shift+Click or Right-Click: Change Type' : 'Clic: Disparar/Cargar | Shift+Clic o Clic Derecho: Cambiar Tipo'}]">
-            <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+          <div class="active-counter-marker torpedo-tube-marker" style="position:relative; width:100%; height:100%; border:2px solid #10b981; border-radius:4px; box-shadow:0 0 8px rgba(16,185,129,0.8), inset 0 0 6px rgba(16,185,129,0.4); overflow:hidden; cursor:pointer;" title="${isEn ? 'Bow Tube' : 'Tubo Proa'} ${tubeNum}: ${typeLabel} [${isEn ? 'Click: Fire | Shift+Click: Cycle type' : 'Clic: Disparar | Shift+Clic: Cambiar tipo'}]">
+            <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <div style="position:absolute; top:0; left:0; right:0; background:rgba(6,95,70,0.95); border-bottom:1px solid #10b981; color:#a7f3d0; font-family:'Cinzel', serif; font-size:0.58rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.4px; line-height:1.1;">
+              T${tubeNum} • ${isEn ? "READY" : "CARGADO"}
+            </div>
+            <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(15,23,42,0.85); font-size:0.50rem; color:#fde047; font-weight:bold; text-align:center; padding:0 1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              ${typeShort}
+            </div>
           </div>
         `;
       }
@@ -1666,11 +1828,11 @@ function decorateAndBindSlot(el, slot) {
           cycleTubeTorpedoType(tubeNum);
           return;
         }
-        if (!subBoardState.tubes) subBoardState.tubes = {};
-        subBoardState.tubes[tubeNum] = !isLoaded;
-        saveSubBoardState();
-        renderInteractiveSlots();
-        showToast(isEn ? `Tube ${tubeNum}: ${subBoardState.tubes[tubeNum] ? "LOADED" : "DISCHARGED"}` : `Tubo ${tubeNum}: ${subBoardState.tubes[tubeNum] ? "CARGADO" : "DISPARADO"}`);
+        if (isLoaded) {
+          fireSingleTube(tubeNum);
+        } else {
+          reloadSingleTube(tubeNum);
+        }
       };
       el.oncontextmenu = (e) => {
         e.preventDefault();
@@ -1690,18 +1852,31 @@ function decorateAndBindSlot(el, slot) {
         const torpType = (subBoardState.tubeTypes && subBoardState.tubeTypes[tubeNum]) || 'type95';
         const typeLabel = getTorpedoTypeLabel(torpType, isEn);
         const chitName = getTorpedoChit(torpType, false);
+        const typeShort = (torpType === 'type95') ? 'T-95 Oxíg' : ((torpType === 'type92') ? 'T-92 Eléc' : ((torpType === 'type6') ? 'T-6 Vapor' : 'T-89'));
 
         if (!isLoaded) {
           el.innerHTML = `
-            <div class="slot-badge-overlay badge-tube-discharged" style="position:absolute; inset:0; background:rgba(15,23,42,0.65); border:1.5px solid #ef4444; border-radius:3px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fca5a5; font-size:0.60rem; font-weight:bold; pointer-events:none;">
-              <span style="font-size:0.85rem; line-height:1;">💥</span>
-              <span>${isEn ? "FIRED" : "DISPARADO"}</span>
+            <div class="slot-badge-overlay badge-tube-discharged" style="position:absolute; inset:0; background:rgba(15,23,42,0.94); border:2px solid #ef4444; border-radius:4px; box-shadow:0 0 10px rgba(239,68,68,0.85); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fca5a5; cursor:pointer;" title="${isEn ? 'Aft Tube' : 'Tubo Popa'} ${tubeNum}: ${isEn ? 'DISCHARGED / EMPTY (Click to reload from reserve)' : 'DISPARADO / VACÍO (Clic para recargar desde reserva)'}">
+              <div style="position:absolute; top:0; left:0; right:0; background:rgba(153,27,27,0.95); border-bottom:1px solid #ef4444; color:#fecaca; font-family:'Cinzel', serif; font-size:0.58rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.3px; line-height:1.1;">
+                T${tubeNum} POPA • ${isEn ? "EMPTY" : "VACÍO"}
+              </div>
+              <div style="margin-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                <span style="font-size:1.15rem; line-height:1;">💥</span>
+                <span style="font-size:0.56rem; font-weight:bold; color:#f87171; letter-spacing:0.4px;">${isEn ? "DISCHARGED" : "DISPARADO"}</span>
+                <span style="font-size:0.50rem; color:#a7f3d0; margin-top:1px; background:rgba(6,95,70,0.7); padding:1px 4px; border-radius:2px; font-weight:bold;">${isEn ? "Click: Reload" : "Clic: Recargar"}</span>
+              </div>
             </div>
           `;
         } else {
           el.innerHTML = `
-            <div class="active-counter-marker torpedo-tube-marker" title="${isEn ? 'Aft Tube' : 'Tubo Popa'} ${tubeNum}: ${typeLabel} [${isEn ? 'Click: Fire/Load | Shift+Click or Right-Click: Change Type' : 'Clic: Disparar/Cargar | Shift+Clic o Clic Derecho: Cambiar Tipo'}]">
-              <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+            <div class="active-counter-marker torpedo-tube-marker" style="position:relative; width:100%; height:100%; border:2px solid #10b981; border-radius:4px; box-shadow:0 0 8px rgba(16,185,129,0.8), inset 0 0 6px rgba(16,185,129,0.4); overflow:hidden; cursor:pointer;" title="${isEn ? 'Aft Tube' : 'Tubo Popa'} ${tubeNum}: ${typeLabel} [${isEn ? 'Click: Fire | Shift+Click: Cycle type' : 'Clic: Disparar | Shift+Clic: Cambiar tipo'}]">
+              <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div style="position:absolute; top:0; left:0; right:0; background:rgba(6,95,70,0.95); border-bottom:1px solid #10b981; color:#a7f3d0; font-family:'Cinzel', serif; font-size:0.58rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.3px; line-height:1.1;">
+                T${tubeNum} POPA • ${isEn ? "READY" : "CARGADO"}
+              </div>
+              <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(15,23,42,0.85); font-size:0.50rem; color:#fde047; font-weight:bold; text-align:center; padding:0 1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                ${typeShort}
+              </div>
             </div>
           `;
         }
@@ -1710,11 +1885,11 @@ function decorateAndBindSlot(el, slot) {
             cycleTubeTorpedoType(tubeNum);
             return;
           }
-          if (!subBoardState.tubes) subBoardState.tubes = {};
-          subBoardState.tubes[tubeNum] = !isLoaded;
-          saveSubBoardState();
-          renderInteractiveSlots();
-          showToast(isEn ? `Aft Tube ${tubeNum}: ${subBoardState.tubes[tubeNum] ? "LOADED" : "DISCHARGED"}` : `Tubo de Popa ${tubeNum}: ${subBoardState.tubes[tubeNum] ? "CARGADO" : "DISPARADO"}`);
+          if (isLoaded) {
+            fireSingleTube(tubeNum);
+          } else {
+            reloadSingleTube(tubeNum);
+          }
         };
         el.oncontextmenu = (e) => {
           e.preventDefault();
@@ -1731,18 +1906,30 @@ function decorateAndBindSlot(el, slot) {
           const torpType = (subBoardState.reloadTypes && subBoardState.reloadTypes[rKey]) || 'type95';
           const typeLabel = getTorpedoTypeLabel(torpType, isEn);
           const chitName = getTorpedoChit(torpType, true);
+          const typeShort = (torpType === 'type95') ? 'T-95 Oxíg' : ((torpType === 'type92') ? 'T-92 Eléc' : ((torpType === 'type6') ? 'T-6 Vapor' : 'T-89'));
 
           if (!isAvail) {
             el.innerHTML = `
-              <div class="slot-badge-overlay badge-reload-spent" style="position:absolute; inset:0; background:rgba(15,23,42,0.65); border:1.5px solid #64748b; border-radius:3px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#cbd5e1; font-size:0.60rem; font-weight:bold; pointer-events:none;">
-                <span style="font-size:0.85rem; line-height:1;">✖</span>
-                <span>${isEn ? "SPENT" : "GASTADA"}</span>
+              <div class="slot-badge-overlay badge-reload-spent" style="position:absolute; inset:0; background:rgba(15,23,42,0.92); border:1.5px dashed #64748b; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; cursor:pointer;" title="${isEn ? 'Aft Reload' : 'Recarga Popa'} ${aftRldIdx}: ${isEn ? 'SPENT' : 'GASTADA / CONSUMIDA'}">
+                <div style="position:absolute; top:0; left:0; right:0; background:rgba(30,41,59,0.95); border-bottom:1px solid #475569; color:#94a3b8; font-family:'Cinzel', serif; font-size:0.56rem; font-weight:800; text-align:center; padding:1px 0; letter-spacing:0.3px; line-height:1.1;">
+                  R-POPA ${aftRldIdx} • ${isEn ? "SPENT" : "GASTADA"}
+                </div>
+                <div style="margin-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                  <span style="font-size:1.0rem; line-height:1; color:#94a3b8;">✖</span>
+                  <span style="font-size:0.52rem; font-weight:bold; color:#64748b;">${isEn ? "CONSUMED" : "CONSUMIDA"}</span>
+                </div>
               </div>
             `;
           } else {
             el.innerHTML = `
-              <div class="active-counter-marker torpedo-reload-marker" title="${isEn ? 'Aft Reload' : 'Recarga Popa'} ${aftRldIdx}: ${typeLabel} [${isEn ? 'Click: Spend/Load | Shift+Click or Right-Click: Change Type' : 'Clic: Gastar/Cargar | Shift+Clic o Clic Derecho: Cambiar Tipo'}]">
-                <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+              <div class="active-counter-marker torpedo-reload-marker" style="position:relative; width:100%; height:100%; border:1.5px solid #0284c7; border-radius:4px; box-shadow:0 0 6px rgba(2,132,199,0.5); overflow:hidden; cursor:pointer;" title="${isEn ? 'Aft Reload' : 'Recarga Popa'} ${aftRldIdx}: ${typeLabel} [${isEn ? 'Click: Load into empty aft tube | Shift+Click: Cycle type' : 'Clic: Cargar en tubo de popa vacío | Shift+Clic: Cambiar tipo'}]">
+                <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                <div style="position:absolute; top:0; left:0; right:0; background:rgba(12,74,110,0.95); border-bottom:1px solid #38bdf8; color:#bae6fd; font-family:'Cinzel', serif; font-size:0.56rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.3px; line-height:1.1;">
+                  R-POPA ${aftRldIdx} • ${isEn ? "READY" : "RESERVA"}
+                </div>
+                <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(15,23,42,0.85); font-size:0.50rem; color:#7dd3fc; font-weight:bold; text-align:center; padding:0 1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${typeShort}
+                </div>
               </div>
             `;
           }
@@ -1751,11 +1938,7 @@ function decorateAndBindSlot(el, slot) {
               cycleReloadTorpedoType(rKey);
               return;
             }
-            if (!subBoardState.reloads) subBoardState.reloads = {};
-            subBoardState.reloads[rKey] = !isAvail;
-            saveSubBoardState();
-            renderInteractiveSlots();
-            showToast(isEn ? `Aft Reload ${aftRldIdx}: ${subBoardState.reloads[rKey] ? "AVAILABLE" : "SPENT"}` : `Recarga de Popa ${aftRldIdx}: ${subBoardState.reloads[rKey] ? "DISPONIBLE" : "GASTADA"}`);
+            useAftReserveReload(rKey, aftRldIdx);
           };
           el.oncontextmenu = (e) => {
             e.preventDefault();
@@ -1776,7 +1959,7 @@ function decorateAndBindSlot(el, slot) {
       const rNum = parseInt(match[1]);
       const cfg = getSubmarineArmamentConfig(currentBoardSubKey);
       if (rNum > cfg.fwdReloads) {
-        // Inactive reload slot on this submarine! 100% clean, let PDF card show through!
+        // Inactive reload slot on this submarine!
         el.innerHTML = '';
         el.style.pointerEvents = 'none';
         return;
@@ -1786,18 +1969,30 @@ function decorateAndBindSlot(el, slot) {
       const torpType = (subBoardState.reloadTypes && subBoardState.reloadTypes[rNum]) || 'type95';
       const typeLabel = getTorpedoTypeLabel(torpType, isEn);
       const chitName = getTorpedoChit(torpType, true);
+      const typeShort = (torpType === 'type95') ? 'T-95 Oxíg' : ((torpType === 'type92') ? 'T-92 Eléc' : ((torpType === 'type6') ? 'T-6 Vapor' : 'T-89'));
 
       if (!isAvailable) {
         el.innerHTML = `
-          <div class="slot-badge-overlay badge-reload-spent" style="position:absolute; inset:0; background:rgba(15,23,42,0.65); border:1.5px solid #64748b; border-radius:3px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#cbd5e1; font-size:0.60rem; font-weight:bold; pointer-events:none;">
-            <span style="font-size:0.85rem; line-height:1;">✖</span>
-            <span>${isEn ? "SPENT" : "GASTADA"}</span>
+          <div class="slot-badge-overlay badge-reload-spent" style="position:absolute; inset:0; background:rgba(15,23,42,0.92); border:1.5px dashed #64748b; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; cursor:pointer;" title="${isEn ? 'Bow Reload' : 'Recarga Proa'} ${rNum}: ${isEn ? 'SPENT' : 'GASTADA / CONSUMIDA'}">
+            <div style="position:absolute; top:0; left:0; right:0; background:rgba(30,41,59,0.95); border-bottom:1px solid #475569; color:#94a3b8; font-family:'Cinzel', serif; font-size:0.56rem; font-weight:800; text-align:center; padding:1px 0; letter-spacing:0.3px; line-height:1.1;">
+              R${rNum} • ${isEn ? "SPENT" : "GASTADA"}
+            </div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+              <span style="font-size:1.0rem; line-height:1; color:#94a3b8;">✖</span>
+              <span style="font-size:0.52rem; font-weight:bold; color:#64748b;">${isEn ? "CONSUMED" : "CONSUMIDA"}</span>
+            </div>
           </div>
         `;
       } else {
         el.innerHTML = `
-          <div class="active-counter-marker torpedo-reload-marker" title="${isEn ? 'Bow Reload' : 'Recarga Proa'} ${rNum}: ${typeLabel} [${isEn ? 'Click: Spend/Load | Shift+Click or Right-Click: Change Type' : 'Clic: Gastar/Cargar | Shift+Clic o Clic Derecho: Cambiar Tipo'}]">
-            <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+          <div class="active-counter-marker torpedo-reload-marker" style="position:relative; width:100%; height:100%; border:1.5px solid #0284c7; border-radius:4px; box-shadow:0 0 6px rgba(2,132,199,0.5); overflow:hidden; cursor:pointer;" title="${isEn ? 'Bow Reload' : 'Recarga Proa'} ${rNum}: ${typeLabel} [${isEn ? 'Click: Load into empty bow tube | Shift+Click: Cycle type' : 'Clic: Cargar en tubo de proa vacío | Shift+Clic: Cambiar tipo'}]">
+            <img src="assets/chits/${chitName}" alt="${typeLabel}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <div style="position:absolute; top:0; left:0; right:0; background:rgba(12,74,110,0.95); border-bottom:1px solid #38bdf8; color:#bae6fd; font-family:'Cinzel', serif; font-size:0.56rem; font-weight:800; text-align:center; padding:1px 0; text-shadow:0 1px 2px #000; letter-spacing:0.3px; line-height:1.1;">
+              R${rNum} • ${isEn ? "READY" : "RESERVA"}
+            </div>
+            <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(15,23,42,0.85); font-size:0.50rem; color:#7dd3fc; font-weight:bold; text-align:center; padding:0 1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              ${typeShort}
+            </div>
           </div>
         `;
       }
@@ -1806,11 +2001,7 @@ function decorateAndBindSlot(el, slot) {
           cycleReloadTorpedoType(rNum);
           return;
         }
-        if (!subBoardState.reloads) subBoardState.reloads = {};
-        subBoardState.reloads[rNum] = !isAvailable;
-        saveSubBoardState();
-        renderInteractiveSlots();
-        showToast(isEn ? `Reload ${rNum}: ${subBoardState.reloads[rNum] ? "AVAILABLE" : "SPENT"}` : `Recarga ${rNum}: ${subBoardState.reloads[rNum] ? "DISPONIBLE" : "GASTADA"}`);
+        useReserveReload(rNum);
       };
       el.oncontextmenu = (e) => {
         e.preventDefault();
@@ -1937,6 +2128,8 @@ function syncBoardFromCampaignState(showToastMsg = false) {
     let boxIdx = campaignState.workflow.currentBoxIndex;
     if (boxIdx >= maxPatrolBoxes) boxIdx = Math.max(-1, maxPatrolBoxes - 1);
     subBoardState.patrolIndex = boxIdx;
+  } else {
+    subBoardState.patrolIndex = -1;
   }
 
   // 4. Officer Casualties from Campaign State
@@ -2000,7 +2193,15 @@ window.onSensuikanTorpedoFired = function(tubesFiredCount = 1, options = {}) {
     ? getSubmarineArmamentConfig(subKey) 
     : { fwdTubes: 6, aftTubes: 2 };
 
-  const mode = options.mode || (document.getElementById('wf-attack-mode-select') ? document.getElementById('wf-attack-mode-select').value : 'submerged');
+  let fwdCountReq = 0;
+  let aftCountReq = 0;
+  if (typeof options.fwdCount === 'number' || typeof options.aftCount === 'number') {
+    fwdCountReq = options.fwdCount || 0;
+    aftCountReq = options.aftCount || 0;
+  } else {
+    fwdCountReq = tubesFiredCount;
+  }
+
   const torpTypePref = options.torpType || (document.getElementById('wf-torp-type-select') ? document.getElementById('wf-torp-type-select').value : null);
 
   if (!subBoardState.tubes) subBoardState.tubes = {};
@@ -2010,43 +2211,44 @@ window.onSensuikanTorpedoFired = function(tubesFiredCount = 1, options = {}) {
   const fwdEvenDmg = subBoardState.systems && subBoardState.systems['f-doors-even'] === 'dmg';
   const aftDoorDmg = subBoardState.systems && subBoardState.systems['aft-doors'] === 'dmg';
 
-  let eligibleTubes = [];
-  // Forward tubes
+  let eligibleFwd = [];
   if (!fwdDoorDmg) {
     for (let i = 1; i <= cfg.fwdTubes; i++) {
       if (i % 2 !== 0 && fwdOddDmg) continue;
       if (i % 2 === 0 && fwdEvenDmg) continue;
       if (subBoardState.tubes[i] === true) {
-        eligibleTubes.push({ idx: i, isAft: false, type: (subBoardState.tubeTypes && subBoardState.tubeTypes[i]) || 'type95' });
+        eligibleFwd.push({ idx: i, isAft: false, type: (subBoardState.tubeTypes && subBoardState.tubeTypes[i]) || 'type95' });
       }
     }
   }
-  // Aft tubes (only if surface night attack mode allows)
-  if (mode === 'surface_night' && !aftDoorDmg) {
+
+  let eligibleAft = [];
+  if (!aftDoorDmg && cfg.aftTubes > 0) {
     for (let a = 1; a <= cfg.aftTubes; a++) {
       const idx = cfg.fwdTubes + a;
       if (subBoardState.tubes[idx] === true) {
-        eligibleTubes.push({ idx: idx, isAft: true, type: (subBoardState.tubeTypes && subBoardState.tubeTypes[idx]) || 'type95' });
+        eligibleAft.push({ idx: idx, isAft: true, type: (subBoardState.tubeTypes && subBoardState.tubeTypes[idx]) || 'type95' });
       }
     }
   }
 
-  // If torpedo type filter preferred, prioritize matching tubes
   if (torpTypePref) {
-    eligibleTubes.sort((a, b) => {
-      const aMatch = (a.type === torpTypePref) ? 1 : 0;
-      const bMatch = (b.type === torpTypePref) ? 1 : 0;
-      return bMatch - aMatch;
-    });
+    eligibleFwd.sort((a, b) => ((b.type === torpTypePref ? 1 : 0) - (a.type === torpTypePref ? 1 : 0)));
+    eligibleAft.sort((a, b) => ((b.type === torpTypePref ? 1 : 0) - (a.type === torpTypePref ? 1 : 0)));
   }
 
-  let firedList = [];
-  let fired = 0;
-  for (let t of eligibleTubes) {
-    if (fired >= tubesFiredCount) break;
+  let fwdFired = [];
+  for (let t of eligibleFwd) {
+    if (fwdFired.length >= fwdCountReq) break;
     subBoardState.tubes[t.idx] = false;
-    firedList.push(t.idx);
-    fired++;
+    fwdFired.push(t.idx);
+  }
+
+  let aftFired = [];
+  for (let t of eligibleAft) {
+    if (aftFired.length >= aftCountReq) break;
+    subBoardState.tubes[t.idx] = false;
+    aftFired.push(t.idx);
   }
 
   saveSubBoardState();
@@ -2054,9 +2256,253 @@ window.onSensuikanTorpedoFired = function(tubesFiredCount = 1, options = {}) {
   if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
   if (typeof renderSubBoard === 'function') renderSubBoard();
   if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+  if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
 
-  return firedList;
+  return {
+    fwdFired,
+    aftFired,
+    allFired: [...fwdFired, ...aftFired]
+  };
 };
+
+// =========================================================================
+// TORPEDO TRACKING, CONSUMPTION & RELOAD ACTIONS (HOJA DE SUBMARINO)
+// =========================================================================
+
+function fireSingleTube(tubeNum) {
+  const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2 };
+
+  if (!subBoardState.tubes) subBoardState.tubes = {};
+  subBoardState.tubes[tubeNum] = false;
+
+  saveSubBoardState();
+  if (typeof saveState === 'function') saveState();
+  renderInteractiveSlots();
+  if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+  if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+
+  const isAft = (tubeNum > cfg.fwdTubes);
+  showToast(isEn ? `💥 ${isAft ? 'Aft' : 'Bow'} Tube ${tubeNum} fired / empty. Click to reload from reserves.` : `💥 Tubo ${isAft ? 'de Popa' : 'de Proa'} ${tubeNum} disparado (vacío). Haz clic para recargar desde reservas.`);
+}
+window.fireSingleTube = fireSingleTube;
+
+function reloadSingleTube(tubeNum) {
+  const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2, fwdReloads: 8, aftReloads: 2 };
+
+  if (!subBoardState.tubes) subBoardState.tubes = {};
+  if (!subBoardState.reloads) subBoardState.reloads = {};
+  if (!subBoardState.tubeTypes) subBoardState.tubeTypes = {};
+  if (!subBoardState.reloadTypes) subBoardState.reloadTypes = {};
+
+  const isAft = (tubeNum > cfg.fwdTubes);
+
+  if (!isAft) {
+    // Forward tube: find first available forward reload
+    let foundR = null;
+    for (let r = 1; r <= (cfg.fwdReloads || 16); r++) {
+      if (subBoardState.reloads[r] === true) {
+        foundR = r;
+        break;
+      }
+    }
+    if (foundR !== null) {
+      subBoardState.reloads[foundR] = false;
+      subBoardState.tubes[tubeNum] = true;
+      subBoardState.tubeTypes[tubeNum] = subBoardState.reloadTypes[foundR] || 'type95';
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `✅ Bow Tube ${tubeNum} reloaded (Reserve #${foundR} consumed)` : `✅ Tubo Proa ${tubeNum} recargado (Consumida Recarga #${foundR})`);
+      return true;
+    } else {
+      showToast(isEn ? `⚠️ No forward reserves available to reload Tube ${tubeNum}!` : `⚠️ ¡No quedan reservas de proa para recargar el Tubo ${tubeNum}!`);
+      return false;
+    }
+  } else {
+    // Aft tube: find first available aft reload
+    let foundAft = null;
+    if (subBoardState.reloads['aft_1'] === true) foundAft = 'aft_1';
+    else if (subBoardState.reloads['aft_2'] === true) foundAft = 'aft_2';
+
+    if (foundAft !== null) {
+      subBoardState.reloads[foundAft] = false;
+      subBoardState.tubes[tubeNum] = true;
+      subBoardState.tubeTypes[tubeNum] = subBoardState.reloadTypes[foundAft] || 'type95';
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `✅ Aft Tube ${tubeNum} reloaded (Reserve ${foundAft} consumed)` : `✅ Tubo Popa ${tubeNum} recargado (Consumida Recarga de Popa ${foundAft.replace('aft_', '#')})`);
+      return true;
+    } else {
+      showToast(isEn ? `⚠️ No aft reserves available to reload Aft Tube ${tubeNum}!` : `⚠️ ¡No quedan reservas de popa para recargar el Tubo de Popa ${tubeNum}!`);
+      return false;
+    }
+  }
+}
+window.reloadSingleTube = reloadSingleTube;
+
+function useReserveReload(rNum) {
+  const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2, fwdReloads: 8 };
+
+  if (!subBoardState.reloads) subBoardState.reloads = {};
+  if (!subBoardState.tubes) subBoardState.tubes = {};
+
+  const isAvail = (subBoardState.reloads[rNum] !== false);
+
+  if (isAvail) {
+    let emptyTube = null;
+    for (let i = 1; i <= cfg.fwdTubes; i++) {
+      if (subBoardState.tubes[i] === false) {
+        emptyTube = i;
+        break;
+      }
+    }
+    if (emptyTube !== null) {
+      subBoardState.reloads[rNum] = false;
+      subBoardState.tubes[emptyTube] = true;
+      subBoardState.tubeTypes[emptyTube] = (subBoardState.reloadTypes && subBoardState.reloadTypes[rNum]) || 'type95';
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `✅ Reserve #${rNum} loaded into Bow Tube #${emptyTube}!` : `✅ ¡Recarga #${rNum} introducida en Tubo de Proa #${emptyTube}!`);
+    } else {
+      subBoardState.reloads[rNum] = false;
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `Reserve #${rNum} marked as spent (all tubes already loaded).` : `Recarga #${rNum} marcada como gastada (todos los tubos de proa ya estaban llenos).`);
+    }
+  } else {
+    subBoardState.reloads[rNum] = true;
+    saveSubBoardState();
+    if (typeof saveState === 'function') saveState();
+    renderInteractiveSlots();
+    if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+    if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+    showToast(isEn ? `Reserve #${rNum} replenished (available).` : `Recarga #${rNum} repuesta (disponible de nuevo).`);
+  }
+}
+window.useReserveReload = useReserveReload;
+
+function useAftReserveReload(rKey, aftRldIdx) {
+  const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2 };
+
+  if (!subBoardState.reloads) subBoardState.reloads = {};
+  if (!subBoardState.tubes) subBoardState.tubes = {};
+
+  const isAvail = (subBoardState.reloads[rKey] !== false);
+
+  if (isAvail) {
+    let emptyAft = null;
+    for (let a = 1; a <= cfg.aftTubes; a++) {
+      const tNum = cfg.fwdTubes + a;
+      if (subBoardState.tubes[tNum] === false) {
+        emptyAft = tNum;
+        break;
+      }
+    }
+    if (emptyAft !== null) {
+      subBoardState.reloads[rKey] = false;
+      subBoardState.tubes[emptyAft] = true;
+      subBoardState.tubeTypes[emptyAft] = (subBoardState.reloadTypes && subBoardState.reloadTypes[rKey]) || 'type95';
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `✅ Aft Reserve #${aftRldIdx} loaded into Aft Tube #${emptyAft}!` : `✅ ¡Recarga de Popa #${aftRldIdx} introducida en Tubo de Popa #${emptyAft}!`);
+    } else {
+      subBoardState.reloads[rKey] = false;
+      saveSubBoardState();
+      if (typeof saveState === 'function') saveState();
+      renderInteractiveSlots();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+      if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+      showToast(isEn ? `Aft Reserve #${aftRldIdx} marked as spent (all aft tubes loaded).` : `Recarga de Popa #${aftRldIdx} marcada como gastada (todos los tubos de popa ya estaban llenos).`);
+    }
+  } else {
+    subBoardState.reloads[rKey] = true;
+    saveSubBoardState();
+    if (typeof saveState === 'function') saveState();
+    renderInteractiveSlots();
+    if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+    if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+    showToast(isEn ? `Aft Reserve #${aftRldIdx} replenished (available).` : `Recarga de Popa #${aftRldIdx} repuesta (disponible de nuevo).`);
+  }
+}
+window.useAftReserveReload = useAftReserveReload;
+
+function updateSubBoardTorpedoSummary() {
+  const summaryEl = document.getElementById('subboard-torpedo-summary-badge');
+  if (!summaryEl) return;
+  const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2, fwdReloads: 8, aftReloads: 2 };
+
+  let fwdLoaded = 0;
+  for (let i = 1; i <= cfg.fwdTubes; i++) {
+    if (subBoardState.tubes && subBoardState.tubes[i] !== false) fwdLoaded++;
+  }
+  let aftLoaded = 0;
+  for (let a = 1; a <= cfg.aftTubes; a++) {
+    const tNum = cfg.fwdTubes + a;
+    if (subBoardState.tubes && subBoardState.tubes[tNum] !== false) aftLoaded++;
+  }
+
+  let fwdReloadsAvail = 0;
+  for (let r = 1; r <= (cfg.fwdReloads || 0); r++) {
+    if (subBoardState.reloads && subBoardState.reloads[r] !== false) fwdReloadsAvail++;
+  }
+  let aftReloadsAvail = 0;
+  if (cfg.aftReloads >= 1 && subBoardState.reloads && subBoardState.reloads['aft_1'] !== false) aftReloadsAvail++;
+  if (cfg.aftReloads >= 2 && subBoardState.reloads && subBoardState.reloads['aft_2'] !== false) aftReloadsAvail++;
+
+  const totalLoaded = fwdLoaded + aftLoaded;
+  const totalTubes = cfg.fwdTubes + cfg.aftTubes;
+  const totalReloadsAvail = fwdReloadsAvail + aftReloadsAvail;
+  const totalReloads = (cfg.fwdReloads || 0) + (cfg.aftReloads || 0);
+
+  summaryEl.innerHTML = isEn
+    ? `🚀 <strong>Tubes:</strong> ${totalLoaded}/${totalTubes} (${fwdLoaded} Fwd${cfg.aftTubes > 0 ? ` • ${aftLoaded} Aft` : ''}) &nbsp;|&nbsp; 📦 <strong>Reserves:</strong> ${totalReloadsAvail}/${totalReloads}`
+    : `🚀 <strong>Tubos:</strong> ${totalLoaded}/${totalTubes} (${fwdLoaded} Proa${cfg.aftTubes > 0 ? ` • ${aftLoaded} Popa` : ''}) &nbsp;|&nbsp; 📦 <strong>Reservas:</strong> ${totalReloadsAvail}/${totalReloads}`;
+}
+window.updateSubBoardTorpedoSummary = updateSubBoardTorpedoSummary;
 
 window.reloadAllEmptyTubesFromReserves = function() {
   const isEn = (window.currentLang === 'en');
@@ -2112,9 +2558,10 @@ window.reloadAllEmptyTubesFromReserves = function() {
 
   saveSubBoardState();
   if (typeof saveState === 'function') saveState();
-  if (typeof renderInteractiveSlots === 'function') renderInteractiveSlots();
+  renderInteractiveSlots();
   if (typeof renderSubBoard === 'function') renderSubBoard();
   if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+  if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
 
   if (reloadedCount > 0) {
     showToast(isEn ? `✅ ${reloadedCount} torpedo tubes reloaded from reserves!` : `✅ ¡${reloadedCount} tubos recargados desde las reservas!`);
@@ -2154,24 +2601,54 @@ window.onSensuikanRepaired = function(sysKey) {
 
 function loadAllTorpedoes() {
   const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2, fwdReloads: 8, aftReloads: 2 };
+
   if (!subBoardState.tubes) subBoardState.tubes = {};
   if (!subBoardState.reloads) subBoardState.reloads = {};
-  for (let i = 1; i <= 8; i++) subBoardState.tubes[i] = true;
-  for (let i = 1; i <= 16; i++) subBoardState.reloads[i] = true;
+  for (let i = 1; i <= cfg.fwdTubes; i++) subBoardState.tubes[i] = true;
+  for (let a = 1; a <= cfg.aftTubes; a++) subBoardState.tubes[cfg.fwdTubes + a] = true;
+  for (let i = 1; i <= (cfg.fwdReloads || 16); i++) subBoardState.reloads[i] = true;
+  subBoardState.reloads['aft_1'] = true;
+  subBoardState.reloads['aft_2'] = true;
+
   saveSubBoardState();
+  if (typeof saveState === 'function') saveState();
   renderInteractiveSlots();
-  showToast(isEn ? "All torpedo tubes and reloads loaded." : "Todos los tubos y recargas de torpedos cargados.");
+  if (typeof renderSubBoard === 'function') renderSubBoard();
+  if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+  if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
+  showToast(isEn ? "All torpedo tubes and reloads fully replenished." : "Todos los tubos y recargas de torpedos reabastecidos al 100%.");
 }
 window.loadAllTorpedoes = loadAllTorpedoes;
 
 function unloadAllTorpedoes() {
   const isEn = (window.currentLang === 'en');
+  const subKey = (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) ||
+                 (typeof currentBoardSubKey !== 'undefined' && currentBoardSubKey) ||
+                 (typeof campaignState !== 'undefined' && campaignState.submarine) || 'Type_B_Class';
+  const cfg = (typeof getSubmarineArmamentConfig === 'function') 
+    ? getSubmarineArmamentConfig(subKey) 
+    : { fwdTubes: 6, aftTubes: 2, fwdReloads: 8, aftReloads: 2 };
+
   if (!subBoardState.tubes) subBoardState.tubes = {};
   if (!subBoardState.reloads) subBoardState.reloads = {};
-  for (let i = 1; i <= 8; i++) subBoardState.tubes[i] = false;
-  for (let i = 1; i <= 16; i++) subBoardState.reloads[i] = false;
+  for (let i = 1; i <= cfg.fwdTubes; i++) subBoardState.tubes[i] = false;
+  for (let a = 1; a <= cfg.aftTubes; a++) subBoardState.tubes[cfg.fwdTubes + a] = false;
+  for (let i = 1; i <= (cfg.fwdReloads || 16); i++) subBoardState.reloads[i] = false;
+  subBoardState.reloads['aft_1'] = false;
+  subBoardState.reloads['aft_2'] = false;
+
   saveSubBoardState();
+  if (typeof saveState === 'function') saveState();
   renderInteractiveSlots();
+  if (typeof renderSubBoard === 'function') renderSubBoard();
+  if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
+  if (typeof updateSubBoardTorpedoSummary === 'function') updateSubBoardTorpedoSummary();
   showToast(isEn ? "All torpedo tubes and reloads emptied." : "Todos los tubos y recargas de torpedos vaciados.");
 }
 window.unloadAllTorpedoes = unloadAllTorpedoes;
@@ -2208,8 +2685,9 @@ window.cycleReloadTorpedoType = cycleReloadTorpedoType;
 
 function applyTorpedoAllocation(arg1 = 4, arg2 = 2, arg3 = 0, arg4 = 0) {
   if (!currentBoardSubKey) {
-    currentBoardSubKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) || 'Kaidai_KD3_Class';
+    currentBoardSubKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) || (typeof subBoardState !== 'undefined' && subBoardState.activeSubKey) || null;
   }
+  if (!currentBoardSubKey) return;
   const cfg = getSubmarineArmamentConfig(currentBoardSubKey);
   if (!subBoardState.tubeTypes) subBoardState.tubeTypes = {};
   if (!subBoardState.reloadTypes) subBoardState.reloadTypes = {};
@@ -2275,27 +2753,27 @@ function applyTorpedoAllocation(arg1 = 4, arg2 = 2, arg3 = 0, arg4 = 0) {
   // 1. Forward Tubes
   for (let i = 1; i <= cfg.fwdTubes; i++) {
     subBoardState.tubeTypes[i] = (i <= fwdTubesSpec) ? specialType : baseType;
-    subBoardState.tubes[i] = true;
+    if (subBoardState.tubes[i] === undefined) subBoardState.tubes[i] = true;
   }
 
   // 2. Aft Tubes
   for (let a = 1; a <= cfg.aftTubes; a++) {
     const tNum = cfg.fwdTubes + a;
     subBoardState.tubeTypes[tNum] = (a <= aftTubesSpec) ? specialType : baseType;
-    subBoardState.tubes[tNum] = true;
+    if (subBoardState.tubes[tNum] === undefined) subBoardState.tubes[tNum] = true;
   }
 
   // 3. Forward Reloads
   for (let r = 1; r <= cfg.fwdReloads; r++) {
     subBoardState.reloadTypes[r] = (r <= fwdRldSpec) ? specialType : baseType;
-    subBoardState.reloads[r] = true;
+    if (subBoardState.reloads[r] === undefined) subBoardState.reloads[r] = true;
   }
 
   // 4. Aft Reloads
   for (let ar = 1; ar <= cfg.aftReloads; ar++) {
     const rKey = `aft_${ar}`;
     subBoardState.reloadTypes[rKey] = (ar <= aftRldSpec) ? specialType : baseType;
-    subBoardState.reloads[rKey] = true;
+    if (subBoardState.reloads[rKey] === undefined) subBoardState.reloads[rKey] = true;
   }
 
   const allocObj = {

@@ -1,14 +1,20 @@
         <div id="phase-content-5" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>⚓</span>
-              <span id="p5-title">FASE 5: RETORNO A BASE, MANTENIMIENTO (REFIT) Y ASCENSOS</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('5: Post Mission', '', 'FLOW_5')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span>📋 Guía de Fase</span>
-            </button>
-            <span class="rules-ref-pill">[Reglas 6.0 Paso 3, 8.5.11, 8.7-8.9, 9.0]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">⚓</span>
+                <span id="p5-title">FASE 5: RETORNO A BASE, MANTENIMIENTO (REFIT) Y ASCENSOS</span>
+              </h2>
+              <div id="p5-sub-desc" class="phase-subtitle" data-i18n="p5Subtitle">
+                Cálculo de periodo de puesta a punto (meses R) [9.1-9.2] • Ascensos de dotación [8.7] • Condecoraciones imperiales [8.8-8.9]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('5: Post Mission', '', 'FLOW_5')" class="action-btn">
+                <span>🗺️</span> <span id="p5-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span class="rules-ref-pill" id="p5-rules-pill" data-i18n="p5RulesRef">[Reglas 6.0 Paso 3, 8.5.11, 8.7-8.9, 9.0]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">

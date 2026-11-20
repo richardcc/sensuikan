@@ -1,19 +1,24 @@
         <div id="phase-content-patrol" class="phase-body">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e293b 0%, #0369a1 100%); border-left:4px solid #38bdf8;">
-            <h2>
-              <span>✈️</span>
-              <span id="ppatrol-title">ENCUENTRO CON AVIONES [REGLA 8.3]</span>
-            </h2>
-            <div style="margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-              <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-size:0.82rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.22); display:flex; align-items:center; gap:6px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(239,68,68,0.3);">
-                <span>📖</span> <span>Guía Táctica: Ataque Aéreo [8.3]</span>
-              </button>
-              <span id="ppatrol-badge-zone" style="background:rgba(0,0,0,0.4); border:1px solid #38bdf8; color:#7dd3fc; padding:4px 10px; border-radius:6px; font-weight:700; font-size:0.84rem;">Zona: Casilla de Patrulla</span>
-              <button type="button" onclick="setWorkflowPhase(2)" class="action-btn" style="padding:4px 10px; font-size:0.84rem; border-color:#94a3b8; color:#e2e8f0; display:flex; align-items:center; gap:6px;">
-                <span>🗺️</span> <span id="ppatrol-btn-back-track">Ver Ruta Trayecto</span>
-              </button>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">✈️</span>
+                <span id="ppatrol-title">FASE AÉREA: ENCUENTRO CON AVIONES [REGLA 8.3]</span>
+              </h2>
+              <div id="ppatrol-sub-desc" class="phase-subtitle" data-i18n="pPatrolSubtitle">
+                Secuencia: Detección y Avión Atacante ➔ Reacción Submarino ➔ Fuego Antiaéreo [F1] o Inmersión de Emergencia
+              </div>
             </div>
-            <span id="ppatrol-rules-pill" class="rules-ref-pill">[Regla 8.3 • Tablas A2, A4, B5, B7, FIDO]</span>
+            <div class="phase-header-actions">
+              <button id="ppatrol-btn-top-air-guide" type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.22);">
+                <span>📖</span> <span id="ppatrol-btn-top-air-guide-label" data-i18n="airTacticalGuideBtn">Guía Táctica: Ataque Aéreo [8.3]</span>
+              </button>
+              <span id="ppatrol-badge-zone" style="background:rgba(0,0,0,0.4); border:1px solid #38bdf8; color:#7dd3fc; padding:3px 8px; border-radius:6px; font-weight:700; font-size:0.78rem;">Zona: Casilla de Patrulla</span>
+              <button id="ppatrol-btn-top-back-track" type="button" onclick="setWorkflowPhase(2)" class="action-btn" style="border-color:#94a3b8; color:#e2e8f0;">
+                <span>🗺️</span> <span id="ppatrol-btn-back-track" data-i18n="airBackTrackBtn">Ver Ruta Trayecto</span>
+              </button>
+              <span id="ppatrol-rules-pill" class="rules-ref-pill">[Regla 8.3 • Tablas A2, A4, B5, B7, FIDO]</span>
+            </div>
           </div>
 
           <!-- Active Contact Status Bar -->
@@ -37,9 +42,7 @@
                 <span>✈️</span> <span>Secuencia Táctica de Encuentro Aéreo [Regla Oficial 8.3]</span>
               </h4>
               <div style="display:flex; align-items:center; gap:8px;">
-                <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:3px 10px; font-size:0.78rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.2); font-weight:700; cursor:pointer; border-radius:4px; box-shadow:0 2px 6px rgba(239,68,68,0.25);">
-                  <span>📖</span> <span>Ver Workflow Completo [8.3]</span>
-                </button>
+                <button id="ppatrol-btn-air-workflow-open" type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:3px 10px; font-size:0.78rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.2); font-weight:700; cursor:pointer; border-radius:4px; box-shadow:0 2px 6px rgba(239,68,68,0.25);"><span>📖</span> <span id="ppatrol-btn-air-workflow-label" data-i18n="airViewFullWorkflowBtn">Ver Workflow Completo [8.3]</span></button>
                 <span id="ppatrol-air-badge" class="badge-air-category" style="background:#7f1d1d; color:#fca5a5; border:1px solid #ef4444; font-size:0.75rem; padding:2px 8px; border-radius:4px; font-weight:700;">Aéreo</span>
               </div>
             </div>
@@ -61,15 +64,13 @@
                 </div>
                 <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                   <span style="font-size:0.75rem; color:#86efac; background:rgba(34,197,94,0.2); padding:2px 8px; border-radius:4px; border:1px solid #22c55e;">Crash Dive (2d6)</span>
-                  <button type="button" class="btn-dice" onclick="rollInteractiveA4()" style="background:#1e40af; border-color:#3b82f6; font-size:0.76rem; padding:4px 8px;">
-                    🎲 <span id="ppatrol-btn-a4-label">Tirar [A4]</span>
-                  </button>
+                  <button id="ppatrol-btn-a4" type="button" class="btn-dice" onclick="rollInteractiveA4()" style="background:#1e40af; border-color:#3b82f6; font-size:0.76rem; padding:4px 8px;">🎲 <span id="ppatrol-btn-a4-label" data-i18n="airRollA4Btn">Tirar [A4]</span></button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #3b82f6; border-radius:3px; padding:1px 4px;">
                     <span id="ppatrol-lbl-manual-a4" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
                     <select id="ppatrol-sel-manual-a4" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
                       <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                     </select>
-                    <button type="button" onclick="rollInteractiveA4(parseInt(document.getElementById('ppatrol-sel-manual-a4').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a4">Aplicar</span></button>
+                    <button id="ppatrol-btn-apply-a4-btn" type="button" onclick="rollInteractiveA4(parseInt(document.getElementById(\'ppatrol-sel-manual-a4\').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a4" data-i18n="btnApply">Aplicar</span></button>
                   </div>
                 </div>
               </div>
@@ -201,8 +202,8 @@
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; background:#071220; border:1px solid #334155; border-radius:6px; padding:6px 10px; margin-bottom:8px;">
                 <span style="font-size:0.78rem; font-weight:bold; color:var(--gold-300);">Tirada 1d6 de Detección de FIDO:</span>
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                  <button type="button" class="btn-dice" onclick="rollPatrolFidoCheck()" style="background:#0284c7; border-color:#38bdf8; font-size:0.74rem; padding:3px 8px;">
-                    🎲 <span id="ppatrol-btn-fido-check">Tirar Chequeo (1d6)</span>
+                  <button id="ppatrol-btn-fido-roll" type="button" class="btn-dice" onclick="rollPatrolFidoCheck()" style="background:#0284c7; border-color:#38bdf8; font-size:0.74rem; padding:3px 8px;">
+                    🎲 <span id="ppatrol-btn-fido-check" data-i18n="airFidoCheckBtn">Tirar Chequeo (1d6)</span>
                   </button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
                     <span style="color:var(--gold-300);">Mesa:</span>
@@ -210,7 +211,7 @@
                       <option value="1">1</option><option value="2">2</option><option value="3">3</option>
                       <option value="4">4</option><option value="5">5</option><option value="6">6</option>
                     </select>
-                    <button type="button" onclick="rollPatrolFidoCheck(parseInt(document.getElementById('ppatrol-sel-fido-check').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                    <button type="button" onclick="rollPatrolFidoCheck(parseInt(document.getElementById('ppatrol-sel-fido-check').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;" data-i18n="btnApply">
                       Aplicar
                     </button>
                   </div>
@@ -261,15 +262,13 @@
                 </div>
                 <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                   <span style="font-size:0.75rem; color:#fde047; background:rgba(245,158,11,0.2); padding:2px 8px; border-radius:4px; border:1px solid #f59e0b;">Tirada 2d6 simultánea</span>
-                  <button type="button" class="btn-dice" onclick="rollInteractiveA2()" style="background:#b91c1c; border-color:#ef4444; font-size:0.76rem; padding:4px 8px;">
-                    🎲 <span id="ppatrol-btn-a2-label">Tirar AA [A2]</span>
-                  </button>
+                  <button id="ppatrol-btn-a2" type="button" class="btn-dice" onclick="rollInteractiveA2()" style="background:#b91c1c; border-color:#ef4444; font-size:0.76rem; padding:4px 8px;">🎲 <span id="ppatrol-btn-a2-label" data-i18n="airRollA2Btn">Tirar AA [A2]</span></button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #ef4444; border-radius:3px; padding:1px 4px;">
                     <span id="ppatrol-lbl-manual-a2" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
                     <select id="ppatrol-sel-manual-a2" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
                       <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                     </select>
-                    <button type="button" onclick="rollInteractiveA2(parseInt(document.getElementById('ppatrol-sel-manual-a2').value))" class="btn-xs" style="background:#b91c1c; color:#fee2e2; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a2">Aplicar</span></button>
+                    <button id="ppatrol-btn-apply-a2-btn" type="button" onclick="rollInteractiveA2(parseInt(document.getElementById(\'ppatrol-sel-manual-a2\').value))" class="btn-xs" style="background:#b91c1c; color:#fee2e2; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a2" data-i18n="btnApply">Aplicar</span></button>
                   </div>
                 </div>
               </div>
@@ -345,14 +344,14 @@
                       <span>🩺</span> <span id="ppatrol-lbl-step-crew">4A.1 — Herida de Dotación Obligatoria (Tabla B7 • 2d6 Puesto + 1d6 Gravedad)</span>
                     </strong>
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewPosOnly()" style="background:#1e40af; border-color:#3b82f6; font-size:0.74rem; padding:3px 8px;" title="Lanzar 2d6 para determinar qué tripulante u oficial resulta alcanzado">
-                        🎲 <span id="ppatrol-btn-air-crew-pos">1. Tirar Puesto (2d6)</span>
+                      <button id="ppatrol-btn-air-crew-pos-btn" type="button" class="btn-dice" onclick="rollPatrolAirCrewPosOnly()" style="background:#1e40af; border-color:#3b82f6; font-size:0.74rem; padding:3px 8px;" title="Lanzar 2d6 para determinar qué tripulante u oficial resulta alcanzado">
+                        🎲 <span id="ppatrol-btn-air-crew-pos" data-i18n="airCrewPosBtn">1. Tirar Puesto (2d6)</span>
                       </button>
                       <button type="button" id="ppatrol-btn-air-crew-sev-roll" class="btn-dice" onclick="rollPatrolAirCrewSevOnly()" style="background:#b91c1c; border-color:#ef4444; font-size:0.74rem; padding:3px 8px;" title="Lanzar 1d6 para determinar el tipo de baja y acumulación">
-                        🎲 <span id="ppatrol-btn-air-crew-sev">2. Tirar Tipo de Baja (1d6)</span>
+                        🎲 <span id="ppatrol-btn-air-crew-sev" data-i18n="airCrewSevBtn">2. Tirar Tipo de Baja (1d6)</span>
                       </button>
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewInjury()" style="background:#334155; border-color:#64748b; font-size:0.72rem; padding:3px 7px;" title="Lanzar 2d6 y 1d6 simultáneamente">
-                        ⚡ <span id="ppatrol-btn-air-crew-roll-all">Tirar Ambos</span>
+                      <button id="ppatrol-btn-air-crew-both" type="button" class="btn-dice" onclick="rollPatrolAirCrewInjury()" style="background:#334155; border-color:#64748b; font-size:0.72rem; padding:3px 7px;" title="Lanzar 2d6 y 1d6 simultáneamente">
+                        ⚡ <span id="ppatrol-btn-air-crew-roll-all" data-i18n="airCrewBothBtn">Tirar Ambos</span>
                       </button>
                       <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
                         <span style="color:var(--gold-300);">Puesto (2d6):</span>
@@ -366,9 +365,7 @@
                           <option value="1">1 (LW - Leve)</option><option value="2">2 (LW - Leve)</option><option value="3">3 (LW - Leve)</option>
                           <option value="4" selected>4 (SW - Grave)</option><option value="5">5 (SW - Grave)</option><option value="6">6 (KIA - Muerto)</option>
                         </select>
-                        <button type="button" onclick="rollPatrolAirCrewInjury(parseInt(document.getElementById('ppatrol-sel-air-crew-pos').value), parseInt(document.getElementById('ppatrol-sel-air-crew-sev').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                          Aplicar
-                        </button>
+                        <button id="ppatrol-btn-apply-crew-btn" type="button" onclick="rollPatrolAirCrewInjury(parseInt(document.getElementById(\'ppatrol-sel-air-crew-pos\').value), parseInt(document.getElementById(\'ppatrol-sel-air-crew-sev\').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-crew" data-i18n="btnApply">Aplicar</span></button>
                       </div>
                     </div>
                   </div>
@@ -471,17 +468,17 @@
                       <span>💣</span> <span id="ppatrol-lbl-step-bombs">4A.2 — Impactos de Bombas y Cargas (Tabla B5 con +2 DRM Aéreo)</span>
                     </strong>
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirBombRun()" style="background:#dc2626; border-color:#f87171; font-size:0.74rem; padding:3px 8px;">
-                        🎲 <span id="ppatrol-btn-air-bomb-roll">Tirar Bombas (B5)</span>
+                      <button id="ppatrol-btn-air-bomb" type="button" class="btn-dice" onclick="rollPatrolAirBombRun()" style="background:#dc2626; border-color:#f87171; font-size:0.74rem; padding:3px 8px;">
+                        🎲 <span id="ppatrol-btn-air-bomb-roll" data-i18n="airBombRollBtn">Tirar Bombas (B5)</span>
                       </button>
                       <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
-                        <span style="color:var(--gold-300);">Mesa (2d6):</span>
+                        <span id="ppatrol-lbl-manual-bombs" data-i18n="tabletop2d6Label" style="color:var(--gold-300);">Mesa (2d6):</span>
                         <select id="ppatrol-sel-air-bomb-roll" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
                           <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
                           <option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                         </select>
-                        <button type="button" onclick="rollPatrolAirBombRun(parseInt(document.getElementById('ppatrol-sel-air-bomb-roll').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                          Aplicar
+                        <button id="ppatrol-btn-apply-bomb-btn" type="button" onclick="rollPatrolAirBombRun(parseInt(document.getElementById('ppatrol-sel-air-bomb-roll').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                          <span id="ppatrol-btn-apply-bomb" data-i18n="btnApply">Aplicar</span>
                         </button>
                       </div>
                     </div>
@@ -556,11 +553,11 @@
                     <span>4B. Torpedo Acústico Guiado Mark 24 «FIDO» [Regla 8.3.3]</span>
                   </strong>
                   <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <button type="button" class="btn-dice" onclick="rollPatrolFidoImpact()" style="background:#0284c7; border-color:#38bdf8; font-size:0.72rem; padding:2px 7px;">
-                      🎯 <span>Tirar Impacto (1d6)</span>
+                    <button id="ppatrol-btn-fido-impact-roll" type="button" class="btn-dice" onclick="rollPatrolFidoImpact()" style="background:#0284c7; border-color:#38bdf8; font-size:0.72rem; padding:2px 7px;">
+                      🎯 <span id="ppatrol-btn-fido-impact-label" data-i18n="airFidoImpactRollBtn">Tirar Impacto (1d6)</span>
                     </button>
                     <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
-                      <span style="color:var(--gold-300);">Mesa:</span>
+                      <span id="ppatrol-lbl-manual-fido-imp" data-i18n="tabletopLabel" style="color:var(--gold-300);">Mesa:</span>
                       <select id="ppatrol-sel-fido-impact" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
                         <option value="1">1 (Hundido)</option>
                         <option value="2">2 (7 Daños)</option>
@@ -569,8 +566,8 @@
                         <option value="5">5 (Fallo)</option>
                         <option value="6">6 (Fallo)</option>
                       </select>
-                      <button type="button" onclick="rollPatrolFidoImpact(parseInt(document.getElementById('ppatrol-sel-fido-impact').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                        Aplicar
+                      <button id="ppatrol-btn-apply-fido-imp-btn" type="button" onclick="rollPatrolFidoImpact(parseInt(document.getElementById('ppatrol-sel-fido-impact').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                        <span id="ppatrol-btn-apply-fido-imp" data-i18n="btnApply">Aplicar</span>
                       </button>
                     </div>
                   </div>
@@ -626,12 +623,8 @@
 
               <!-- Botones de resolución post-aérea -->
               <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="action-btn" onclick="nextPatrolBox(); setWorkflowPhase(2);" style="flex:1; min-width:180px; justify-content:center; background:#1e293b; border-color:#64748b; color:#cbd5e1; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
-                  ◀ <span id="ppatrol-btn-air-evaded">Avión Evadido: Avanzar Casilla</span>
-                </button>
-                <button type="button" class="action-btn" onclick="setWorkflowPhase(4)" style="flex:1; min-width:180px; justify-content:center; background:#7f1d1d; border-color:#ef4444; color:#fee2e2; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
-                  💥 <span id="ppatrol-btn-air-damaged">Daño Sufrido: Ir a Averías (Fase 4) ➔</span>
-                </button>
+                <button id="ppatrol-btn-evaded-advance" type="button" class="action-btn" onclick="nextPatrolBox(); setWorkflowPhase(2);" style="flex:1; min-width:180px; justify-content:center; background:#1e293b; border-color:#64748b; color:#cbd5e1; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">◀ <span id="ppatrol-btn-air-evaded" data-i18n="airEvadedBtn">Avión Evadido: Avanzar Casilla</span></button>
+                <button id="ppatrol-btn-damaged-p4" type="button" class="action-btn" onclick="setWorkflowPhase(4)" style="flex:1; min-width:180px; justify-content:center; background:#7f1d1d; border-color:#ef4444; color:#fee2e2; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">💥 <span id="ppatrol-btn-air-damaged" data-i18n="airDamagedBtn">Daño Sufrido: Ir a Averías (Fase 4) ➔</span></button>
               </div>
             </div>
 
@@ -771,11 +764,9 @@
 
           <!-- Quick Navigation Actions Bar -->
           <div class="action-bar-nav" style="margin-top:16px;">
-            <button class="btn-step-prev" onclick="setWorkflowPhase(2)">
-              ◀ <span id="ppatrol-btn-prev">Volver a Fase 2: Trayecto</span>
+            <button id="ppatrol-nav-prev" class="btn-step-prev" onclick="setWorkflowPhase(2)">
+              ◀ <span id="ppatrol-btn-prev" data-i18n="airPrevBtn">Volver a Fase 2: Trayecto</span>
             </button>
-            <button class="btn-step-next" onclick="setWorkflowPhase(3)">
-              <span id="ppatrol-btn-next">Pasar a Fase 3: Encuentro con Barcos ➔</span>
-            </button>
+            <button id="ppatrol-nav-next" class="btn-step-next" onclick="setWorkflowPhase(3)"><span id="ppatrol-btn-next" data-i18n="airNextBtn">Pasar a Fase 3: Encuentro con Barcos ➔</span></button>
           </div>
         </div>

@@ -3,6 +3,16 @@
 // =========================================================================
 function switchTab(tabId) {
       if (tabId === 'k1') tabId = 'chart-k1';
+      if (tabId === 'special-missions') {
+        switchTab('workflow');
+        setWorkflowPhase('special-missions');
+        return;
+      }
+      if (tabId === 'major-events') {
+        switchTab('workflow');
+        setWorkflowPhase('major-events');
+        return;
+      }
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       
@@ -31,6 +41,7 @@ function switchTab(tabId) {
         if (typeof syncAreaSelectDropdown === 'function' && typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.assignedArea) {
           syncAreaSelectDropdown(campaignState.workflow.assignedArea);
         }
+        if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
       }
       if (tabId === 'dock') {
         buildSubmarineList();
@@ -53,6 +64,12 @@ function switchTab(tabId) {
       if (tabId === 'operations-map') {
         if (typeof initOperationsMapHotspots === 'function') initOperationsMapHotspots();
         if (typeof updateOperationsMap === 'function') updateOperationsMap();
+      }
+      if (tabId === 'special-missions') {
+        if (typeof initSpecialMissionsTab === 'function') initSpecialMissionsTab();
+      }
+      if (tabId === 'major-events') {
+        if (typeof initMajorEventsTab === 'function') initMajorEventsTab();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -96,13 +113,22 @@ function switchTab(tabId) {
 
     function setWorkflowPhase(phaseId) {
       campaignState.workflow.currentPhase = phaseId;
-      const allPhases = ['0', 'school', '1', '2', 'patrol', '3', '4', '5'];
+      const allPhases = ['0', 'school', '1', 'special-missions', 'major-events', '2', 'patrol', '3', '4', '5'];
       allPhases.forEach(pid => {
         const elNav = document.getElementById('step-nav-' + pid);
         const elBody = document.getElementById('phase-content-' + pid);
         if (elNav) elNav.classList.toggle('active', String(pid) === String(phaseId));
         if (elBody) elBody.classList.toggle('active', String(pid) === String(phaseId));
       });
+      if (phaseId === 'special-missions') {
+        if (typeof initSpecialMissionsTab === 'function') initSpecialMissionsTab();
+      }
+      if (phaseId === 'major-events') {
+        if (typeof initMajorEventsTab === 'function') initMajorEventsTab();
+      }
+      if (phaseId === 0 || phaseId === '0') {
+        if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
+      }
       if (phaseId === 'patrol') {
         const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
         if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
@@ -200,6 +226,9 @@ function openModalViewer(title, dummySrc, chartKey) {
     }
 
     function openAirEncounterWorkflowModal() {
+      if (typeof updateWorkflowModalsLanguage === 'function') {
+        updateWorkflowModalsLanguage(window.currentLang === 'en');
+      }
       const modal = document.getElementById('modal-air-workflow');
       if (modal) modal.style.display = 'flex';
     }
@@ -210,6 +239,9 @@ function openModalViewer(title, dummySrc, chartKey) {
     }
 
     function openShipEncounterWorkflowModal() {
+      if (typeof updateWorkflowModalsLanguage === 'function') {
+        updateWorkflowModalsLanguage(window.currentLang === 'en');
+      }
       const modal = document.getElementById('modal-ship-workflow');
       if (modal) modal.style.display = 'flex';
     }
@@ -295,6 +327,20 @@ function openModalViewer(title, dummySrc, chartKey) {
         e.preventDefault();
         if (typeof switchTab === 'function') switchTab('compendium');
         showToast("📚 Todas las Tablas [7]");
+        return;
+      }
+      if (k === '8') {
+        e.preventDefault();
+        if (typeof switchTab === 'function') switchTab('workflow');
+        if (typeof setWorkflowPhase === 'function') setWorkflowPhase('special-missions');
+        showToast("🎯 Misiones Especiales [8]");
+        return;
+      }
+      if (k === '9') {
+        e.preventDefault();
+        if (typeof switchTab === 'function') switchTab('workflow');
+        if (typeof setWorkflowPhase === 'function') setWorkflowPhase('major-events');
+        showToast("🚩 Mayores Eventos [9]");
         return;
       }
 

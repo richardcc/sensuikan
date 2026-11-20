@@ -1,14 +1,20 @@
         <div id="phase-content-1" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>⚓</span>
-              <span id="p1-title">FASE 1: ZARPE Y ASIGNACIÓN DE PATRULLA</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('1: Mission Start', '', 'FLOW_1')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span id="p1-guide-label">📋 Guía de Fase</span>
-            </button>
-            <span id="p1-rules-pill" class="rules-ref-pill">[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">⚓</span>
+                <span id="p1-title">FASE 1: ZARPE Y ASIGNACIÓN DE PATRULLA</span>
+              </h2>
+              <div id="p1-sub-desc" class="phase-subtitle" data-i18n="p1Subtitle">
+                Asignación de misión y zona de patrulla [Tabla A1] • Selección de base • Comprobación de eventos mayores [7.14]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('1: Mission Start', '', 'FLOW_1')" class="action-btn">
+                <span>🗺️</span> <span id="p1-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p1-rules-pill" class="rules-ref-pill">[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -158,10 +164,18 @@
                   <!-- Rendered dynamically -->
                 </div>
 
-                <div style="margin-top:10px; text-align:right;">
-                  <button type="button" onclick="openAllMissionsGuideModal()" class="action-btn" style="border-color:#38bdf8; color:#7dd3fc; font-size:0.78rem; padding:3px 8px; display:inline-flex; align-items:center; gap:5px;">
-                    <span>📖</span> <span>Guía Oficial: Las 20 Misiones Especiales (7.1 a 7.18)</span>
+                <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <button type="button" onclick="openAllMissionsGuideModal()" class="action-btn" style="border-color:#64748b; color:#94a3b8; font-size:0.78rem; padding:4px 8px; display:inline-flex; align-items:center; gap:5px;">
+                    <span>📖</span> <span>Guía Rápida (7.1 - 7.18)</span>
                   </button>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" onclick="setWorkflowPhase('special-missions')" class="action-btn" style="border-color:#38bdf8; color:#7dd3fc; font-size:0.78rem; padding:4px 10px; display:inline-flex; align-items:center; gap:5px; background:rgba(2,132,199,0.18);">
+                      <span>🎯</span> <span>Misiones Especiales [7.1-7.13] ➔</span>
+                    </button>
+                    <button type="button" onclick="setWorkflowPhase('major-events')" class="action-btn" style="border-color:#ef4444; color:#fca5a5; font-size:0.78rem; padding:4px 10px; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.18);">
+                      <span>🚩</span> <span>Mayores Eventos [7.14] ➔</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

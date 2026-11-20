@@ -1,15 +1,20 @@
         <div id="phase-content-4" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>🛠️</span>
-              <span id="p4-title">FASE 4: CONTROL DE AVERÍAS, REPARACIONES Y RETIRADA A BASE</span>
-            </h2>
-            <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
-              <button type="button" onclick="openModalViewer('4: Patrol Return', '', 'FLOW_4')" class="action-btn" style="padding:4px 10px; font-size:0.86rem; border-color:var(--gold-500); color:var(--gold-300); display:flex; align-items:center; gap:6px;">
-                <span>🗺️</span> <span id="p4-sequence-btn-label">Carta de Secuencia</span>
-              </button>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🛠️</span>
+                <span id="p4-title">FASE 4: CONTROL DE AVERÍAS, REPARACIONES Y RETIRADA A BASE</span>
+              </h2>
+              <div id="p4-sub-desc" class="phase-subtitle" data-i18n="p4Subtitle">
+                Control de averías e inundación [B7] • Reparación de sistemas • Bajas de dotación • Criterios de retirada [8.6]
+              </div>
             </div>
-            <span class="rules-ref-pill">[Chart B7 • Reglas 8.5 y 8.6]</span>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('4: Patrol Return', '', 'FLOW_4')" class="action-btn">
+                <span>🗺️</span> <span id="p4-sequence-btn-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span class="rules-ref-pill" id="p4-rules-pill" data-i18n="p4RulesRef">[Tabla B7 • Reglas 8.5 y 8.6]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">

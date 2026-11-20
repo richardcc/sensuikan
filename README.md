@@ -5,6 +5,14 @@ Diseñado a medida para la tarjeta física oficial tamaño **US Letter ($280.0 \
 
 ---
 
+## 🌐 Política de Desarrollo: Aplicación 100% Bilingüe Obligatoria (ES / EN)
+
+> [!IMPORTANT]
+> **Norma estricta del proyecto**: Toda funcionalidad, pantalla, tabla de resolución, regla táctica, etiqueta, botón, modal o mensaje añadido a la aplicación web **debe ser rigurosamente bilingüe (Español e Inglés)** con paridad 1:1.
+> Cada vez que se añade o modifica contenido, debe incorporarse su correspondiente traducción tanto en `app/i18n.js` como en `app/js/i18n_ui.js` y comprobar que la conmutación entre **IDIOMA: ES** y **LANGUAGE: EN** funcione de manera integral.
+
+---
+
 ## 📁 Estructura del Proyecto
 
 ### 1. `stl/` (Modelos 3D para Impresión en Bambu Lab)

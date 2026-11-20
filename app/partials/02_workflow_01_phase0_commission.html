@@ -1,14 +1,20 @@
         <div id="phase-content-0" class="phase-body active">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #0f2d4a 0%, #1e3a8a 100%); border-left:4px solid var(--gold-500);">
-            <h2>
-              <span>🚢</span>
-              <span id="p0-title">FASE 0: ELECCIÓN DE SUBMARINO Y COMANDANTE (COMISIONADO)</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span>               <span data-i18n="p0PhaseGuide">📋 Guía de Fase</span>
-            </button>
-            <span class="rules-ref-pill" data-i18n="p0RulesRef">[Reglas 4.0 Setup, 4.8 Escuelas, Tabla H2]</span>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🚢</span>
+                <span id="p0-title">FASE 0: ELECCIÓN Y COMISIONADO DE SUBMARINO</span>
+              </h2>
+              <div id="p0-sub-desc" class="phase-subtitle" data-i18n="p0Subtitle">
+                Comisionado del buque • Asignación del Comandante • Carga reglamentaria de torpedos [Regla 4.5]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn">
+                <span>🗺️</span> <span id="p0-guide-label" data-i18n="p0PhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p0-rules-pill" class="rules-ref-pill" data-i18n="p0RulesRef">[Reglas 4.0 Preparación, 4.8 Escuelas, Tabla H2]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -28,11 +34,16 @@
 
               <div class="field-row">
                 <label data-i18n="p0HullLabel">Identificador del Buque (Nombre / Número):</label>
-                <input type="text" id="wf-sub-hull-number" value="I-19" onchange="onWorkflowHullNumberChange()" style="width:100%; font-size:1.1rem; font-weight:bold; color:var(--gold-400); background:var(--slate-900); border:1px solid var(--slate-600); border-radius:6px; padding:6px 10px; text-transform:uppercase;">
+                <input type="text" id="wf-sub-hull-number" value="" placeholder="ej. I-19" onchange="onWorkflowHullNumberChange()" style="width:100%; font-size:1.1rem; font-weight:bold; color:var(--gold-400); background:var(--slate-900); border:1px solid var(--slate-600); border-radius:6px; padding:6px 10px; text-transform:uppercase;">
+              </div>
+
+              <!-- Empty State Prompt (shown when no submarine is selected) -->
+              <div id="wf-sub-empty-prompt" style="display:none; padding:18px 16px; text-align:center; color:#94a3b8; font-style:italic; border:1px dashed #334155; border-radius:8px; margin-top:12px; background:rgba(15,23,42,0.45); font-size:0.88rem;">
+                <span data-i18n="p0EmptySubPrompt">⚓ Selecciona una clase de submarino imperial arriba para ver sus especificaciones y dotación reglamentaria de torpedos.</span>
               </div>
 
               <!-- Live Specs Display Card -->
-              <div id="wf-sub-specs-box" style="background:var(--slate-900); border:1px solid var(--slate-700); border-radius:8px; padding:12px; margin-top:12px;">
+              <div id="wf-sub-specs-box" style="display:none; background:var(--slate-900); border:1px solid var(--slate-700); border-radius:8px; padding:12px; margin-top:12px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-700); padding-bottom:8px; margin-bottom:8px; flex-wrap:wrap; gap:10px;">
                   <div style="display:flex; align-items:center; gap:10px;">
                     <img id="wf-spec-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:52px; height:52px; min-width:52px; min-height:52px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 3px 8px rgba(0,0,0,0.6); object-fit:cover;">
@@ -57,7 +68,7 @@
               </div>
 
               <!-- Dynamic Torpedo Loadout Card [Rule 4.5] -->
-              <div id="wf-torpedo-doctrine-box" style="background:rgba(15, 23, 42, 0.95); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-top:12px; box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+              <div id="wf-torpedo-doctrine-box" style="display:none; background:rgba(15, 23, 42, 0.95); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-top:12px; box-shadow:0 4px 14px rgba(0,0,0,0.4);">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
                   <span style="font-weight:bold; color:#38bdf8; font-size:0.88rem; display:flex; align-items:center; gap:6px;">
                     <span id="wf-torp-title">🚀 Carga Reglamentaria de Torpedos</span>

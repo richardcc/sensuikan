@@ -11,10 +11,16 @@
     }
 
     function getRankChitImage(rankIdx) {
-      if (rankIdx <= 0) return 'assets/tokens/Rank.jpg';
-      if (rankIdx === 1) return 'assets/tokens/Rank1.jpg';
-      if (rankIdx === 2) return 'assets/tokens/Rank2.jpg';
-      return 'assets/tokens/Rank3.jpg';
+      const map = [
+        'assets/tokens/Rank_SubLt.jpg',
+        'assets/tokens/Rank_Lt.jpg',
+        'assets/tokens/Rank1.jpg',
+        'assets/tokens/Rank2.jpg',
+        'assets/tokens/Rank3.jpg',
+        'assets/tokens/Rank_RearAdmiral.jpg'
+      ];
+      const p = map[rankIdx] || map[2];
+      return (typeof resolveAsset === 'function') ? resolveAsset(p) : p;
     }
 
     function cycleRank() {

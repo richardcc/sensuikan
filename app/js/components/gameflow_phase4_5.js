@@ -335,9 +335,9 @@
         notes: lockedAleutians ? "Patrulla obligatoria en Aleutianas desde Paramushiro [Regla 4.7.2]" : ""
       };
 
-      // Reset workflow tracking for next patrol
+      // Reset workflow tracking for next patrol: starts moored in Port [Rule 6.0]
       campaignState.workflow.currentPhase = 1;
-      campaignState.workflow.currentBoxIndex = 0;
+      campaignState.workflow.currentBoxIndex = -1;
       campaignState.workflow.patrolBoxesCompleted = false;
       campaignState.workflow.currentTarget = null;
       campaignState.workflow.encounterStatus = "none";
@@ -818,7 +818,7 @@
       const s = subs[subKey];
       const isEn = window.currentLang === 'en';
       const isCdrPlus = isCommanderOrHigher();
-      const requiresCdr = (subKey === 'Sen_Toku_Class' || subKey === 'Type_A_Modified');
+      const requiresCdr = (s && s.commander_rank_required === 'Commander') || (subKey === 'Sen_Toku_Class' || subKey === 'Type_A_Modified');
       const isRankBlocked = requiresCdr && !isCdrPlus;
       const curMonth = (campaignState.workflow && campaignState.workflow.selectedMonth) || "1941-12";
       const startMonth = getSubmarineStartMonth(subKey);

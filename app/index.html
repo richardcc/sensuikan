@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif+JP:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261120_02">
   <!-- PWA MANIFEST & ICONS -->
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icon-192.png">
@@ -65,32 +65,32 @@
     <!-- Row 2: Dedicated Navigation Tabs Bar -->
     <div class="header-nav-row">
       <nav class="nav-tabs" aria-label="Navegación principal">
-        <button class="tab-btn active" onclick="switchTab('workflow')" title="Atajo: [1]">
-          <span id="tab-nav-workflow">🎮 Game Flow</span>
+        <button class="tab-btn active" onclick="switchTab('workflow')" title="Game Flow: Fases de Campaña (0 a 5) [1]">
+          <span id="tab-nav-workflow" data-i18n="navWorkflow">🎮 Game Flow</span>
           <kbd class="nav-kbd-hint">1</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('chart-k1')" title="Atajo: [2]">
-          <span id="tab-nav-chartk1">🎴 Habilidades (Tabla K1)</span>
+        <button class="tab-btn" onclick="switchTab('chart-k1')" title="Habilidades y Rangos del Comandante (Tabla K1) [2]">
+          <span id="tab-nav-chartk1" data-i18n="navChartK1">🎴 Habilidades</span>
           <kbd class="nav-kbd-hint">2</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Atajo: [3]">
-          <span id="tab-nav-rogubukku">📜 Rogu Bukku (Log)</span>
+        <button class="tab-btn" onclick="switchTab('rogu-bukku')" title="Rogu Bukku: Cuaderno de Bitácora Oficial [3]">
+          <span id="tab-nav-rogubukku" data-i18n="navRoguBukku">📜 Rogu Bukku</span>
           <kbd class="nav-kbd-hint">3</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('operations-map')" title="Atajo: [4]">
-          <span id="tab-nav-opmap">🗺️ Mapa de Operaciones</span>
+        <button class="tab-btn" onclick="switchTab('operations-map')" title="Mapa de Operaciones y Teatros de Guerra [4]">
+          <span id="tab-nav-opmap" data-i18n="tabNavOpMap">🗺️ Operaciones</span>
           <kbd class="nav-kbd-hint">4</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('sub-board')" title="Atajo: [5]">
-          <span id="tab-nav-subboard">📋 Hoja de Submarino</span>
+        <button class="tab-btn" onclick="switchTab('sub-board')" title="Hoja Canónica Oficial del Submarino [5]">
+          <span id="tab-nav-subboard" data-i18n="tabNavSubBoard">📋 Submarino</span>
           <kbd class="nav-kbd-hint">5</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('dock')" title="Atajo: [6]">
-          <span id="tab-nav-dock">⚓ Submarines (18)</span>
+        <button class="tab-btn" onclick="switchTab('dock')" title="Flota Imperial: 24 Submarinos (18 Oficiales + 6 Fanmade) [6]">
+          <span id="tab-nav-dock" data-i18n="navDock">⚓ Flota (24)</span>
           <kbd class="nav-kbd-hint">6</kbd>
         </button>
-        <button class="tab-btn" onclick="switchTab('compendium')" title="Atajo: [7]">
-          <span id="tab-nav-compendium">📚 Todas las Tablas</span>
+        <button class="tab-btn" onclick="switchTab('compendium')" title="Todas las Tablas Oficiales de Consulta [7]">
+          <span id="tab-nav-compendium" data-i18n="navCompendium">📚 Tablas</span>
           <kbd class="nav-kbd-hint">7</kbd>
         </button>
       </nav>
@@ -121,17 +121,25 @@
             <span class="badge-num">1</span>
             <span id="lbl-step1">Zarpe</span>
           </div>
+          <div id="step-nav-special-missions" class="step-item" onclick="setWorkflowPhase('special-missions')" title="Misiones Especiales [Reglas 7.1 a 7.13]">
+            <span class="badge-num">🎯</span>
+            <span id="lbl-stepspecmissions" data-i18n="stepSpecMissions">Misiones</span>
+          </div>
+          <div id="step-nav-major-events" class="step-item" onclick="setWorkflowPhase('major-events')" title="Mayores Eventos Históricos [Regla 7.14]">
+            <span class="badge-num">🚩</span>
+            <span id="lbl-stepmajorevents" data-i18n="stepMajorEvents">Eventos</span>
+          </div>
           <div id="step-nav-2" class="step-item" onclick="setWorkflowPhase(2)" title="Atajo: [F2] o [T]">
             <span class="badge-num">2</span>
             <span id="lbl-step2">Trayecto</span>
           </div>
           <div id="step-nav-patrol" class="step-item" onclick="setWorkflowPhase('patrol')" title="Atajo: [P] • Encuentro con Aviones [Regla 8.3]">
             <span class="badge-num">✈️</span>
-            <span id="lbl-steppatrol">Encuentro con Aviones</span>
+            <span id="lbl-steppatrol" data-i18n="stepPatrol">Aviones</span>
           </div>
           <div id="step-nav-3" class="step-item" onclick="setWorkflowPhase(3)" title="Atajo: [F3] o [C]">
             <span class="badge-num">3</span>
-            <span id="lbl-step3">Encuentro con Barcos</span>
+            <span id="lbl-step3" data-i18n="step3">Barcos</span>
           </div>
           <div id="step-nav-4" class="step-item" onclick="setWorkflowPhase(4)" title="Atajo: [F4] o [A]">
             <span class="badge-num">4</span>
@@ -145,16 +153,22 @@
 
         <!-- =================== FASE 0: ELECCIÓN DE SUBMARINO Y COMANDANTE =================== -->
         <div id="phase-content-0" class="phase-body active">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #0f2d4a 0%, #1e3a8a 100%); border-left:4px solid var(--gold-500);">
-            <h2>
-              <span>🚢</span>
-              <span id="p0-title">FASE 0: ELECCIÓN DE SUBMARINO Y COMANDANTE (COMISIONADO)</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span>               <span data-i18n="p0PhaseGuide">📋 Guía de Fase</span>
-            </button>
-            <span class="rules-ref-pill" data-i18n="p0RulesRef">[Reglas 4.0 Setup, 4.8 Escuelas, Tabla H2]</span>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🚢</span>
+                <span id="p0-title">FASE 0: ELECCIÓN Y COMISIONADO DE SUBMARINO</span>
+              </h2>
+              <div id="p0-sub-desc" class="phase-subtitle" data-i18n="p0Subtitle">
+                Comisionado del buque • Asignación del Comandante • Carga reglamentaria de torpedos [Regla 4.5]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn">
+                <span>🗺️</span> <span id="p0-guide-label" data-i18n="p0PhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p0-rules-pill" class="rules-ref-pill" data-i18n="p0RulesRef">[Reglas 4.0 Preparación, 4.8 Escuelas, Tabla H2]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -174,11 +188,16 @@
 
               <div class="field-row">
                 <label data-i18n="p0HullLabel">Identificador del Buque (Nombre / Número):</label>
-                <input type="text" id="wf-sub-hull-number" value="I-19" onchange="onWorkflowHullNumberChange()" style="width:100%; font-size:1.1rem; font-weight:bold; color:var(--gold-400); background:var(--slate-900); border:1px solid var(--slate-600); border-radius:6px; padding:6px 10px; text-transform:uppercase;">
+                <input type="text" id="wf-sub-hull-number" value="" placeholder="ej. I-19" onchange="onWorkflowHullNumberChange()" style="width:100%; font-size:1.1rem; font-weight:bold; color:var(--gold-400); background:var(--slate-900); border:1px solid var(--slate-600); border-radius:6px; padding:6px 10px; text-transform:uppercase;">
+              </div>
+
+              <!-- Empty State Prompt (shown when no submarine is selected) -->
+              <div id="wf-sub-empty-prompt" style="display:none; padding:18px 16px; text-align:center; color:#94a3b8; font-style:italic; border:1px dashed #334155; border-radius:8px; margin-top:12px; background:rgba(15,23,42,0.45); font-size:0.88rem;">
+                <span data-i18n="p0EmptySubPrompt">⚓ Selecciona una clase de submarino imperial arriba para ver sus especificaciones y dotación reglamentaria de torpedos.</span>
               </div>
 
               <!-- Live Specs Display Card -->
-              <div id="wf-sub-specs-box" style="background:var(--slate-900); border:1px solid var(--slate-700); border-radius:8px; padding:12px; margin-top:12px;">
+              <div id="wf-sub-specs-box" style="display:none; background:var(--slate-900); border:1px solid var(--slate-700); border-radius:8px; padding:12px; margin-top:12px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-700); padding-bottom:8px; margin-bottom:8px; flex-wrap:wrap; gap:10px;">
                   <div style="display:flex; align-items:center; gap:10px;">
                     <img id="wf-spec-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:52px; height:52px; min-width:52px; min-height:52px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 3px 8px rgba(0,0,0,0.6); object-fit:cover;">
@@ -203,7 +222,7 @@
               </div>
 
               <!-- Dynamic Torpedo Loadout Card [Rule 4.5] -->
-              <div id="wf-torpedo-doctrine-box" style="background:rgba(15, 23, 42, 0.95); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-top:12px; box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+              <div id="wf-torpedo-doctrine-box" style="display:none; background:rgba(15, 23, 42, 0.95); border:1px solid #0284c7; border-radius:8px; padding:12px; margin-top:12px; box-shadow:0 4px 14px rgba(0,0,0,0.4);">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
                   <span style="font-weight:bold; color:#38bdf8; font-size:0.88rem; display:flex; align-items:center; gap:6px;">
                     <span id="wf-torp-title">🚀 Carga Reglamentaria de Torpedos</span>
@@ -571,23 +590,22 @@
 
         <!-- =================== FASE DE ESCUELAS NAVALES: ADIESTRAMIENTO =================== -->
         <div id="phase-content-school" class="phase-body">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e3a8a 0%, #064e3b 100%); border-left:4px solid var(--gold-500); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div>
-              <h2 style="margin:0; display:flex; align-items:center; gap:8px;">
-                <span>🏫</span>
-                <span id="pschool-title">TABLA [F1]: ESCUELA DE SUBMARINOS DE KURE Y ESPECIALIDADES (REGLA 4.8)</span>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🏫</span>
+                <span id="pschool-title">FASE DE ESCUELAS: ADIESTRAMIENTO NAVAL Y ESPECIALIDADES [REGLA 4.8]</span>
               </h2>
-              <div id="pschool-sub-desc" style="font-size:0.86rem; color:#93c5fd; margin-top:3px;">
-                Escuela de Kure [F1] • Minisubmarinos [F2] • Escuela Aérea Kasumigaura [F3] • Escuela Kaiten Otsujima [F4] • Tablas Activas: [B1], [B6], [M5], [M7], [K5], [K6]
+              <div id="pschool-sub-desc" class="phase-subtitle" data-i18n="pSchoolSubtitle">
+                Escuela de Kure [F1] • Minisubmarinos [F2] • Kasumigaura [F3] • Kaiten Otsujima [F4] • Tablas: B1, B6, M5, M7, K5, K6
               </div>
             </div>
             
-            <!-- The integrated tables below are the single source of reference. -->
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto;">
-              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); display:flex; align-items:center; gap:4px;">
-                <span>🗺️</span> <span id="pschool-guide-label">📋 Guía de Fase</span>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn">
+                <span>🗺️</span> <span id="pschool-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
               </button>
-              <button type="button" onclick="toggleSchoolTablesDrawer()" id="btn-toggle-school-tables" class="action-btn" style="border-color:#38bdf8; color:#f8fafc; font-weight:bold; font-size:0.84rem; padding:4px 9px; background:rgba(2,132,199,0.25);">
+              <button type="button" onclick="toggleSchoolTablesDrawer()" id="btn-toggle-school-tables" class="action-btn" style="border-color:#38bdf8; color:#f8fafc; background:rgba(2,132,199,0.25);">
                 👁️ Ocultar Tablas ▲
               </button>
               <span id="pschool-rules-pill" class="rules-ref-pill">[Regla 4.8 • Tablas F1-F4]</span>
@@ -1034,15 +1052,21 @@
         <!-- =================== FASE 1: ZARPE Y ASIGNACIÓN =================== -->
         <div id="phase-content-1" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>⚓</span>
-              <span id="p1-title">FASE 1: ZARPE Y ASIGNACIÓN DE PATRULLA</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('1: Mission Start', '', 'FLOW_1')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span id="p1-guide-label">📋 Guía de Fase</span>
-            </button>
-            <span id="p1-rules-pill" class="rules-ref-pill">[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">⚓</span>
+                <span id="p1-title">FASE 1: ZARPE Y ASIGNACIÓN DE PATRULLA</span>
+              </h2>
+              <div id="p1-sub-desc" class="phase-subtitle" data-i18n="p1Subtitle">
+                Asignación de misión y zona de patrulla [Tabla A1] • Selección de base • Comprobación de eventos mayores [7.14]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('1: Mission Start', '', 'FLOW_1')" class="action-btn">
+                <span>🗺️</span> <span id="p1-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p1-rules-pill" class="rules-ref-pill">[Reglas 4.0, 6.0 Paso 1, 7.14 • Tabla A1]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -1192,10 +1216,18 @@
                   <!-- Rendered dynamically -->
                 </div>
 
-                <div style="margin-top:10px; text-align:right;">
-                  <button type="button" onclick="openAllMissionsGuideModal()" class="action-btn" style="border-color:#38bdf8; color:#7dd3fc; font-size:0.78rem; padding:3px 8px; display:inline-flex; align-items:center; gap:5px;">
-                    <span>📖</span> <span>Guía Oficial: Las 20 Misiones Especiales (7.1 a 7.18)</span>
+                <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <button type="button" onclick="openAllMissionsGuideModal()" class="action-btn" style="border-color:#64748b; color:#94a3b8; font-size:0.78rem; padding:4px 8px; display:inline-flex; align-items:center; gap:5px;">
+                    <span>📖</span> <span>Guía Rápida (7.1 - 7.18)</span>
                   </button>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" onclick="setWorkflowPhase('special-missions')" class="action-btn" style="border-color:#38bdf8; color:#7dd3fc; font-size:0.78rem; padding:4px 10px; display:inline-flex; align-items:center; gap:5px; background:rgba(2,132,199,0.18);">
+                      <span>🎯</span> <span>Misiones Especiales [7.1-7.13] ➔</span>
+                    </button>
+                    <button type="button" onclick="setWorkflowPhase('major-events')" class="action-btn" style="border-color:#ef4444; color:#fca5a5; font-size:0.78rem; padding:4px 10px; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.18);">
+                      <span>🚩</span> <span>Mayores Eventos [7.14] ➔</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1260,17 +1292,234 @@
         </div>
 
         <!-- PHASE 2: NAVEGACIÓN Y TRAYECTO -->
+<!-- ====================================================================
+     WORKFLOW PHASE 7.1-7.13: CENTRO DE MISIONES ESPECIALES
+     Misiones Estratégicas y Operaciones Especiales de la Flota Imperial
+     ==================================================================== -->
+<div id="phase-content-special-missions" class="phase-body">
+  <div id="tab-special-missions">
+    <!-- Toolbar: Título y Control de Misiones Especiales -->
+    <div class="phase-header-banner">
+      <div class="phase-header-info">
+        <h2>
+          <span class="phase-header-icon">🎯</span>
+          <span id="lbl-spec-missions-title">MISIONES ESPECIALES: OPERACIONES ESTRATÉGICAS IJN [REGLAS 7.1 - 7.13]</span>
+        </h2>
+        <div id="lbl-spec-missions-sub" class="phase-subtitle" data-i18n="pSpecMissionsSubtitle">
+          Infiltración Ko-Hyoteki, Vuelos Glen/Seiran, Líneas de Piquete, Misión Yanagi a Europa, Ataques Kaiten y Minado
+        </div>
+      </div>
+
+      <!-- Regla Oficial 7.13 Badge & Navegación -->
+      <div class="phase-header-actions">
+        <span id="spec-missions-rules-pill" class="rules-ref-pill" title="Regla Oficial 7.13">
+          ⭐ Regla 7.13: Misión Especial = 2 Patrullas
+        </span>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="border-color:#38bdf8; color:#7dd3fc;">
+          <span>⚓</span> <span id="spec-missions-back-btn" data-i18n="pSpecBackSortie">Volver a Zarpe (F1)</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('major-events')" style="border-color:#ef4444; color:#fca5a5;">
+          <span>🚩</span> <span id="spec-missions-to-major-btn" data-i18n="pSpecToMajorEvents">Mayores Eventos [7.14] ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel Resumen del Submarino Activo y Capacidades Operativas -->
+    <div id="spec-sub-capabilities-panel" style="background:rgba(30,41,59,0.7); border:1px solid #475569; border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid #334155; padding-bottom:8px; margin-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:1.2rem;">🚢</span>
+          <div>
+            <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;" data-i18n="specSubCommissionedLabel">Buque Comisionado Activo</span>
+            <h4 id="spec-active-sub-name" style="margin:0; color:#f8fafc; font-size:1.02rem; font-family:'Cinzel', serif;">--</h4>
+          </div>
+        </div>
+        <div id="spec-active-sub-badges" style="display:flex; gap:6px; flex-wrap:wrap;">
+          <!-- Se rellena dinámicamente con badges (Avión, Minisub, Kaiten, Minas, Gran Radio) -->
+        </div>
+      </div>
+      <div id="spec-active-sub-desc" style="font-size:0.80rem; color:#cbd5e1; line-height:1.4;">
+        Selecciona una misión especial a continuación para comprobar si tu buque está equipado para ejecutarla y simular su resolución táctica.
+      </div>
+    </div>
+
+    <!-- Contenedor Principal: Selector de Misiones (Grid de Tarjetas) -->
+    <div id="spec-missions-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px; margin-bottom:20px;">
+      <!-- Las tarjetas de misiones se renderizan dinámicamente por JS o estáticas bilingües -->
+    </div>
+
+    <!-- Modal / Drawer Interactivo de Resolución de Misión Especial -->
+    <div id="spec-mission-resolver-panel" style="display:none; background:#0f172a; border:2px solid var(--gold-500); border-radius:8px; padding:16px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.6);">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="spec-res-icon" style="font-size:1.4rem;">🎯</span>
+          <div>
+            <h3 id="spec-res-title" style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; color:var(--gold-300);">RESOLUCIÓN DE MISIÓN</h3>
+            <span id="spec-res-rule" style="font-size:0.75rem; color:#94a3b8;">Regla Oficial Sensuikan</span>
+          </div>
+        </div>
+        <button type="button" class="btn-dice" onclick="closeSpecialMissionResolver()" style="padding:4px 10px; font-size:0.78rem;">✕ Cerrar</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start;">
+        <!-- Columna Izquierda: Instrucciones y Modificadores -->
+        <div>
+          <div id="spec-res-briefing" style="font-size:0.82rem; color:#cbd5e1; margin-bottom:12px; line-height:1.45; background:rgba(30,41,59,0.5); padding:10px; border-radius:6px; border-left:3px solid var(--gold-500);"></div>
+          <div id="spec-res-controls" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <!-- Columna Derecha: Resultado Interactivo y Concesión de Recompensa -->
+        <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:12px;">
+          <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:6px; text-transform:uppercase;">Resultado Táctico de la Misión</div>
+          <div id="spec-res-output" style="min-height:70px; background:#020617; border:1px dashed #475569; border-radius:4px; padding:10px; font-size:0.84rem; color:#e2e8f0; line-height:1.4; margin-bottom:12px;">
+            Pulsa el botón de tirada para resolver la misión según sus tablas oficiales.
+          </div>
+          <div id="spec-res-reward-box" style="display:none; background:rgba(34,197,94,0.15); border:1px solid #22c55e; border-radius:6px; padding:10px; text-align:center;">
+            <strong style="color:#86efac; font-size:0.88rem; display:block; margin-bottom:4px;">🎉 ¡MISIÓN ESPECIAL COMPLETADA CON ÉXITO!</strong>
+            <span style="font-size:0.78rem; color:#cbd5e1; display:block; margin-bottom:8px;">Regla 7.13: Se otorgan 2 Patrullas Exitosas para condecoraciones y promociones.</span>
+            <button type="button" id="btn-claim-spec-reward" class="action-btn" onclick="claimSpecialMissionReward()" style="background:#22c55e; color:#0f172a; font-weight:bold; border:none; padding:6px 14px; font-size:0.82rem; box-shadow:0 2px 6px rgba(34,197,94,0.4);">
+              ⭐ Registrar 2 Patrullas en Rogu Bukku [Regla 7.13]
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación Inferior de Fase -->
+    <div class="action-bar-nav" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:14px; border-top:1px solid #334155;">
+      <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="padding:8px 16px;">
+        <span>← Volver a Fase 1: Zarpe</span>
+      </button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('major-events')" style="padding:8px 16px; background:rgba(239,68,68,0.2); border-color:#ef4444; color:#fca5a5;">
+          <span>🚩 Mayores Eventos [7.14] ➔</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(2)" style="padding:8px 16px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;">
+          <span>Continuar a Fase 2: Trayecto ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ====================================================================
+     WORKFLOW PHASE 7.14: CRONOLOGÍA DE MAYORES EVENTOS HISTÓRICOS
+     Las 28 Fichas Oficiales de Eventos Mayores de Sensuikan (1941–1945)
+     ==================================================================== -->
+<div id="phase-content-major-events" class="phase-body">
+  <div id="tab-major-events">
+    <!-- Toolbar: Título y Filtros de Mayores Eventos -->
+    <div class="phase-header-banner">
+      <div class="phase-header-info">
+        <h2>
+          <span class="phase-header-icon">🚩</span>
+          <span id="lbl-major-events-title">MAYORES EVENTOS: CRONOLOGÍA HISTÓRICA IJN [REGLA 7.14]</span>
+        </h2>
+        <div id="lbl-major-events-sub" class="phase-subtitle" data-i18n="pMajorEventsSubtitle">
+          28 Fichas Oficiales de Eventos Mayores • Asignación Prioritaria de Misiones según Fecha y Teatro Naval
+        </div>
+      </div>
+
+      <!-- Acciones Rápidas -->
+      <div class="phase-header-actions">
+        <span class="rules-ref-pill" style="border-color:#ef4444; color:#fca5a5;">
+          [Regla 7.14 • 28 Fichas Históricas]
+        </span>
+        <button type="button" id="btn-toggle-event-chits-flip" class="action-btn" onclick="toggleMajorEventsFlip()" style="border-color:var(--gold-500); color:var(--gold-300);" title="Alterna entre la cara roja (Anverso Histórico) y la cara blanca (Reverso con Misiones Especiales)">
+          <span>🔄</span> <span id="lbl-major-events-flip-btn" data-i18n="pMajorFlipBtn">Voltear Fichas</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase('special-missions')" style="border-color:#22c55e; color:#86efac;">
+          <span>🎯</span> <span id="lbl-major-to-spec-btn" data-i18n="pMajorToSpecMissions">Misiones Especiales ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Filtros Multifunción -->
+    <div style="background:rgba(30,41,59,0.7); border:1px solid #334155; border-radius:8px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <!-- Filtros de Año -->
+      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <span style="font-size:0.78rem; color:#94a3b8; font-weight:bold; margin-right:4px;">AÑO:</span>
+        <button type="button" class="action-btn event-filter-year active" onclick="filterMajorEventsByYear('all', this)" style="padding:3px 9px; font-size:0.75rem;">TODOS</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1941', this)" style="padding:3px 9px; font-size:0.75rem;">1941</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1942', this)" style="padding:3px 9px; font-size:0.75rem;">1942</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1943', this)" style="padding:3px 9px; font-size:0.75rem;">1943</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1944', this)" style="padding:3px 9px; font-size:0.75rem;">1944</button>
+        <button type="button" class="action-btn event-filter-year" onclick="filterMajorEventsByYear('1945', this)" style="padding:3px 9px; font-size:0.75rem;">1945</button>
+      </div>
+
+      <!-- Filtro de Teatro / Zona y Botón Mes Actual -->
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <select id="event-filter-zone-select" onchange="filterMajorEventsByZone(this.value)" style="background:#0f172a; color:#f8fafc; border:1px solid #475569; padding:4px 8px; border-radius:4px; font-size:0.78rem;">
+          <option value="all">Todas las Zonas Navales</option>
+          <option value="Pearl Harbor">Pearl Harbor</option>
+          <option value="Marshall">Marshall</option>
+          <option value="Midway">Midway</option>
+          <option value="Aleutians">Aleutians</option>
+          <option value="Solomon">Solomons / Guadalcanal</option>
+          <option value="Mariana">Marianas / Filipinas</option>
+          <option value="Japan">Japan / Iwo Jima / Okinawa</option>
+        </select>
+        <button type="button" class="action-btn" onclick="filterMajorEventsToCurrentCampaign()" style="font-size:0.78rem; padding:4px 10px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; font-weight:bold; border:none;" title="Filtra los eventos que coinciden con la fecha actual de tu campaña">
+          📅 Mes Actual de Campaña
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel Informativo de Asignación de Misión por Evento Mayor -->
+    <div id="major-event-active-banner" style="background:rgba(239,68,68,0.12); border:1px solid #ef4444; border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">⚡</span>
+          <div>
+            <strong style="color:#fca5a5; font-size:0.88rem; display:block;">REGLA 7.14: EVENTOS MAYORES EN TU FECHA DE PATRULLA</strong>
+            <span id="major-event-active-msg" style="font-size:0.80rem; color:#fecaca;">
+              Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. Si estás en la zona indicada, consulta el reverso para determinar si tu submarino participa en la misión histórica.
+            </span>
+          </div>
+        </div>
+        <button type="button" id="btn-apply-campaign-event" class="action-btn" onclick="assignActiveCampaignEventMission()" style="background:#ef4444; color:#fff; font-weight:bold; border:none; padding:6px 12px; font-size:0.80rem; box-shadow:0 2px 6px rgba(239,68,68,0.4);">
+          ⭐ Asignar a Patrulla Actual
+        </button>
+      </div>
+    </div>
+
+    <!-- Catálogo de las 28 Fichas de Eventos Mayores (Grid) -->
+    <div id="major-events-chits-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px;">
+      <!-- Rellenado dinámicamente por major_events.js -->
+    </div>
+
+    <!-- Navegación Inferior de Fase -->
+    <div class="action-bar-nav" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:14px; border-top:1px solid #334155;">
+      <button type="button" class="action-btn" onclick="setWorkflowPhase('special-missions')" style="padding:8px 16px;">
+        <span>← Ver Misiones Especiales</span>
+      </button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(1)" style="padding:8px 16px; background:rgba(30,41,59,0.8);">
+          <span>Fase 1: Zarpe</span>
+        </button>
+        <button type="button" class="action-btn" onclick="setWorkflowPhase(2)" style="padding:8px 16px; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;">
+          <span>Continuar a Fase 2: Trayecto ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
         <div id="phase-content-2" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>🗺️</span>
-              <span id="p2-title">FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('2: Patrol Transit', '', 'FLOW_2')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span>📋 Guía de Fase</span>
-            </button>
-            <span id="p2-rules-pill" class="rules-ref-pill">[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🗺️</span>
+                <span id="p2-title">FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS</span>
+              </h2>
+              <div id="p2-sub-desc" class="phase-subtitle" data-i18n="p2Subtitle">
+                Navegación secuencial por casillas de tránsito y estación • Contactos de patrulla y encuentros [Tablas A2, A3 / B11]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('2: Patrol Transit', '', 'FLOW_2')" class="action-btn">
+                <span>🗺️</span> <span id="p2-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span id="p2-rules-pill" class="rules-ref-pill">[Reglas 6.0 Paso 2, 8.1 • Tabla A3 / B11]</span>
+            </div>
           </div>
 
           <!-- DYNAMIC PATROL ROUTE TRACK STRIP -->
@@ -1314,40 +1563,59 @@
               </div>
             </div>
 
-            <!-- Encounter Roll [A3] -->
+            <!-- Encounter Roll [A3] & Port Status [4.7.6] -->
             <div class="flow-card">
               <h4 id="p2-c2-title">2. Tirada de Encuentros en Tabla [A3]</h4>
               <p id="p2-encounter-help" style="font-size:0.80rem; color:var(--slate-300);">Lanza 2d6 en cada casilla de estación o tránsito:</p>
               
-              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px; border-radius:6px; flex-wrap:wrap; gap:8px;">
-                <div>
-                  <div id="p2-roll-result-label" style="font-size:0.84rem; color:var(--slate-400);">Resultado 2d6:</div>
-                  <div id="wf-encounter-roll-res" style="font-size:1.15rem; font-weight:800; color:var(--gold-300);">Sin Tirar</div>
-                </div>
-                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                  <button id="p2-roll-btn" class="btn-dice" onclick="rollBoxEncounter()">🎲 Tirar 2d6 [A3]</button>
-                  <div style="display:flex; align-items:center; gap:4px; background:var(--slate-800); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
-                    <span style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
-                    <select id="sel-manual-a3-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.82rem; padding:2px 4px; border-radius:3px;">
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7" selected>7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </select>
-                    <button type="button" onclick="rollBoxEncounter(parseInt(document.getElementById('sel-manual-a3-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Aplicar tirada física de mesa">Aplicar</button>
+              <div id="p2-a3-controls-wrapper">
+                <div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy-900); padding:10px; border-radius:6px; flex-wrap:wrap; gap:8px;">
+                  <div>
+                    <div id="p2-roll-result-label" style="font-size:0.84rem; color:var(--slate-400);">Resultado 2d6:</div>
+                    <div id="wf-encounter-roll-res" style="font-size:1.15rem; font-weight:800; color:var(--gold-300);">Sin Tirar</div>
                   </div>
+                  <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                    <button id="p2-roll-btn" class="btn-dice" onclick="rollBoxEncounter()">🎲 Tirar 2d6 [A3]</button>
+                    <div style="display:flex; align-items:center; gap:4px; background:var(--slate-800); border:1px solid var(--slate-600); border-radius:4px; padding:2px 6px;">
+                      <span style="font-size:0.74rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
+                      <select id="sel-manual-a3-dice" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.82rem; padding:2px 4px; border-radius:3px;">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7" selected>7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                      </select>
+                      <button type="button" onclick="rollBoxEncounter(parseInt(document.getElementById('sel-manual-a3-dice').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:1px solid #3b82f6; border-radius:3px; padding:3px 6px; font-size:0.75rem; cursor:pointer;" title="Aplicar tirada física de mesa">Aplicar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="wf-encounter-detail-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem; margin-top:8px;">
+                  <strong id="p2-status-label">Estado:</strong> <span id="wf-enc-status-text">Listo para tirar en esta casilla.</span>
                 </div>
               </div>
 
-              <div id="wf-encounter-detail-box" style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; font-size:0.80rem;">
-                <strong id="p2-status-label">Estado:</strong> <span id="wf-enc-status-text">Listo para tirar en esta casilla.</span>
+              <!-- Dedicated Port View (Only shown when currentBoxIndex === -1) -->
+              <div id="p2-port-controls-wrapper" style="display:none; background:rgba(15,23,42,0.85); border:1px solid #0284c7; border-radius:6px; padding:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <span style="font-size:1.4rem;">⚓</span>
+                  <div>
+                    <div id="p2-port-status-title" style="font-weight:800; color:#38bdf8; font-size:0.95rem;">BUQUE AMARRADO EN BASE NAVAL</div>
+                    <div id="p2-port-status-sub" style="font-size:0.75rem; color:#94a3b8;">Sin navegación activa • No aplica Tabla [A3]</div>
+                  </div>
+                </div>
+                <div id="p2-port-status-desc" style="font-size:0.80rem; color:var(--slate-300); line-height:1.45; margin-bottom:12px;">
+                  En puerto <strong>no se aplican encuentros navales (Tabla A3)</strong>. La tripulación se encuentra aprovisionando torpedos, combustible y órdenes de patrulla. La única amenaza operativa contemplada en puerto son las <strong>Incursiones Aéreas [Regla 4.7.6]</strong> (evaluadas durante el Refit a partir de enero de 1944).
+                </div>
+                <button type="button" class="action-btn" onclick="nextPatrolBox()" style="width:100%; justify-content:center; background:linear-gradient(135deg, #0284c7, #0369a1); border-color:#38bdf8; color:#fff; font-weight:800; padding:8px 12px; font-size:0.88rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+                  <span id="p2-btn-sail-text">⚓ Zarpar a la Mar ➔ Iniciar Tránsito 1</span>
+                </button>
               </div>
 
               <!-- Hidden container for backwards-compatibility -->
@@ -1357,7 +1625,7 @@
             <!-- Special Mission / Random Events -->
             <div class="flow-card">
               <h4 id="p2-c3-title">3. Casilla de Misión y Eventos</h4>
-              <div style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
+              <div id="p2-c3-dynamic-content" style="font-size:0.80rem; color:var(--slate-300); line-height:1.5;">
                 <p><strong id="p2-mission-box-label">Casilla de Misión:</strong> <span id="p2-mission-box-help">La primera casilla que no es de tránsito activa la Misión Especial:</span></p>
                 <ul style="margin-left:16px; margin-top:4px; font-size:0.86rem; color:var(--slate-400);">
                   <li id="p2-mission-midget">Mini-Submarinos (Mapas M1-M7)</li>
@@ -1374,7 +1642,7 @@
           </div>
 
           <!-- CHARTS A2 & A3: PATROL AREA & TRANSIT ENCOUNTERS (DIRECTAMENTE EN FASE 2) -->
-          <div style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
+          <div id="p2-a3-main-container" style="background:var(--slate-800); border:1px solid var(--gold-600); border-radius:10px; padding:16px; margin-top:16px;">
             <div style="background:var(--navy-900); padding:10px 14px; border-radius:6px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
               <div>
                 <h4 style="margin:0; color:var(--gold-300); font-size:1.05rem; display:flex; align-items:center; gap:8px;">
@@ -1383,8 +1651,9 @@
                 </h4>
                 <span id="p2-a3-subtitle" style="font-size:0.86rem; color:var(--slate-400);">Tabla de contactos por zona de operaciones. Lanza 2d6 al entrar en cada casilla de patrulla o tránsito.</span>
               </div>
-              <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <span id="p2-current-zone-badge" style="background:#065f46; border:1px solid #10b981; color:#a7f3d0; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.86rem;">Zona Actual: Transit</span>
+                <span id="p2-zone-toggle-btn-container"></span>
                 <button type="button" onclick="rollBoxEncounter()" class="btn-dice" style="padding:6px 14px; font-size:0.82rem;">
                   🎲 Tirar [A3]
                 </button>
@@ -1452,21 +1721,26 @@
                 <!-- =================== FASE PATRULLA: ENCUENTROS ORDINARIOS (AIRCRAFT & SHIP) =================== -->
                 <!-- =================== FASE PATRULLA: ENCUENTROS ORDINARIOS (AIRCRAFT & SHIP) =================== -->
         <div id="phase-content-patrol" class="phase-body">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e293b 0%, #0369a1 100%); border-left:4px solid #38bdf8;">
-            <h2>
-              <span>✈️</span>
-              <span id="ppatrol-title">ENCUENTRO CON AVIONES [REGLA 8.3]</span>
-            </h2>
-            <div style="margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-              <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-size:0.82rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.22); display:flex; align-items:center; gap:6px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(239,68,68,0.3);">
-                <span>📖</span> <span>Guía Táctica: Ataque Aéreo [8.3]</span>
-              </button>
-              <span id="ppatrol-badge-zone" style="background:rgba(0,0,0,0.4); border:1px solid #38bdf8; color:#7dd3fc; padding:4px 10px; border-radius:6px; font-weight:700; font-size:0.84rem;">Zona: Casilla de Patrulla</span>
-              <button type="button" onclick="setWorkflowPhase(2)" class="action-btn" style="padding:4px 10px; font-size:0.84rem; border-color:#94a3b8; color:#e2e8f0; display:flex; align-items:center; gap:6px;">
-                <span>🗺️</span> <span id="ppatrol-btn-back-track">Ver Ruta Trayecto</span>
-              </button>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">✈️</span>
+                <span id="ppatrol-title">FASE AÉREA: ENCUENTRO CON AVIONES [REGLA 8.3]</span>
+              </h2>
+              <div id="ppatrol-sub-desc" class="phase-subtitle" data-i18n="pPatrolSubtitle">
+                Secuencia: Detección y Avión Atacante ➔ Reacción Submarino ➔ Fuego Antiaéreo [F1] o Inmersión de Emergencia
+              </div>
             </div>
-            <span id="ppatrol-rules-pill" class="rules-ref-pill">[Regla 8.3 • Tablas A2, A4, B5, B7, FIDO]</span>
+            <div class="phase-header-actions">
+              <button id="ppatrol-btn-top-air-guide" type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.22);">
+                <span>📖</span> <span id="ppatrol-btn-top-air-guide-label" data-i18n="airTacticalGuideBtn">Guía Táctica: Ataque Aéreo [8.3]</span>
+              </button>
+              <span id="ppatrol-badge-zone" style="background:rgba(0,0,0,0.4); border:1px solid #38bdf8; color:#7dd3fc; padding:3px 8px; border-radius:6px; font-weight:700; font-size:0.78rem;">Zona: Casilla de Patrulla</span>
+              <button id="ppatrol-btn-top-back-track" type="button" onclick="setWorkflowPhase(2)" class="action-btn" style="border-color:#94a3b8; color:#e2e8f0;">
+                <span>🗺️</span> <span id="ppatrol-btn-back-track" data-i18n="airBackTrackBtn">Ver Ruta Trayecto</span>
+              </button>
+              <span id="ppatrol-rules-pill" class="rules-ref-pill">[Regla 8.3 • Tablas A2, A4, B5, B7, FIDO]</span>
+            </div>
           </div>
 
           <!-- Active Contact Status Bar -->
@@ -1490,9 +1764,7 @@
                 <span>✈️</span> <span>Secuencia Táctica de Encuentro Aéreo [Regla Oficial 8.3]</span>
               </h4>
               <div style="display:flex; align-items:center; gap:8px;">
-                <button type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:3px 10px; font-size:0.78rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.2); font-weight:700; cursor:pointer; border-radius:4px; box-shadow:0 2px 6px rgba(239,68,68,0.25);">
-                  <span>📖</span> <span>Ver Workflow Completo [8.3]</span>
-                </button>
+                <button id="ppatrol-btn-air-workflow-open" type="button" onclick="openAirEncounterWorkflowModal()" class="action-btn" style="padding:3px 10px; font-size:0.78rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.2); font-weight:700; cursor:pointer; border-radius:4px; box-shadow:0 2px 6px rgba(239,68,68,0.25);"><span>📖</span> <span id="ppatrol-btn-air-workflow-label" data-i18n="airViewFullWorkflowBtn">Ver Workflow Completo [8.3]</span></button>
                 <span id="ppatrol-air-badge" class="badge-air-category" style="background:#7f1d1d; color:#fca5a5; border:1px solid #ef4444; font-size:0.75rem; padding:2px 8px; border-radius:4px; font-weight:700;">Aéreo</span>
               </div>
             </div>
@@ -1514,15 +1786,13 @@
                 </div>
                 <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                   <span style="font-size:0.75rem; color:#86efac; background:rgba(34,197,94,0.2); padding:2px 8px; border-radius:4px; border:1px solid #22c55e;">Crash Dive (2d6)</span>
-                  <button type="button" class="btn-dice" onclick="rollInteractiveA4()" style="background:#1e40af; border-color:#3b82f6; font-size:0.76rem; padding:4px 8px;">
-                    🎲 <span id="ppatrol-btn-a4-label">Tirar [A4]</span>
-                  </button>
+                  <button id="ppatrol-btn-a4" type="button" class="btn-dice" onclick="rollInteractiveA4()" style="background:#1e40af; border-color:#3b82f6; font-size:0.76rem; padding:4px 8px;">🎲 <span id="ppatrol-btn-a4-label" data-i18n="airRollA4Btn">Tirar [A4]</span></button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #3b82f6; border-radius:3px; padding:1px 4px;">
                     <span id="ppatrol-lbl-manual-a4" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
                     <select id="ppatrol-sel-manual-a4" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
                       <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                     </select>
-                    <button type="button" onclick="rollInteractiveA4(parseInt(document.getElementById('ppatrol-sel-manual-a4').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a4">Aplicar</span></button>
+                    <button id="ppatrol-btn-apply-a4-btn" type="button" onclick="rollInteractiveA4(parseInt(document.getElementById(\'ppatrol-sel-manual-a4\').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a4" data-i18n="btnApply">Aplicar</span></button>
                   </div>
                 </div>
               </div>
@@ -1654,8 +1924,8 @@
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; background:#071220; border:1px solid #334155; border-radius:6px; padding:6px 10px; margin-bottom:8px;">
                 <span style="font-size:0.78rem; font-weight:bold; color:var(--gold-300);">Tirada 1d6 de Detección de FIDO:</span>
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                  <button type="button" class="btn-dice" onclick="rollPatrolFidoCheck()" style="background:#0284c7; border-color:#38bdf8; font-size:0.74rem; padding:3px 8px;">
-                    🎲 <span id="ppatrol-btn-fido-check">Tirar Chequeo (1d6)</span>
+                  <button id="ppatrol-btn-fido-roll" type="button" class="btn-dice" onclick="rollPatrolFidoCheck()" style="background:#0284c7; border-color:#38bdf8; font-size:0.74rem; padding:3px 8px;">
+                    🎲 <span id="ppatrol-btn-fido-check" data-i18n="airFidoCheckBtn">Tirar Chequeo (1d6)</span>
                   </button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
                     <span style="color:var(--gold-300);">Mesa:</span>
@@ -1663,7 +1933,7 @@
                       <option value="1">1</option><option value="2">2</option><option value="3">3</option>
                       <option value="4">4</option><option value="5">5</option><option value="6">6</option>
                     </select>
-                    <button type="button" onclick="rollPatrolFidoCheck(parseInt(document.getElementById('ppatrol-sel-fido-check').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                    <button type="button" onclick="rollPatrolFidoCheck(parseInt(document.getElementById('ppatrol-sel-fido-check').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;" data-i18n="btnApply">
                       Aplicar
                     </button>
                   </div>
@@ -1714,15 +1984,13 @@
                 </div>
                 <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                   <span style="font-size:0.75rem; color:#fde047; background:rgba(245,158,11,0.2); padding:2px 8px; border-radius:4px; border:1px solid #f59e0b;">Tirada 2d6 simultánea</span>
-                  <button type="button" class="btn-dice" onclick="rollInteractiveA2()" style="background:#b91c1c; border-color:#ef4444; font-size:0.76rem; padding:4px 8px;">
-                    🎲 <span id="ppatrol-btn-a2-label">Tirar AA [A2]</span>
-                  </button>
+                  <button id="ppatrol-btn-a2" type="button" class="btn-dice" onclick="rollInteractiveA2()" style="background:#b91c1c; border-color:#ef4444; font-size:0.76rem; padding:4px 8px;">🎲 <span id="ppatrol-btn-a2-label" data-i18n="airRollA2Btn">Tirar AA [A2]</span></button>
                   <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.3); border:1px solid #ef4444; border-radius:3px; padding:1px 4px;">
                     <span id="ppatrol-lbl-manual-a2" style="font-size:0.70rem; color:var(--gold-300);">Mesa:</span>
                     <select id="ppatrol-sel-manual-a2" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.75rem; padding:1px 3px; border-radius:2px;">
                       <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                     </select>
-                    <button type="button" onclick="rollInteractiveA2(parseInt(document.getElementById('ppatrol-sel-manual-a2').value))" class="btn-xs" style="background:#b91c1c; color:#fee2e2; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a2">Aplicar</span></button>
+                    <button id="ppatrol-btn-apply-a2-btn" type="button" onclick="rollInteractiveA2(parseInt(document.getElementById(\'ppatrol-sel-manual-a2\').value))" class="btn-xs" style="background:#b91c1c; color:#fee2e2; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-a2" data-i18n="btnApply">Aplicar</span></button>
                   </div>
                 </div>
               </div>
@@ -1798,14 +2066,14 @@
                       <span>🩺</span> <span id="ppatrol-lbl-step-crew">4A.1 — Herida de Dotación Obligatoria (Tabla B7 • 2d6 Puesto + 1d6 Gravedad)</span>
                     </strong>
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewPosOnly()" style="background:#1e40af; border-color:#3b82f6; font-size:0.74rem; padding:3px 8px;" title="Lanzar 2d6 para determinar qué tripulante u oficial resulta alcanzado">
-                        🎲 <span id="ppatrol-btn-air-crew-pos">1. Tirar Puesto (2d6)</span>
+                      <button id="ppatrol-btn-air-crew-pos-btn" type="button" class="btn-dice" onclick="rollPatrolAirCrewPosOnly()" style="background:#1e40af; border-color:#3b82f6; font-size:0.74rem; padding:3px 8px;" title="Lanzar 2d6 para determinar qué tripulante u oficial resulta alcanzado">
+                        🎲 <span id="ppatrol-btn-air-crew-pos" data-i18n="airCrewPosBtn">1. Tirar Puesto (2d6)</span>
                       </button>
                       <button type="button" id="ppatrol-btn-air-crew-sev-roll" class="btn-dice" onclick="rollPatrolAirCrewSevOnly()" style="background:#b91c1c; border-color:#ef4444; font-size:0.74rem; padding:3px 8px;" title="Lanzar 1d6 para determinar el tipo de baja y acumulación">
-                        🎲 <span id="ppatrol-btn-air-crew-sev">2. Tirar Tipo de Baja (1d6)</span>
+                        🎲 <span id="ppatrol-btn-air-crew-sev" data-i18n="airCrewSevBtn">2. Tirar Tipo de Baja (1d6)</span>
                       </button>
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirCrewInjury()" style="background:#334155; border-color:#64748b; font-size:0.72rem; padding:3px 7px;" title="Lanzar 2d6 y 1d6 simultáneamente">
-                        ⚡ <span id="ppatrol-btn-air-crew-roll-all">Tirar Ambos</span>
+                      <button id="ppatrol-btn-air-crew-both" type="button" class="btn-dice" onclick="rollPatrolAirCrewInjury()" style="background:#334155; border-color:#64748b; font-size:0.72rem; padding:3px 7px;" title="Lanzar 2d6 y 1d6 simultáneamente">
+                        ⚡ <span id="ppatrol-btn-air-crew-roll-all" data-i18n="airCrewBothBtn">Tirar Ambos</span>
                       </button>
                       <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
                         <span style="color:var(--gold-300);">Puesto (2d6):</span>
@@ -1819,9 +2087,7 @@
                           <option value="1">1 (LW - Leve)</option><option value="2">2 (LW - Leve)</option><option value="3">3 (LW - Leve)</option>
                           <option value="4" selected>4 (SW - Grave)</option><option value="5">5 (SW - Grave)</option><option value="6">6 (KIA - Muerto)</option>
                         </select>
-                        <button type="button" onclick="rollPatrolAirCrewInjury(parseInt(document.getElementById('ppatrol-sel-air-crew-pos').value), parseInt(document.getElementById('ppatrol-sel-air-crew-sev').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                          Aplicar
-                        </button>
+                        <button id="ppatrol-btn-apply-crew-btn" type="button" onclick="rollPatrolAirCrewInjury(parseInt(document.getElementById(\'ppatrol-sel-air-crew-pos\').value), parseInt(document.getElementById(\'ppatrol-sel-air-crew-sev\').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="ppatrol-btn-apply-crew" data-i18n="btnApply">Aplicar</span></button>
                       </div>
                     </div>
                   </div>
@@ -1924,17 +2190,17 @@
                       <span>💣</span> <span id="ppatrol-lbl-step-bombs">4A.2 — Impactos de Bombas y Cargas (Tabla B5 con +2 DRM Aéreo)</span>
                     </strong>
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollPatrolAirBombRun()" style="background:#dc2626; border-color:#f87171; font-size:0.74rem; padding:3px 8px;">
-                        🎲 <span id="ppatrol-btn-air-bomb-roll">Tirar Bombas (B5)</span>
+                      <button id="ppatrol-btn-air-bomb" type="button" class="btn-dice" onclick="rollPatrolAirBombRun()" style="background:#dc2626; border-color:#f87171; font-size:0.74rem; padding:3px 8px;">
+                        🎲 <span id="ppatrol-btn-air-bomb-roll" data-i18n="airBombRollBtn">Tirar Bombas (B5)</span>
                       </button>
                       <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
-                        <span style="color:var(--gold-300);">Mesa (2d6):</span>
+                        <span id="ppatrol-lbl-manual-bombs" data-i18n="tabletop2d6Label" style="color:var(--gold-300);">Mesa (2d6):</span>
                         <select id="ppatrol-sel-air-bomb-roll" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
                           <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
                           <option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
                         </select>
-                        <button type="button" onclick="rollPatrolAirBombRun(parseInt(document.getElementById('ppatrol-sel-air-bomb-roll').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                          Aplicar
+                        <button id="ppatrol-btn-apply-bomb-btn" type="button" onclick="rollPatrolAirBombRun(parseInt(document.getElementById('ppatrol-sel-air-bomb-roll').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                          <span id="ppatrol-btn-apply-bomb" data-i18n="btnApply">Aplicar</span>
                         </button>
                       </div>
                     </div>
@@ -2009,11 +2275,11 @@
                     <span>4B. Torpedo Acústico Guiado Mark 24 «FIDO» [Regla 8.3.3]</span>
                   </strong>
                   <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <button type="button" class="btn-dice" onclick="rollPatrolFidoImpact()" style="background:#0284c7; border-color:#38bdf8; font-size:0.72rem; padding:2px 7px;">
-                      🎯 <span>Tirar Impacto (1d6)</span>
+                    <button id="ppatrol-btn-fido-impact-roll" type="button" class="btn-dice" onclick="rollPatrolFidoImpact()" style="background:#0284c7; border-color:#38bdf8; font-size:0.72rem; padding:2px 7px;">
+                      🎯 <span id="ppatrol-btn-fido-impact-label" data-i18n="airFidoImpactRollBtn">Tirar Impacto (1d6)</span>
                     </button>
                     <div style="display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.4); border:1px solid #64748b; border-radius:3px; padding:1px 4px; font-size:0.70rem;">
-                      <span style="color:var(--gold-300);">Mesa:</span>
+                      <span id="ppatrol-lbl-manual-fido-imp" data-i18n="tabletopLabel" style="color:var(--gold-300);">Mesa:</span>
                       <select id="ppatrol-sel-fido-impact" style="background:#0f172a; color:#fff; border:1px solid #475569; font-size:0.72rem; padding:1px 3px;">
                         <option value="1">1 (Hundido)</option>
                         <option value="2">2 (7 Daños)</option>
@@ -2022,8 +2288,8 @@
                         <option value="5">5 (Fallo)</option>
                         <option value="6">6 (Fallo)</option>
                       </select>
-                      <button type="button" onclick="rollPatrolFidoImpact(parseInt(document.getElementById('ppatrol-sel-fido-impact').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
-                        Aplicar
+                      <button id="ppatrol-btn-apply-fido-imp-btn" type="button" onclick="rollPatrolFidoImpact(parseInt(document.getElementById('ppatrol-sel-fido-impact').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;">
+                        <span id="ppatrol-btn-apply-fido-imp" data-i18n="btnApply">Aplicar</span>
                       </button>
                     </div>
                   </div>
@@ -2079,12 +2345,8 @@
 
               <!-- Botones de resolución post-aérea -->
               <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="action-btn" onclick="nextPatrolBox(); setWorkflowPhase(2);" style="flex:1; min-width:180px; justify-content:center; background:#1e293b; border-color:#64748b; color:#cbd5e1; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
-                  ◀ <span id="ppatrol-btn-air-evaded">Avión Evadido: Avanzar Casilla</span>
-                </button>
-                <button type="button" class="action-btn" onclick="setWorkflowPhase(4)" style="flex:1; min-width:180px; justify-content:center; background:#7f1d1d; border-color:#ef4444; color:#fee2e2; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">
-                  💥 <span id="ppatrol-btn-air-damaged">Daño Sufrido: Ir a Averías (Fase 4) ➔</span>
-                </button>
+                <button id="ppatrol-btn-evaded-advance" type="button" class="action-btn" onclick="nextPatrolBox(); setWorkflowPhase(2);" style="flex:1; min-width:180px; justify-content:center; background:#1e293b; border-color:#64748b; color:#cbd5e1; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">◀ <span id="ppatrol-btn-air-evaded" data-i18n="airEvadedBtn">Avión Evadido: Avanzar Casilla</span></button>
+                <button id="ppatrol-btn-damaged-p4" type="button" class="action-btn" onclick="setWorkflowPhase(4)" style="flex:1; min-width:180px; justify-content:center; background:#7f1d1d; border-color:#ef4444; color:#fee2e2; font-size:0.84rem; padding:10px; font-weight:bold; cursor:pointer;">💥 <span id="ppatrol-btn-air-damaged" data-i18n="airDamagedBtn">Daño Sufrido: Ir a Averías (Fase 4) ➔</span></button>
               </div>
             </div>
 
@@ -2224,37 +2486,35 @@
 
           <!-- Quick Navigation Actions Bar -->
           <div class="action-bar-nav" style="margin-top:16px;">
-            <button class="btn-step-prev" onclick="setWorkflowPhase(2)">
-              ◀ <span id="ppatrol-btn-prev">Volver a Fase 2: Trayecto</span>
+            <button id="ppatrol-nav-prev" class="btn-step-prev" onclick="setWorkflowPhase(2)">
+              ◀ <span id="ppatrol-btn-prev" data-i18n="airPrevBtn">Volver a Fase 2: Trayecto</span>
             </button>
-            <button class="btn-step-next" onclick="setWorkflowPhase(3)">
-              <span id="ppatrol-btn-next">Pasar a Fase 3: Encuentro con Barcos ➔</span>
-            </button>
+            <button id="ppatrol-nav-next" class="btn-step-next" onclick="setWorkflowPhase(3)"><span id="ppatrol-btn-next" data-i18n="airNextBtn">Pasar a Fase 3: Encuentro con Barcos ➔</span></button>
           </div>
         </div>
         <div id="phase-content-3" class="phase-body">
-          <!-- Main Header Banner (Single, clean, non-redundant) -->
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #0f2d4a 0%, #064e3b 100%); border-left:4px solid #10b981; padding:12px 16px; margin-bottom:14px; border-radius:8px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <!-- Main Header Banner (Homogeneous styling) -->
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
               <h2>
-                <span>🚢</span>
+                <span class="phase-header-icon">🚢</span>
                 <span id="p3-title">FASE 3: ENCUENTRO CON BARCOS Y COMBATE NAVAL [REGLAS 8.1 - 8.2]</span>
               </h2>
-              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <button type="button" onclick="openShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 14px; font-size:0.84rem; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.25); display:inline-flex; align-items:center; gap:6px; font-weight:800; cursor:pointer; box-shadow:0 2px 10px rgba(16,185,129,0.3); border-radius:6px;">
-                  <span>📖</span> <span id="p3-top-btn-ship-workflow">Ver Workflow Completo de Barcos [8.1 - 8.2]</span>
-                </button>
-                <button type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.82rem; border-color:#ef4444; color:#fca5a5; display:inline-flex; align-items:center; gap:6px; font-weight:bold; border-radius:6px;">
-                  <span>📋</span> <span id="p3-btn-b1b6">Ver Tablas B1-B6 Oficiales</span>
-                </button>
-                <button type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.82rem; border-color:var(--gold-500); color:var(--gold-300); display:inline-flex; align-items:center; gap:6px; border-radius:6px;">
-                  <span>🗺️</span> <span id="p3-btn-seq">Carta de Secuencia</span>
-                </button>
+              <div id="p3-sub-desc" class="phase-subtitle" data-i18n="p3Subtitle">
+                Secuencia: Encuentro [A3] ➔ Selección de Blancos [T1-T5] ➔ Modalidad [8.2.2] ➔ Salva y Daño [B1-B4] ➔ Escoltas [B4-B6]
               </div>
             </div>
-            <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-              <span style="font-size:0.80rem; color:#cbd5e1;">Secuencia oficial paso a paso: Encuentro [A3] ➔ Determinación de Blanco [T1-T5] y Momento ➔ Alcance [8.2.1] ➔ Modalidad [8.2.2] ➔ Salva y Daño [B1-B4] ➔ Escoltas [B4-B6] ➔ Registro Rogu Bukku.</span>
-              <span id="p3-rules-pill" class="rules-ref-pill" style="font-size:0.75rem;">[Reglas 8.1 - 8.2 • Hoja H1 • Tablas T1-T5, B1-B6]</span>
+            <div class="phase-header-actions">
+              <button id="p3-top-btn-ship-workflow-btn" type="button" onclick="openShipEncounterWorkflowModal()" class="action-btn" style="border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.22);">
+                <span>📖</span> <span id="p3-top-btn-ship-workflow" data-i18n="p3TopShipWorkflowBtn">Workflow de Barcos</span>
+              </button>
+              <button id="p3-top-btn-b1b6-btn" type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">
+                <span>📋</span> <span id="p3-btn-b1b6" data-i18n="p3BtnB1B6">Tablas B1-B6</span>
+              </button>
+              <button id="p3-top-btn-seq-btn" type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn">
+                <span>🗺️</span> <span id="p3-btn-seq" data-i18n="p3BtnSeq">Guía de Fase</span>
+              </button>
+              <span id="p3-rules-pill" class="rules-ref-pill">[Reglas 8.1 - 8.2 • Tablas T1-T5, B1-B6]</span>
             </div>
           </div>
 
@@ -2335,9 +2595,7 @@
                       </div>
                       
                       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <button id="p3-btn-roll-size-d6" type="button" class="btn-dice" onclick="rollShipSizeD6()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border:1px solid #38bdf8; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d6 para determinar si es T1 o T2 (no genera el buque aún)">
-                          🎲 Tirar 1d6 Tamaño [1-4: T1 • 5-6: T2]
-                        </button>
+                        <button id="p3-btn-roll-size-d6" type="button" class="btn-dice" onclick="rollShipSizeD6()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border:1px solid #38bdf8; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d6 para determinar si es T1 o T2 (no genera el buque aún)" data-i18n="p3BtnRollSizeD6">🎲 Tirar 1d6 Tamaño [1-4: T1 • 5-6: T2]</button>
                         
                         <!-- Mesa 1d6 Tamaño -->
                         <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
@@ -2350,7 +2608,7 @@
                             <option value="5">5 (T2 Gde)</option>
                             <option value="6">6 (T2 Gde)</option>
                           </select>
-                          <button type="button" onclick="rollShipSizeD6(parseInt(document.getElementById('p3-manual-size-d6').value))" class="btn-xs" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;" title="Aplicar valor 1d6 de mesa">➔ Tamaño</button>
+                          <button id="p3-btn-manual-size" type="button" onclick="rollShipSizeD6(parseInt(document.getElementById(\'p3-manual-size-d6\').value))" class="btn-xs" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;" title="Aplicar valor 1d6 de mesa"><span id="p3-btn-manual-size-lbl" data-i18n="p3BtnApplySize">➔ Tamaño</span></button>
                         </div>
                       </div>
 
@@ -2368,21 +2626,15 @@
                       </div>
 
                       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <button id="p3-btn-roll-merchant" type="button" class="btn-dice" onclick="rollMerchantShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #059669 0%, #047857 100%); border:1px solid #10b981; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d100 en la tabla según el tamaño determinado">
-                          🚢 Tirar Buque [Tabla T1 / T2]
-                        </button>
-                        <button type="button" onclick="rollChartT1()" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T1 (Mercante Pequeño)">
-                          T1 Pequeño
-                        </button>
-                        <button type="button" onclick="rollChartT2()" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T2 (Mercante Grande / Petrolero)">
-                          T2 Grande
-                        </button>
+                        <button id="p3-btn-roll-merchant" type="button" class="btn-dice" onclick="rollMerchantShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #059669 0%, #047857 100%); border:1px solid #10b981; color:#fff; font-weight:bold; cursor:pointer;" title="Tira 1d100 en la tabla según el tamaño determinado" data-i18n="p3BtnRollMerchant">🚢 Tirar Buque [Tabla T1 / T2]</button>
+                        <button id="p3-btn-quick-t1" type="button" onclick="rollChartT1()" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T1 (Mercante Pequeño)"><span id="p3-btn-quick-t1-lbl" data-i18n="p3QuickT1">T1 Pequeño</span></button>
+                        <button id="p3-btn-quick-t2" type="button" onclick="rollChartT2()" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Forzar tirada en T2 (Mercante Grande)"><span id="p3-btn-quick-t2-lbl" data-i18n="p3QuickT2">T2 Grande</span></button>
 
                         <!-- Mesa 1d100 Mercante -->
                         <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
                           <span style="font-size:0.73rem; color:var(--gold-300); font-weight:bold;">Mesa (1d100):</span>
                           <input type="number" id="p3-manual-merchant-d100" min="1" max="100" placeholder="1-100" style="width:48px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:4px; font-size:0.74rem;">
-                          <button type="button" onclick="rollMerchantShip(parseInt(document.getElementById('p3-manual-merchant-d100').value))" class="btn-xs" style="background:#047857; color:#fff; border:1px solid #10b981; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;">➔ Aplicar</button>
+                          <button id="p3-btn-apply-merchant" type="button" onclick="rollMerchantShip(parseInt(document.getElementById(\'p3-manual-merchant-d100\').value))" class="btn-xs" style="background:#059669; color:#fff; border:1px solid #10b981; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;" title="Aplicar tirada 1d100 de mesa"><span id="p3-btn-apply-merchant-lbl" data-i18n="btnApply">➔ Aplicar</span></button>
                         </div>
                       </div>
                     </div>
@@ -2397,21 +2649,15 @@
                       </div>
 
                       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <button id="p3-btn-roll-escort" type="button" class="btn-dice" onclick="rollEscortShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #b45309 0%, #92400e 100%); border:1px solid #f59e0b; color:#fff; font-weight:bold; cursor:pointer;" title="Tira la escolta en T3 o T5 según la zona asignada">
-                          🛡️ Tirar Escolta Según Sitio
-                        </button>
-                        <button type="button" onclick="rollEscortShip(null, 'T3')" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Tirar en Tabla T3 (Escoltas / Destructores US)">
-                          T3 (US)
-                        </button>
-                        <button type="button" onclick="rollEscortShip(null, 'T5')" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; border-radius:4px; padding:4px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Tirar en Tabla T5 (Royal Navy / Commonwealth)">
-                          T5 (CW)
-                        </button>
+                        <button id="p3-btn-roll-escort" type="button" class="btn-dice" onclick="rollEscortShip()" style="font-size:0.78rem; padding:5px 12px; background:linear-gradient(135deg, #b45309 0%, #92400e 100%); border:1px solid #f59e0b; color:#fff; font-weight:bold; cursor:pointer;" title="Tira la escolta en T3 o T5 según la zona asignada" data-i18n="p3BtnRollEscort">🛡️ Tirar Escolta Según Sitio</button>
+                        <button id="p3-btn-quick-t3" type="button" onclick="rollEscortShip(null, \'T3\')" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:4px; padding:4px 7px; font-size:0.73rem; font-weight:bold; cursor:pointer;"><span id="p3-btn-quick-t3-lbl" data-i18n="p3QuickT3">T3 (US)</span></button>
+                        <button id="p3-btn-quick-t5" type="button" onclick="rollEscortShip(null, \'T5\')" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; border-radius:4px; padding:4px 7px; font-size:0.73rem; font-weight:bold; cursor:pointer;"><span id="p3-btn-quick-t5-lbl" data-i18n="p3QuickT5">T5 (CW)</span></button>
 
                         <!-- Mesa Escolta -->
                         <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; border:1px solid #334155;">
                           <span style="font-size:0.73rem; color:var(--gold-300); font-weight:bold;">Mesa:</span>
                           <input type="number" id="p3-manual-escort-val" min="1" max="100" placeholder="d100/d20" style="width:55px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:4px; font-size:0.74rem;">
-                          <button type="button" onclick="rollEscortShip(parseInt(document.getElementById('p3-manual-escort-val').value))" class="btn-xs" style="background:#b45309; color:#fff; border:1px solid #f59e0b; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;">➔ Escolta</button>
+                          <button id="p3-btn-apply-escort" type="button" onclick="rollEscortShip(parseInt(document.getElementById(\'p3-manual-escort-val\').value))" class="btn-xs" style="background:#b45309; color:#fff; border:1px solid #f59e0b; border-radius:3px; padding:2px 6px; font-size:0.72rem; cursor:pointer;" title="Aplicar tirada 1d100 de escolta"><span id="p3-btn-apply-escort-lbl" data-i18n="p3BtnApplyEscort">➔ Escolta</span></button>
                         </div>
                       </div>
 
@@ -2423,9 +2669,9 @@
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.72rem; color:#94a3b8; background:rgba(0,0,0,0.2); padding:4px 8px; border-radius:4px; border:1px solid #334155; flex-wrap:wrap;">
                       <span>⚡ Contactos directos de guerra:</span>
                       <div style="display:flex; gap:4px;">
-                        <button type="button" onclick="rollChartT3()" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T3 Guerra US</button>
-                        <button type="button" onclick="rollChartT4()" class="btn-xs" style="background:#581c87; color:#f3e8ff; border:1px solid #c084fc; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T4 Capital</button>
-                        <button type="button" onclick="rollChartT5()" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; border-radius:3px; padding:2px 6px; font-size:0.70rem;">T5 CW</button>
+                        <button id="p3-btn-quick-t3-war" type="button" onclick="rollChartT3()" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; padding:3px 8px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-quick-t3-war-lbl" data-i18n="p3BtnT3War">T3 Guerra US</span></button>
+                        <button id="p3-btn-quick-t4-cap" type="button" onclick="rollChartT4()" class="btn-xs" style="background:#581c87; color:#f3e8f8; border:1px solid #a855f7; padding:3px 8px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-quick-t4-cap-lbl" data-i18n="p3BtnT4Cap">T4 Capital</span></button>
+                        <button id="p3-btn-quick-t5-cw" type="button" onclick="rollChartT5()" class="btn-xs" style="background:#115e59; color:#99f6e4; border:1px solid #14b8a6; padding:3px 8px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-quick-t5-cw-lbl" data-i18n="p3BtnT5Cw">T5 CW</span></button>
                       </div>
                     </div>
 
@@ -2440,9 +2686,9 @@
                       Tira 1d10 para iniciativa: <strong>1–3:</strong> Iniciativa tuya (atacas primero o evitas contacto). <strong>4–10:</strong> ¡El submarino enemigo dispara primero 4 torpedos a media distancia! <em>(Cañón prohibido).</em>
                     </p>
                     <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollSubVsSubInitiative()" style="font-size:0.76rem; padding:3px 8px;">🎲 Tirar 1d10</button>
-                      <button type="button" class="btn-xs" onclick="setSubVsSubInitiative(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:3px 6px; font-size:0.72rem; cursor:pointer;" title="1-3 en mesa">✅ Iniciativa IJN</button>
-                      <button type="button" class="btn-xs" onclick="setSubVsSubInitiative(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:3px 6px; font-size:0.72rem; cursor:pointer;" title="4-10 en mesa">⚠️ Sorpresa Enemiga</button>
+                      <button id="p3-btn-roll-init-d10" type="button" class="btn-dice" onclick="rollSubVsSubInitiative()" style="font-size:0.76rem; padding:3px 8px;"><span id="p3-btn-init-d10-lbl" data-i18n="p3BtnRollInitD10">🎲 Tirar 1d10</span></button>
+                      <button id="p3-btn-init-force-ijn" type="button" class="btn-xs" onclick="setSubVsSubInitiative(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-init-ijn-lbl" data-i18n="p3BtnInitIjn">✅ Iniciativa IJN</span></button>
+                      <button id="p3-btn-init-force-surprise" type="button" class="btn-xs" onclick="setSubVsSubInitiative(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-init-surprise-lbl" data-i18n="p3BtnInitSurprise">⚠️ Sorpresa Enemiga</span></button>
                     </div>
                     <div id="wf-sub-initiative-res" style="font-size:0.76rem; font-weight:bold; margin-top:4px;"></div>
                   </div>
@@ -2501,9 +2747,7 @@
                     </div>
                     <!-- Fila 2: Tirador 1d6 y Resultado siempre en la segunda fila -->
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
-                      <button type="button" class="btn-dice" onclick="rollTimeOfDayD6()" style="font-size:0.74rem; padding:3px 8px; white-space:nowrap;" title="Tirar 1d6: 1-3 Día, 4-6 Noche">
-                        🎲 Tirar 1d6 Momento
-                      </button>
+                      <button id="p3-btn-roll-tod-d6" type="button" class="btn-dice" onclick="rollTimeOfDayD6()" style="font-size:0.74rem; padding:3px 8px; white-space:nowrap;" title="Tirar 1d6: 1-3 Día, 4-6 Noche"><span id="p3-btn-tod-d6-lbl" data-i18n="p3BtnRollTodD6">🎲 Tirar 1d6 Momento</span></button>
                       <span id="p3-tod-dice-result" style="display:none; font-size:0.78rem; font-weight:bold; padding:2px 8px; border-radius:4px; border:1px solid #eab308; background:rgba(234,179,8,0.25); color:#fef08a; white-space:nowrap;"></span>
                     </div>
                     <!-- Fila 3: Contador gráfico, Selector y Mesa -->
@@ -2525,7 +2769,33 @@
                           <option value="5">5 (Noche)</option>
                           <option value="6">6 (Noche)</option>
                         </select>
-                        <button type="button" onclick="rollTimeOfDayD6(parseInt(document.getElementById('p3-manual-tod-d6').value))" class="btn-xs" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; border-radius:3px; padding:2px 6px; font-size:0.70rem; cursor:pointer;" title="Aplicar valor de mesa">➔ Aplicar</button>
+                        <button id="p3-btn-apply-tod" type="button" onclick="rollTimeOfDayD6(parseInt(document.getElementById('p3-manual-tod-d6').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:2px 5px; font-size:0.70rem; cursor:pointer;"><span id="p3-btn-apply-tod-lbl" data-i18n="btnApply">➔ Aplicar</span></button>
+                      </div>
+                    </div>
+
+                    <!-- Fila 4: Regla [8.1.10] Cambiar de Día a Noche / Noche a Día -->
+                    <div id="p3-rule-8110-panel" style="margin-top:8px; padding-top:8px; border-top:1px dashed #334155; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <button id="p3-btn-switch-tod-8110" type="button" class="action-btn" onclick="executeRule8110SwitchTimeOfDay()" style="font-size:0.72rem; padding:4px 10px; background:linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border:1px solid #c5a059; color:#fde047; font-weight:bold; cursor:pointer;" title="Regla 8.1.10: Cambiar Día ↔ Noche (1-4 éxito, 5-6 contacto perdido; -1 DRM si tienes radar operativo; Prohibido vs Buque Capital)">
+                          <span id="p3-btn-switch-tod-lbl">🔄 Cambiar Momento [Regla 8.1.10]</span>
+                        </button>
+                        <span id="p3-tod-switch-result" style="display:none; font-size:0.76rem; font-weight:bold; padding:2px 8px; border-radius:4px;"></span>
+                      </div>
+                      <div style="font-size:0.70rem; color:#94a3b8;">
+                        <span id="p3-rule-8110-hint">1–4 Éxito • 5–6 Contacto Perdido • -1 DRM Radar • No vs Capital</span>
+                      </div>
+                    </div>
+
+                    <!-- Banner de Contacto Perdido si falla la tirada de la Regla 8.1.10 -->
+                    <div id="p3-contact-lost-banner" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(239,68,68,0.18); border:1.5px solid #ef4444; border-radius:6px; color:#fecaca; font-size:0.80rem;">
+                      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                        <div>
+                          <strong id="p3-contact-lost-title" style="color:#f87171; display:block; font-size:0.84rem;">⚠️ CONTACTO PERDIDO [Regla 8.1.10]</strong>
+                          <span id="p3-contact-lost-desc" style="color:#cbd5e1;">El buque enemigo se desvaneció en el horizonte durante el cambio de momento. El encuentro en esta casilla finaliza sin ataque.</span>
+                        </div>
+                        <button type="button" class="action-btn" onclick="finishEncounterContactLost()" style="padding:4px 10px; font-size:0.75rem; background:#dc2626; color:#fff; border:none; font-weight:bold; cursor:pointer;">
+                          <span id="p3-btn-finish-lost-lbl">Continuar Patrulla ➔</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -2585,25 +2855,28 @@
                 <!-- Tirador de Infiltración para Corta Distancia -->
                 <div style="background:rgba(0,0,0,0.3); border:1px solid #334155; border-radius:4px; padding:6px 8px;">
                   <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <span style="font-size:0.74rem; color:var(--slate-300); font-weight:bold;">Infiltración a Corta (2d6 &le; 9):</span>
+                    <span style="font-size:0.74rem; color:var(--slate-300); font-weight:bold;">
+                      Infiltración a Corta [8.2.1] (2d6 &le; 9):
+                      <span id="p3-golden-kite-badge" style="display:none; margin-left:4px; font-size:0.70rem; color:#fde047; background:rgba(234,179,8,0.2); padding:1px 5px; border-radius:3px; border:1px solid #ca8a04;">🦅 Milano de Oro (-1 DRM)</span>
+                    </span>
                     <div style="display:flex; gap:4px;">
-                      <button type="button" class="btn-dice" onclick="rollInfiltration2d6()" style="font-size:0.72rem; padding:3px 7px;">🎲 Tirar 2d6</button>
-                      <button type="button" class="btn-xs" onclick="rollInfiltration2d6(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Éxito en mesa (&le;9)">✅ Lograda</button>
-                      <button type="button" class="btn-xs" onclick="rollInfiltration2d6(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Fallo en mesa (&gt;9)">🚨 Falla</button>
+                      <button id="p3-btn-roll-approach-2d6" type="button" class="btn-dice" onclick="rollInfiltration2d6()" style="font-size:0.72rem; padding:3px 8px;"><span id="p3-btn-approach-2d6-lbl" data-i18n="p3BtnApproach2d6">🎲 Tirar 2d6</span></button>
+                      <button id="p3-btn-approach-force-ok" type="button" class="btn-xs" onclick="rollInfiltration2d6(true)" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-approach-ok-lbl" data-i18n="p3BtnApproachOk">✅ Lograda</span></button>
+                      <button id="p3-btn-approach-force-fail" type="button" class="btn-xs" onclick="rollInfiltration2d6(false)" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-approach-fail-lbl" data-i18n="p3BtnApproachFail">🚨 Falla</span></button>
                     </div>
                   </div>
                   <div id="wf-infilt-res" style="font-size:0.76rem; color:#38bdf8; margin-top:4px; display:none; line-height:1.35;"></div>
                 </div>
               </div>
 
-              <!-- PASO 3: MODALIDAD DE ATAQUE [REGLA 8.2.2] -->
+              <!-- PASO 3: MODALIDAD DE ATAQUE [REGLAS 8.2.2 & 8.2.4] -->
               <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #eab308; border-left:4px solid #eab308; border-radius:8px; padding:12px 14px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span style="background:#ca8a04; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:bold;">3</span>
-                    <h4 id="p3-step3-title" style="margin:0; color:#fde047; font-size:0.92rem;">Paso 3: Modalidad de Ataque [Regla 8.2.2]</h4>
+                    <h4 id="p3-step3-title" style="margin:0; color:#fde047; font-size:0.92rem;">Paso 3: Modalidad de Ataque [Reglas 8.2.2 & 8.2.4]</h4>
                   </div>
-                  <span class="rules-ref-pill" style="font-size:0.72rem; padding:2px 8px;">Regla 8.2.2</span>
+                  <span id="p3-step3-rules-pill" class="rules-ref-pill" style="font-size:0.72rem; padding:2px 8px;">Reglas 8.2.2 • 8.2.4</span>
                 </div>
 
                 <!-- Resumen de Modalidades -->
@@ -2625,13 +2898,13 @@
                     <select id="wf-attack-mode-select" class="flow-select" style="font-size:0.80rem; padding:4px 8px; width:100%;" onchange="syncPhase3TorpedoOptions(); if(typeof updateCombatChits==='function')updateCombatChits();">
                       <option id="p3-mode-opt-sub" value="submerged">Ataque en Inmersión (Torpedos estándar - Recomendado Día)</option>
                       <option id="p3-mode-opt-surf" value="surface_night">Superficie Nocturna (Torpedos - Permite salva popa a +1)</option>
-                      <option id="p3-mode-opt-gun" value="gun">Cañón de Cubierta (Superficie - ¡PROHIBIDO si hay escoltas!)</option>
+                      <option id="p3-mode-opt-gun" value="gun">Cañón de Cubierta [Regla 8.2.4] (Superficie - Solo buques sin escolta)</option>
                     </select>
                   </div>
                 </div>
 
-                <div style="font-size:0.74rem; color:#94a3b8; background:rgba(0,0,0,0.25); padding:6px 8px; border-radius:4px; border:1px solid #334155;">
-                  <span style="color:#fde047; font-weight:bold;">⚠️ Doctrina Imperial:</span> El uso del cañón de cubierta solo está autorizado contra blancos no escoltados o tras neutralizar la escolta enemiga.
+                <div id="p3-deck-gun-rule-hint" style="font-size:0.74rem; color:#94a3b8; background:rgba(0,0,0,0.25); padding:6px 8px; border-radius:4px; border:1px solid #334155;">
+                  <span style="color:#fde047; font-weight:bold;">⚠️ Regla 8.2.4 (Cañón de Cubierta):</span> Fuego en superficie contra buques sin escolta. Se permiten hasta 2 disparos por cañón de cubierta por combate (evaluados disparo a disparo, acumulable con torpedos).
                 </div>
               </div>
 
@@ -2642,9 +2915,10 @@
             <!-- ========================================================================= -->
             <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid #10b981; border-left:4px solid #10b981; border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                   <span style="background:#059669; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">4</span>
                   <h4 id="p3-step4-title" style="margin:0; color:#34d399; font-size:0.96rem;">Paso 4: Asignación y Disparo de Torpedos [Reglas 8.2.3 - 8.2.7 & Tablas B1, B2, B3, B4]</h4>
+                  <span id="p3-step4-mode-badge" style="display:none; font-size:0.72rem; background:rgba(234,179,8,0.25); color:#fde047; border:1px solid #ca8a04; padding:2px 7px; border-radius:4px; font-weight:bold; box-shadow:0 0 8px rgba(234,179,8,0.2);">🌙 Superficie Nocturna (2 Salvas)</span>
                 </div>
                 <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px;">Tablas [B1, B2, B3, B4] • Reglas 8.2.3 - 8.2.7</span>
               </div>
@@ -2661,12 +2935,8 @@
                     </div>
                   </div>
                   <div style="display:flex; align-items:center; gap:6px;">
-                    <button type="button" onclick="reloadAllEmptyTubesFromReserves()" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:4px; padding:3px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Recargar tubos vacíos usando las reservas de torpedos">
-                      🔄 Recargar Tubos
-                    </button>
-                    <button type="button" onclick="switchToSubmarineSheet()" class="btn-xs" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; border-radius:4px; padding:3px 8px; font-size:0.74rem; font-weight:bold; cursor:pointer;" title="Ver la hoja interactiva completa del submarino">
-                      📋 Ver Ficha Submarino
-                    </button>
+                    <button id="p3-btn-reload-tubes" type="button" onclick="reloadAllEmptyTubesFromReserves()" class="btn-xs" style="background:#0284c7; color:#f0f9ff; border:none; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Recargar tubos vacíos usando las reservas de torpedos"><span id="p3-btn-reload-tubes-lbl" data-i18n="p3BtnReloadTubes">🔄 Recargar Tubos</span></button>
+                    <button id="p3-btn-view-subsheet" type="button" onclick="switchToSubmarineSheet()" class="btn-xs" style="background:#1e293b; color:#94a3b8; border:1px solid #475569; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Ver o editar ficha completa del submarino"><span id="p3-btn-view-subsheet-lbl" data-i18n="p3BtnViewSubSheet">📋 Ver Ficha Submarino</span></button>
                   </div>
                 </div>
 
@@ -2710,20 +2980,68 @@
                 
                 <!-- Left: Weapon Selectors, Rollers & Results -->
                 <div>
-                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
-                    <div class="flow-field" style="margin:0;">
-                      <label id="p3-tubes-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Tubos Disparados:</label>
-                      <select id="wf-tubes-fired" class="flow-select" style="font-size:0.80rem; padding:4px 8px;">
+                  <!-- Banner Específico: Ataque Nocturno en Superficie [Regla 8.2.2] -->
+                  <div id="p3-night-salvo-banner" style="display:none; background:linear-gradient(135deg, rgba(30,27,75,0.9) 0%, rgba(15,23,42,0.95) 100%); border:1px solid #eab308; border-left:4px solid #facc15; border-radius:6px; padding:8px 12px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.4);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:1.25rem;">🌙</span>
+                        <div>
+                          <span id="p3-night-banner-title" style="font-weight:bold; color:#fde047; font-size:0.83rem;">
+                            MODO SELECCIONADO: ATAQUE NOCTURNO EN SUPERFICIE [REGLA 8.2.2] — 2 SALVAS
+                          </span>
+                          <div id="p3-night-banner-desc" style="font-size:0.71rem; color:#cbd5e1; margin-top:2px; line-height:1.35;">
+                            Disparo simultáneo autorizado: <strong>1.ª Salva (Proa)</strong> y <strong>2.ª Salva (Popa a +1 DRM)</strong>. Los torpedos aplican <strong style="color:#4ade80;">-1 DRM Superficie</strong> en Tabla B1.
+                          </div>
+                        </div>
+                      </div>
+                      <span id="p3-night-banner-pill" style="font-size:0.69rem; background:rgba(234,179,8,0.2); color:#fde047; border:1px solid #ca8a04; padding:2px 8px; border-radius:4px; font-weight:bold; white-space:nowrap;">
+                        🌙 2 Salvas Habilitadas
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Selectores de Salva: 1.ª Salva (Proa) y 2.ª Salva (Popa - Regla 8.2.2) -->
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:8px;">
+                    <!-- 1.ª Salva: Tubos de Proa -->
+                    <div class="flow-field" style="margin:0; background:rgba(0,0,0,0.25); border:1px solid #334155; border-radius:6px; padding:8px;">
+                      <label id="p3-tubes-fwd-lbl" style="font-size:0.78rem; color:#93c5fd; font-weight:bold; display:block; margin-bottom:4px;">
+                        ▲ 1.ª Salva (Tubos de Proa):
+                      </label>
+                      <select id="wf-tubes-fired" class="flow-select" onchange="if(typeof onSalvoConfigChanged==='function')onSalvoConfigChanged();" style="font-size:0.80rem; padding:4px 8px; width:100%;">
                         <option id="p3-tubes-opt-2" value="2">2 Torpedos (Salva Reducida)</option>
                         <option id="p3-tubes-opt-4" value="4" selected>4 Torpedos (Salva Estándar)</option>
                         <option id="p3-tubes-opt-6" value="6">6 Torpedos (Salva Completa Proa)</option>
                       </select>
+                      <div id="p3-fwd-salvo-hint" style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">Puntería estándar en Tabla B1</div>
                     </div>
+
+                    <!-- 2.ª Salva: Tubos de Popa [Regla 8.2.2 / 8.2.3] -->
+                    <div id="p3-second-salvo-container" class="flow-field" style="margin:0; background:rgba(0,0,0,0.25); border:1px solid #eab308; border-radius:6px; padding:8px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <label id="p3-tubes-aft-lbl" style="font-size:0.78rem; color:#fde047; font-weight:bold;">
+                          ▼ 2.ª Salva [Regla 8.2.2] (Popa):
+                        </label>
+                        <span id="p3-second-salvo-badge" style="font-size:0.68rem; color:#fde047; background:rgba(234,179,8,0.2); border:1px solid #ca8a04; padding:1px 5px; border-radius:3px;">+1 To-Hit DRM</span>
+                      </div>
+                      <select id="wf-tubes-aft-second-salvo" class="flow-select" onchange="if(typeof onSalvoConfigChanged==='function')onSalvoConfigChanged();" style="font-size:0.80rem; padding:4px 8px; width:100%;">
+                        <option value="0">0 (Sin 2.ª Salva de Popa)</option>
+                        <option value="1">1 Torpedo de Popa (+1 DRM)</option>
+                        <option value="2">2 Torpedos de Popa (+1 DRM)</option>
+                      </select>
+                      <div id="p3-aft-salvo-hint" style="font-size:0.68rem; color:#fde047; margin-top:3px; line-height:1.25;">
+                        Disparada desde el extremo opuesto a +1 DRM (Regla 8.2.2). Se permite siempre que haya tubos de popa cargados.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Fila secundaria: Tipo de Torpedo -->
+                  <div style="margin-bottom:10px;">
                     <div class="flow-field" style="margin:0;">
                       <label id="p3-torp-type-lbl" style="font-size:0.78rem; color:var(--gold-300); font-weight:bold;">Tipo de Torpedo:</label>
-                      <select id="wf-torp-type-select" class="flow-select" style="font-size:0.80rem; padding:4px 8px;">
+                      <select id="wf-torp-type-select" class="flow-select" style="font-size:0.80rem; padding:4px 8px; width:100%;">
                         <option id="p3-torp-opt-95" value="type95">Type 95 Oxygen (Sin estela visible, letal)</option>
                         <option id="p3-torp-opt-89" value="type89">Type 89 Steam (Estela de vapor, penaliza evasión)</option>
+                        <option id="p3-torp-opt-92" value="type92">Type 92 Electric (+2 DRM a medio/largo, sin estela)</option>
                       </select>
                     </div>
                   </div>
@@ -2735,9 +3053,7 @@
                       <div id="wf-combat-hit-res" style="font-size:1.15rem; font-weight:800; color:var(--emerald-500);">¡2 IMPACTOS! (Defectuosos: 0)</div>
                       <div id="wf-combat-sink-status" style="font-size:0.82rem; font-weight:700; color:#fde047;">¡BUQUE HUNDIDO! (5,700 tons)</div>
                     </div>
-                    <button id="p3-btn-fire" class="btn-dice" onclick="resolveTorpedoSalvo()" style="padding:8px 16px; font-size:0.88rem; background:linear-gradient(135deg, #059669 0%, #047857 100%); border-color:#10b981; font-weight:bold; box-shadow:0 3px 10px rgba(16,185,129,0.35);">
-                      🚀 ¡FUEGO! (Lanzar Salva Virtual)
-                    </button>
+                    <button id="p3-btn-fire" class="btn-dice" onclick="resolveTorpedoSalvo()" style="padding:8px 16px; font-size:0.88rem; background:linear-gradient(135deg, #059669 0%, #047857 100%); border-color:#10b981; font-weight:bold; box-shadow:0 3px 10px rgba(16,185,129,0.35);" data-i18n="p3BtnFire">🚀 ¡FUEGO! (Lanzar Salva Virtual)</button>
                   </div>
 
                   <!-- Entrada Manual de Impactos de Mesa (Físicos) -->
@@ -2766,7 +3082,7 @@
                       <label style="font-size:0.74rem; color:var(--slate-300);">Pts Daño:
                         <input type="number" id="wf-manual-dmg-input" value="6" min="0" max="24" style="background:#0f172a; color:#38bdf8; border:1px solid #38bdf8; border-radius:3px; padding:2px 4px; width:44px; font-weight:bold; font-size:0.78rem;" />
                       </label>
-                      <button type="button" onclick="applyManualTorpedoHits()" class="btn-xs" style="background:#047857; color:#fff; border:1px solid #10b981; border-radius:4px; padding:3px 8px; font-size:0.75rem; font-weight:bold; cursor:pointer;" title="Aplicar impactos tirados en mesa">🎯 Aplicar Mesa</button>
+                      <button id="p3-btn-apply-hits" type="button" onclick="applyManualTorpedoHits()" class="btn-xs" style="background:#047857; color:#d1fae5; border:none; padding:3px 8px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-apply-hits-lbl" data-i18n="p3BtnApplyHits">🎯 Aplicar Mesa</span></button>
                     </div>
                   </div>
 
@@ -2832,9 +3148,9 @@
                     <img id="wf-escort-chit-img" src="assets/chits/Escort.jpg" alt="Escort Chit" style="width:100%; height:100%; object-fit:cover;">
                   </div>
                   <span style="background:#dc2626; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">5</span>
-                  <h4 id="p3-step5-title" style="margin:0; color:#f87171; font-size:0.96rem;">Paso 5: Detección y Ataque de Escoltas [Reglas 8.2.8, 8.4 & Tablas B4, B5, B6]</h4>
+                  <h4 id="p3-step5-title" style="margin:0; color:#f87171; font-size:0.96rem;">Paso 5: Detección y Ataque de Escoltas [Reglas 8.2.7, 8.4 & Tablas B4, B5, B6]</h4>
                 </div>
-                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:#ef4444; color:#fca5a5;">Tablas [B4, B5, B6] • Reglas 8.2.8, 8.4</span>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:#ef4444; color:#fca5a5;">Tablas [B4, B5, B6] • Reglas 8.2.7, 8.4</span>
               </div>
 
               <!-- Two Column Layout: Escort Action Rollers | Implied Tables B4, B5, B6 -->
@@ -2848,15 +3164,9 @@
 
                   <!-- Digital Dice Buttons -->
                   <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
-                    <button id="p3-btn-b4" type="button" class="btn-dice" onclick="rollB4Detection()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px;">
-                      🎲 1. Tirar Detección (B4)
-                    </button>
-                    <button id="p3-btn-b5" type="button" class="btn-dice" onclick="rollEscortCounterAttack()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px; background:linear-gradient(135deg,#991b1b,#b91c1c); border-color:#ef4444;">
-                      💣 2. Tirar Cargas (B5/B6)
-                    </button>
-                    <button id="p3-btn-deep" type="button" class="action-btn" onclick="testDepthDive()" style="font-size:0.82rem; border-color:#38bdf8; color:#38bdf8; padding:6px 10px;">
-                      ⚓ Inmersión Profunda
-                    </button>
+                    <button id="p3-btn-b4" type="button" class="btn-dice" onclick="rollB4Detection()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px;" data-i18n="p3BtnB4Detection">🎲 1. Tirar Detección (B4)</button>
+                    <button id="p3-btn-b5" type="button" class="btn-dice" onclick="rollEscortCounterAttack()" style="font-size:0.82rem; flex:1; justify-content:center; padding:6px 10px; background:linear-gradient(135deg,#991b1b,#b91c1c); border-color:#ef4444;" data-i18n="p3BtnB5Charges">💣 2. Tirar Cargas (B5/B6)</button>
+                    <button id="p3-btn-deep" type="button" class="action-btn" onclick="testDepthDive()" style="font-size:0.82rem; border-color:#38bdf8; color:#38bdf8; padding:6px 10px;" data-i18n="p3BtnDeepDive">⚓ Inmersión Profunda</button>
                   </div>
 
                   <!-- Botones Rápidos / Mesa para B4 y B5 -->
@@ -2864,21 +3174,21 @@
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem;">
                       <span style="color:var(--gold-400); font-weight:bold;">Mesa B4 (Detección 2d6):</span>
                       <div style="display:flex; gap:4px;">
-                        <button type="button" onclick="rollB4Detection(7)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Evadido (tirada &le;8)">✅ No Detectado (&le;8)</button>
-                        <button type="button" onclick="rollB4Detection(9)" class="btn-xs" style="background:#b45309; color:#fde68a; border:1px solid #f59e0b; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Detectado (tirada 9-10)">⚠️ Detectado (9-10)</button>
-                        <button type="button" onclick="rollB4Detection(11)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 7px; font-size:0.72rem; cursor:pointer;" title="Detectado con +1 ataque (tirada &ge;11)">🚨 Detectado +1 (&ge;11)</button>
+                        <button id="p3-btn-det-force-no" type="button" onclick="rollB4Detection(7)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-det-no-lbl" data-i18n="p3BtnDetNo">✅ No Detectado (&le;8)</span></button>
+                        <button id="p3-btn-det-force-warn" type="button" onclick="rollB4Detection(9)" class="btn-xs" style="background:#b45309; color:#fde68a; border:1px solid #f59e0b; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-det-warn-lbl" data-i18n="p3BtnDetWarn">⚠️ Detectado (9-10)</span></button>
+                        <button id="p3-btn-det-force-crit" type="button" onclick="rollB4Detection(11)" class="btn-xs" style="background:#7f1d1d; color:#fecaca; border:1px solid #ef4444; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-det-crit-lbl" data-i18n="p3BtnDetCrit">🚨 Detectado +1 (&ge;11)</span></button>
                       </div>
                     </div>
 
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem;">
                       <span style="color:#f87171; font-weight:bold;">Mesa B5 (Cargas 2d6):</span>
                       <div style="display:flex; gap:3px; flex-wrap:wrap;">
-                        <button type="button" onclick="rollEscortCounterAttack(3)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="Ineficaz (&le;3)">🌊 Ineficaz</button>
-                        <button type="button" onclick="rollEscortCounterAttack(5)" class="btn-xs" style="background:#1e3a8a; color:#bfdbfe; border:1px solid #3b82f6; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="1 impacto de carga (4-6)">1 Daño</button>
-                        <button type="button" onclick="rollEscortCounterAttack(7)" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="2 impactos (7-8)">2 Daños</button>
-                        <button type="button" onclick="rollEscortCounterAttack(9)" class="btn-xs" style="background:#c2410c; color:#fed7aa; border:1px solid #f97316; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="3 impactos (9-10)">3 Daños</button>
-                        <button type="button" onclick="rollEscortCounterAttack(11)" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="4 impactos (11)">4 Daños</button>
-                        <button type="button" onclick="rollEscortCounterAttack(12)" class="btn-xs" style="background:#581c87; color:#f5d0fe; border:1px solid #a855f7; border-radius:3px; padding:2px 5px; font-size:0.70rem; cursor:pointer;" title="5 impactos (12)">5 Daños</button>
+                        <button id="p3-btn-dmg-0" type="button" onclick="rollEscortCounterAttack(3)" class="btn-xs" style="background:#065f46; color:#a7f3d0; border:1px solid #10b981; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-0-lbl" data-i18n="p3BtnDmg0">🌊 Ineficaz</span></button>
+                        <button id="p3-btn-dmg-1" type="button" onclick="rollEscortCounterAttack(5)" class="btn-xs" style="background:#1e3a8a; color:#bfdbfe; border:1px solid #3b82f6; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-1-lbl" data-i18n="p3BtnDmg1">1 Daño</span></button>
+                        <button id="p3-btn-dmg-2" type="button" onclick="rollEscortCounterAttack(7)" class="btn-xs" style="background:#854d0e; color:#fef08a; border:1px solid #eab308; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-2-lbl" data-i18n="p3BtnDmg2">2 Daños</span></button>
+                        <button id="p3-btn-dmg-3" type="button" onclick="rollEscortCounterAttack(9)" class="btn-xs" style="background:#c2410c; color:#fed7aa; border:1px solid #f97316; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-3-lbl" data-i18n="p3BtnDmg3">3 Daños</span></button>
+                        <button id="p3-btn-dmg-4" type="button" onclick="rollEscortCounterAttack(11)" class="btn-xs" style="background:#991b1b; color:#fecaca; border:1px solid #ef4444; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-4-lbl" data-i18n="p3BtnDmg4">4 Daños</span></button>
+                        <button id="p3-btn-dmg-5" type="button" onclick="rollEscortCounterAttack(12)" class="btn-xs" style="background:#581c87; color:#f3e8f8; border:1px solid #a855f7; padding:2px 6px; font-size:0.72rem; cursor:pointer;"><span id="p3-btn-dmg-5-lbl" data-i18n="p3BtnDmg5">5 Daños</span></button>
                       </div>
                     </div>
 
@@ -2886,9 +3196,9 @@
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:0.74rem; border-top:1px solid #1e293b; padding-top:4px;">
                       <span style="color:#c084fc; font-weight:bold;">Mesa B6 (Avería d66):</span>
                       <div style="display:inline-flex; align-items:center; gap:4px;">
-                        <button type="button" class="btn-dice" onclick="rollB6DamageManual()" style="font-size:0.70rem; padding:2px 6px;">🎲 Tirar d66</button>
+                        <button id="p3-btn-roll-d66" type="button" class="btn-dice" onclick="rollB6DamageManual()" style="font-size:0.70rem; padding:2px 6px;"><span id="p3-btn-d66-lbl" data-i18n="p3BtnRollD66">🎲 Tirar d66</span></button>
                         <input type="number" id="p3-manual-b6-val" min="11" max="66" placeholder="d66" style="width:48px; padding:2px 4px; background:#0f172a; border:1px solid #475569; color:#fff; border-radius:3px; font-size:0.74rem;">
-                        <button type="button" onclick="rollB6DamageManual(parseInt(document.getElementById('p3-manual-b6-val').value))" class="btn-xs" style="background:#581c87; color:#f3e8ff; border:1px solid #c084fc; border-radius:3px; padding:2px 6px; font-size:0.70rem; cursor:pointer;">➔ Avería</button>
+                        <button id="p3-btn-apply-d66" type="button" onclick="rollB6DamageManual(parseInt(document.getElementById(\'p3-manual-b6-val\').value))" class="btn-xs" style="background:#1e40af; color:#dbeafe; border:none; padding:1px 4px; font-size:0.68rem; cursor:pointer;"><span id="p3-btn-apply-d66-lbl" data-i18n="p3BtnApplyD66">➔ Avería</span></button>
                       </div>
                     </div>
                   </div>
@@ -2966,36 +3276,48 @@
             </div>
 
             <!-- ========================================================================= -->
-            <!-- PASO 6: DECISIÓN TÁCTICA Y REGISTRO EN ROGU BUKKU [REGLAS 8.2.10 & 8.4]   -->
+            <!-- PASO 6: DECISIÓN TÁCTICA Y REGISTRO EN ROGU BUKKU [REGLAS 8.2.8 & 8.4]   -->
             <!-- ========================================================================= -->
             <div class="flow-card combat-calc-panel" style="background:rgba(15,23,42,0.92); border:1px solid var(--gold-500); border-left:4px solid var(--gold-500); border-radius:8px; padding:12px 16px; box-shadow:0 3px 12px rgba(0,0,0,0.4);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
                 <div style="display:flex; align-items:center; gap:8px;">
                   <span style="background:var(--gold-600); color:#000; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.80rem; font-weight:bold;">6</span>
-                  <h4 style="margin:0; color:var(--gold-300); font-size:0.96rem;">Paso 6: Decisión Táctica y Registro en Rogu Bukku [Reglas 8.2.10 & 8.4]</h4>
+                  <h4 id="p3-step6-title" style="margin:0; color:var(--gold-300); font-size:0.96rem;">Paso 6: Decisión Táctica y Registro en Rogu Bukku [Reglas 8.2.8 & 8.4]</h4>
                 </div>
-                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:var(--gold-500); color:var(--gold-300);">Reglas 8.2.10 & 8.4</span>
+                <span class="rules-ref-pill" style="font-size:0.74rem; padding:2px 8px; border-color:var(--gold-500); color:var(--gold-300);">Reglas 8.2.8 & 8.4</span>
               </div>
 
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; align-items:center;">
-                <!-- Segunda Ronda / Seguir Convoy -->
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; align-items:start;">
+                <!-- Opción A: Ronda Adicional Buque Sin Escolta [Regla 8.2.8] -->
                 <div>
-                  <button type="button" id="btn-follow-convoy" onclick="followConvoyNextRound()" class="action-btn" style="width:100%; justify-content:center; border-color:#38bdf8; color:#38bdf8; font-size:0.84rem; padding:8px 12px; font-weight:bold; background:rgba(2,132,199,0.15);" title="Regla 8.4: Permanecer en la misma casilla y realizar una segunda ronda de combate contra buques dañados o el convoy">
-                    🔄 Seguir Convoy / Buque Dañado [Regla 8.4]
+                  <button type="button" id="btn-additional-round-828" onclick="rollAdditionalRound828()" class="action-btn" style="width:100%; justify-content:center; border-color:#22c55e; color:#86efac; font-size:0.82rem; padding:8px 8px; font-weight:bold; background:rgba(34,197,94,0.15);" title="Regla 8.2.8: Ronda adicional contra buques sin escolta no hundidos (Tirada en Tabla A3)" data-i18n="p3BtnAdditionalRound828">
+                    🎯 Ronda Adicional [Regla 8.2.8]
                   </button>
-                  <div style="font-size:0.74rem; color:#94a3b8; margin-top:4px; line-height:1.35;">
-                    Permite realizar una 2.ª ronda de ataque permaneciendo en el contacto o romper contacto para evadirte.
+                  <div id="wf-additional-round-desc" style="font-size:0.72rem; color:#94a3b8; margin-top:4px; line-height:1.3;" data-i18n="p3DescAdditionalRound828">
+                    Buques sin escolta: tira 2d6 en [A3]. Con 4–12 reatacas a corta distancia.
                   </div>
                 </div>
 
-                <!-- Sincronizar en Rogu Bukku -->
+                <!-- Opción B: Seguir Convoy / Buque Escoltado [Regla 8.4] -->
                 <div>
-                  <button id="p3-btn-sync-rogu" type="button" class="action-btn" onclick="logCombatToRoguBukku(true)" style="background:var(--gold-500); color:#0f172a; font-weight:800; border:none; width:100%; justify-content:center; font-size:0.84rem; padding:8px 12px; box-shadow:0 2px 8px rgba(234,179,8,0.35);">
-                    📋 Registrar / Sincronizar en Rogu Bukku
+                  <button type="button" id="btn-follow-convoy" onclick="followConvoyNextRound()" class="action-btn" style="width:100%; justify-content:center; border-color:#38bdf8; color:#38bdf8; font-size:0.82rem; padding:8px 8px; font-weight:bold; background:rgba(2,132,199,0.15);" title="Regla 8.4: Permanecer en la misma casilla y realizar una segunda ronda de combate contra buques dañados o el convoy" data-i18n="p3BtnFollowConvoy">
+                    🔄 Seguir Convoy [Regla 8.4]
                   </button>
-                  <div id="wf-rogu-log-status" style="font-size:0.78rem; text-align:center; min-height:18px; margin-top:4px;"></div>
+                  <div id="wf-follow-convoy-desc" style="font-size:0.72rem; color:#94a3b8; margin-top:4px; line-height:1.3;" data-i18n="p3DescFollowConvoy">
+                    Buques escoltados / Convoy: continuar persecución o aislar rezagado.
+                  </div>
+                </div>
+
+                <!-- Opción C: Sincronizar en Rogu Bukku -->
+                <div>
+                  <button id="p3-btn-sync-rogu" type="button" class="action-btn" onclick="logCombatToRoguBukku(true)" style="background:var(--gold-500); color:#0f172a; font-weight:800; border:none; width:100%; justify-content:center; font-size:0.82rem; padding:8px 8px; box-shadow:0 2px 8px rgba(234,179,8,0.35);" data-i18n="p3BtnSyncRogu">
+                    📋 Registrar en Rogu Bukku
+                  </button>
+                  <div id="wf-rogu-log-status" style="font-size:0.75rem; text-align:center; min-height:16px; margin-top:4px;"></div>
                 </div>
               </div>
+              <!-- Status banner for additional round results -->
+              <div id="wf-additional-round-res" style="display:none; margin-top:8px; padding:6px 10px; border-radius:6px; font-size:0.80rem; line-height:1.4;"></div>
             </div>
 
             <!-- ========================================================================= -->
@@ -3008,11 +3330,11 @@
               </summary>
               <div style="margin-top:10px; border-top:1px solid #334155; padding-top:10px;">
                 <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                  <button id="p3-t1-btn" type="button" class="action-btn" onclick="showTargetChartTab('T1')" style="padding:4px 10px; font-size:0.80rem;">T1: Cargueros Peq.</button>
-                  <button id="p3-t2-btn" type="button" class="action-btn" onclick="showTargetChartTab('T2')" style="padding:4px 10px; font-size:0.80rem;">T2: Petroleros/Gdes.</button>
-                  <button id="p3-t3-btn" type="button" class="action-btn" onclick="showTargetChartTab('T3')" style="padding:4px 10px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; font-weight:bold;">T3: Buques Guerra EE.UU.</button>
-                  <button id="p3-t4-btn" type="button" class="action-btn" onclick="showTargetChartTab('T4')" style="padding:4px 10px; font-size:0.80rem; border-color:#c084fc; color:#f3e8ff; font-weight:bold;">T4: Buques Capitales</button>
-                  <button id="p3-t5-btn" type="button" class="action-btn" onclick="showTargetChartTab('T5')" style="padding:4px 10px; font-size:0.80rem; border-color:#14b8a6; color:#99f6e4; font-weight:bold;">T5: Buques Commonwealth</button>
+                  <button id="p3-t1-btn" type="button" class="action-btn" onclick="showTargetChartTab(\'T1\')" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); border-color:#10b981; color:#a7f3d0; font-weight:bold;"><span id="p3-t1-btn-lbl" data-i18n="p3T1Btn">T1: Cargueros Peq.</span></button>
+                  <button id="p3-t2-btn" type="button" class="action-btn" onclick="showTargetChartTab(\'T2\')" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); border-color:#f59e0b; color:#fde047; font-weight:bold;"><span id="p3-t2-btn-lbl" data-i18n="p3T2Btn">T2: Petroleros/Gdes.</span></button>
+                  <button id="p3-t3-btn" type="button" class="action-btn" onclick="showTargetChartTab(\'T3\')" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); border-color:#ef4444; color:#fca5a5; font-weight:bold;"><span id="p3-t3-btn-lbl" data-i18n="p3T3Btn">T3: Buques Guerra EE.UU.</span></button>
+                  <button id="p3-t4-btn" type="button" class="action-btn" onclick="showTargetChartTab(\'T4\')" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); border-color:#a855f7; color:#e9d5ff; font-weight:bold;"><span id="p3-t4-btn-lbl" data-i18n="p3T4Btn">T4: Buques Capitales</span></button>
+                  <button id="p3-t5-btn" type="button" class="action-btn" onclick="showTargetChartTab(\'T5\')" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); border-color:#14b8a6; color:#99f6e4; font-weight:bold;"><span id="p3-t5-btn-lbl" data-i18n="p3T5Btn">T5: Buques Commonwealth</span></button>
                 </div>
                 <!-- Interactive display container for Target Charts -->
                 <div id="p3-target-chart-viewer" style="background:rgba(0,0,0,0.3); border-radius:6px; padding:10px; max-height:260px; overflow-y:auto; font-size:0.82rem;">
@@ -3025,26 +3347,27 @@
 
           <!-- Bottom Navigation Bar -->
           <div class="action-bar-nav" style="margin-top:16px;">
-            <button id="p3-btn-prev" class="btn-step-prev" onclick="setWorkflowPhase('patrol')">
-              ◀ <span id="p3-btn-prev-lbl">Volver a Encuentro con Aviones</span>
-            </button>
-            <button class="btn-step-next" onclick="setWorkflowPhase(4)">
-              <span id="p3-btn-next">Pasar a Fase 4: Control de Averías ➔</span>
-            </button>
+            <button id="p3-btn-prev" class="btn-step-prev" onclick="setWorkflowPhase(\'patrol\')">◀ <span id="p3-btn-prev-lbl" data-i18n="p3BtnPrev">Volver a Encuentro con Aviones</span></button>
+            <button id="p3-btn-next-action" class="btn-step-next" onclick="setWorkflowPhase(4)"><span id="p3-btn-next" data-i18n="p3BtnNext">Pasar a Fase 4: Control de Averías ➔</span></button>
           </div>
         </div>
         <div id="phase-content-4" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>🛠️</span>
-              <span id="p4-title">FASE 4: CONTROL DE AVERÍAS, REPARACIONES Y RETIRADA A BASE</span>
-            </h2>
-            <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
-              <button type="button" onclick="openModalViewer('4: Patrol Return', '', 'FLOW_4')" class="action-btn" style="padding:4px 10px; font-size:0.86rem; border-color:var(--gold-500); color:var(--gold-300); display:flex; align-items:center; gap:6px;">
-                <span>🗺️</span> <span id="p4-sequence-btn-label">Carta de Secuencia</span>
-              </button>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🛠️</span>
+                <span id="p4-title">FASE 4: CONTROL DE AVERÍAS, REPARACIONES Y RETIRADA A BASE</span>
+              </h2>
+              <div id="p4-sub-desc" class="phase-subtitle" data-i18n="p4Subtitle">
+                Control de averías e inundación [B7] • Reparación de sistemas • Bajas de dotación • Criterios de retirada [8.6]
+              </div>
             </div>
-            <span class="rules-ref-pill">[Chart B7 • Reglas 8.5 y 8.6]</span>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('4: Patrol Return', '', 'FLOW_4')" class="action-btn">
+                <span>🗺️</span> <span id="p4-sequence-btn-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span class="rules-ref-pill" id="p4-rules-pill" data-i18n="p4RulesRef">[Tabla B7 • Reglas 8.5 y 8.6]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -3371,15 +3694,21 @@
         <!-- PHASE 5: RETORNO A BASE, MANTENIMIENTO Y PROGRESIÓN -->
         <div id="phase-content-5" class="phase-body">
           <div class="phase-header-banner">
-            <h2>
-              <span>⚓</span>
-              <span id="p5-title">FASE 5: RETORNO A BASE, MANTENIMIENTO (REFIT) Y ASCENSOS</span>
-            
-            </h2>
-            <button type="button" onclick="openModalViewer('5: Post Mission', '', 'FLOW_5')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); margin-left:auto; display:flex; align-items:center; gap:4px;">
-              <span>🗺️</span> <span>📋 Guía de Fase</span>
-            </button>
-            <span class="rules-ref-pill">[Reglas 6.0 Paso 3, 8.5.11, 8.7-8.9, 9.0]</span>
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">⚓</span>
+                <span id="p5-title">FASE 5: RETORNO A BASE, MANTENIMIENTO (REFIT) Y ASCENSOS</span>
+              </h2>
+              <div id="p5-sub-desc" class="phase-subtitle" data-i18n="p5Subtitle">
+                Cálculo de periodo de puesta a punto (meses R) [9.1-9.2] • Ascensos de dotación [8.7] • Condecoraciones imperiales [8.8-8.9]
+              </div>
+            </div>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('5: Post Mission', '', 'FLOW_5')" class="action-btn">
+                <span>🗺️</span> <span id="p5-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
+              </button>
+              <span class="rules-ref-pill" id="p5-rules-pill" data-i18n="p5RulesRef">[Reglas 6.0 Paso 3, 8.5.11, 8.7-8.9, 9.0]</span>
+            </div>
           </div>
 
           <div class="workflow-grid-2">
@@ -3668,22 +3997,22 @@
           <div>
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <h3 style="margin:0; color:#fca5a5; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
-                <span>✈️</span> <span>PROCEDIMIENTO TÁCTICO: ATAQUE AÉREO EN PATRULLA</span>
+                <span>✈️</span> <span id="modal-air-title" data-i18n="modalAirTitle">PROCEDIMIENTO TÁCTICO: ATAQUE AÉREO EN PATRULLA</span>
               </h3>
-              <span style="background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fecaca; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLA OFICIAL 8.3</span>
+              <span id="modal-air-rule-badge" data-i18n="modalAirBadge" style="background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fecaca; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLA OFICIAL 8.3</span>
             </div>
-            <div style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+            <div id="modal-air-subtitle" data-i18n="modalAirSubtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
               Protocolo completo de combate aeronaval: Detección [A3], Inmersión Obligatoria [A4], Defensa Antiaérea [A2], Torpedo FIDO (5/44+) [8.3.3], Bombardeo [B5] y Acoso [8.3.4].
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
-            <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">✕ Cerrar</button>
+            <span id="modal-air-esc-lbl" data-i18n="modalEscClose" style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button id="modal-air-close-btn" type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);"><span id="modal-air-close-btn-lbl" data-i18n="modalBtnClose">✕ Cerrar</span></button>
           </div>
         </div>
 
         <!-- SCROLLABLE CONTENT BODY -->
-        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+        <div id="modal-air-workflow-content" style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
           
           <!-- RESUMEN OPERATIVO -->
           <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
@@ -3864,15 +4193,15 @@
         <!-- FOOTER ACTIONS -->
         <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(239,68,68,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <button type="button" onclick="openModalViewer('Tablas B1 a B6 (Combate y Ataque Aéreo)', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🎯</span> <span>Ver Tabla [B5] en Visor Oficial</span>
+            <button id="modal-air-b5-btn" type="button" onclick="openModalViewer('Tablas B1 a B6 (Combate y Ataque Aéreo)', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span id="modal-air-b5-lbl" data-i18n="modalAirB5Btn">Ver Tabla [B5] en Visor Oficial</span>
             </button>
-            <button type="button" onclick="openModalViewer('Tabla [B7]: Heridas de Tripulación', '', 'B7')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#f59e0b; color:#fde047; background:rgba(245,158,11,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🩸</span> <span>Ver Tabla [B7]</span>
+            <button id="modal-air-b7-btn" type="button" onclick="openModalViewer('Tabla [B7]: Heridas de Tripulación', '', 'B7')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#f59e0b; color:#fde047; background:rgba(245,158,11,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🩸</span> <span id="modal-air-b7-lbl" data-i18n="modalAirB7Btn">Ver Tabla [B7]</span>
             </button>
           </div>
-          <button type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#1e293b; border-color:#64748b; color:#e2e8f0; font-weight:bold;">
-            <span>✓</span> <span>Entendido (Cerrar)</span>
+          <button id="modal-air-ack-btn" type="button" onclick="closeAirEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#1e293b; border-color:#64748b; color:#e2e8f0; font-weight:bold;">
+            <span>✓</span> <span id="modal-air-ack-lbl" data-i18n="modalBtnAck">Entendido (Cerrar)</span>
           </button>
         </div>
 
@@ -3890,22 +4219,22 @@
           <div>
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <h3 style="margin:0; color:#a7f3d0; font-size:1.25rem; font-family:'Cinzel', serif; display:flex; align-items:center; gap:8px;">
-                <span>🚢</span> <span id="modal-ship-title">PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA</span>
+                <span>🚢</span> <span id="modal-ship-title" data-i18n="modalShipTitle">PROCEDIMIENTO TÁCTICO: ATAQUE NAVAL EN PATRULLA</span>
               </h3>
-              <span id="modal-ship-rule-badge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#a7f3d0; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLAS OFICIALES 8.1 - 8.2</span>
+              <span id="modal-ship-rule-badge" data-i18n="modalShipBadge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#a7f3d0; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">REGLAS OFICIALES 8.1 - 8.2</span>
             </div>
-            <div id="modal-ship-subtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
+            <div id="modal-ship-subtitle" data-i18n="modalShipSubtitle" style="font-size:0.84rem; color:#94a3b8; margin-top:4px;">
               Protocolo completo de combate de superficie y submarino: Detección [A3/T1-T5], Modo y Distancia [8.1.3-8.1.10], Solución de Torpedos [B1/B2/B3], Daño al Objetivo [B4] y Contraataque de Escoltas [B5].
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
-            <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.2);">✕ Cerrar</button>
+            <span id="modal-ship-esc-lbl" data-i18n="modalEscClose" style="font-size:0.80rem; color:#94a3b8; background:rgba(0,0,0,0.4); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] Cerrar</span>
+            <button id="modal-ship-close-btn" type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#10b981; color:#a7f3d0; background:rgba(16,185,129,0.2);"><span id="modal-ship-close-btn-lbl" data-i18n="modalBtnClose">✕ Cerrar</span></button>
           </div>
         </div>
 
         <!-- SCROLLABLE CONTENT BODY -->
-        <div style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
+        <div id="modal-ship-workflow-content" style="flex:1; overflow-y:auto; padding-right:8px; display:flex; flex-direction:column; gap:14px;">
           
           <!-- RESUMEN OPERATIVO -->
           <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-left:4px solid #10b981; border-radius:6px; padding:10px 14px; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
@@ -4090,15 +4419,15 @@
         <!-- FOOTER ACTIONS -->
         <div style="padding-top:12px; margin-top:10px; border-top:1px solid rgba(16,185,129,0.3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <button type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🎯</span> <span>Ver Tablas B1–B6</span>
+            <button id="modal-ship-b1b6-btn" type="button" onclick="openModalViewer('Tablas de Combate B1 a B6', '', 'B1_B6')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🎯</span> <span id="modal-ship-b1b6-lbl" data-i18n="modalShipB1B6Btn">Ver Tablas B1–B6</span>
             </button>
-            <button type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:var(--gold-500); color:var(--gold-300); background:rgba(202,138,4,0.15); display:inline-flex; align-items:center; gap:5px;">
-              <span>🗺️</span> <span>Carta de Secuencia</span>
+            <button id="modal-ship-flow-btn" type="button" onclick="openModalViewer('3: Encounters', '', 'FLOW_3')" class="action-btn" style="padding:5px 12px; font-size:0.80rem; border-color:var(--gold-500); color:var(--gold-300); background:rgba(202,138,4,0.15); display:inline-flex; align-items:center; gap:5px;">
+              <span>🗺️</span> <span id="modal-ship-flow-lbl" data-i18n="modalShipSeqBtn">Carta de Secuencia</span>
             </button>
           </div>
-          <button type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
-            <span>✓</span> <span>Entendido (Cerrar)</span>
+          <button id="modal-ship-ack-btn" type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
+            <span>✓</span> <span id="modal-ship-ack-lbl" data-i18n="modalBtnAck">Entendido (Cerrar)</span>
           </button>
         </div>
 
@@ -4215,14 +4544,14 @@
 
             <div class="uniform-chest">
               <div class="chest-row">
-                <div id="k1-lbl-rank" style="font-size:0.80rem; font-weight:800; color:#fff; margin-right:8px;">RANGO:</div>
+                <div id="k1-lbl-rank" style="font-size:0.84rem; font-weight:800; color:#fff; margin-right:8px; letter-spacing:0.5px;">RANGO:</div>
                 <div id="token-rank" class="wargame-token token-yellow active rank-slot" onclick="cycleRank()">
-              <img id="k1-rank-chit-img" src="assets/tokens/Rank.jpg" class="k1-chit-img" alt="Rank">
-              <div class="k1-chit-label-wrap">
-                <span id="rank-text" style="font-size:0.90rem;">LT Cdr (少佐)</span>
-                  <span id="k1-lbl-cycle" style="font-size:0.80rem; color:#555;">[Clic para Cambiar]</span>
-              </div>
-            </div>
+                  <img id="k1-rank-chit-img" src="assets/tokens/Rank1.jpg" class="k1-chit-img" alt="Rank">
+                  <div class="k1-chit-label-wrap">
+                    <span id="rank-text" style="font-size:0.95rem; font-weight:800; color:#0f172a;">LT Cdr (少佐)</span>
+                    <span id="k1-lbl-cycle" style="font-size:0.75rem; color:#475569; font-weight:600;">[Clic para Cambiar]</span>
+                  </div>
+                </div>
               </div>
 
               <div class="chest-row">
@@ -4992,27 +5321,27 @@
     <div id="tab-dock" class="tab-pane">
       <div class="dock-grid">
         <div class="dock-sidebar">
-          <h3 id="lbl-dock-sidebar-title" data-i18n="ui.selectSubmarineClass" style="font-size:0.95rem; font-weight:800; color:var(--gold-400); margin-bottom:12px;">SELECCIONAR CLASE DE SUBMARINO</h3>
-          <div id="sub-buttons-list" style="display:flex; flex-direction:column; gap:4px; max-height:640px; overflow-y:auto; padding-right:4px;">
+          <h3 id="lbl-dock-sidebar-title" data-i18n="ui.selectSubmarineClass" style="font-size:0.90rem; font-weight:800; color:var(--gold-400); margin-bottom:10px; flex-shrink:0;">SELECCIONAR CLASE DE SUBMARINO</h3>
+          <div id="sub-buttons-list">
             <!-- Generated from sub_db -->
           </div>
         </div>
 
         <div class="sub-detail-panel">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <img id="dock-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:54px; height:54px; min-width:54px; min-height:54px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 3px 8px rgba(0,0,0,0.6); object-fit:cover;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img id="dock-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:42px; height:42px; min-width:42px; min-height:42px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 2px 6px rgba(0,0,0,0.6); object-fit:cover;">
               <div>
-                <h2 id="sub-title" style="font-family:'Cinzel',serif; font-size:1.35rem; color:#fff; margin:0;">Junsen Type B Class</h2>
-                <p id="sub-subtitle" style="font-size:0.85rem; color:var(--gold-400); font-weight:600; margin:3px 0 0 0;">Otsu-gata Sensuikan • Fleet Submarine</p>
+                <h2 id="sub-title" style="font-family:'Cinzel',serif; font-size:1.15rem; color:#fff; margin:0; line-height:1.2;">Junsen Type B Class</h2>
+                <p id="sub-subtitle" style="font-size:0.78rem; color:var(--gold-400); font-weight:600; margin:2px 0 0 0;">Otsu-gata Sensuikan • Fleet Submarine</p>
               </div>
             </div>
-            <button id="btn-dock-assign-active" class="action-btn" onclick="assignActiveSub()" style="border-color:var(--gold-500); background:var(--gold-500); color:#0f172a; font-weight:800;">
+            <button id="btn-dock-assign-active" class="action-btn" onclick="assignActiveSub()" style="border-color:var(--gold-500); background:var(--gold-500); color:#0f172a; font-weight:800; padding:6px 14px; font-size:0.82rem;">
               <span id="lbl-dock-assign-active" data-i18n="ui.assignActiveSubmarine">⚓ Asignar como Buque Activo</span>
             </button>
           </div>
 
-          <p id="sub-desc" data-i18n="ui.historicalNotes" style="font-size:0.88rem; line-height:1.5; color:var(--slate-300); margin-top:14px; background:rgba(0,0,0,0.25); padding:12px; border-radius:8px; border-left:3px solid var(--gold-500);">
+          <p id="sub-desc" data-i18n="ui.historicalNotes" style="font-size:0.80rem; line-height:1.35; color:var(--slate-300); margin-top:8px; margin-bottom:0; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:6px; border-left:3px solid var(--gold-500);">
             Historical notes...
           </p>
 
@@ -5056,7 +5385,7 @@
           </div>
 
           <!-- RUTA OPERATIVA Y REGISTROS DE DAÑO -->
-          <div id="sub-mat-tracks-wrapper" style="margin-top:20px; background:#f4eedb; border:2px solid #b89f68; border-radius:10px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,0.6); color:#1e293b;">
+          <div id="sub-mat-tracks-wrapper" style="margin-top:12px; background:#f4eedb; border:2px solid #b89f68; border-radius:8px; padding:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5); color:#1e293b;">
             <!-- Header bar for Patrol Track -->
             <div style="background:#e4d8be; border:1px solid #c7b693; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
               <div style="display:flex; align-items:center; gap:8px;">
@@ -5087,7 +5416,7 @@
           </div>
 
           <!-- PERFIL ILUSTRADO DEL SUBMARINO CON SELLO ROJO -->
-          <div id="sub-profile-container" style="margin-top:20px; background:linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border:2px solid var(--gold-500); border-radius:10px; padding:12px; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-align:center;">
+          <div id="sub-profile-container" style="margin-top:12px; background:linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border:2px solid var(--gold-500); border-radius:8px; padding:10px; box-shadow:0 6px 20px rgba(0,0,0,0.5); text-align:center;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(212,175,55,0.3);">
               <span id="sub-profile-header-title" data-i18n="ui.officialProfile" style="font-family:'Cinzel', serif; font-size:0.85rem; font-weight:800; color:var(--gold-400); letter-spacing:1px;">⚓ PERFIL IJN</span>
               <span id="sub-profile-label" data-i18n="ui.profileSeal" style="font-size:0.86rem; color:#94a3b8; font-weight:600;">Lámina con Sello Imperial</span>
@@ -5212,20 +5541,15 @@
         <button type="button" class="action-btn" onclick="loadActiveCampaignSubmarine()" style="padding:5px 10px; font-size:0.82rem; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); color:#fff; border:none; font-weight:bold;" title="Cargar el submarino actualmente comisionado en tu campaña">
           <span>⚓ Mi Submarino Activo</span>
         </button>
-        <button type="button" class="action-btn" onclick="loadAllTorpedoes()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#93c5fd; border:1px solid #3b82f6; border-radius:5px; font-weight:bold; cursor:pointer;" title="Cargar todos los torpedos y recargas">
-          <span>⚡ Cargar Torpedos</span>
-        </button>
-        <button type="button" class="action-btn" onclick="openTorpedoDistributionDialog()" style="padding:5px 10px; font-size:0.82rem; background:#1e293b; color:#fde047; border:1px solid #eab308; border-radius:5px; font-weight:bold; cursor:pointer;" title="Repartir torpedos delante (proa) y detrás (popa)">
-          <span>📍 Repartir Proa / Popa</span>
-        </button>
       </div>
+      <div id="subboard-torpedo-summary-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.80rem; font-weight:bold; padding:4px 10px; border-radius:5px; background:rgba(15,23,42,0.95); border:1px solid #334155; color:#fde047;"></div>
     </div>
   </div>
 
   <!-- Interactive Board Viewport Container -->
   <div class="sub-board-viewport" id="sub-board-viewport">
     <!-- Layer 1: Submarine Background Printed Card Image -->
-    <img id="sub-board-bg-img" src="assets/submarines_cards/Type_B_Class_es.webp" alt="Submarine Player Card" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:1;" />
+    <img id="sub-board-bg-img" src="" alt="Submarine Player Card" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:1; display:none;" />
 
     <!-- Layer 2: 3D Acrylic/Plastic Top Overlay (Toggled with display mode) -->
     <img id="sub-board-3d-overlay" src="assets/submarines_cards/overlay_3d_es.webp" alt="3D Double Layer Overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; pointer-events:none; z-index:5; display:none;" />
@@ -7780,6 +8104,8 @@
   <script src="js/dock.js?v=20261119_01"></script>
   <script src="js/operations_map.js?v=20261119_01"></script>
   <script src="js/submarines_canonical_slots.js?v=20261119_01"></script>
-  <script src="js/sub_board.js?v=20261119_01"></script>
+  <script src="js/sub_board.js?v=20261119_02"></script>
+  <script src="js/special_missions.js?v=20261120_01"></script>
+  <script src="js/major_events.js?v=20261120_01"></script>
 </body>
 </html>

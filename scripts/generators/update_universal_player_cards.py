@@ -29,189 +29,23 @@ COLS_9_X = [27.5, 44.1, 60.7, 77.3, 93.9, 110.5, 127.1, 143.7, 160.3]
 RIGHT_COLS_X = [177.9, 194.6, 211.3, 228.0]
 
 # =========================================================================
-# UNIVERSAL ARMAMENT CONFIGURATION FOR ALL 18 SUBMARINES
+# DYNAMIC DATABASE LOADER: ALL ARMAMENT & SPECS READ DIRECTLY FROM JSON DB
 # =========================================================================
-UNIVERSAL_ARMAMENT_MAP = {
-    "Kaidai_KD3_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [("7", "stern", "tube"), ("8", "stern", "tube"), ("Aft\nReload", "stern", "rld"), ("Aft\nReload", "stern", "rld")],
-        "artillery": [("120mm", "gun"), ("Ammo\nx5", "ammo"), ("13.1mm", "aa"), None],
-        "fwd_reloads": 8,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
-                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
-                "Periscope", None, None, None]
-    },
-    "Kaidai_KD4_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [("5", "stern", "tube"), ("6", "stern", "tube"), ("Aft\nReload", "stern", "rld"), ("Aft\nReload", "stern", "rld")],
-        "artillery": [("120mm", "gun"), ("Ammo\nx5", "ammo"), ("13.1mm", "aa"), None],
-        "fwd_reloads": 6,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
-                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
-                "Periscope", None, None, None]
-    },
-    "Kaidai_KD5_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [("5", "stern", "tube"), ("6", "stern", "tube"), ("Aft\nReload", "stern", "rld"), ("Aft\nReload", "stern", "rld")],
-        "artillery": [("100mm", "gun"), ("Ammo\nx5", "ammo"), ("13.1mm", "aa"), ("Kaiten", "kai")],
-        "fwd_reloads": 6,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
-                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
-                "Periscope", None, None, None]
-    },
-    "Kaidai_KD6_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [("5", "stern", "tube"), ("6", "stern", "tube"), ("Aft\nReload", "stern", "rld"), ("Aft\nReload", "stern", "rld")],
-        "artillery": [("100mm", "gun"), ("Ammo\nx5", "ammo"), ("13.1mm", "aa"), ("Daihatsu", "cargo")],
-        "fwd_reloads": 6,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
-                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
-                "Periscope", None, None, None]
-    },
-    "Kaidai_KD7_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, None, None],
-        "artillery": [("120mm", "gun"), ("Ammo\nx5", "ammo"), ("25mm AA\n#1", "aa"), ("25mm AA\n#2", "aa")],
-        "fwd_reloads": 6,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
-                "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
-                None, None, None, None]
-    },
-    "Kirai_Sen_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [("Aft Mine\nDoors", "stern", "mine_door"), ("Mines\nx42", "cargo", "mines"), None, None],
-        "artillery": [("140mm", "gun"), ("Ammo\nx5", "ammo"), None, None],
-        "fwd_reloads": 8,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Dive Planes", "Radio",
-                "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2",
-                "Fuel Tanks", "Hydrophones", "Batteries", "Periscope",
-                None, None, None, None]
-    },
-    "Junsen_J_IM_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [("5", "stern", "tube"), ("6", "stern", "tube"), ("140mm\n#2", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("140mm\n#1", "gun"), ("Ammo\nx5", "ammo"), None, None],
-        "fwd_reloads": 12,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Aft Torp Doors", "Electric Motor 1", "Electric Motor 2", "Diesel Engine 1",
-                "Diesel Engine 2", "Fuel Tanks", "Hydrophones", "Batteries",
-                "Periscope", None, None, None]
-    },
-    "Junsen_J2_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [("7", "stern", "tube"), ("8", "stern", "tube"), ("Aft\nReload", "stern", "rld"), ("Aft\nReload", "stern", "rld")],
-        "artillery": [("127mm", "gun"), ("Ammo\nx5", "ammo"), ("13.1mm", "aa"), None],
-        "fwd_reloads": 10,
-        "sys": ["Crane", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Radio", "Dive Planes", "Aft Torp Doors", "Electric Motor 1",
-                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
-                "Hydrophones", "Batteries", "Periscope", None]
-    },
-    "Junsen_J3_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [("7", "stern", "tube"), ("8", "stern", "tube"), ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("13.1mm\n#1", "aa"), ("13.1mm\n#2", "aa"), ("Kaiten", "kai"), ("Kaiten", "kai")],
-        "fwd_reloads": 11,
-        "sys": ["Crane", "Aft Torp Doors", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries", "Periscope", None, None]
-    },
-    "Type_A_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Twin\n#1", "aa"), ("25mm Twin\n#2", "aa"), None, None],
-        "fwd_reloads": 12,
-        "sys": ["Crane", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries", "Periscope", None, None]
-    },
-    "Type_B_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Twin\n#1", "aa"), ("25mm Twin\n#2", "aa"), ("Kaiten", "kai"), ("Kaiten", "kai")],
-        "fwd_reloads": 11,
-        "sys": ["Radio", "Dive Planes", "Hangar", "Crane",
-                "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries", "Periscope", None, None]
-    },
-    "Type_B_3_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Triple\n#1", "aa"), ("25mm Triple\n#2", "aa"), ("Kaiten", "kai"), ("Kaiten", "kai")],
-        "fwd_reloads": 11,
-        "sys": ["Type 22 Radar", "Crane", "Hangar", "F. Torp. Doors (Odd)",
-                "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1",
-                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
-                "Hydrophones", "Batteries", "Periscope", None]
-    },
-    "Type_C_Class": {
-        "bow_tubes": 8,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Twin\n#1", "aa"), ("25mm Twin\n#2", "aa"), ("Kaiten", "kai"), ("Kaiten", "kai")],
-        "fwd_reloads": 12,
-        "sys": ["Type 22 Radar", "Hangar", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries", "Periscope", None, None]
-    },
-    "Type_C3_Class": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, ("140mm\n#1", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("140mm\n#2", "gun"), ("Ammo\nx5", "ammo"), ("25mm Twin\n#1", "aa"), ("25mm Twin\n#2", "aa")],
-        "fwd_reloads": 13,
-        "sys": ["Type 22 Radar", "Cargo", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)",
-                "Radio", "Dive Planes", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries", "Periscope", None, None]
-    },
-    "Type_A_Modified": {
-        "bow_tubes": 6,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Triple\n#1", "aa"), ("25mm Triple\n#2", "aa"), ("25mm Single", "aa"), None],
-        "fwd_reloads": 12,
-        "sys": ["Type 22 Radar", "Crane", "Hangar", "F. Torp. Doors (Odd)",
-                "F. Torp. Doors (Even)", "Radio", "Dive Planes", "Electric Motor 1",
-                "Electric Motor 2", "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks",
-                "Hydrophones", "Batteries", "Periscope", None]
-    },
-    "Sen_Toku_Class": {
-        "bow_tubes": 8,
-        "aft_r3": [None, None, ("140mm", "gun"), ("Ammo\nx5", "ammo")],
-        "artillery": [("25mm Triple\n#1", "aa"), ("25mm Triple\n#2", "aa"), ("25mm Triple\n#3", "aa"), ("25mm Single", "aa")],
-        "fwd_reloads": 12,
-        "sys": ["Crane", "Hangar", "Radio", "Periscope",
-                "Hydrophones", "F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Dive Planes",
-                "Batteries", "Fuel Tanks", "Electric Motor 1", "Electric Motor 2",
-                "Diesel Engine 1", "Diesel Engine 2", "Diesel Engine 3", "Diesel Engine 4"]
-    },
-    "Sen_Taka_Class": {
-        "bow_tubes": 4,
-        "aft_r3": [None, None, ("25mm Single", "aa"), None],
-        "artillery": [None, None, None, None],
-        "fwd_reloads": 6,
-        "sys": ["F. Torp. Doors (Odd)", "F. Torp. Doors (Even)", "Radio", "Dive Planes",
-                "Electric Motor 1", "Electric Motor 2", "Electric Motor 3", "Electric Motor 4",
-                "Diesel Engine 1", "Diesel Engine 2", "Fuel Tanks", "Hydrophones",
-                "Batteries 1", "Batteries 2", "Batteries 3", "Periscope"]
-    },
-    "Type_A_Midget_Submarine___Ko_Hyoteki": {
-        "bow_tubes": 2,
-        "aft_r3": [None, None, None, None],
-        "artillery": [None, None, None, None],
-        "fwd_reloads": 0,
-        "sys": ["Fwd Battery", "Aft Battery", "Wire Cutters", "Gyro Compass",
-                "Propeller", "Electric Motor", "Horiz. Rudder", "Vertical Rudder",
-                "Radio", "Hydrophones", "Periscope", None,
-                None, None, None, None]
-    }
+_CACHED_SUBS_DB = None
+def get_submarines_db():
+    global _CACHED_SUBS_DB
+    if _CACHED_SUBS_DB is None:
+        db_path = 'data/submarines_database.json'
+        with open(db_path, 'r', encoding='utf-8') as f:
+            _CACHED_SUBS_DB = json.load(f)['submarines']
+    return _CACHED_SUBS_DB
+
+# Dynamic dictionaries populated directly from database (eliminating hardcoded copies)
+UNIVERSAL_ARMAMENT_MAP = {k: v.get('armament_config', {}) for k, v in get_submarines_db().items()}
+
+I18N_SPECIAL_RULES = {
+    'en': {k: v.get('special_rules_i18n', {}).get('en', (v.get('special_rules', ''), None)) for k, v in get_submarines_db().items()},
+    'es': {k: v.get('special_rules_i18n', {}).get('es', (v.get('special_rules', ''), None)) for k, v in get_submarines_db().items()}
 }
 
 I18N_SYSTEMS = {
@@ -349,49 +183,6 @@ I18N_UI = {
         'random_event': 'Random\nEvent', 'status_sfx': 'Status',
         'sheet_str': 'Sheet', 'side_a': 'Side A (Front)', 'side_b': 'Side B (Reverse)',
         'footer': 'Sensuikan Canonical Board • Sheet {sheet}/9 • {side} (Page {page:02d}/18) • {family} • Reverse: {paired} • Double-Sided Print (Flip on Long Edge) • 100% Scale'
-    }
-}
-
-I18N_SPECIAL_RULES = {
-    'en': {
-        'Kaidai_KD3_Class': ("Fast fleet attack submarine without aircraft. 8 total torpedo tubes (6 forward, 2 aft).", None),
-        'Kaidai_KD4_Class': ("Compact Kaidai variant. 6 torpedo tubes total (4 forward, 2 aft).", None),
-        'Kaidai_KD5_Class': ("Improved diving depth (75m). High speed fleet attack boat.", "In 4/45 Kaiten may be installed. If so, remove deck gun. Kaiten carried ONLY on Kaiten missions."),
-        'Kaidai_KD6_Class': ("Fastest pre-war IJN submarines (23 knots surface). High torpedo endurance.\nCargo: In 1/43, conversion to cargo submarine may occur (carries Daihatsu craft; remove deck gun).", "In 1945 may convert to Kaiten carrier (removes deck gun). Carried ONLY on Kaiten missions."),
-        'Kaidai_KD7_Class': ("Wartime standardized attack class. All 6 torpedo tubes forward, powerful 25mm AA guns.", None),
-        'Kirai_Sen_Class': ("Specialized minelayer (I-121..I-124). Carries 42 naval mines in aft internal tubes. Every patrol is automatically a minelaying mission.\nSpecial Damage: Damage to 'Aft Torpedo Doors' on Chart [E6] instead affects Aft Mine Doors.", None),
-        'Junsen_J_IM_Class': ("Junsen I modified with seaplane hangar. 6 forward torpedo tubes, no aft tubes. Twin 140mm deck guns.", None),
-        'Junsen_J2_Class': ("Equipped with aircraft hangar forward of conning tower. Dedicated aft reloads on tubes 3 & 4. 127mm dual-purpose deck gun.", None),
-        'Junsen_J3_Class': ("Equipped with aircraft hangar forward of conning tower. Systems Status includes Aft Torpedo Doors damage box.", "In 10/44 Kaiten may be installed. If so, remove aircraft. Carried ONLY on Kaiten missions."),
-        'Type_A_Class': ("Squadron flagship with extended command facilities, scout seaplane, and 140mm deck gun.", None),
-        'Type_B_Class': ("Most numerous and successful Japanese cruiser submarine class. Carries 1 Yokosuka E14Y1 scout seaplane.", "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions."),
-        'Type_B_3_Class': ("Late-war Kaiten carrier. Sunk USS Indianapolis (I-58). Equipped with Type 22 Radar.", "In 12/44 Kaiten may be installed with 2nd 25mm Twin AA. If so, remove Deck Gun and aircraft. Carried ONLY on Kaiten missions."),
-        'Type_C_Class': ("Heavy torpedo attack boat: 8 bow tubes, 20 Type 95 torpedoes. Carries 1 Type A Midget Submarine (Ko-Hyoteki) on aft deck.\nRadar: Type 22 Radar available from Dec. 1944.", None),
-        'Type_A_Modified': ("Extended long-range cruiser sub with improved diesel endurance, scout plane, and 25mm AA suites. Type 22 Radar equipped.", None),
-        'Sen_Toku_Class': ("Available Dec 1944. Massive carrier sub carrying 3 Aichi M6A1 Seiran bombers.\nArmament: All 8 tubes are Forward; Chart [E6] aft tube hits treat as No Effect. Heavy gun armament (Ammo x6), 4x 25mm Triple AA, Mk 3 M1 / Mk 2 M2 Radar.", None),
-        'Sen_Taka_Class': ("High-speed sub (19 kt submerged). Streamlined hull, snorkel, high capacity batteries.\n• High Speed: Never suffers +1 DRM for previous detection.\n• Motors: 2nd hit on Motor 1 -> Motor 3; 2nd on Motor 2 -> Motor 4. [E3] motor penalties reduced by 1.\n• Batteries: Suffers +1 DRM only when all 3 banks are damaged.", None),
-        'Type_C3_Class': ("Extra long-range cargo submarine (Yanagi missions to Germany). Twin 140mm deck guns.\nRadar: Type 22 Radar available from Dec. 1944.", "In 12/44 Kaiten are installed. Remove 2nd Deck Gun & ammo. Carried ONLY on Kaiten missions."),
-        'Type_A_Midget_Submarine___Ko_Hyoteki': ("Two-man midget submarine launched from mothership for harbour penetration [7.16]. 600 hp electric drive, forward/aft battery banks, gyro compass, wire cutters. 2x 45cm Type 97 torpedoes.", None)
-    },
-    'es': {
-        'Kaidai_KD3_Class': ("Submarino de ataque de escuadra rápido sin hidroavión. 8 tubos lanzatorpedos en total (6 a proa, 2 a popa).", None),
-        'Kaidai_KD4_Class': ("Variante Kaidai compacta. 6 tubos lanzatorpedos en total (4 a proa, 2 a popa).", None),
-        'Kaidai_KD5_Class': ("Profundidad de inmersión mejorada (75 m). Alta velocidad en superficie.", "En 4/45 puede instalar Kaiten (elimina el cañón de cubierta). Embarcados SOLO en misiones Kaiten."),
-        'Kaidai_KD6_Class': ("Submarinos más veloces de preguerra (23 nudos). Gran autonomía de torpedos.\nCarga: En 1/43 puede convertirse en transporte (lleva lancha Daihatsu; retira cañón de cubierta).", "En 1945 puede convertirse en portador Kaiten (retira cañón). Solo en misiones Kaiten."),
-        'Kaidai_KD7_Class': ("Clase de ataque estandarizada de guerra. Los 6 tubos a proa, potente artillería AA de 25 mm.", None),
-        'Kirai_Sen_Class': ("Minador especializado (I-121..I-124). Lleva 42 minas navales en tubos de popa. Cada patrulla es misión de minado.\nDaño Especial: Daño en 'Compuertas Popa' en Tabla [E6] afecta a Compuertas de Minas de Popa.", None),
-        'Junsen_J_IM_Class': ("Junsen I modificado con hangar para hidroavión. 6 tubos a proa, sin tubos a popa. Dos cañones de 140 mm.", None),
-        'Junsen_J2_Class': ("Equipado con hangar para hidroavión a proa de la torre. Recargas dedicadas para tubos 3 y 4. Cañón de 127 mm.", None),
-        'Junsen_J3_Class': ("Equipado con hangar para hidroavión a proa de la torre. El estado de sistemas incluye casilla de compuertas de popa.", "En 10/44 puede instalar Kaiten (retira el avión). Embarcados SOLO en misiones Kaiten."),
-        'Type_A_Class': ("Buque insignia de flotilla con puesto de mando ampliado, hidroavión de exploración y cañón de 140 mm.", None),
-        'Type_B_Class': ("La clase de crucero submarino más numerosa y exitosa de la AIJ. Lleva 1 hidroavión Yokosuka E14Y1.", "En 12/44 puede instalar Kaiten y segundo AA doble de 25 mm (retira cañón y avión). Solo misiones Kaiten."),
-        'Type_B_3_Class': ("Portador Kaiten de final de guerra. Famoso por hundir el USS Indianapolis (I-58). Equipado con Radar Tipo 22.", "En 12/44 puede instalar Kaiten y segundo AA doble de 25 mm (retira cañón y avión). Solo misiones Kaiten."),
-        'Type_C_Class': ("Submarino de ataque pesado: 8 tubos a proa, 20 torpedos Tipo 95. Transporta 1 submarino enano Tipo A en cubierta de popa.\nRadar: Radar Tipo 22 disponible desde dic. 1944.", None),
-        'Type_A_Modified': ("Crucero submarino de muy largo alcance con autonomía diésel mejorada, hidroavión y baterías AA de 25 mm. Con Radar Tipo 22.", None),
-        'Sen_Toku_Class': ("Disponible en dic. 1944. Submarino portaviones gigante con 3 bombarderos Aichi M6A1 Seiran.\nArmamento: Los 8 tubos están a proa; impactos a tubos de popa en [E6] sin efecto. Cañón con munición x6, 4x AA triples de 25 mm, Radares Mk 3 M1 y Mk 2 M2.", None),
-        'Sen_Taka_Class': ("Submarino rápido revolucionario (19 nudos en inmersión). Casco hidrodinámico, esnórquel y baterías de gran capacidad.\n• Alta Velocidad: Nunca sufre penalización +1 DRM por detección previa.\n• Motores: 2.º impacto en Motor 1 -> Motor 3; 2.º en Motor 2 -> Motor 4. Penalizaciones en [E3] reducidas en 1.\n• Baterías: Sufre +1 DRM solo si los 3 bancos están dañados.", None),
-        'Type_C3_Class': ("Submarino de transporte de alcance oceánico extremo (misiones Yanagi a Alemania). Dos cañones de 140 mm.\nRadar: Radar Tipo 22 disponible desde dic. 1944.", "En 12/44 instala Kaiten (retira segundo cañón y munición). Embarcados SOLO en misiones Kaiten."),
-        'Type_A_Midget_Submarine___Ko_Hyoteki': ("Submarino enano biplaza lanzado desde submarino nodriza para incursiones en puertos [7.16]. Motor eléctrico de 600 hp, bancos de baterías proa/popa, girocompás y cortacables. 2x torpedos Tipo 97 de 45 cm.", None)
     }
 }
 
@@ -580,7 +371,7 @@ def draw_single_card(ax, key, sub, lang='es'):
     def to_x(x_mm):
         return ox + (x_mm * BROTHER_COMP)
 
-    arm_cfg = UNIVERSAL_ARMAMENT_MAP.get(key, {})
+    arm_cfg = sub.get('armament_config') or UNIVERSAL_ARMAMENT_MAP.get(key, {})
 
     # 1. SHIPYARD TITLE BLOCK (Y: 2.5 to 18.5 mm)
     tb_x0 = to_x(2.5)
@@ -628,7 +419,19 @@ def draw_single_card(ax, key, sub, lang='es'):
             fontsize=9.2 if len(title_txt) > 24 else 10.8,
             weight='bold', color='#0F172A', va='center', zorder=2.5)
 
-    ax.text(to_x(48.5), to_y(10.8), meta['subtitle'],
+    sub_title_txt = meta['subtitle']
+    if lang == 'es':
+        sub_title_txt = (sub_title_txt.replace('FLEET SUBMARINE', 'SUBMARINO DE FLOTA')
+                                      .replace('CRUISER SUBMARINE', 'CRUCERO SUBMARINO')
+                                      .replace('HEAVY ATTACK SUBMARINE', 'SUBMARINO DE ATAQUE PESADO')
+                                      .replace('ATTACK CARRIER SUBMARINE', 'SUBMARINO PORTAAVIONES DE ATAQUE')
+                                      .replace('SUPPLY TRANSPORT', 'TRANSPORTE LOGÍSTICO')
+                                      .replace('RECONNAISSANCE', 'RECONOCIMIENTO')
+                                      .replace('LONG-RANGE', 'GRAN ALCANCE')
+                                      .replace('MEDIUM COASTAL', 'COSTERO MEDIO')
+                                      .replace('TWIN 140MM GUNS', 'DOBLE CAÑÓN 140MM'))
+
+    ax.text(to_x(48.5), to_y(10.8), sub_title_txt,
             fontsize=4.4, weight='bold', color='#475569', va='center', zorder=2.5)
 
     badge_y = to_y(16.5)
@@ -640,6 +443,15 @@ def draw_single_card(ax, key, sub, lang='es'):
         b_rect = patches.Rectangle((bx, badge_y), badge_w, badge_h, linewidth=0.35*BROTHER_COMP,
                                    edgecolor='#94A3B8', facecolor='#F1EFEA', zorder=2.5)
         ax.add_patch(b_rect)
+        if lang == 'es':
+            badge_txt = (badge_txt.replace('AVAILABLE:', 'DISPONIBLE:')
+                                  .replace('PATROLS:', 'PATRULLAS:')
+                                  .replace('MONTHS', 'MESES')
+                                  .replace('MONTH', 'MES')
+                                  .replace('DEC', 'DIC')
+                                  .replace('AUG', 'AGO')
+                                  .replace('JAN', 'ENE')
+                                  .replace('APR', 'ABR'))
         ax.text(bx + badge_w / 2.0, badge_y + badge_h / 2.0, badge_txt,
                 fontsize=3.2, weight='bold', color='#1E293B', ha='center', va='center', zorder=3)
 
@@ -885,7 +697,7 @@ def draw_single_card(ax, key, sub, lang='es'):
 
     draw_imperial_hanko(ax, box_x0 + box_w - 6.5*BROTHER_COMP, to_y(169.5), r_mm=3.5*BROTHER_COMP, angle=3.5)
 
-    rules_tuple = I18N_SPECIAL_RULES[lang].get(key, ("", None))
+    rules_tuple = sub.get('special_rules_i18n', {}).get(lang) or I18N_SPECIAL_RULES[lang].get(key, ("", None))
     rules_raw = rules_tuple[0].strip()
     kaiten_raw = rules_tuple[1].strip() if rules_tuple[1] else None
 
@@ -922,10 +734,16 @@ def draw_single_card(ax, key, sub, lang='es'):
     draw_section_header_plaque(ax, to_x(170.4), to_y(2.5), ui['aircraft_header'], width=65.1*BROTHER_COMP, h=2.8*BROTHER_COMP)
     y_r0 = to_y(14.4)
     is_sentoku = (key == "Sen_Toku_Class")
+    is_a2 = (key == "Type_A2_Class")
     if is_sentoku:
         draw_card_slot(ax, col_x[0], y_r0, label=f"Aichi M6A1\n{ui['status_sfx']} #1", bg='#EEF4FA', border='#2A5682', text_color='#183758')
         draw_card_slot(ax, col_x[1], y_r0, label=f"Aichi M6A1\n{ui['status_sfx']} #2", bg='#EEF4FA', border='#2A5682', text_color='#183758')
         draw_card_slot(ax, col_x[2], y_r0, label=f"Aichi M6A1\n{ui['status_sfx']} #3", bg='#EEF4FA', border='#2A5682', text_color='#183758')
+        draw_card_slot(ax, col_x[3], y_r0, label=ui['random_event'], bg='#FAF2E1', border='#C08420', text_color='#784B05')
+    elif is_a2:
+        draw_card_slot(ax, col_x[0], y_r0, label=f"Aichi M6A1\n{ui['status_sfx']} #1", bg='#EEF4FA', border='#2A5682', text_color='#183758')
+        draw_card_slot(ax, col_x[1], y_r0, label=f"Aichi M6A1\n{ui['status_sfx']} #2", bg='#EEF4FA', border='#2A5682', text_color='#183758')
+        draw_card_slot(ax, col_x[2], y_r0, label=ui['random_event'], bg='#FAF2E1', border='#C08420', text_color='#784B05')
         draw_card_slot(ax, col_x[3], y_r0, label=ui['random_event'], bg='#FAF2E1', border='#C08420', text_color='#784B05')
     else:
         if sub['has_aircraft']:

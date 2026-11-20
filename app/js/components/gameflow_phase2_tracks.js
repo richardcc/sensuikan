@@ -130,18 +130,17 @@ function getTrackAssetUrl(relPath) {
 
         let floodBoxes = '';
         for (let i = 1; i <= 9; i++) {
-          if (i <= maxFlood && i <= 8) {
+          if (i <= maxFlood) {
             floodBoxes += `
-              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#0a192f; border:1.5px solid #3b82f6; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="Inundación Nivel ${i}">
+              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#0a192f; border:1.5px solid #3b82f6; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="${isEn ? 'Flooding Level ' + i : 'Inundación Nivel ' + i}">
                 <img src="${getTrackAssetUrl("assets/tracks/track_flood_" + i + ".jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Flood ${i}">
-                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.88); border:1px solid #3b82f6; border-radius:3px; padding:0 4px; font-family:'Cinzel', serif; font-size:0.7rem; font-weight:900; color:#bfdbfe; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">${i}</div>
               </div>
             `;
-          } else if (i === 9 && maxFlood >= 8) {
+          } else if (i === maxFlood + 1) {
             floodBoxes += `
-              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#0a192f; border:1.5px solid #f59e0b; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="Nivel 9: Inundación Crítica (Superficie de Emergencia obligatoria)">
-                <img src="${getTrackAssetUrl("assets/tracks/track_flood_8.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Emergency Surface">
-                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.92); border:1px solid #f59e0b; border-radius:3px; padding:0 3px; font-size:0.58rem; font-weight:900; color:#fde047; text-transform:uppercase; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">EMERG</div>
+              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#0a192f; border:1.5px solid #f59e0b; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="${isEn ? 'Critical Flooding (Emergency Surface mandatory)' : 'Inundación Crítica (Superficie de Emergencia obligatoria)'}">
+                <img src="${getTrackAssetUrl("assets/tracks/track_emergency.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Emergency Surface">
+                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.92); border:1px solid #f59e0b; border-radius:3px; padding:0 3px; font-size:0.58rem; font-weight:900; color:#fde047; text-transform:uppercase; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">${isEn ? "SURFACE" : "EMERG"}</div>
               </div>
             `;
           } else {
@@ -155,18 +154,17 @@ function getTrackAssetUrl(relPath) {
 
         let hullBoxes = '';
         for (let i = 1; i <= 9; i++) {
-          if (i <= maxHull && i <= 8) {
+          if (i <= maxHull) {
             hullBoxes += `
-              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#1c0a0a; border:1.5px solid #ef4444; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="Daño de Casco ${i}">
+              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#1c0a0a; border:1.5px solid #ef4444; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="${isEn ? 'Hull Damage ' + i : 'Daño de Casco ' + i}">
                 <img src="${getTrackAssetUrl("assets/tracks/track_hull_" + i + ".jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Hull ${i}">
-                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.88); border:1px solid #ef4444; border-radius:3px; padding:0 4px; font-family:'Cinzel', serif; font-size:0.7rem; font-weight:900; color:#fecaca; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">${i}</div>
               </div>
             `;
-          } else if (i === 9 && maxHull >= 8) {
+          } else if (i === maxHull + 1) {
             hullBoxes += `
-              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#1c0a0a; border:1.5px solid #991b1b; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="Nivel 9: Daño de Casco Letal (Submarino Hundido)">
-                <img src="${getTrackAssetUrl("assets/tracks/track_hull_8.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Sunk">
-                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.92); border:1px solid #ef4444; border-radius:3px; padding:0 3px; font-size:0.58rem; font-weight:900; color:#ef4444; text-transform:uppercase; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">SUNK</div>
+              <div style="flex:1; min-width:38px; max-width:62px; height:54px; background:#1c0a0a; border:1.5px solid #991b1b; border-radius:5px; position:relative; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.35);" title="${isEn ? 'Lethal Hull Damage (Submarine Sunk)' : 'Daño de Casco Letal (Submarino Hundido)'}">
+                <img src="${getTrackAssetUrl("assets/tracks/track_sunk.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Sunk">
+                <div style="position:absolute; bottom:2px; right:3px; background:rgba(15,23,42,0.92); border:1px solid #ef4444; border-radius:3px; padding:0 3px; font-size:0.58rem; font-weight:900; color:#ef4444; text-transform:uppercase; text-shadow:0 1px 2px #000; z-index:2; line-height:1.2;">${isEn ? "SUNK" : "HUNDIDO"}</div>
               </div>
             `;
           } else {
@@ -180,24 +178,24 @@ function getTrackAssetUrl(relPath) {
 
         dmgContainer.innerHTML = `
           <div style="display:flex; align-items:center; gap:8px;">
-            <div style="width:130px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
-              <div style="width:42px; height:42px; border-radius:5px; overflow:hidden; border:2px solid #2563eb; box-shadow:0 2px 5px rgba(0,0,0,0.4); flex-shrink:0; background:#0f172a;">
+            <div style="width:142px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
+              <div style="width:38px; height:38px; border-radius:5px; overflow:hidden; border:2px solid #2563eb; box-shadow:0 2px 5px rgba(0,0,0,0.4); flex-shrink:0; background:#0f172a; box-sizing:border-box;">
                 <img src="${getTrackAssetUrl("assets/tracks/track_flood_marker.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;" alt="Flooding Marker">
               </div>
-              <div>
-                <div style="font-family:'Cinzel', serif; font-size:0.76rem; font-weight:800; color:#1e40af; line-height:1.2;">${isEn ? "FLOODING" : "INUNDACIÓN"}</div>
+              <div style="min-width:0; flex:1;">
+                <div style="font-family:'Cinzel', serif; font-size:0.71rem; font-weight:800; color:#1e40af; line-height:1.2; white-space:nowrap; letter-spacing:0.3px;">${isEn ? "FLOODING" : "INUNDACIÓN"}</div>
                 <div style="font-size:0.65rem; color:#64748b; font-weight:700;">${maxFlood} ${isEn ? "Levels" : "Niveles"}</div>
               </div>
             </div>
             <div style="display:flex; gap:6px; flex:1;">${floodBoxes}</div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-            <div style="width:130px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
-              <div style="width:42px; height:42px; border-radius:5px; overflow:hidden; border:2px solid #b91c1c; box-shadow:0 2px 5px rgba(0,0,0,0.4); flex-shrink:0; background:#0f172a;">
+            <div style="width:142px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
+              <div style="width:38px; height:38px; border-radius:5px; overflow:hidden; border:2px solid #b91c1c; box-shadow:0 2px 5px rgba(0,0,0,0.4); flex-shrink:0; background:#0f172a; box-sizing:border-box;">
                 <img src="${getTrackAssetUrl("assets/tracks/track_hull_marker.jpg")}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;" alt="Hull Damage Marker">
               </div>
-              <div>
-                <div style="font-family:'Cinzel', serif; font-size:0.76rem; font-weight:800; color:#991b1b; line-height:1.2;">${isEn ? "HULL HITS" : "CASCO"}</div>
+              <div style="min-width:0; flex:1;">
+                <div style="font-family:'Cinzel', serif; font-size:0.71rem; font-weight:800; color:#991b1b; line-height:1.2; white-space:nowrap; letter-spacing:0.3px;">${isEn ? "HULL HITS" : "CASCO"}</div>
                 <div style="font-size:0.65rem; color:#64748b; font-weight:700;">${maxHull} ${isEn ? "Hits" : "Daños"}</div>
               </div>
             </div>

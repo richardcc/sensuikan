@@ -45,9 +45,13 @@
         }
         if (!dateBadge) dateBadge = '1941';
 
-        const activeTag = isCommissioned
-          ? `<span class="badge-sub-active" style="font-size:0.65rem; color:#86efac; background:rgba(22,163,74,0.35); border:1px solid #16a34a; padding:1px 5px; border-radius:3px; font-weight:800; margin-left:4px; flex-shrink:0;">⚓ ${isEn ? 'ACTIVE' : 'ACTIVO'}</span>`
+        const isFan = !!s.is_fanmade;
+        const fanBadge = isFan
+          ? `<span class="badge-sub-fanmade" style="font-size:0.60rem; color:#fbbf24; background:rgba(245,158,11,0.25); border:1px solid #f59e0b; padding:1px 4px; border-radius:3px; font-weight:800; margin-left:4px; flex-shrink:0;">FANMADE</span>`
           : '';
+        const activeTag = (isCommissioned
+          ? `<span class="badge-sub-active" style="font-size:0.65rem; color:#86efac; background:rgba(22,163,74,0.35); border:1px solid #16a34a; padding:1px 5px; border-radius:3px; font-weight:800; margin-left:4px; flex-shrink:0;">⚓ ${isEn ? 'ACTIVE' : 'ACTIVO'}</span>`
+          : '') + fanBadge;
 
         btn.innerHTML = `
           <div style="display:flex; align-items:center; gap:4px; overflow:hidden; padding-right:6px;">
@@ -140,16 +144,15 @@ function selectSubmarine(subKey, autoAssign = false) {
       
       const subTitleEl = document.getElementById('sub-subtitle');
       if (subTitleEl) {
+        const fanPrefix = s.is_fanmade ? (isEn ? "⭐ [Historical Fanmade Variant] • " : "⭐ [Variante Histórica Fanmade] • ") : "";
         if (isCurrentlyActive) {
           subTitleEl.innerText = isEn 
-            ? `${s.full_title || s.class_name} • [Active Commissioned Boat]`
-            : `${s.full_title || s.class_name} • [Buque Activo Comisionado]`;
+            ? `${fanPrefix}${s.full_title || s.class_name} • [Active Commissioned Boat]`
+            : `${fanPrefix}${s.full_title || s.class_name} • [Buque Activo Comisionado]`;
           subTitleEl.style.color = '#86efac';
         } else {
-          subTitleEl.innerText = isEn
-            ? `${s.full_title || s.class_name} • [Class Preview - Click to Assign]`
-            : `${s.full_title || s.class_name} • [Vista Previa - Clic para Asignar]`;
-          subTitleEl.style.color = 'var(--gold-400)';
+          subTitleEl.innerText = `${fanPrefix}${s.full_title || s.class_name}`;
+          subTitleEl.style.color = s.is_fanmade ? '#fbbf24' : 'var(--gold-400)';
         }
       }
 
@@ -250,7 +253,13 @@ function selectSubmarine(subKey, autoAssign = false) {
           'Sen_Toku_Class': 'Submarine - Sen-Toku.jpg',
           'Sen_Taka_Class': 'Submarine - Sen-Taka.jpg',
           'Type_C3_Class': 'Submarine - Type C.3.jpg',
-          'Type_A_Midget_Submarine___Ko_Hyoteki': 'Submarine - Midget.jpg'
+          'Type_A_Midget_Submarine___Ko_Hyoteki': 'Submarine - Midget.jpg',
+          'Type_B2_Class': 'Submarine - Type B.2.jpg',
+          'Type_C2_Class': 'Submarine - Type C.2.jpg',
+          'Type_A2_Class': 'Submarine - Type A.2.jpg',
+          'Type_D1_Class': 'Submarine - Type D.1.jpg',
+          'Kaichu_VII_Class': 'Submarine - Kaichu VII.jpg',
+          'Junsen_J1_Class': 'Submarine - Junsen J1.jpg'
         };
         const fname = chitMap[subKey] || 'Submarine - Type B.jpg';
         const rawSrc = `assets/chits/${fname}`;
@@ -313,13 +322,22 @@ function selectSubmarine(subKey, autoAssign = false) {
       if (selClass && selClass.value !== targetKey) {
         selClass.value = targetKey;
       }
+      const defHull = (typeof getDefaultHullForSubmarine === 'function')
+        ? getDefaultHullForSubmarine(targetKey)
+        : 'I-19';
+      const hullInput = document.getElementById('wf-sub-hull-number');
+      if (hullInput) hullInput.value = defHull;
+      if (campaignState.workflow) {
+        campaignState.workflow.hullNumber = defHull;
+      }
       try {
-        if (typeof onWorkflowSubClassChange === 'function') {
-          // Keep activeSubKey intact
-          campaignState.activeSubKey = targetKey;
-        }
         if (typeof updateWorkflowSubmarineSpecs === 'function') updateWorkflowSubmarineSpecs();
         if (typeof buildWorkflowMonthSelect === 'function') buildWorkflowMonthSelect();
+        if (typeof updateSchoolEquipDisplay === 'function') updateSchoolEquipDisplay();
+        if (typeof updateBasesForDate === 'function') {
+          const m = (campaignState.workflow && campaignState.workflow.selectedMonth) || "1941-12";
+          updateBasesForDate(m);
+        }
       } catch (e) {}
 
       // 2. Sync Sub Board (16 systems & slots)

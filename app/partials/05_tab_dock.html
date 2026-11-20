@@ -1,27 +1,27 @@
 <div id="tab-dock" class="tab-pane">
       <div class="dock-grid">
         <div class="dock-sidebar">
-          <h3 id="lbl-dock-sidebar-title" data-i18n="ui.selectSubmarineClass" style="font-size:0.95rem; font-weight:800; color:var(--gold-400); margin-bottom:12px;">SELECCIONAR CLASE DE SUBMARINO</h3>
-          <div id="sub-buttons-list" style="display:flex; flex-direction:column; gap:4px; max-height:640px; overflow-y:auto; padding-right:4px;">
+          <h3 id="lbl-dock-sidebar-title" data-i18n="ui.selectSubmarineClass" style="font-size:0.90rem; font-weight:800; color:var(--gold-400); margin-bottom:10px; flex-shrink:0;">SELECCIONAR CLASE DE SUBMARINO</h3>
+          <div id="sub-buttons-list">
             <!-- Generated from sub_db -->
           </div>
         </div>
 
         <div class="sub-detail-panel">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <img id="dock-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:54px; height:54px; min-width:54px; min-height:54px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 3px 8px rgba(0,0,0,0.6); object-fit:cover;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img id="dock-sub-chit" src="assets/chits/Submarine - Type B.jpg" alt="Submarine Counter Chit" style="width:42px; height:42px; min-width:42px; min-height:42px; border-radius:6px; border:2px solid var(--gold-500); box-shadow:0 2px 6px rgba(0,0,0,0.6); object-fit:cover;">
               <div>
-                <h2 id="sub-title" style="font-family:'Cinzel',serif; font-size:1.35rem; color:#fff; margin:0;">Junsen Type B Class</h2>
-                <p id="sub-subtitle" style="font-size:0.85rem; color:var(--gold-400); font-weight:600; margin:3px 0 0 0;">Otsu-gata Sensuikan • Fleet Submarine</p>
+                <h2 id="sub-title" style="font-family:'Cinzel',serif; font-size:1.15rem; color:#fff; margin:0; line-height:1.2;">Junsen Type B Class</h2>
+                <p id="sub-subtitle" style="font-size:0.78rem; color:var(--gold-400); font-weight:600; margin:2px 0 0 0;">Otsu-gata Sensuikan • Fleet Submarine</p>
               </div>
             </div>
-            <button id="btn-dock-assign-active" class="action-btn" onclick="assignActiveSub()" style="border-color:var(--gold-500); background:var(--gold-500); color:#0f172a; font-weight:800;">
+            <button id="btn-dock-assign-active" class="action-btn" onclick="assignActiveSub()" style="border-color:var(--gold-500); background:var(--gold-500); color:#0f172a; font-weight:800; padding:6px 14px; font-size:0.82rem;">
               <span id="lbl-dock-assign-active" data-i18n="ui.assignActiveSubmarine">⚓ Asignar como Buque Activo</span>
             </button>
           </div>
 
-          <p id="sub-desc" data-i18n="ui.historicalNotes" style="font-size:0.88rem; line-height:1.5; color:var(--slate-300); margin-top:14px; background:rgba(0,0,0,0.25); padding:12px; border-radius:8px; border-left:3px solid var(--gold-500);">
+          <p id="sub-desc" data-i18n="ui.historicalNotes" style="font-size:0.80rem; line-height:1.35; color:var(--slate-300); margin-top:8px; margin-bottom:0; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:6px; border-left:3px solid var(--gold-500);">
             Historical notes...
           </p>
 
@@ -65,7 +65,7 @@
           </div>
 
           <!-- RUTA OPERATIVA Y REGISTROS DE DAÑO -->
-          <div id="sub-mat-tracks-wrapper" style="margin-top:20px; background:#f4eedb; border:2px solid #b89f68; border-radius:10px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,0.6); color:#1e293b;">
+          <div id="sub-mat-tracks-wrapper" style="margin-top:12px; background:#f4eedb; border:2px solid #b89f68; border-radius:8px; padding:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5); color:#1e293b;">
             <!-- Header bar for Patrol Track -->
             <div style="background:#e4d8be; border:1px solid #c7b693; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
               <div style="display:flex; align-items:center; gap:8px;">
@@ -96,7 +96,7 @@
           </div>
 
           <!-- PERFIL ILUSTRADO DEL SUBMARINO CON SELLO ROJO -->
-          <div id="sub-profile-container" style="margin-top:20px; background:linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border:2px solid var(--gold-500); border-radius:10px; padding:12px; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-align:center;">
+          <div id="sub-profile-container" style="margin-top:12px; background:linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border:2px solid var(--gold-500); border-radius:8px; padding:10px; box-shadow:0 6px 20px rgba(0,0,0,0.5); text-align:center;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(212,175,55,0.3);">
               <span id="sub-profile-header-title" data-i18n="ui.officialProfile" style="font-family:'Cinzel', serif; font-size:0.85rem; font-weight:800; color:var(--gold-400); letter-spacing:1px;">⚓ PERFIL IJN</span>
               <span id="sub-profile-label" data-i18n="ui.profileSeal" style="font-size:0.86rem; color:#94a3b8; font-weight:600;">Lámina con Sello Imperial</span>

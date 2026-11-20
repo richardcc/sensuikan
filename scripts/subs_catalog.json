@@ -1,0 +1,218 @@
+[
+  {
+    "key": "Kaidai_KD3_Class",
+    "is_fanmade": false,
+    "name": "Kaidai KD3 Class",
+    "title": "Kaidai KD3a / KD3b Class",
+    "date": "Available December 1941",
+    "guns": "100mm Status",
+    "torp": "6 Proa / 2 Popa"
+  },
+  {
+    "key": "Kaidai_KD4_Class",
+    "is_fanmade": false,
+    "name": "Kaidai KD4 Class",
+    "title": "Kaidai KD4 Class",
+    "date": "Available December 1941",
+    "guns": "100mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Kaidai_KD5_Class",
+    "is_fanmade": false,
+    "name": "Kaidai KD5 Class",
+    "title": "Kaidai KD5 Class",
+    "date": "Available December 1941",
+    "guns": "100mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Kaidai_KD6_Class",
+    "is_fanmade": false,
+    "name": "Kaidai KD6 Class",
+    "title": "Kaidai KD6a / KD6b Class",
+    "date": "Available December 1941",
+    "guns": "100mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Kaidai_KD7_Class",
+    "is_fanmade": false,
+    "name": "Kaidai KD7 Class",
+    "title": "Kaidai KD7 Class",
+    "date": "Available 1942",
+    "guns": "120mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Kirai_Sen_Class",
+    "is_fanmade": false,
+    "name": "Kirai-Sen Class",
+    "title": "Kirai-Sen Submarine Minelayer (I-121 Class)",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "4 Proa / 0 Popa"
+  },
+  {
+    "key": "Junsen_J_IM_Class",
+    "is_fanmade": false,
+    "name": "Junsen J. 1M Class",
+    "title": "Junsen J. 1 Modified Class",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Junsen_J2_Class",
+    "is_fanmade": false,
+    "name": "Junsen J. 2 Class",
+    "title": "Junsen J. 2 Class (I-6)",
+    "date": "Available December 1941",
+    "guns": "127mm Gun Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Junsen_J3_Class",
+    "is_fanmade": false,
+    "name": "Junsen J. 3 Class",
+    "title": "Junsen J. 3 Class (I-7, I-8)",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "4 Proa / 2 Popa"
+  },
+  {
+    "key": "Type_A_Class",
+    "is_fanmade": false,
+    "name": "Type A Class",
+    "title": "Type A (Ko-gata) Command Submarine (I-9 Class)",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_B_Class",
+    "is_fanmade": false,
+    "name": "Type B Class",
+    "title": "Type B (Otsu-gata) Cruiser Submarine (I-15 Class)",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_B_3_Class",
+    "is_fanmade": false,
+    "name": "Type B-3 Class",
+    "title": "Type B-3 Cruiser Submarine (I-56 / I-58 Class)",
+    "date": "Available 1944",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_C_Class",
+    "is_fanmade": false,
+    "name": "Type C Class",
+    "title": "Type C (Hei-gata) Attack Submarine (I-16 Class)",
+    "date": "Available December 1941",
+    "guns": "140mm Status",
+    "torp": "8 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_A_Modified",
+    "is_fanmade": false,
+    "name": "Type A Modified",
+    "title": "Type A Modified 2 (I-12 Class)",
+    "date": "Available 1943",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Sen_Toku_Class",
+    "is_fanmade": false,
+    "name": "Sen-Toku Class",
+    "title": "Sen-Toku Submarine Aircraft Carrier (I-400 Class)",
+    "date": "Available December 1944",
+    "guns": "140mm Status",
+    "torp": "8 Proa / 0 Popa"
+  },
+  {
+    "key": "Sen_Taka_Class",
+    "is_fanmade": false,
+    "name": "Sen-Taka Class",
+    "title": "Sen-Taka High-Speed Submarine (I-201 Class)",
+    "date": "Available 1945",
+    "guns": "None",
+    "torp": "4 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_C3_Class",
+    "is_fanmade": false,
+    "name": "Type C-3 Class",
+    "title": "Type C-3 Heavy Attack Submarine (I-52 Class)",
+    "date": "Available 1943",
+    "guns": "140mm Twin Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_A_Midget_Submarine___Ko_Hyoteki",
+    "is_fanmade": false,
+    "name": "Type A Midget Submarine",
+    "title": "Ko-Hyoteki Type A Midget Carrier Submarine",
+    "date": "Available December 1941",
+    "guns": null,
+    "torp": "2 Proa / 0 Popa"
+  },
+  {
+    "key": "Junsen_J1_Class",
+    "is_fanmade": true,
+    "name": "Junsen J1 Class",
+    "title": "Junsen J1 (I-1 Series) Twin Deck Gun Cruiser Submarine",
+    "date": "Available December 1941",
+    "guns": "2x 140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Kaichu_VII_Class",
+    "is_fanmade": true,
+    "name": "Kaichu VII Class",
+    "title": "Kaichu VII (Ro-35 Series) Medium Fleet Submarine",
+    "date": "Available March 1943",
+    "guns": "76.2mm Status",
+    "torp": "4 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_B2_Class",
+    "is_fanmade": true,
+    "name": "Type B2 Class",
+    "title": "Type B2 (I-40 Series) Cruiser Submarine",
+    "date": "Available July 1943",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_C2_Class",
+    "is_fanmade": true,
+    "name": "Type C2 Class",
+    "title": "Type C2 (I-46 Series) Heavy Attack Submarine",
+    "date": "Available February 1944",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_D1_Class",
+    "is_fanmade": true,
+    "name": "Type D1 Class",
+    "title": "Type D1 (I-361 Series) Transport & Kaiten Submarine",
+    "date": "Available May 1944",
+    "guns": "140mm Status",
+    "torp": "2 Proa / 0 Popa"
+  },
+  {
+    "key": "Type_A2_Class",
+    "is_fanmade": true,
+    "name": "Type A2 Class",
+    "title": "Type A2 (I-13 Series) Seiran Aircraft Carrier Submarine",
+    "date": "Available December 1944",
+    "guns": "140mm Status",
+    "torp": "6 Proa / 0 Popa"
+  }
+]

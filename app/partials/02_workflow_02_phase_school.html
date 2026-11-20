@@ -1,21 +1,20 @@
         <div id="phase-content-school" class="phase-body">
-          <div class="phase-header-banner" style="background:linear-gradient(90deg, #1e3a8a 0%, #064e3b 100%); border-left:4px solid var(--gold-500); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div>
-              <h2 style="margin:0; display:flex; align-items:center; gap:8px;">
-                <span>🏫</span>
-                <span id="pschool-title">TABLA [F1]: ESCUELA DE SUBMARINOS DE KURE Y ESPECIALIDADES (REGLA 4.8)</span>
+          <div class="phase-header-banner">
+            <div class="phase-header-info">
+              <h2>
+                <span class="phase-header-icon">🏫</span>
+                <span id="pschool-title">FASE DE ESCUELAS: ADIESTRAMIENTO NAVAL Y ESPECIALIDADES [REGLA 4.8]</span>
               </h2>
-              <div id="pschool-sub-desc" style="font-size:0.86rem; color:#93c5fd; margin-top:3px;">
-                Escuela de Kure [F1] • Minisubmarinos [F2] • Escuela Aérea Kasumigaura [F3] • Escuela Kaiten Otsujima [F4] • Tablas Activas: [B1], [B6], [M5], [M7], [K5], [K6]
+              <div id="pschool-sub-desc" class="phase-subtitle" data-i18n="pSchoolSubtitle">
+                Escuela de Kure [F1] • Minisubmarinos [F2] • Kasumigaura [F3] • Kaiten Otsujima [F4] • Tablas: B1, B6, M5, M7, K5, K6
               </div>
             </div>
             
-            <!-- The integrated tables below are the single source of reference. -->
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto;">
-              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn" style="padding:2px 8px; font-size:0.84rem; border-color:var(--gold-500); color:var(--gold-300); display:flex; align-items:center; gap:4px;">
-                <span>🗺️</span> <span id="pschool-guide-label">📋 Guía de Fase</span>
+            <div class="phase-header-actions">
+              <button type="button" onclick="openModalViewer('0: Prepare to Play', '', 'FLOW_0')" class="action-btn">
+                <span>🗺️</span> <span id="pschool-guide-label" data-i18n="pPhaseGuide">Guía de Fase</span>
               </button>
-              <button type="button" onclick="toggleSchoolTablesDrawer()" id="btn-toggle-school-tables" class="action-btn" style="border-color:#38bdf8; color:#f8fafc; font-weight:bold; font-size:0.84rem; padding:4px 9px; background:rgba(2,132,199,0.25);">
+              <button type="button" onclick="toggleSchoolTablesDrawer()" id="btn-toggle-school-tables" class="action-btn" style="border-color:#38bdf8; color:#f8fafc; background:rgba(2,132,199,0.25);">
                 👁️ Ocultar Tablas ▲
               </button>
               <span id="pschool-rules-pill" class="rules-ref-pill">[Regla 4.8 • Tablas F1-F4]</span>

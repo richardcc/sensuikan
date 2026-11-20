@@ -50,7 +50,22 @@ def export_all_cards_for_web():
             img = Image.fromarray(rgba_buf).convert('RGB')
             plt.close(fig)
 
-            img.save(out_file, 'WEBP', quality=86)
+            saved = False
+            for attempt in range(5):
+                try:
+                    img.save(out_file, 'WEBP', quality=86)
+                    saved = True
+                    break
+                except Exception as e:
+                    import time
+                    time.sleep(0.5)
+            if not saved:
+                tmp_file = out_file + '.tmp.webp'
+                img.save(tmp_file, 'WEBP', quality=86)
+                if os.path.exists(out_file):
+                    try: os.remove(out_file)
+                    except: pass
+                os.replace(tmp_file, out_file)
             size_kb = os.path.getsize(out_file) / 1024
             print(f"  -> Saved {out_file} ({size_kb:.1f} KB)")
 

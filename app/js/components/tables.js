@@ -721,24 +721,53 @@ function rollChartB8Interactive() {
 
     function updatePhase2TableDisplay() {
       const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
-      const idx = campaignState.workflow.currentBoxIndex || 0;
+      const idx = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
+      const base = campaignState.workflow.startingBase || "Yokosuka";
+
+      const badge = document.getElementById('p2-current-zone-badge');
+      const thZone = document.getElementById('th-p2-zone-name');
+      const tb = document.getElementById('phase2-a3-tbody');
+
+      const a3MainContainer = document.getElementById('p2-a3-main-container');
+      if (idx === -1) {
+        if (a3MainContainer) a3MainContainer.style.display = 'none';
+        return;
+      }
+      if (a3MainContainer) a3MainContainer.style.display = 'block';
       const list = campaignState.workflow.boxList || [];
       const boxName = list[idx] || "Patrulla";
       const isTransit = boxName.includes("Transit") || boxName.includes("Tránsito") || boxName.includes("Return") || boxName.includes("Retorno");
       const isSpecialBox = boxName.includes("Mission") || boxName.includes("Misión");
       
       const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
-      const targetZone = isTransit ? "Transit" : (isSpecialBox ? "Special Mission" : mapA1ToA3Zone(assignedArea));
+      const mappedAreaZone = mapA1ToA3Zone(assignedArea);
+      const useSpecialCol = !!(isSpecialBox && campaignState.workflow.useA3SpecialMissionColumn);
+      const targetZone = isTransit ? "Transit" : (useSpecialCol ? "Special Mission" : mappedAreaZone);
       const zoneLabel = isEn
         ? (targetZone === "Special Mission" ? "Special Mission" : targetZone)
         : (targetZone === "Transit" ? "Tránsito" : targetZone === "Special Mission" ? "Misión Especial" : targetZone);
 
-      const badge = document.getElementById('p2-current-zone-badge');
-      if (badge) badge.innerText = (isEn ? "Current Zone: " : "Zona Actual: ") + zoneLabel;
-      const thZone = document.getElementById('th-p2-zone-name');
+      if (badge) {
+        if (isSpecialBox) {
+          badge.innerHTML = `${isEn ? "Zone: " : "Zona: "}<strong>${zoneLabel}</strong> <span style="font-size:0.72rem; color:#fde047; margin-left:4px;">(⭐ ${isEn ? 'Special Mission' : 'Misión Especial'})</span>`;
+        } else {
+          badge.innerText = (isEn ? "Current Zone: " : "Zona Actual: ") + zoneLabel;
+        }
+      }
       if (thZone) thZone.innerText = (isEn ? "Encounter in " : "Encuentro en ") + zoneLabel;
 
-      const tb = document.getElementById('phase2-a3-tbody');
+      const toggleContainer = document.getElementById('p2-zone-toggle-btn-container');
+      if (toggleContainer) {
+        if (isSpecialBox) {
+          const btnText = useSpecialCol
+            ? (isEn ? `⚓ View Area Chart (${mappedAreaZone})` : `⚓ Ver Tabla de Área (${mappedAreaZone})`)
+            : (isEn ? `🎯 View Special Mission Col [A3]` : `🎯 Ver Columna Misión Especial [A3]`);
+          toggleContainer.innerHTML = `<button type="button" onclick="toggleSpecialMissionA3View()" class="action-btn" style="padding:4px 8px; font-size:0.75rem; border-color:#38bdf8; background:rgba(2,132,199,0.25); color:#7dd3fc; cursor:pointer;" title="${isEn ? 'Toggle between Area chart and Special Mission column' : 'Alternar entre Tabla del Área y Columna de Misión Especial'}">${btnText}</button>`;
+        } else {
+          toggleContainer.innerHTML = '';
+        }
+      }
+
       if (!tb) return;
       const zoneRow = CHART_A3_DATA[targetZone] || CHART_A3_DATA["Transit"];
       const lastRoll = campaignState.workflow.lastA3Roll || 0;
@@ -848,6 +877,15 @@ function rollChartB8Interactive() {
       tbA3.innerHTML = html;
     }
     window.renderCompendiumA3Table = renderCompendiumA3Table;
+
+    function toggleSpecialMissionA3View() {
+      if (!campaignState.workflow) campaignState.workflow = {};
+      campaignState.workflow.useA3SpecialMissionColumn = !campaignState.workflow.useA3SpecialMissionColumn;
+      if (typeof updatePhase2TableDisplay === 'function') updatePhase2TableDisplay();
+      if (typeof updateBoxDisplay === 'function') updateBoxDisplay();
+      if (typeof saveState === 'function') saveState();
+    }
+    window.toggleSpecialMissionA3View = toggleSpecialMissionA3View;
 
     function populateMasterCompendiumTables() {
       // Populate A1 in Compendium
@@ -1885,8 +1923,21 @@ function rollChartB8Interactive() {
 
     function applyTargetToWorkflow(t) {
       campaignState.workflow.currentTarget = t;
+      campaignState.workflow.salvoHistory = [];
+      campaignState.workflow.lastCombatHits = 0;
+      campaignState.workflow.lastCombatDamage = 0;
+      campaignState.workflow.lastCombatIsSunk = false;
+      campaignState.workflow.lastCombatStatus = 'miss';
+      const diceBox = document.getElementById('wf-torpedo-dice-details');
+      if (diceBox) diceBox.innerHTML = '';
+      const hitRes = document.getElementById('wf-combat-hit-res');
+      if (hitRes) hitRes.innerText = (window.currentLang === 'en') ? 'Awaiting Firing Solution...' : 'Esperando Solución de Disparo...';
+      const sinkStatus = document.getElementById('wf-combat-sink-status');
+      if (sinkStatus) sinkStatus.innerText = '';
+
       if (typeof checkSubVsSubTarget === 'function') checkSubVsSubTarget(t);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
+      if (typeof syncPhase3TorpedoOptions === 'function') syncPhase3TorpedoOptions();
       renderTargetUI(t);
       saveState();
     }
@@ -1901,10 +1952,33 @@ function rollChartB8Interactive() {
       }
     }
 
+    function checkCommanderHasGoldenKite() {
+      if (typeof campaignState === 'undefined') return false;
+      if (campaignState.tokens) {
+        if (campaignState.tokens['token-medal-gk4'] || campaignState.tokens['token-medal-gk5'] || campaignState.tokens['golden_kite'] || campaignState.tokens['gk4'] || campaignState.tokens['gk5']) {
+          return true;
+        }
+      }
+      if (campaignState.commander) {
+        if (campaignState.commander.hasGoldenKite || campaignState.commander.goldenKite) return true;
+        if (Array.isArray(campaignState.commander.medals) && campaignState.commander.medals.some(m => String(m).toLowerCase().includes('kite') || String(m).toLowerCase().includes('milano'))) return true;
+        if (Array.isArray(campaignState.commander.awards) && campaignState.commander.awards.some(m => String(m).toLowerCase().includes('kite') || String(m).toLowerCase().includes('milano'))) return true;
+      }
+      if (campaignState.hasGoldenKite) return true;
+      return false;
+    }
+
     function onRangeChange() {
       const r = document.getElementById('wf-range-select') ? document.getElementById('wf-range-select').value : 'medium';
       const infiltEl = document.getElementById('wf-infilt-res');
       if (infiltEl) infiltEl.style.display = (r === 'close') ? 'block' : 'none';
+      
+      const gBadge = document.getElementById('p3-golden-kite-badge');
+      if (gBadge) {
+        const hasGk = checkCommanderHasGoldenKite();
+        gBadge.style.display = (r === 'close' && hasGk) ? 'inline-block' : 'none';
+      }
+
       if (typeof updateCombatChits === 'function') updateCombatChits();
     }
 
@@ -2169,8 +2243,148 @@ function syncTodBadgeManual() {
   }
 }
 
+function executeRule8110SwitchTimeOfDay(manualD6) {
+  const isEn = (window.currentLang === 'en');
+  
+  // 1. Check if current target is a Capital Ship (Rule 8.1.10 explicitly forbids switching against Capital Ships)
+  let isCapital = false;
+  if (typeof campaignState !== 'undefined' && campaignState.combat && campaignState.combat.target) {
+    const tgt = campaignState.combat.target;
+    if (tgt.table === 'T4' || tgt.isCapital) isCapital = true;
+    if (tgt.type && (tgt.type.toLowerCase().includes('capital') || tgt.type.toLowerCase().includes('carrier') || tgt.type.toLowerCase().includes('battleship') || tgt.type.toLowerCase().includes('acorazado') || tgt.type.toLowerCase().includes('portaaviones'))) isCapital = true;
+  }
+  const encSel = document.getElementById('wf-encounter-select');
+  if (encSel && encSel.value === 'capital') isCapital = true;
+
+  if (isCapital) {
+    const msg = isEn
+      ? "Rule [8.1.10]: Switching between Day and Night is NOT permitted against Capital Ships (they are simply too fast to maintain contact)."
+      : "Regla [8.1.10]: Prohibido cambiar entre Día y Noche contra Buques Capitales (son demasiado veloces para mantener el contacto).";
+    showToast(msg);
+    alert(msg);
+    return;
+  }
+
+  // 2. Determine current and target time of day
+  const todSel = document.getElementById('wf-tod-select');
+  const currentTod = todSel ? todSel.value : 'day';
+  const nextTod = (currentTod === 'day') ? 'night' : 'day';
+  const nextTodLabel = nextTod === 'night' ? (isEn ? 'NIGHT' : 'NOCHE') : (isEn ? 'DAY' : 'DÍA');
+
+  // 3. Check radar operational status (-1 DRM)
+  let hasRadar = false;
+  if (typeof checkSubmarineRadarStatus === 'function') {
+    const rInfo = checkSubmarineRadarStatus();
+    hasRadar = !!(rInfo && rInfo.isOperational);
+  } else if (typeof campaignState !== 'undefined') {
+    hasRadar = !!(campaignState.hasRadar && !campaignState.radarDamaged);
+  }
+  const drm = hasRadar ? -1 : 0;
+
+  // 4. Roll 1d6
+  let d;
+  if (typeof manualD6 === 'number' && manualD6 >= 1 && manualD6 <= 6) {
+    d = manualD6;
+  } else {
+    d = Math.floor(Math.random() * 6) + 1;
+  }
+  const modified = Math.max(1, d + drm);
+  const success = (modified <= 4);
+
+  const resBadge = document.getElementById('p3-tod-switch-result');
+  const lostBanner = document.getElementById('p3-contact-lost-banner');
+
+  if (success) {
+    // Successfully switched
+    if (todSel) todSel.value = nextTod;
+    if (typeof onRangeChange === 'function') onRangeChange();
+    if (typeof syncTodBadgeManual === 'function') syncTodBadgeManual();
+    if (typeof updateCombatChits === 'function') updateCombatChits();
+
+    if (resBadge) {
+      resBadge.style.display = 'inline-flex';
+      resBadge.style.background = 'rgba(16,185,129,0.25)';
+      resBadge.style.border = '1px solid #10b981';
+      resBadge.style.color = '#6ee7b7';
+      resBadge.innerHTML = `✅ 1d6: [${d}]${hasRadar ? ' -1 (Radar)' : ''} = <strong>${modified}</strong> ➔ ${isEn ? 'SUCCESS! Switched to ' : '¡ÉXITO! Cambiado a '}${nextTodLabel}`;
+    }
+    if (lostBanner) lostBanner.style.display = 'none';
+
+    showToast(isEn
+      ? `Rule [8.1.10]: Contact maintained! Time of day switched to ${nextTodLabel}.`
+      : `Regla [8.1.10]: ¡Contacto mantenido! Momento cambiado a ${nextTodLabel}.`);
+  } else {
+    // Contact lost (5 or 6)
+    if (resBadge) {
+      resBadge.style.display = 'inline-flex';
+      resBadge.style.background = 'rgba(239,68,68,0.25)';
+      resBadge.style.border = '1px solid #ef4444';
+      resBadge.style.color = '#fca5a5';
+      resBadge.innerHTML = `❌ 1d6: [${d}]${hasRadar ? ' -1 (Radar)' : ''} = <strong>${modified}</strong> ➔ ${isEn ? 'CONTACT LOST!' : '¡CONTACTO PERDIDO!'}`;
+    }
+    if (lostBanner) lostBanner.style.display = 'block';
+
+    if (typeof campaignState !== 'undefined' && campaignState.combat) {
+      campaignState.combat.contactLost = true;
+    }
+
+    showToast(isEn
+      ? `Rule [8.1.10]: 1d6 = [${d}]! Contact lost during transition. Target escaped!`
+      : `Regla [8.1.10]: 1d6 = [${d}]! Contacto perdido durante la transición. ¡El blanco escapó!`);
+  }
+}
+
+function finishEncounterContactLost() {
+  const isEn = (window.currentLang === 'en');
+  if (typeof logPatrolEvent === 'function') {
+    logPatrolEvent(isEn ? "Target contact lost during Day/Night transition [Rule 8.1.10]." : "Contacto con el blanco perdido durante la transición Día/Noche [Regla 8.1.10].");
+  }
+  const lostBanner = document.getElementById('p3-contact-lost-banner');
+  if (lostBanner) lostBanner.style.display = 'none';
+  const resBadge = document.getElementById('p3-tod-switch-result');
+  if (resBadge) resBadge.style.display = 'none';
+
+  showToast(isEn ? "Encounter concluded. Returning to patrol track." : "Encuentro finalizado. Retornando al avance de patrulla.");
+  if (typeof switchTab === 'function') {
+    switchTab('tab-workflow');
+  }
+}
+
 function rollInfiltration2d6(manualSuccess) {
   const isEn = (window.currentLang === 'en');
+  
+  // Rule [8.2.1]: Check if target is unescorted
+  let isUnescorted = false;
+  if (typeof campaignState !== 'undefined' && campaignState.combat && campaignState.combat.target) {
+    const tgt = campaignState.combat.target;
+    if (tgt.escort === false || tgt.escort === 'Sin Escolta' || tgt.escort === 'None' || (tgt.type && tgt.type.toLowerCase().includes('sin escolta'))) {
+      isUnescorted = true;
+    }
+  }
+  const encSel = document.getElementById('wf-encounter-select');
+  if (encSel && encSel.value === 'ship') {
+    const tgtTitle = document.getElementById('wf-target-title');
+    if (tgtTitle && tgtTitle.innerText.includes('T1')) isUnescorted = true;
+  }
+
+  const resEl = document.getElementById('wf-infilt-res');
+
+  if (isUnescorted && typeof manualSuccess !== 'boolean') {
+    if (resEl) {
+      resEl.style.display = 'block';
+      resEl.style.color = '#34d399';
+      resEl.innerHTML = isEn
+        ? `★ Rule [8.2.1]: <strong>Unescorted Vessel!</strong> No detection roll needed. Close range (+1 to-hit) achieved automatically without risk!`
+        : `★ Regla [8.2.1]: <strong>¡Buque Sin Escolta!</strong> No se realiza tirada de detección. Corta distancia (+1 a impactar) lograda automáticamente sin riesgo.`;
+      showToast(isEn ? "Unescorted vessel: Close range achieved automatically!" : "¡Buque sin escolta: Corta distancia lograda automáticamente!");
+    }
+    return;
+  }
+
+  // Rule [8.2.1]: Check Order of the Golden Kite (-1 DRM to Detection roll)
+  const hasGoldenKite = (typeof checkCommanderHasGoldenKite === 'function') ? checkCommanderHasGoldenKite() : false;
+  const drm = hasGoldenKite ? -1 : 0;
+
   let d1, d2, sum, success;
   if (typeof manualSuccess === 'boolean') {
     success = manualSuccess;
@@ -2181,22 +2395,26 @@ function rollInfiltration2d6(manualSuccess) {
     d1 = Math.floor(Math.random() * 6) + 1;
     d2 = Math.floor(Math.random() * 6) + 1;
     sum = d1 + d2;
-    success = (sum <= 9);
+    const modified = sum + drm;
+    success = (modified <= 9);
   }
-  const resEl = document.getElementById('wf-infilt-res');
+
+  const modifiedTotal = sum + drm;
+  const drmStr = hasGoldenKite ? ` - 1 (🦅 ${isEn ? 'Golden Kite' : 'Milano de Oro'}) = <strong>${modifiedTotal}</strong>` : ` = <strong>${sum}</strong>`;
+
   if (resEl) {
     resEl.style.display = 'block';
     if (success) {
       resEl.style.color = '#34d399';
       resEl.innerHTML = isEn
-        ? `★ Infiltration: 🎲 2d6 = [${d1}+${d2}=${sum}] &le; 9 ➔ <strong>SUCCESSFUL INFILTRATION!</strong> Close range (+1 to-hit in B1) achieved safely.`
-        : `★ Infiltración: 🎲 2d6 = [${d1}+${d2}=${sum}] &le; 9 ➔ <strong>¡INFILTRACIÓN LOGRADA!</strong> Corta distancia (+1 a impactar en B1) alcanzada con éxito.`;
+        ? `★ Infiltration [Rule 8.2.1]: 🎲 2d6 = [${d1}+${d2}=${sum}]${drmStr} &le; 9 ➔ <strong>SUCCESSFUL INFILTRATION!</strong> Close range (+1 to-hit in B1) achieved safely.`
+        : `★ Infiltración [Regla 8.2.1]: 🎲 2d6 = [${d1}+${d2}=${sum}]${drmStr} &le; 9 ➔ <strong>¡INFILTRACIÓN LOGRADA!</strong> Corta distancia (+1 a impactar en B1) alcanzada con éxito.`;
       showToast(isEn ? "Infiltration succeeded!" : "¡Infiltración lograda con éxito!");
     } else {
       resEl.style.color = '#ef4444';
       resEl.innerHTML = isEn
-        ? `⚠️ Infiltration: 🎲 2d6 = [${d1}+${d2}=${sum}] > 9 ➔ <strong>INFILTRATION FAILED!</strong> Escorts detect submarine and counter-attack before you can fire!`
-        : `⚠️ Infiltración: 🎲 2d6 = [${d1}+${d2}=${sum}] > 9 ➔ <strong>¡FALLO DE INFILTRACIÓN!</strong> ¡Las escoltas te detectan y atacan antes de que puedas disparar!`;
+        ? `⚠️ Infiltration [Rule 8.2.1]: 🎲 2d6 = [${d1}+${d2}=${sum}]${drmStr} > 9 ➔ <strong>INFILTRATION FAILED!</strong> Escorts detect submarine and counter-attack before you can fire!`
+        : `⚠️ Infiltración [Regla 8.2.1]: 🎲 2d6 = [${d1}+${d2}=${sum}]${drmStr} > 9 ➔ <strong>¡FALLO DE INFILTRACIÓN!</strong> ¡Las escoltas te detectan y atacan antes de que puedas disparar!`;
       showToast(isEn ? "Infiltration failed! Escorts alerted!" : "¡Infiltración fallida! ¡Escoltas alertadas!");
     }
   }
