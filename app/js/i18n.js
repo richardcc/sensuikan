@@ -23,7 +23,7 @@ const I18N = {
     // Navigation Tabs
     navWorkflow: "🎮 Game Flow",
     navChartK1: "🎴 Habilidades",
-    navRoguBukku: "📜 Rogu Bukku",
+    navRoguBukku: "📜 Rogu Bukku (Logs)",
     tabNavOpMap: "🗺️ Operaciones",
     tabNavSubBoard: "📋 Submarino",
     navDock: "⚓ Flota (24)",
@@ -63,13 +63,35 @@ const I18N = {
 
     pSpecMissionsTitle: "MISIONES ESPECIALES: OPERACIONES ESTRATÉGICAS IJN [REGLAS 7.1 - 7.13]",
     pSpecMissionsSubtitle: "Infiltración Ko-Hyoteki, Vuelos Glen/Seiran, Líneas de Piquete, Misión Yanagi a Europa, Ataques Kaiten y Minado",
+    specCurrentAlertTitle: "ESTADO DE MISIÓN ESPECIAL EN PATRULLA",
+    specRuleRef: "Regla Oficial Sensuikan",
+    specIncompatBadge: "⚠️ REQUIERE BUQUE ESPECÍFICO",
+    specCompatBadge: "✅ BUQUE APTO",
+    specAssignedBadge: "⭐ MISIÓN ACTUAL ASIGNADA",
+    specAssignAsCurrentBtn: "🎯 Asignar como Misión Actual",
+    specNoCurrentMission: "Tu patrulla actual no tiene una misión especial concreta asignada (o estás en patrulla estándar). Puedes activar un Mayor Evento en [7.14] o pulsar 'Asignar como Misión Actual' en una misión apta.",
+    specFilterAll: "📚 Todas las Misiones [7.1 - 7.11]",
+    specFilterCompatible: "✅ Misiones Aptas (Buque Activo)",
+    specFilterCurrent: "🎯 Misión Actual Asignada",
+    specFilterLabel: "🔍 Filtrar Misiones:",
     pSpecBackSortie: "Volver a Zarpe (F1)",
     pSpecToMajorEvents: "Mayores Eventos [7.14] ➔",
 
     pMajorEventsTitle: "MAYORES EVENTOS: CRONOLOGÍA HISTÓRICA IJN [REGLA 7.14]",
     pMajorEventsSubtitle: "28 Fichas Oficiales de Eventos Mayores • Asignación Prioritaria de Misiones según Fecha y Teatro Naval",
+    pMajorEventsPill: "[Regla 7.14 • 28 Fichas Históricas]",
     pMajorFlipBtn: "Voltear Fichas",
     pMajorToSpecMissions: "Misiones Especiales ➔",
+    lblFilterYear: "AÑO:",
+    btnFilterAll: "TODOS",
+    optAllZones: "Todas las Zonas Navales",
+    pMajorFilterCurMonth: "Mes Actual de Campaña",
+    pMajorBannerTitle: "REGLA 7.14: EVENTOS MAYORES EN TU FECHA DE PATRULLA",
+    pMajorBannerDesc: "Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. Si estás en la zona indicada, consulta el reverso para determinar si tu submarino participa en la misión histórica.",
+    pMajorAssignBtn: "Asignar a Patrulla Actual",
+    pMajorBackSpec: "Ver Misiones Especiales",
+    pMajorGoPhase1: "Fase 1: Zarpe",
+    pMajorGoPhase2: "Continuar a Fase 2: Trayecto ➔",
 
     p2Title: "FASE 2: NAVEGACIÓN Y TRAYECTO POR CASILLAS",
     p2Subtitle: "Navegación secuencial por casillas de tránsito y estación • Contactos de patrulla y encuentros [Tablas A2, A3 / B11]",
@@ -382,7 +404,7 @@ const I18N = {
     // Navigation Tabs
     navWorkflow: "🎮 Game Flow",
     navChartK1: "🎴 Skills (K1)",
-    navRoguBukku: "📜 Rogu Bukku",
+    navRoguBukku: "📜 Rogu Bukku (Logs)",
     tabNavOpMap: "🗺️ Operations",
     tabNavSubBoard: "📋 Sub Board",
     navDock: "⚓ Fleet (24)",
@@ -422,13 +444,35 @@ const I18N = {
 
     pSpecMissionsTitle: "SPECIAL MISSIONS: IJN STRATEGIC OPERATIONS [RULES 7.1 - 7.13]",
     pSpecMissionsSubtitle: "Ko-Hyoteki infiltration, Glen/Seiran flights, Picket lines, Yanagi mission to Europe, Kaiten strikes & Minelaying",
+    specCurrentAlertTitle: "SPECIAL MISSION PATROL STATUS",
+    specRuleRef: "Official Sensuikan Rule",
+    specIncompatBadge: "⚠️ REQUIRES SPECIFIC SUB",
+    specCompatBadge: "✅ ELIGIBLE SUB",
+    specAssignedBadge: "⭐ CURRENT ASSIGNED MISSION",
+    specAssignAsCurrentBtn: "🎯 Set as Current Mission",
+    specNoCurrentMission: "Your current patrol does not have an assigned special mission (or you are on a standard patrol). You may activate a Major Event in [7.14] or click 'Set as Current Mission' on an eligible mission.",
+    specFilterAll: "📚 All Missions [7.1 - 7.11]",
+    specFilterCompatible: "✅ Eligible Missions (Active Sub)",
+    specFilterCurrent: "🎯 Current Assigned Mission",
+    specFilterLabel: "🔍 Filter Missions:",
     pSpecBackSortie: "Back to Sortie (P1)",
     pSpecToMajorEvents: "Major Events [7.14] ➔",
 
     pMajorEventsTitle: "MAJOR EVENTS: HISTORICAL IJN CHRONOLOGY [RULE 7.14]",
     pMajorEventsSubtitle: "28 Official Major Event Chits • Priority Mission Assignment by Date and Naval Theater",
+    pMajorEventsPill: "[Rule 7.14 • 28 Historical Chits]",
     pMajorFlipBtn: "Flip Chits",
     pMajorToSpecMissions: "Special Missions ➔",
+    lblFilterYear: "YEAR:",
+    btnFilterAll: "ALL",
+    optAllZones: "All Naval Zones",
+    pMajorFilterCurMonth: "Campaign Current Month",
+    pMajorBannerTitle: "RULE 7.14: MAJOR EVENTS ON YOUR PATROL DATE",
+    pMajorBannerDesc: "Check whether your departure month and year match any of the designated events. If in the indicated zone, check reverse to determine if your submarine takes part in the historical mission.",
+    pMajorAssignBtn: "Assign to Current Patrol",
+    pMajorBackSpec: "View Special Missions",
+    pMajorGoPhase1: "Phase 1: Sortie",
+    pMajorGoPhase2: "Continue to Phase 2: Transit ➔",
 
     p2Title: "PHASE 2: TRANSIT & ON-STATION NAVIGATION",
     p2Subtitle: "Sequential navigation along transit and station boxes • Patrol contacts and encounters [Charts A2, A3 / B11]",
@@ -1393,6 +1437,9 @@ const TEXT_TRANSLATIONS = {
   "Evaluación de Misión": "Mission Evaluation",
   "Evalúa si la escolta te detecta acústicamente (Chart B4) y resuelve las cargas de profundidad (B5 & B6):": "Assess acoustic escort detection (Chart B4) and resolve depth charges (B5 & B6):",
   "Evento": "Event",
+  "Eventos": "Events",
+  "Mayores Eventos": "Major Events",
+  "Eventos Mayores": "Major Events",
   "Exceder profundidad de test (Test Depth)": "Exceder profundidad de test (Test Depth)",
   "Excepción:": "Excepción:",
   "Experto en Armamento (Weapons Expert):": "Experto en Armamento (Weapons Expert):",
@@ -2339,22 +2386,34 @@ function translateText(text, language) {
   return translated;
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 const TEXT_TRANSLATOR_CACHE = new Map();
 function getTextTranslators(language) {
   const lang = TEXT_TRANSLATIONS_BY_LANGUAGE[language] ? language : 'es';
   if (TEXT_TRANSLATOR_CACHE.has(lang)) return TEXT_TRANSLATOR_CACHE.get(lang);
 
   const map = TEXT_TRANSLATIONS_BY_LANGUAGE[lang];
+  // Multi-word phrases (containing space, hyphen, brackets, etc.) can be replaced via substring
   const phrases = Object.keys(map)
-    .filter((key) => key.length >= 5)
+    .filter((key) => key.length >= 5 && (key.includes(' ') || key.includes('-') || key.includes('[') || key.includes(':') || key.includes('.')))
     .sort((a, b) => b.length - a.length)
     .map((key) => [key, map[key]]);
-  const words = Object.entries(COMMON_TEXT_WORDS[lang] || {})
-    .sort(([a], [b]) => b.length - a.length)
-    .map(([word, replacement]) => ({
-      pattern: new RegExp(`(^|[^\\p{L}])${word}(?=$|[^\\p{L}])`, 'giu'),
-      replacement
-    }));
+
+  // Single-word entries in map (no space) plus COMMON_TEXT_WORDS must match whole words with boundary regex
+  const singleMapWords = Object.entries(map)
+    .filter(([key]) => key.length >= 3 && !key.includes(' ') && !key.includes('-') && !key.includes('[') && !key.includes(':') && !key.includes('.'));
+  const commonWords = Object.entries(COMMON_TEXT_WORDS[lang] || {});
+  const allWordEntries = [...commonWords, ...singleMapWords]
+    .sort(([a], [b]) => b.length - a.length);
+
+  const words = allWordEntries.map(([word, replacement]) => ({
+    pattern: new RegExp(`(^|[^\\p{L}])${escapeRegExp(word)}(?=$|[^\\p{L}])`, 'giu'),
+    replacement
+  }));
+
   const translators = { exact: map, phrases, words, cache: new Map() };
   TEXT_TRANSLATOR_CACHE.set(lang, translators);
   return translators;

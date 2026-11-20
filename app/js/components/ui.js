@@ -302,7 +302,7 @@ function openModalViewer(title, dummySrc, chartKey) {
       if (k === '3') {
         e.preventDefault();
         if (typeof switchTab === 'function') switchTab('rogu-bukku');
-        showToast("📜 Rogu Bukku [3]");
+        showToast("📜 Rogu Bukku (Logs) [3]");
         return;
       }
       if (k === '4') {
@@ -331,15 +331,13 @@ function openModalViewer(title, dummySrc, chartKey) {
       }
       if (k === '8') {
         e.preventDefault();
-        if (typeof switchTab === 'function') switchTab('workflow');
-        if (typeof setWorkflowPhase === 'function') setWorkflowPhase('special-missions');
+        if (typeof switchTab === 'function') switchTab('special-missions');
         showToast("🎯 Misiones Especiales [8]");
         return;
       }
       if (k === '9') {
         e.preventDefault();
-        if (typeof switchTab === 'function') switchTab('workflow');
-        if (typeof setWorkflowPhase === 'function') setWorkflowPhase('major-events');
+        if (typeof switchTab === 'function') switchTab('major-events');
         showToast("🚩 Mayores Eventos [9]");
         return;
       }
@@ -531,8 +529,9 @@ function openModalViewer(title, dummySrc, chartKey) {
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('./sw.js?v=20261120_02')
           .then(function(reg) {
+            reg.update();
             console.log('Sensuikan PWA ServiceWorker registrado en:', reg.scope);
           })
           .catch(function(err) {

@@ -206,6 +206,13 @@ function updateWorkflowModalsLanguage(isEn) {
         'lbl-major-events-sub': d.pMajorEventsSubtitle,
         'lbl-major-events-flip-btn': d.pMajorFlipBtn,
         'lbl-major-to-spec-btn': d.pMajorToSpecMissions,
+        'lbl-filter-campaign-btn': d.pMajorFilterCurMonth,
+        'lbl-major-banner-title': d.pMajorBannerTitle,
+        'lbl-major-assign-btn': d.pMajorAssignBtn,
+        'lbl-major-back-spec': d.pMajorBackSpec,
+        'lbl-major-go-phase1': d.pMajorGoPhase1,
+        'lbl-major-go-phase2': d.pMajorGoPhase2,
+        'lbl-filter-year-prefix': d.lblFilterYear,
 
         'p2-title': d.p2Title,
         'p2-sub-desc': d.p2Subtitle,

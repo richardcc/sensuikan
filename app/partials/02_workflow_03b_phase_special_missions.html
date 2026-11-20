@@ -49,6 +49,43 @@
       </div>
     </div>
 
+        <!-- Barra de Filtros de Misiones Especiales -->
+    <div class="spec-missions-filter-bar" style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:center; background:rgba(15,23,42,0.6); padding:10px 14px; border-radius:8px; border:1px solid #334155;">
+      <div style="font-size:0.80rem; font-weight:bold; color:var(--gold-400); text-transform:uppercase; letter-spacing:0.5px; margin-right:4px;" data-i18n="specFilterLabel">
+        🔍 Filtrar Misiones:
+      </div>
+      <button type="button" id="btn-filter-spec-current" class="action-btn" onclick="setSpecialMissionsFilter('current')" style="padding:6px 14px; font-size:0.82rem; border-color:var(--gold-500); color:var(--gold-300);">
+        <span>🎯</span> <span data-i18n="specFilterCurrent">Misión Actual Asignada</span>
+      </button>
+      <button type="button" id="btn-filter-spec-compatible" class="action-btn" onclick="setSpecialMissionsFilter('compatible')" style="padding:6px 14px; font-size:0.82rem; border-color:#22c55e; color:#86efac;">
+        <span>✅</span> <span data-i18n="specFilterCompatible">Misiones Aptas (Buque Activo)</span>
+      </button>
+      <button type="button" id="btn-filter-spec-all" class="action-btn active" onclick="setSpecialMissionsFilter('all')" style="padding:6px 14px; font-size:0.82rem; border-color:#38bdf8; color:#7dd3fc;">
+        <span>📚</span> <span data-i18n="specFilterAll">Todas las Misiones [7.1 - 7.11]</span>
+      </button>
+      <div id="spec-missions-filter-counter" style="margin-left:auto; font-size:0.75rem; color:#94a3b8; font-weight:bold;">
+        <!-- Se rellena con JS -->
+      </div>
+    </div>
+
+    <!-- Banner Informativo de Misión Actual si no hay asignada -->
+    <div id="spec-current-mission-alert" style="display:none; background:rgba(234,179,8,0.12); border:1px solid var(--gold-500); border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:1.4rem;">🎯</span>
+          <div>
+            <strong style="color:var(--gold-300); font-size:0.88rem; display:block;" data-i18n="specCurrentAlertTitle">ESTADO DE MISIÓN ESPECIAL EN PATRULLA</strong>
+            <span id="spec-current-alert-msg" style="font-size:0.80rem; color:#e2e8f0;" data-i18n="specNoCurrentMission">Tu patrulla actual no tiene una misión especial asignada.</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="action-btn" onclick="setWorkflowPhase('major-events')" style="font-size:0.78rem; padding:6px 12px; border-color:#ef4444; color:#fca5a5;">
+            🚩 <span data-i18n="pSpecToMajorEvents">Mayores Eventos [7.14] ➔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Contenedor Principal: Selector de Misiones (Grid de Tarjetas) -->
     <div id="spec-missions-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px; margin-bottom:20px;">
       <!-- Las tarjetas de misiones se renderizan dinámicamente por JS o estáticas bilingües -->

@@ -13,12 +13,12 @@ function initMajorEventsTab() {
 }
 
 function renderMajorEventsGrid() {
-  const isEn = (window.currentLang === 'en');
-  const container = document.getElementById('major-events-cards-container');
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+  const container = document.getElementById('major-events-chits-grid') || document.getElementById('major-events-cards-container');
   if (!container) return;
 
   if (typeof MISSION_CHITS === 'undefined' || !Array.isArray(MISSION_CHITS)) {
-    container.innerHTML = `<div style="color:#ef4444; padding:20px;">Error: No se encontró la base de datos MISSION_CHITS.</div>`;
+    container.innerHTML = `<div style="color:#ef4444; padding:20px;">${isEn ? 'Error: MISSION_CHITS database not found.' : 'Error: No se encontró la base de datos MISSION_CHITS.'}</div>`;
     return;
   }
 
@@ -53,7 +53,31 @@ function renderMajorEventsGrid() {
 
   const countBadge = document.getElementById('major-events-count-badge');
   if (countBadge) {
-    countBadge.innerText = `${events.length} ${isEn ? 'Markers' : 'Fichas'}`;
+    countBadge.innerText = `${isEn ? '[Rule 7.14 •' : '[Regla 7.14 •'} ${events.length} ${isEn ? 'Historical Chits]' : 'Fichas Históricas]'}`;
+  }
+
+  // Update dynamic active campaign banner
+  const activeEventsThisMonth = MISSION_CHITS.filter(c => c.cat === 'mission' && c.validMonths && c.validMonths.includes(currentMonth));
+  const activeMsgEl = document.getElementById('major-event-active-msg');
+  const assignBtnEl = document.getElementById('btn-apply-campaign-event');
+
+  if (activeEventsThisMonth.length > 0) {
+    const eventTitles = activeEventsThisMonth.map(e => `${e.redTitle} (${e.redDate})`).join(', ');
+    if (activeMsgEl) {
+      activeMsgEl.innerHTML = isEn
+        ? `⚡ <strong>Active this month (${currentMonth}):</strong> ${eventTitles}. Check reverse to assign priority mission to your boat.`
+        : `⚡ <strong>Activo este mes (${currentMonth}):</strong> ${eventTitles}. Comprueba el reverso para asignar la misión prioritaria a tu submarino.`;
+    }
+    if (assignBtnEl) {
+      assignBtnEl.disabled = false;
+      assignBtnEl.style.opacity = '1';
+    }
+  } else {
+    if (activeMsgEl) {
+      activeMsgEl.innerHTML = isEn
+        ? `Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. En la fecha <strong>${currentMonth}</strong> aplican órdenes de patrulla estándar.`
+        : `Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. En la fecha <strong>${currentMonth}</strong> aplican órdenes de patrulla estándar.`;
+    }
   }
 
   if (events.length === 0) {
@@ -70,7 +94,6 @@ function renderMajorEventsGrid() {
     const assignedMission = determineMajorEventAssignedMission(c, subData);
 
     const imgSrc = majorEventsFlipped ? `assets/chits/${c.whiteImg}` : `assets/chits/${c.redImg}`;
-    const altImgSrc = majorEventsFlipped ? `assets/chits/${c.redImg}` : `assets/chits/${c.whiteImg}`;
 
     // Priority missions HTML list
     const missionLines = c.whiteLines || [c.whiteImg.replace('.jpg', '')];
@@ -93,7 +116,7 @@ function renderMajorEventsGrid() {
         <div>
           <!-- Header: Chit Image & Title -->
           <div style="display:flex; gap:12px; align-items:center; margin-bottom:10px; border-bottom:1px solid #1e293b; padding-bottom:8px;">
-            <div style="width:68px; height:68px; min-width:68px; border-radius:6px; overflow:hidden; border:2px solid ${majorEventsFlipped ? '#e2e8f0' : '#ef4444'}; box-shadow:0 2px 8px rgba(0,0,0,0.5); background:#020617; cursor:pointer;" onclick="toggleSingleEventChit(this, '${c.redImg}', '${c.whiteImg}')" title="${isEn ? 'Click to flip chit' : 'Haz clic para voltear la ficha'}">
+            <div data-single-flipped="${majorEventsFlipped ? 'true' : 'false'}" style="width:68px; height:68px; min-width:68px; border-radius:6px; overflow:hidden; border:2px solid ${majorEventsFlipped ? '#e2e8f0' : '#ef4444'}; box-shadow:0 2px 8px rgba(0,0,0,0.5); background:#020617; cursor:pointer;" onclick="toggleSingleEventChit(this, '${encodeURIComponent(c.redImg)}', '${encodeURIComponent(c.whiteImg)}')" title="${isEn ? 'Click to flip chit' : 'Haz clic para voltear la ficha'}">
               <img src="${imgSrc}" data-red="${c.redImg}" data-white="${c.whiteImg}" alt="${c.redTitle}" style="width:100%; height:100%; object-fit:cover;">
             </div>
             
@@ -140,7 +163,7 @@ function renderMajorEventsGrid() {
 }
 
 function determineMajorEventAssignedMission(chit, subData) {
-  const isEn = (window.currentLang === 'en');
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
   const lines = chit.whiteLines || [];
 
   for (const line of lines) {
@@ -177,20 +200,23 @@ function determineMajorEventAssignedMission(chit, subData) {
 function toggleMajorEventsFlip() {
   majorEventsFlipped = !majorEventsFlipped;
   const btn = document.getElementById('btn-toggle-event-chits-flip');
-  const isEn = (window.currentLang === 'en');
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
   if (btn) {
-    btn.innerText = majorEventsFlipped 
-      ? (isEn ? "🔄 Flip Chits (Front Red Side)" : "🔄 Voltear Fichas (Cara Roja)") 
-      : (isEn ? "🔄 Flip Chits (Back White Side)" : "🔄 Voltear Fichas (Cara Blanca)");
+    btn.innerHTML = majorEventsFlipped 
+      ? `<span>🔄</span> <span>${isEn ? "Flip Chits (Front Red Side)" : "Voltear Fichas (Cara Roja)"}</span>`
+      : `<span>🔄</span> <span>${isEn ? "Flip Chits (Back White Side)" : "Voltear Fichas (Cara Blanca)"}</span>`;
   }
   renderMajorEventsGrid();
 }
 
-function toggleSingleEventChit(el, redImg, whiteImg) {
+function toggleSingleEventChit(el, encodedRedImg, encodedWhiteImg) {
   const img = el.querySelector('img');
   if (!img) return;
-  const isCurrentlyWhite = img.src.includes(whiteImg);
-  img.src = isCurrentlyWhite ? `assets/chits/${redImg}` : `assets/chits/${whiteImg}`;
+  const isFlipped = el.getAttribute('data-single-flipped') === 'true';
+  const nextFlipped = !isFlipped;
+  el.setAttribute('data-single-flipped', nextFlipped ? 'true' : 'false');
+  img.src = nextFlipped ? `assets/chits/${decodeURIComponent(encodedWhiteImg)}` : `assets/chits/${decodeURIComponent(encodedRedImg)}`;
+  el.style.borderColor = nextFlipped ? '#e2e8f0' : '#ef4444';
 }
 
 function filterMajorEventsByYear(year, btnEl) {
@@ -205,20 +231,81 @@ function filterMajorEventsByZone(zone) {
   renderMajorEventsGrid();
 }
 
-function filterMajorEventsCurrentMonth() {
+function filterMajorEventsToCurrentCampaign() {
   majorEventsOnlyCurrentMonth = !majorEventsOnlyCurrentMonth;
+  const btn = document.getElementById('btn-filter-campaign-month');
+  if (btn) {
+    if (majorEventsOnlyCurrentMonth) {
+      btn.style.boxShadow = '0 0 10px rgba(234, 179, 8, 0.8)';
+      btn.style.outline = '2px solid #fde047';
+    } else {
+      btn.style.boxShadow = 'none';
+      btn.style.outline = 'none';
+    }
+  }
+
+  // If active, reset year to 'all' so current month events aren't filtered out
+  if (majorEventsOnlyCurrentMonth) {
+    majorEventsYearFilter = 'all';
+    document.querySelectorAll('.event-filter-year').forEach(b => {
+      const txt = b.innerText.trim().toUpperCase();
+      b.classList.toggle('active', txt === 'TODOS' || txt === 'ALL');
+    });
+  }
+
   renderMajorEventsGrid();
-  const isEn = (window.currentLang === 'en');
-  showToast(majorEventsOnlyCurrentMonth 
-    ? (isEn ? "Filtered: Active events for current month" : "Filtrado: Eventos activos en el mes actual") 
-    : (isEn ? "Showing all historical events" : "Mostrando todos los eventos"));
+
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+  const curMonth = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.selectedMonth) ? campaignState.workflow.selectedMonth : '1941-12';
+  
+  if (typeof showToast === 'function') {
+    showToast(majorEventsOnlyCurrentMonth 
+      ? (isEn ? `📅 Filtered: Active events for current month (${curMonth})` : `📅 Filtrado: Eventos activos en el mes actual (${curMonth})`) 
+      : (isEn ? "Showing all historical events" : "Mostrando todos los eventos"));
+  }
+}
+
+function assignActiveCampaignEventMission() {
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+  if (typeof MISSION_CHITS === 'undefined' || !Array.isArray(MISSION_CHITS)) return;
+
+  const currentMonth = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.selectedMonth) ? campaignState.workflow.selectedMonth : '1941-12';
+  const assignedArea = (typeof campaignState !== 'undefined' && campaignState.workflow && campaignState.workflow.assignedArea) ? campaignState.workflow.assignedArea.toLowerCase() : '';
+
+  // 1. Try finding chit matching both current month and assigned area
+  let matchedChit = MISSION_CHITS.find(c => {
+    if (c.cat !== 'mission' || !c.validMonths || !c.validMonths.includes(currentMonth)) return false;
+    if (assignedArea && c.redTitle && (c.redTitle.toLowerCase().includes(assignedArea) || assignedArea.includes(c.redTitle.toLowerCase()))) {
+      return true;
+    }
+    return false;
+  });
+
+  // 2. If no area match, find any chit active for the current month
+  if (!matchedChit) {
+    matchedChit = MISSION_CHITS.find(c => c.cat === 'mission' && c.validMonths && c.validMonths.includes(currentMonth));
+  }
+
+  if (matchedChit) {
+    assignPatrolToMajorEvent(matchedChit.id);
+  } else {
+    if (typeof showToast === 'function') {
+      showToast(isEn 
+        ? `⚠️ No Major Event chit is scheduled for campaign date (${currentMonth}). Standard patrol applies.` 
+        : `⚠️ No hay ninguna ficha de Evento Mayor para la fecha (${currentMonth}). Aplica patrulla estándar.`);
+    }
+  }
 }
 
 function assignPatrolToMajorEvent(eventId) {
-  const isEn = (window.currentLang === 'en');
-  if (typeof MISSION_CHITS === 'undefined') return;
+  const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+  if (typeof MISSION_CHITS === 'undefined' || !Array.isArray(MISSION_CHITS)) return;
   const chit = MISSION_CHITS.find(c => c.id === eventId);
   if (!chit) return;
+
+  const subKey = (typeof campaignState !== 'undefined' && campaignState.activeSubKey) ? campaignState.activeSubKey : 'Type_B_Class';
+  const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines && SUB_DB.submarines[subKey]) ? SUB_DB.submarines[subKey] : {};
+  const assigned = determineMajorEventAssignedMission(chit, subData);
 
   if (typeof campaignState !== 'undefined') {
     if (!campaignState.workflow) campaignState.workflow = {};
@@ -227,22 +314,32 @@ function assignPatrolToMajorEvent(eventId) {
     }
     campaignState.workflow.currentChit = chit;
     campaignState.workflow.assignedArea = chit.redTitle;
+    campaignState.workflow.specialMissionAssigned = assigned.missionName;
+    campaignState.workflow.majorEventActive = true;
+    campaignState.workflow.majorEventChit = chit;
     if (typeof saveState === 'function') saveState();
   }
 
-  showToast(isEn ? `⚓ Patrolling ${chit.redTitle} (${chit.redDate})!` : `⚓ ¡Patrullando en ${chit.redTitle} (${chit.redDate})!`);
+  if (typeof showToast === 'function') {
+    showToast(isEn 
+      ? `⚓ Assigned to ${chit.redTitle} (${chit.redDate}): Priority ${assigned.missionName}!` 
+      : `⚓ ¡Asignado a ${chit.redTitle} (${chit.redDate}): Misión prioritaria ${assigned.missionName}!`);
+  }
+
   if (typeof switchTab === 'function') switchTab('workflow');
   if (typeof setWorkflowPhase === 'function') setWorkflowPhase(1);
 }
 
-// Attach to window
+// Attach to window for global access
 window.initMajorEventsTab = initMajorEventsTab;
 window.renderMajorEventsGrid = renderMajorEventsGrid;
 window.toggleMajorEventsFlip = toggleMajorEventsFlip;
 window.toggleSingleEventChit = toggleSingleEventChit;
 window.filterMajorEventsByYear = filterMajorEventsByYear;
 window.filterMajorEventsByZone = filterMajorEventsByZone;
-window.filterMajorEventsCurrentMonth = filterMajorEventsCurrentMonth;
+window.filterMajorEventsCurrentMonth = filterMajorEventsToCurrentCampaign;
+window.filterMajorEventsToCurrentCampaign = filterMajorEventsToCurrentCampaign;
+window.assignActiveCampaignEventMission = assignActiveCampaignEventMission;
 window.assignPatrolToMajorEvent = assignPatrolToMajorEvent;
 
 document.addEventListener('DOMContentLoaded', () => {
