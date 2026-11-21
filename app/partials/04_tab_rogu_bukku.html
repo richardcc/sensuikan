@@ -317,13 +317,13 @@
     </div>
 
     <!-- DIGITAL OCR VIEWER FOR PHASE GUIDES -->
-    <div id="modal-viewer" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
+    <div id="modal-viewer" onclick="if(event.target===this)closeModalViewer();" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:100010; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
       <div style="position:relative; max-width:1150px; width:100%; max-height:92vh; background:var(--navy-900); border:2px solid var(--gold-500); border-radius:12px; padding:16px; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,0.9);">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--navy-700); padding-bottom:10px; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
           <h3 id="modal-viewer-title" style="margin:0; color:var(--gold-300); font-size:1.15rem; display:flex; align-items:center; gap:8px;"><span>📖</span> <span>Guía de Fase</span></h3>
           <div style="display:flex; align-items:center; gap:8px;">
-            <span style="font-size:0.86rem; color:var(--slate-400); background:rgba(0,0,0,0.3); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] para cerrar</span>
-            <button type="button" onclick="closeModalViewer()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5;">✕ Cerrar (Esc)</button>
+            <span id="modal-viewer-esc-hint" style="font-size:0.86rem; color:var(--slate-400); background:rgba(0,0,0,0.3); padding:3px 8px; border-radius:4px; border:1px solid #334155;">[Esc] para cerrar</span>
+            <button id="modal-viewer-btn-close" type="button" onclick="closeModalViewer()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5;">✕ Cerrar (Esc)</button>
           </div>
         </div>
         <div style="flex:1; overflow-y:auto; padding:6px; background:#071220; border-radius:8px;">
@@ -333,7 +333,7 @@
     </div>
 
     <!-- TARGET EDITOR MODAL (Interactive Target Inspector) -->
-    <div id="modal-about" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:linear-gradient(135deg,rgba(2,6,23,0.94),rgba(15,23,42,0.88)); z-index:10000; justify-content:center; align-items:center; padding:18px; box-sizing:border-box;">
+    <div id="modal-about" onclick="if(event.target===this)closeAboutModal();" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:linear-gradient(135deg,rgba(2,6,23,0.94),rgba(15,23,42,0.88)); z-index:10000; justify-content:center; align-items:center; padding:18px; box-sizing:border-box;">
       <div style="background:linear-gradient(160deg,#172554 0%,#0f172a 58%,#111827 100%); border:1px solid rgba(250,204,21,0.7); border-radius:18px; max-width:660px; width:100%; overflow:hidden; box-shadow:0 24px 70px rgba(0,0,0,0.75),0 0 0 1px rgba(56,189,248,0.16); color:#fff;">
         <div style="position:relative; padding:22px 26px 18px; background:radial-gradient(circle at 88% 18%,rgba(250,204,21,0.22),transparent 30%),linear-gradient(115deg,#0f2d4a,#172554); border-bottom:1px solid rgba(148,163,184,0.24);">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding-right:36px;">

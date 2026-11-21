@@ -173,6 +173,7 @@ function updateWorkflowModalsLanguage(isEn) {
       if (elStepPatrol && d.stepPatrol) elStepPatrol.innerText = d.stepPatrol;
       if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
+      if (typeof renderAircraftMatUI === 'function') renderAircraftMatUI();
       const elStep3 = document.getElementById('lbl-step3');
       if (elStep3 && d.step3) elStep3.innerText = d.step3;
       const elStep4 = document.getElementById('lbl-step4');
@@ -332,7 +333,7 @@ function updateWorkflowModalsLanguage(isEn) {
         'comp-sec-campaign': isEn ? "5. PORT REFIT & CAMPAIGN VICTORY LEVELS" : "5. REFIT EN PUERTO Y ESCALA DE VICTORIA DE CAMPAÑA",
         'comp-sec-midget': isEn ? "6. KO-HYOTEKI MIDGET SUBMARINE SPECIAL OPERATIONS (CHARTS M5 TO M9)" : "6. OPERACIONES ESPECIALES DE MINISUBMARINOS KO-HYOTEKI (CHARTS M5 A M9)",
         'comp-sec-kaiten': isEn ? "7. KAITEN SUICIDE TORPEDO SPECIAL OPERATIONS (CHARTS F4, K5, K6 & COMBAT)" : "7. OPERACIONES ESPECIALES KAITEN (CHARTS F4, K5, K6 & COMBATE)",
-        'comp-sec-floatplane': isEn ? "8. FLOAT-PLANE EMBARKED OPERATIONS (CHARTS P3, P4, P5, P6 & RULE 7.17)" : "8. OPERACIONES DE HIDROAVIÓN EMBARCADO (CHARTS P3, P4, P5, P6 & REGLA 7.17)",
+        'comp-sec-floatplane': isEn ? "8. EMBARKED FLOATPLANE OPERATIONS (CHARTS P3 TO P6 & RULE 7.17)" : "8. OPERACIONES DE HIDROAVIÓN EMBARCADO (TABLAS P3 A P6 & REGLA 7.17)",
         'comp-sec-optional': isEn ? "9. OPTIONAL & ADVANCED CAMPAIGN RULES [RULES 11.0 & 8.2.9]" : "9. REGLAS OPCIONALES Y AVANZADAS DE CAMPAÑA [REGLAS 11.0 & 8.2.9]",
         'comp-flow-title': isEn ? "🗺️ GAME FLOW SEQUENCE CARDS" : "🗺️ CARTAS DE SECUENCIA DEL GAME FLOW",
         'comp-flow-subtitle': isEn ? "These cards explain the historical game flow. Select one to enlarge it and open its related phase." : "Las cartas explican el flujo histórico de la partida. Pulsa una para ampliarla y abrir directamente la fase relacionada."
@@ -584,6 +585,7 @@ function updateWorkflowModalsLanguage(isEn) {
       applyPhase4DamageLanguage(isEn);
       if (typeof applyPatrolLanguage === 'function') applyPatrolLanguage(isEn);
       if (typeof updatePatrolPhaseUI === 'function') updatePatrolPhaseUI();
+      if (typeof renderAircraftMatUI === 'function') renderAircraftMatUI();
 
       function applyPhase2Language(isEn) {
         const labels = {
@@ -608,6 +610,7 @@ function updateWorkflowModalsLanguage(isEn) {
           'p2-mission-air': isEn ? 'Air Reconnaissance (Charts P1-P6)' : 'Reconocimiento Aéreo (Tablas P1-P6)',
           'p2-mission-kaiten': isEn ? 'Kaiten Launch (Maps K2-K3)' : 'Lanzamiento Kaiten (Mapas K2-K3)',
           'p2-mission-mine': isEn ? 'Mining or Tokyo Express Transport' : 'Minado o Transporte Tokio Express',
+          'btn-open-air-mat-p2': isEn ? 'Open Floatplane Board [Chart P]' : 'Abrir Tablero de Hidroavión [Chart P]',
           'p2-rule-818-label': isEn ? 'Rule 8.1.8:' : 'Regla 8.1.8:',
           'p2-rule-818-text': isEn ? 'A natural 12 triggers a <em>Random Event [Chart B11]</em> (maximum 1 per patrol).' : 'Un 12 natural activa un <em>Suceso Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).',
           'p2-a3-roll-header': isEn ? '2d6 Roll' : 'Tirada 2d6',
@@ -2166,6 +2169,18 @@ function updateWorkflowModalsLanguage(isEn) {
           ? "<strong>Does Not Apply [Rule 4.8.3]:</strong> Your current submarine is not equipped with a floatplane or hangar. This school only applies to aircraft-equipped submarines (e.g. Type B, I-9, I-400)."
           : "<strong>No Aplica [Regla 4.8.3]:</strong> Tu buque actual no dispone de hidroavión ni hangar embarcado. Esta escuela sólo aplica a submarinos dotados de aviación (p. ej. Tipo B, I-9, I-400).";
       }
+      const elF3BtnRollAll = document.getElementById('f3-btn-roll-all');
+      if (elF3BtnRollAll) elF3BtnRollAll.innerText = isEn ? "🎲 Roll All Pilots" : "🎲 Tirar Todos los Pilotos";
+      const elF3PilotHeading = document.getElementById('f3-pilot-heading');
+      if (elF3PilotHeading) {
+        elF3PilotHeading.innerText = isEn ? "Multi-Aircraft Submarine [Official Rule 7.17]:" : "Submarino Multiavión [Regla Oficial 7.17]:";
+      }
+      const elF3PilotRuleNote = document.getElementById('f3-pilot-rule-note');
+      if (elF3PilotRuleNote) {
+        elF3PilotRuleNote.innerText = isEn 
+          ? "Type A (Mod) and Type A2 submarines conduct Flight School F3 twice (2 pilots); Sen-Toku class submarines conduct it three times (3 pilots). Each pilot receives up to 2 distinct skills."
+          : "Los submarinos clase Tipo A (Mod) y Tipo A2 realizan la Escuela F3 dos veces (2 pilotos); los clase Sen-Toku la realizan tres veces (3 pilotos). Cada piloto adquiere hasta 2 habilidades independientes.";
+      }
 
       // 6. Chart F4 Otsujima Kaiten School
       const elF4MainTitle = document.getElementById('f4-main-title');
@@ -2405,6 +2420,60 @@ function updateWorkflowModalsLanguage(isEn) {
           fpSec.outerHTML = targetFpHtml;
         }
       }
+
+      // Update Aircraft Display Mat Modal Header if present
+      const airMatSub = document.getElementById('air-mat-header-sub');
+      if (airMatSub) {
+        airMatSub.innerText = isEn 
+          ? "Submarine Floatplane Operations & Tactical Management • Launch (P1), Flight (P3-P5), Bombing (P6), and Recovery (P2)"
+          : "Gestión táctica de hidroaviones de reconocimiento y ataque • Despegue (P1), Vuelo (P3-P5), Bombardeo (P6) y Amerizaje (P2)";
+      }
+      const btnToggleSub = document.getElementById('btn-toggle-board-sub');
+      if (btnToggleSub) btnToggleSub.innerText = isEn ? "🚢 Submarine" : "🚢 Submarino";
+      const btnToggleAir = document.getElementById('btn-toggle-board-air');
+      if (btnToggleAir) btnToggleAir.innerText = isEn ? "✈️ Floatplane (Chart P)" : "✈️ Hidroavión (Chart P)";
+
+      // Labels inside Aircraft Modal Redesign
+      const lblTogInsp = document.getElementById('lbl-air-toggle-inspector');
+      if (lblTogInsp) lblTogInsp.innerText = isEn ? "◀ Hide Aircraft Sheet" : "◀ Ocultar Ficha Avión";
+      const theaterTxt = document.getElementById('air-theater-text');
+      if (theaterTxt) theaterTxt.innerText = isEn ? "Expanded View" : "Modo Expandido";
+      const lblMapSel = document.getElementById('lbl-air-map-select');
+      if (lblMapSel) lblMapSel.innerText = isEn ? "MAP:" : "MAPA:";
+      const lblMapExp = document.getElementById('lbl-air-map-expand');
+      if (lblMapExp) lblMapExp.innerText = isEn ? "🔍 Expand" : "🔍 Ampliar";
+      const lblConTit = document.getElementById('lbl-air-console-title');
+      if (lblConTit) lblConTit.innerText = isEn ? "📡 TACTICAL FLIGHT CONSOLE" : "📡 CONSOLA TÁCTICA DE VUELO";
+      const lblActTit = document.getElementById('lbl-air-actions-title');
+      if (lblActTit) lblActTit.innerText = isEn ? "⚡ FLIGHT CIRCLE ACTIONS" : "⚡ ACCIONES OPERATIVAS EN CÍRCULO";
+      const lblPrevCir = document.getElementById('lbl-air-prev-circle');
+      if (lblPrevCir) lblPrevCir.innerText = isEn ? "Previous" : "Anterior";
+      const lblNextCir = document.getElementById('lbl-air-next-circle');
+      if (lblNextCir) lblNextCir.innerText = isEn ? "Advance Circle" : "Avanzar Círculo";
+      const lblBombTar = document.getElementById('lbl-air-bomb-target');
+      if (lblBombTar) lblBombTar.innerText = isEn ? "Bomb Target (1d6)" : "Bombardear Objetivo (1d6)";
+      const lblFinFlight = document.getElementById('lbl-air-finish-flight');
+      if (lblFinFlight) lblFinFlight.innerText = isEn ? "Recover at Submarine (Chart P2) ➔" : "Amerizar en Submarino (Tabla P2) ➔";
+      const lblQuickTit = document.getElementById('lbl-air-quicktables-title');
+      if (lblQuickTit) lblQuickTit.innerText = isEn ? "Quick Reference Charts:" : "Tablas de Resolución Rápida:";
+      const lblLogTit = document.getElementById('lbl-air-log-title');
+      if (lblLogTit) lblLogTit.innerText = isEn ? "📝 TACTICAL FLIGHT LOG" : "📝 BITÁCORA TÁCTICA DE VUELO";
+      const lblTabTakeoff = document.getElementById('lbl-tab-takeoff');
+      if (lblTabTakeoff) lblTabTakeoff.innerText = isEn ? "1. Catapult Launch (P1)" : "1. Despegue (P1)";
+      const lblTabMap = document.getElementById('lbl-tab-map');
+      if (lblTabMap) lblTabMap.innerText = isEn ? "2. Tactical Flight Map (P3-P6)" : "2. Mapa Táctico de Vuelo (P3-P6)";
+      const lblTabRecovery = document.getElementById('lbl-tab-recovery');
+      if (lblTabRecovery) lblTabRecovery.innerText = isEn ? "3. Recovery (P2)" : "3. Amerizaje (P2)";
+      const lblP3 = document.getElementById('lbl-p3-btn');
+      if (lblP3) lblP3.innerText = isEn ? "Encounters" : "Encuentros";
+      const lblP4 = document.getElementById('lbl-p4-btn');
+      if (lblP4) lblP4.innerText = isEn ? "Combat" : "Combate";
+      const lblP5 = document.getElementById('lbl-p5-btn');
+      if (lblP5) lblP5.innerText = isEn ? "Flak AA" : "Antiaéreo";
+      const lblP6 = document.getElementById('lbl-p6-btn');
+      if (lblP6) lblP6.innerText = isEn ? "Bombing" : "Bombardeo";
+
+      if (typeof renderAircraftMatUI === 'function') renderAircraftMatUI();
     }
 
     function applyCompendiumCommanderLanguage(isEn) {

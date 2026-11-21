@@ -733,12 +733,28 @@ function rollChartB8Interactive() {
         if (a3MainContainer) a3MainContainer.style.display = 'none';
         return;
       }
-      if (a3MainContainer) a3MainContainer.style.display = 'block';
+
       const list = campaignState.workflow.boxList || [];
       const boxName = list[idx] || "Patrulla";
       const isTransit = boxName.includes("Transit") || boxName.includes("Tránsito") || boxName.includes("Return") || boxName.includes("Retorno");
       const isSpecialBox = boxName.includes("Mission") || boxName.includes("Misión");
-      
+
+      const specKey = (typeof getAssignedSpecialMissionKeySafe === 'function') 
+        ? getAssignedSpecialMissionKeySafe() 
+        : ((typeof getCurrentAssignedMissionKey === 'function') ? getCurrentAssignedMissionKey() : null);
+
+      const noA3Needed = isSpecialBox && (specKey === 'recon' || specKey === 'midget' || specKey === 'bombing' || specKey === 'kaiten');
+      if (noA3Needed) {
+        if (a3MainContainer) a3MainContainer.style.display = 'none';
+        return;
+      }
+
+      if (a3MainContainer) a3MainContainer.style.display = 'block';
+
+      if (isSpecialBox && (specKey === 'transport' || specKey === 'minelaying' || specKey === 'passenger' || specKey === 'evacuation' || specKey === 'shore_bombardment' || specKey === 'yanagi')) {
+        campaignState.workflow.useA3SpecialMissionColumn = true;
+      }
+
       const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
       const mappedAreaZone = mapA1ToA3Zone(assignedArea);
       const useSpecialCol = !!(isSpecialBox && campaignState.workflow.useA3SpecialMissionColumn);
@@ -1998,7 +2014,9 @@ function rollChartB8Interactive() {
 // INTERACTIVE FUNCTIONS FOR FLOAT-PLANE CHARTS (P3, P4, P5, P6) [RULE 7.17]
 // ====================================================================
 function rollChartP3() {
-  const phase = document.getElementById('p3-mission-phase') ? document.getElementById('p3-mission-phase').value : 'targetRecon';
+  const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
+  const phaseSelect = document.querySelector('#modal-viewer #p3-mission-phase') || document.getElementById('p3-mission-phase');
+  const phase = phaseSelect ? phaseSelect.value : 'targetRecon';
   const d1 = Math.floor(Math.random() * 6) + 1;
   const d2 = Math.floor(Math.random() * 6) + 1;
   const sum = d1 + d2;
@@ -2010,144 +2028,146 @@ function rollChartP3() {
 
   if (val.includes('Aircraft')) {
     col = '#f87171';
-    badgeText = '✈️ ¡ALERTA AÉREA! (' + val + ')';
+    badgeText = isEn ? ('✈️ AIR ALERT! (' + val + ')') : ('✈️ ¡ALERTA AÉREA! (' + val + ')');
   } else if (val.includes('Capital Ship')) {
     col = '#fde047';
-    badgeText = '⚓ ¡BUQUE CAPITAL! (' + val + ')';
+    badgeText = isEn ? ('⚓ CAPITAL SHIP! (' + val + ')') : ('⚓ ¡BUQUE CAPITAL! (' + val + ')');
   } else if (val.includes('Ship') || val.includes('CA') || val.includes('CL') || val.includes('DD') || val.includes('Tanker')) {
     col = '#93c5fd';
-    badgeText = '🚢 Contacto Naval: ' + val;
+    badgeText = isEn ? ('🚢 Naval Contact: ' + val) : ('🚢 Contacto Naval: ' + val);
   } else if (val.includes('AA')) {
     col = '#ef4444';
-    badgeText = '💥 Fuego Antiaéreo (' + val + ')';
+    badgeText = isEn ? ('💥 AA Flak Fire (' + val + ')') : ('💥 Fuego Antiaéreo (' + val + ')');
   } else if (val === '--') {
     col = '#64748b';
-    badgeText = 'Sin Encuentro (Despejado)';
+    badgeText = isEn ? 'No Encounter (Clear)' : 'Sin Encuentro (Despejado)';
   }
 
-  const phaseNames = {
+  const phaseNames = isEn ? {
+    transit: 'Transit',
+    recon: 'Reconnaissance',
+    targetRecon: 'Target - Reconnaissance',
+    targetBombing: 'Target - Bombing Panama'
+  } : {
     transit: 'Tránsito (Transit)',
     recon: 'Reconocimiento (Recon)',
     targetRecon: 'Objetivo - Reconocimiento (Target Recon)',
     targetBombing: 'Objetivo - Bombardeo Canal (Target Bombing)'
   };
 
-  const resEl = document.getElementById('res-interactive-p3');
-  if (resEl) {
-    resEl.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <span style="color:var(--gold-400); font-weight:bold;">Tirada 2d6:</span> 
-          <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
-          <span style="color:#94a3b8; font-size:0.75rem; margin-left:6px;">(${phaseNames[phase] || phase})</span>
-        </div>
-        <div style="font-weight:bold; color:${col}; background:rgba(15,23,42,0.8); border:1px solid ${col}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
-          ${badgeText}
-        </div>
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:var(--gold-400); font-weight:bold;">${isEn ? "Roll 2d6:" : "Tirada 2d6:"}</span> 
+        <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
+        <span style="color:#94a3b8; font-size:0.75rem; margin-left:6px;">(${phaseNames[phase] || phase})</span>
       </div>
-    `;
-  }
+      <div style="font-weight:bold; color:${col}; background:rgba(15,23,42,0.8); border:1px solid ${col}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
+        ${badgeText}
+      </div>
+    </div>
+  `;
 
+  document.querySelectorAll('#res-interactive-p3').forEach(el => el.innerHTML = html);
   document.querySelectorAll('.p3-row').forEach(r => r.style.backgroundColor = '');
-  const activeRow = document.getElementById('p3-row-' + sum);
-  if (activeRow) {
-    activeRow.style.backgroundColor = 'rgba(2, 132, 199, 0.35)';
-  }
+  document.querySelectorAll('#p3-row-' + sum).forEach(r => r.style.backgroundColor = 'rgba(2, 132, 199, 0.35)');
 
-  showToast(`P3 Encuentro [${sum}]: ${val}`);
+  showToast(`${isEn ? "P3 Encounter" : "P3 Encuentro"} [${sum}]: ${val}`);
 }
 
 function rollChartP6() {
+  const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
   const d = Math.floor(Math.random() * 6) + 1;
   let key = (d <= 2) ? "1-2" : (d <= 5 ? "3-5" : "6");
   const data = CHART_P6_DATA[key];
 
-  const resEl = document.getElementById('res-interactive-p6');
-  if (resEl) {
-    resEl.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <span style="color:var(--gold-400); font-weight:bold;">Tirada 1d6:</span> 
-          <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d}]</span>
-        </div>
-        <div style="font-weight:bold; color:${data.color}; background:rgba(15,23,42,0.8); border:1px solid ${data.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
-          🎯 ${data.result}
-        </div>
+  const resText = isEn ? (key === "1-2" ? "Miss" : (key === "3-5" ? "Moderate Damage" : "Heavy Damage")) : data.result;
+  const descText = isEn ? (key === "1-2" ? "Bombs miss target completely." : (key === "3-5" ? "Direct hit causing notable structural damage." : "Devastating hit causing severe destruction.")) : data.desc;
+
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:var(--gold-400); font-weight:bold;">${isEn ? "Roll 1d6:" : "Tirada 1d6:"}</span> 
+        <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d}]</span>
       </div>
-      <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">${data.desc}</div>
-    `;
-  }
+      <div style="font-weight:bold; color:${data.color}; background:rgba(15,23,42,0.8); border:1px solid ${data.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
+        🎯 ${resText}
+      </div>
+    </div>
+    <div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">${descText}</div>
+  `;
 
+  document.querySelectorAll('#res-interactive-p6').forEach(el => el.innerHTML = html);
   document.querySelectorAll('.p6-row').forEach(r => r.style.backgroundColor = '');
-  const activeRow = document.getElementById('p6-row-' + key);
-  if (activeRow) activeRow.style.backgroundColor = 'rgba(234, 179, 8, 0.3)';
+  document.querySelectorAll('#p6-row-' + key).forEach(r => r.style.backgroundColor = 'rgba(234, 179, 8, 0.3)');
 
-  showToast(`P6 Bombardeo [${d}]: ${data.result}`);
+  showToast(`${isEn ? "P6 Bombing" : "P6 Bombardeo"} [${d}]: ${resText}`);
 }
 
 function resolveChartP4FighterAttack() {
-  const choice = parseInt(document.getElementById('p4-recon-choice') ? document.getElementById('p4-recon-choice').value : '1') || 1;
+  const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
+  const choiceSelect = document.querySelector('#modal-viewer #p4-recon-choice') || document.getElementById('p4-recon-choice');
+  const choice = parseInt(choiceSelect ? choiceSelect.value : '1') || 1;
   const fighterDie = Math.floor(Math.random() * 6) + 1;
   const outcome = CHART_P4_AIR_COMBAT.matrix[choice][fighterDie];
 
   let outcomeHtml = '';
   let outcomeText = '';
   if (outcome === 'E') {
-    outcomeHtml = `<span style="background:rgba(16,185,129,0.25); color:#6ee7b7; border:1px solid #10b981; padding:2px 8px; border-radius:4px; font-weight:bold;">✈️ ¡EVASIÓN EXITOSA (E)! El encuentro termina.</span>`;
-    outcomeText = '¡Evasión exitosa!';
+    outcomeHtml = `<span style="background:rgba(16,185,129,0.25); color:#6ee7b7; border:1px solid #10b981; padding:2px 8px; border-radius:4px; font-weight:bold;">✈️ ${isEn ? "SUCCESSFUL EVASION (E)! Encounter ends." : "¡EVASIÓN EXITOSA (E)! El encuentro termina."}</span>`;
+    outcomeText = isEn ? "Successful Evasion!" : "¡Evasión exitosa!";
   } else if (outcome === 0) {
-    outcomeHtml = `<span style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid #3b82f6; padding:2px 8px; border-radius:4px; font-weight:bold;">🛡️ 0 Daños - La ráfaga del caza pasa de largo.</span>`;
-    outcomeText = '0 daños';
+    outcomeHtml = `<span style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid #3b82f6; padding:2px 8px; border-radius:4px; font-weight:bold;">🛡️ ${isEn ? "0 Damage - Fighter burst misses clean." : "0 Daños - La ráfaga del caza pasa de largo."}</span>`;
+    outcomeText = isEn ? "0 damage" : "0 daños";
   } else {
-    outcomeHtml = `<span style="background:rgba(239,68,68,0.25); color:#fca5a5; border:1px solid #ef4444; padding:2px 8px; border-radius:4px; font-weight:bold;">💥 ¡${outcome} IMPACTO(S) AL HIDROAVIÓN!</span>`;
-    outcomeText = `${outcome} impacto(s) recibido(s)`;
+    outcomeHtml = `<span style="background:rgba(239,68,68,0.25); color:#fca5a5; border:1px solid #ef4444; padding:2px 8px; border-radius:4px; font-weight:bold;">💥 ${isEn ? (outcome + " HIT(S) ON FLOATPLANE!") : ("¡" + outcome + " IMPACTO(S) AL HIDROAVIÓN!")}</span>`;
+    outcomeText = isEn ? `${outcome} hit(s) taken` : `${outcome} impacto(s) recibido(s)`;
   }
 
-  const resEl = document.getElementById('res-interactive-p4');
-  if (resEl) {
-    resEl.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <span style="color:#94a3b8;">Tu Maniobra:</span> <strong style="color:var(--gold-400);">#${choice}</strong> | 
-          <span style="color:#94a3b8;">Dado Caza (1d6):</span> <strong style="color:#fde047;">[${fighterDie}]</strong>
-        </div>
-        <div>${outcomeHtml}</div>
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:#94a3b8;">${isEn ? "Maneuver:" : "Tu Maniobra:"}</span> <strong style="color:var(--gold-400);">#${choice}</strong> | 
+        <span style="color:#94a3b8;">${isEn ? "Fighter Die (1d6):" : "Dado Caza (1d6):"}</span> <strong style="color:#fde047;">[${fighterDie}]</strong>
       </div>
-    `;
-  }
+      <div>${outcomeHtml}</div>
+    </div>
+  `;
 
+  document.querySelectorAll('#res-interactive-p4').forEach(el => el.innerHTML = html);
   document.querySelectorAll('.p4-cell').forEach(c => c.style.outline = '');
-  const cell = document.getElementById(`p4-cell-${choice}-${fighterDie}`);
-  if (cell) cell.style.outline = '2px solid #fde047';
+  document.querySelectorAll(`#p4-cell-${choice}-${fighterDie}`).forEach(c => c.style.outline = '2px solid #fde047');
 
-  showToast(`Combate P4: Caza sacó ${fighterDie} -> ${outcomeText}`);
+  showToast(`${isEn ? "P4 Air Combat: Fighter rolled" : "Combate P4: Caza sacó"} ${fighterDie} -> ${outcomeText}`);
 }
 
 function rollChartP4RearGun() {
+  const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
   const d1 = Math.floor(Math.random() * 6) + 1;
   const d2 = Math.floor(Math.random() * 6) + 1;
   const sum = d1 + d2;
   const gun = CHART_P4_AIR_COMBAT.rearGun[sum] || { hits: 0, desc: "Miss", color: "#94a3b8" };
 
-  const resEl = document.getElementById('res-interactive-p4-reargun');
-  if (resEl) {
-    resEl.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <span style="color:var(--gold-400); font-weight:bold;">Ametralladora Trasera (2d6):</span> 
-          <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
-        </div>
-        <div style="font-weight:bold; color:${gun.color}; background:rgba(15,23,42,0.8); border:1px solid ${gun.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
-          🔫 ${gun.desc}
-        </div>
-      </div>
-    `;
-  }
+  const descText = isEn ? (sum === 2 ? "3 hits (Enemy destroyed!)" : (sum <= 4 ? "2 hits" : (sum <= 6 ? "1 hit" : "Miss"))) : gun.desc;
 
-  showToast(`Ametralladora Trasera [${sum}]: ${gun.desc}`);
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:var(--gold-400); font-weight:bold;">${isEn ? "Rear Machine Gun (2d6):" : "Ametralladora Trasera (2d6):"}</span> 
+        <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
+      </div>
+      <div style="font-weight:bold; color:${gun.color}; background:rgba(15,23,42,0.8); border:1px solid ${gun.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
+        🔫 ${descText}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#res-interactive-p4-reargun').forEach(el => el.innerHTML = html);
+  showToast(`${isEn ? "Rear Gun" : "Ametralladora Trasera"} [${sum}]: ${descText}`);
 }
 
 function rollChartP5() {
+  const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
   const d1 = Math.floor(Math.random() * 6) + 1;
   const d2 = Math.floor(Math.random() * 6) + 1;
   const sum = d1 + d2;
@@ -2156,37 +2176,37 @@ function rollChartP5() {
   let extraNote = '';
   if (entry.crewCheck) {
     const crewDie = Math.floor(Math.random() * 6) + 1;
-    const victim = (crewDie <= 3) ? "Piloto (1-3)" : "Observador (4-6)";
+    const victim = (crewDie <= 3) ? (isEn ? "Pilot (1-3)" : "Piloto (1-3)") : (isEn ? "Observer (4-6)" : "Observador (4-6)");
     const b8d1 = Math.floor(Math.random() * 6) + 1;
     const b8d2 = Math.floor(Math.random() * 6) + 1;
     const b8sum = b8d1 + b8d2;
     extraNote = `<div style="margin-top:4px; font-size:0.72rem; color:#fda4af; background:rgba(180,83,9,0.3); padding:3px 8px; border-radius:3px; border:1px solid #d97706;">
-      ⚠️ Herida en tripulación: 🎲 1d6=[${crewDie}] &rarr; <strong>${victim}</strong> | Gravedad [B8 2d6: ${b8d1}+${b8d2}=${b8sum}]
+      ⚠️ ${isEn ? "Crew Wound Check:" : "Herida en tripulación:"} 🎲 1d6=[${crewDie}] &rarr; <strong>${victim}</strong> | ${isEn ? "Severity" : "Gravedad"} [B8 2d6: ${b8d1}+${b8d2}=${b8sum}]
     </div>`;
   }
 
-  const resEl = document.getElementById('res-interactive-p5');
-  if (resEl) {
-    resEl.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <span style="color:var(--gold-400); font-weight:bold;">Tirada AA (2d6):</span> 
-          <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
-        </div>
-        <div style="font-weight:bold; color:${entry.color}; background:rgba(15,23,42,0.8); border:1px solid ${entry.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
-          💥 ${entry.result}
-        </div>
+  const resText = isEn ? (sum <= 7 ? "Ineffective" : (sum <= 9 ? "1 pt. Damage" : (sum <= 11 ? "2 pts. Damage" : "3 pts. Damage (Destroyed)"))) : entry.result;
+  const descText = isEn ? (sum <= 7 ? "Scattered flak, no hits." : (sum === 8 ? "Close call (light shrapnel)." : (sum === 9 ? "Crew injury check (Chart B8)." : (sum === 10 ? "Severe fuselage / wing damage." : (sum === 11 ? "Severe damage & crew injury check." : "Direct hit; blown out of the sky!"))))) : entry.desc;
+
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:var(--gold-400); font-weight:bold;">${isEn ? "AA Flak Roll (2d6):" : "Tirada AA (2d6):"}</span> 
+        <span style="background:#0f172a; padding:2px 7px; border-radius:4px; border:1px solid #334155; color:#fde047; font-weight:bold;">[${d1}+${d2} = ${sum}]</span>
       </div>
-      <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">${entry.desc}</div>
-      ${extraNote}
-    `;
-  }
+      <div style="font-weight:bold; color:${entry.color}; background:rgba(15,23,42,0.8); border:1px solid ${entry.color}; padding:3px 10px; border-radius:4px; font-size:0.8rem;">
+        💥 ${resText}
+      </div>
+    </div>
+    <div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">${descText}</div>
+    ${extraNote}
+  `;
 
+  document.querySelectorAll('#res-interactive-p5').forEach(el => el.innerHTML = html);
   document.querySelectorAll('.p5-row').forEach(r => r.style.backgroundColor = '');
-  const activeRow = document.getElementById('p5-row-' + sum);
-  if (activeRow) activeRow.style.backgroundColor = 'rgba(239, 68, 68, 0.35)';
+  document.querySelectorAll('#p5-row-' + (sum <= 7 ? '2' : sum)).forEach(r => r.style.backgroundColor = 'rgba(239, 68, 68, 0.35)');
 
-  showToast(`P5 Antiaéreo [${sum}]: ${entry.result}`);
+  showToast(`${isEn ? "P5 Flak" : "P5 Antiaéreo"} [${sum}]: ${resText}`);
 }
 
 function rollTimeOfDayD6(manualVal) {

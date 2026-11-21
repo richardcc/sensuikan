@@ -124,6 +124,20 @@
               ⭐ Registrar 2 Patrullas en Rogu Bukku [Regla 7.13]
             </button>
           </div>
+
+          <!-- Carta Táctica de Misión Especial (Mapas P7-P12, M1-M4, K2-K3) -->
+          <div id="spec-res-map-container" style="display:none; margin-top:12px; border-top:1px solid #334155; padding-top:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:bold;" id="spec-res-map-lbl">🗺️ CARTA TÁCTICA ASOCIADA</span>
+              <span id="spec-res-map-title" style="font-size:0.75rem; color:#38bdf8; font-weight:bold;">--</span>
+            </div>
+            <div style="border:1px solid #475569; border-radius:6px; overflow:hidden; background:#070d1d; text-align:center; position:relative;">
+              <img id="spec-res-map-img" src="" alt="Special Mission Tactical Map" style="max-height:220px; width:auto; max-width:100%; object-fit:contain; margin:0 auto; display:block; cursor:pointer;" onclick="if(window.openModalViewer && this.src) window.openModalViewer(document.getElementById('spec-res-map-title')?.innerText || 'Mapa Táctico', this.src);" />
+              <div id="spec-res-map-zoom-hint" style="position:absolute; bottom:4px; right:6px; background:rgba(15,23,42,0.85); color:#7dd3fc; border:1px solid #0284c7; border-radius:3px; font-size:0.65rem; padding:1px 6px;">
+                🔍 Clic para ampliar
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

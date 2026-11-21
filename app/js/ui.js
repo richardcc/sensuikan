@@ -164,14 +164,23 @@ function openModalViewer(title, dummySrc, chartKey) {
       const digEl = document.getElementById('modal-viewer-digital');
 
       if (!modal) return;
-
-      modalTitle.innerHTML = `<span>📖</span> <span>${title}</span>`;
+      modal.style.zIndex = '100010';
 
       // Determine key if not passed
       let key = chartKey;
       if (!key) {
         const checkStr = (title + " " + (dummySrc || "")).toLowerCase();
-        if (checkStr.includes("f1") || checkStr.includes("kure") || checkStr.includes("submarine school")) {
+        if (checkStr.includes("p3_p6") || checkStr.includes("p3 a p6") || checkStr.includes("p3-p6")) {
+          key = "P3_P6";
+        } else if (checkStr.includes("p3") || checkStr.includes("encuentros")) {
+          key = "P3";
+        } else if (checkStr.includes("p4") || checkStr.includes("combate aéreo") || checkStr.includes("cazas")) {
+          key = "P4";
+        } else if (checkStr.includes("p5") || checkStr.includes("antiaéreo") || checkStr.includes("flak")) {
+          key = "P5";
+        } else if (checkStr.includes("p6") || checkStr.includes("bombardeo")) {
+          key = "P6";
+        } else if (checkStr.includes("f1") || checkStr.includes("kure") || checkStr.includes("submarine school")) {
           key = "F1";
         } else if (checkStr.includes("f2") || checkStr.includes("f3") || checkStr.includes("kasumigaura")) {
           key = "F2_F3";
@@ -198,10 +207,46 @@ function openModalViewer(title, dummySrc, chartKey) {
         }
       }
 
-      if (key && OCR_CHART_TEMPLATES[key]) {
-        digEl.innerHTML = `<div id="modal-tab-digital">${OCR_CHART_TEMPLATES[key]}</div>`;
+      const isEn = (typeof window !== 'undefined' && window.currentLang === 'en');
+
+      // Provide proper bilingual titles if standard charts
+      if (key === 'P3') {
+        title = isEn ? "Chart P3: Float-Plane Encounters (2d6)" : "Tabla P3: Encuentros del Hidroavión (2d6)";
+      } else if (key === 'P4') {
+        title = isEn ? "Chart P4: Defensive Air Combat & Rear Gun" : "Tabla P4: Combate Aéreo Defensivo y Ametralladora";
+      } else if (key === 'P5') {
+        title = isEn ? "Chart P5: Anti-Aircraft Fire (Flak - 2d6)" : "Tabla P5: Fuego Antiaéreo (Flak - 2d6)";
+      } else if (key === 'P6') {
+        title = isEn ? "Chart P6: Aerial Bombing (1d6)" : "Tabla P6: Bombardeo Aéreo (1d6)";
+      } else if (key === 'P3_P6') {
+        title = isEn ? "Charts P3 to P6: Embarked Floatplane Operations" : "Tablas P3 a P6: Operaciones de Hidroavión Embarcado";
+      }
+
+      if (modalTitle) {
+        modalTitle.innerHTML = `<span>📖</span> <span>${title}</span>`;
+      }
+
+      // Update Esc hint and Close button
+      const escHint = document.getElementById('modal-viewer-esc-hint');
+      if (escHint) escHint.innerText = isEn ? "[Esc] to close" : "[Esc] para cerrar";
+      const btnClose = document.getElementById('modal-viewer-btn-close');
+      if (btnClose) btnClose.innerText = isEn ? "✕ Close (Esc)" : "✕ Cerrar (Esc)";
+
+      let template = null;
+      const templates = (typeof window !== 'undefined' && window.OCR_CHART_TEMPLATES) ? window.OCR_CHART_TEMPLATES : (typeof OCR_CHART_TEMPLATES !== 'undefined' ? OCR_CHART_TEMPLATES : null);
+      if (key && templates && templates[key]) {
+        template = templates[key];
+        if (typeof template === 'object' && template !== null) {
+          template = isEn ? (template.en || template.es) : (template.es || template.en);
+        } else if (typeof template === 'function') {
+          template = template(isEn);
+        }
+      }
+
+      if (template) {
+        digEl.innerHTML = `<div id="modal-tab-digital">${template}</div>`;
       } else {
-        digEl.innerHTML = `<div style="padding:20px; color:#fde047; text-align:center;"><h3>${title}</h3><p style="color:#94a3b8;">Tabla digital no disponible directamente.</p></div>`;
+        digEl.innerHTML = `<div style="padding:20px; color:#fde047; text-align:center;"><h3>${title}</h3><p style="color:#94a3b8;">${isEn ? "Digital table not available directly." : "Tabla digital no disponible directamente."}</p></div>`;
       }
 
       modal.style.display = 'flex';
@@ -262,13 +307,94 @@ function openModalViewer(title, dummySrc, chartKey) {
       closeAboutModal();
       closeAirEncounterWorkflowModal();
       closeShipEncounterWorkflowModal();
+      if (typeof window.closeAircraftDisplayMatModal === 'function') {
+        window.closeAircraftDisplayMatModal();
+      } else {
+        const mat = document.getElementById('modal-aircraft-display-mat');
+        if (mat) mat.style.display = 'none';
+      }
+      const upg = document.getElementById('modal-sub-upgrade');
+      if (upg) upg.style.display = 'none';
     }
 
     // GLOBAL KEYBOARD SHORTCUTS FOR TABS AND WORKFLOW PHASES
+    
+    // Global capture listener for Escape key to ensure it is never swallowed by focused inputs or buttons
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27 || e.which === 27) {
+        // Priority 0: Aircraft Guide modal
+        const guideModal = document.getElementById('modal-aircraft-guide');
+        if (guideModal && guideModal.style.display !== 'none' && window.getComputedStyle(guideModal).display !== 'none') {
+          window._lastSubModalClosedTime = Date.now();
+          if (typeof window.closeAirModuleGuideModal === 'function') {
+            window.closeAirModuleGuideModal();
+          } else {
+            guideModal.style.display = 'none';
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+
+        // Priority 1: Topmost chart inspector (modal-viewer)
+        const mv = document.getElementById('modal-viewer');
+        if (mv && mv.style.display !== 'none' && window.getComputedStyle(mv).display !== 'none') {
+          window._lastSubModalClosedTime = Date.now();
+          closeModalViewer();
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+
+        // Cooldown check: If a sub-modal was just closed within 400ms, prevent closing parent screen on same keypress/repeat
+        if (Date.now() - (window._lastSubModalClosedTime || 0) < 400) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+
+        // Priority 2: Aircraft display mat
+        const mat = document.getElementById('modal-aircraft-display-mat');
+        if (mat && mat.style.display !== 'none' && window.getComputedStyle(mat).display !== 'none') {
+          if (typeof window.closeAircraftDisplayMatModal === 'function') {
+            window.closeAircraftDisplayMatModal();
+          } else {
+            mat.style.display = 'none';
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+
+        // Priority 3: Submarine upgrade modal
+        const upg = document.getElementById('modal-sub-upgrade');
+        if (upg && upg.style.display !== 'none' && window.getComputedStyle(upg).display !== 'none') {
+          upg.style.display = 'none';
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+
+        // Priority 4: All other open modals
+        if (typeof closeAllModals === 'function') {
+          closeAllModals();
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return;
+        }
+      }
+    }, true);
+
     window.addEventListener('keydown', (e) => {
-      // 1. Always let Escape close modals
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        closeAllModals();
+      // If Escape was already handled by the topmost modal capture listener, do not re-process
+      if (e.defaultPrevented) return;
+      if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27 || e.which === 27) {
         return;
       }
 

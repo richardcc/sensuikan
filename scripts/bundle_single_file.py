@@ -7,7 +7,7 @@ from build_app_html import build_html
 
 def inline_local_resources(html_str, base_dir='app'):
     def replace_link(match):
-        href = match.group(1)
+        href = match.group(1).split('?')[0]
         if href.startswith('http://') or href.startswith('https://'):
             return match.group(0)
         full_path = os.path.join(base_dir, href)
@@ -19,7 +19,7 @@ def inline_local_resources(html_str, base_dir='app'):
     html_str = re.sub(r'<link\s+rel=["\']stylesheet["\']\s+href=["\']([^"\']+)["\']\s*/?>', replace_link, html_str)
 
     def replace_script(match):
-        src = match.group(1)
+        src = match.group(1).split('?')[0]
         if src.startswith('http://') or src.startswith('https://'):
             return match.group(0)
         full_path = os.path.join(base_dir, src)

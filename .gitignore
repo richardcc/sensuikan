@@ -53,6 +53,7 @@ tmp_test/
 *.bak
 
 # Root test / temporary images
+app/assets/screenshots/
 temp_scan.png
 blue_ink_mask.png
 ink_clean.png

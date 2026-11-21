@@ -572,6 +572,11 @@ function renderSpecialMissionsGrid() {
                 🎯 ${isEn ? 'Set as Current' : 'Asignar como Actual'}
               </button>
             ` : ''}
+            ${(m.key === 'recon' || m.key === 'bombing') ? `
+              <button type="button" class="action-btn" onclick="openAircraftDisplayMatModal()" style="font-size:0.75rem; padding:4px 8px; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.18);">
+                ✈️ ${isEn ? 'Mat P' : 'Tablero P'}
+              </button>
+            ` : ''}
             <button type="button" class="action-btn" onclick="openSpecialMissionResolver('${m.key}')" style="font-size:0.78rem; padding:5px 12px; margin-left:auto; border-color:${isCompat ? 'var(--gold-500)' : '#64748b'}; color:${isCompat ? 'var(--gold-300)' : '#94a3b8'}; background:${isCompat ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'};">
               🎲 ${isEn ? 'Rules & Resolver ➔' : 'Ver Reglas y Resolver ➔'}
             </button>
@@ -633,6 +638,21 @@ function openSpecialMissionResolver(missionKey) {
     document.getElementById('spec-res-output').innerHTML = isEn 
       ? 'Under Rule 7.2, no separate dice roll is rolled here. The mission is carried out during patrol in Phase 2 & Phase 3. If you engaged a warship, click the button above to confirm and claim credit for 2 successful patrols.' 
       : 'Bajo la Regla 7.2, no se tira un dado aislado aquí. La misión se cumple durante la patrulla en la Fase 2 y Fase 3. Si entablaste combate con un buque de guerra, pulsa el botón superior para confirmar y reclamar las 2 patrullas exitosas.';
+  } else if (m.key === 'recon' || m.key === 'bombing') {
+    controlsEl.innerHTML = `
+      <button type="button" class="btn-dice" onclick="openAircraftDisplayMatModal()" style="width:100%; padding:10px; font-size:0.92rem; font-weight:bold; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow:0 0 15px rgba(2,132,199,0.4);">
+        ✈️ ${isEn ? 'Open Aircraft Display Mat [Chart P / Rule 7.17]' : 'Abrir Tablero de Hidroavión [Chart P / Regla 7.17]'}
+      </button>
+      <button type="button" class="action-btn" onclick="executeSpecialMissionRoll('${m.key}')" style="width:100%; margin-top:6px; padding:6px; font-size:0.78rem; border-color:#38bdf8; color:#7dd3fc; text-align:center;">
+        🎲 ${isEn ? 'Alternative: Quick Dice Roll' : 'Alternativa: Tirada Rápida de Misión'}
+      </button>
+      <div style="font-size:0.75rem; color:#94a3b8; text-align:center; margin-top:4px;">
+        ${isEn ? 'Interactive aircraft mat: Catapult Launch (P1), Encounters (P3-P5), Bombing (P6), and Recovery (P2).' : 'Tablero interactivo: Despegue (P1), Encuentros (P3-P5), Bombardeo (P6) y Amerizaje (P2).'}
+      </div>
+    `;
+    document.getElementById('spec-res-output').innerHTML = isEn 
+      ? 'Resort to the Aircraft Module [Rule 7.17]. Use the button above to launch your floatplane, check for catapult mishaps, fly through approach circles, and execute recovery with the submarine crane.' 
+      : 'Acude al Módulo de Hidroavión [Regla Oficial 7.17]. Pulsa el botón superior para despegar el hidroavión en catapulta, comprobar percances en P1, explorar los círculos de aproximación y ejecutar la recuperación con la grúa.';
   } else {
     controlsEl.innerHTML = `
       <button type="button" class="btn-dice" onclick="executeSpecialMissionRoll('${m.key}')" style="width:100%; padding:10px; font-size:0.92rem; font-weight:bold;">

@@ -484,6 +484,31 @@ function recalculatePatrolTrack() {
       showToast("Base naval de operaciones: " + norm);
     }
 
+    
+    function getAssignedSpecialMissionKeySafe() {
+      if (typeof getCurrentAssignedMissionKey === 'function') {
+        const k = getCurrentAssignedMissionKey();
+        if (k) return k;
+      }
+      if (typeof campaignState !== 'undefined' && campaignState.workflow) {
+        const wf = campaignState.workflow;
+        if (wf.assignedSpecialMissionKey) return wf.assignedSpecialMissionKey;
+        const str = ((wf.specialMissionAssigned || '') + ' ' + (wf.assignedMissionLine || '') + ' ' + (wf.assignedMissionType || '')).toLowerCase();
+        if (str.includes('recon') || str.includes('aéreo') || str.includes('glen') || str.includes('seiran')) return 'recon';
+        if (str.includes('midget') || str.includes('ko-hyoteki') || str.includes('mini')) return 'midget';
+        if (str.includes('bomb') || str.includes('panama') || str.includes('oregon')) return 'bombing';
+        if (str.includes('kaiten')) return 'kaiten';
+        if (str.includes('transport') || str.includes('tokyo') || str.includes('supply') || str.includes('suministro')) return 'transport';
+        if (str.includes('yanagi') || str.includes('europe') || str.includes('europa')) return 'yanagi';
+        if (str.includes('evac') || str.includes('kiska')) return 'evacuation';
+        if (str.includes('shore') || str.includes('bombard') || str.includes('costero')) return 'shore_bombardment';
+        if (str.includes('mine') || str.includes('mina')) return 'minelaying';
+        if (str.includes('pass') || str.includes('vip') || str.includes('agente')) return 'passenger';
+        if (str.includes('picket') || str.includes('piquete')) return 'picket';
+      }
+      return null;
+    }
+
     function updateBoxDisplay() {
       const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
       const idx = (typeof campaignState.workflow.currentBoxIndex === 'number') ? campaignState.workflow.currentBoxIndex : -1;
@@ -534,12 +559,73 @@ function recalculatePatrolTrack() {
         return;
       }
 
-      if (a3Wrapper) a3Wrapper.style.display = 'block';
-      if (portWrapper) portWrapper.style.display = 'none';
+      const specWrapper = document.getElementById('p2-spec-module-controls-wrapper');
+      const boxNameCheck = list[idx] || "";
+      const isSpecBoxCheck = boxNameCheck.includes("Mission") || boxNameCheck.includes("Misión");
+      const specKeyCheck = getAssignedSpecialMissionKeySafe();
+      const noA3NeededCheck = isSpecBoxCheck && (specKeyCheck === 'recon' || specKeyCheck === 'midget' || specKeyCheck === 'bombing' || specKeyCheck === 'kaiten');
+
       const a3MainContainer = document.getElementById('p2-a3-main-container');
-      if (a3MainContainer) a3MainContainer.style.display = 'block';
-      if (c2Title) c2Title.innerText = isEn ? "2. Encounter Roll on Chart [A3]" : "2. Tirada de Encuentros en Tabla [A3]";
-      if (c2Help) c2Help.innerText = isEn ? "Roll 2d6 in each patrol station or transit box:" : "Lanza 2d6 en cada casilla de estación o tránsito:";
+
+      if (noA3NeededCheck) {
+        if (a3MainContainer) a3MainContainer.style.display = 'none';
+        if (a3Wrapper) a3Wrapper.style.display = 'none';
+        if (portWrapper) portWrapper.style.display = 'none';
+        if (specWrapper) {
+          specWrapper.style.display = 'block';
+          const iconEl = document.getElementById('p2-spec-module-icon');
+          const titleEl = document.getElementById('p2-spec-module-title');
+          const descElM = document.getElementById('p2-spec-module-desc');
+          const btnCont = document.getElementById('p2-spec-module-btn-container');
+
+          if (specKeyCheck === 'recon') {
+            if (iconEl) iconEl.innerText = '✈️';
+            if (titleEl) titleEl.innerText = isEn ? 'Aerial Reconnaissance [Rule 7.1 / 7.17]' : 'Reconocimiento Aéreo con Hidroavión [Regla 7.1 / 7.17]';
+            if (descElM) descElM.innerText = isEn 
+              ? 'In this box, the submarine deploys its onboard floatplane to conduct aerial reconnaissance over enemy anchorages. Table [A3] does not apply.' 
+              : 'En esta casilla el buque despliega su hidroavión embarcado para explorar el fondeadero enemigo. No aplica tirada en Tabla [A3].';
+            if (btnCont) btnCont.innerHTML = `<button type="button" class="action-btn" onclick="openAircraftDisplayMatModal()" style="width:100%; justify-content:center; background:linear-gradient(135deg, #0284c7, #0369a1); border-color:#38bdf8; color:#fff; font-weight:800; padding:8px 12px; font-size:0.86rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">✈️ ${isEn ? 'Open Aircraft Mat [Chart P] / Resolve Flight' : 'Abrir Tablero de Hidroavión [Chart P] / Resolver Vuelo'}</button>`;
+          } else if (specKeyCheck === 'midget') {
+            if (iconEl) iconEl.innerText = '🚀';
+            if (titleEl) titleEl.innerText = isEn ? 'Ko-Hyoteki Midget Sub Attack [Rule 7.3]' : 'Ataque Minisumergibles Ko-Hyoteki [Regla 7.3]';
+            if (descElM) descElM.innerText = isEn 
+              ? 'The mother submarine covertly releases its 46-ton Ko-Hyoteki midget submarine outside the harbor entrance. Resolved on Charts M1–M7. Table [A3] does not apply.' 
+              : 'El submarino nodriza suelta su minisubmarino Ko-Hyoteki ante el puerto enemigo. Se resuelve en las Tablas M1–M7. No aplica Tabla [A3].';
+            if (btnCont) btnCont.innerHTML = `<button type="button" class="action-btn" onclick="openSpecialMissionResolver('midget')" style="width:100%; justify-content:center; background:linear-gradient(135deg, #7c3aed, #6d28d9); border-color:#a855f7; color:#fff; font-weight:800; padding:8px 12px; font-size:0.86rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">🚀 ${isEn ? 'Resolve Ko-Hyoteki Strike [Charts M1-M7]' : 'Resolver Ataque Ko-Hyoteki [Tablas M1-M7]'}</button>`;
+          } else if (specKeyCheck === 'kaiten') {
+            if (iconEl) iconEl.innerText = '💥';
+            if (titleEl) titleEl.innerText = isEn ? 'Kaiten Suicide Torpedo Strike [Rule 7.8]' : 'Ataque de Torpedos Suicidas Kaiten [Regla 7.8]';
+            if (descElM) descElM.innerText = isEn 
+              ? 'Submerged approach and release of Kaiten manned torpedoes against enemy fleet vessels. Resolved via Kaiten Module. Table [A3] does not apply.' 
+              : 'Aproximación en inmersión y lanzamiento de torpedos tripulados Kaiten. Resuelto en el Módulo Kaiten. No aplica Tabla [A3].';
+            if (btnCont) btnCont.innerHTML = `<button type="button" class="action-btn" onclick="openSpecialMissionResolver('kaiten')" style="width:100%; justify-content:center; background:linear-gradient(135deg, #b91c1c, #991b1b); border-color:#ef4444; color:#fff; font-weight:800; padding:8px 12px; font-size:0.86rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">💥 ${isEn ? 'Resolve Kaiten Strike [Rule 7.8]' : 'Resolver Ataque Kaiten [Regla 7.8]'}</button>`;
+          } else if (specKeyCheck === 'bombing') {
+            if (iconEl) iconEl.innerText = '💣';
+            if (titleEl) titleEl.innerText = isEn ? 'Strategic Aerial Bombing [Rule 7.7]' : 'Bombardeo Aéreo Estratégico [Regla 7.7]';
+            if (descElM) descElM.innerText = isEn 
+              ? 'Catapult floatplane loaded with bombs against strategic targets. Table [A3] does not apply.' 
+              : 'Catapulta el hidroavión cargado con bombas contra el objetivo estratégico. No aplica Tabla [A3].';
+            if (btnCont) btnCont.innerHTML = `<button type="button" class="action-btn" onclick="openAircraftDisplayMatModal()" style="width:100%; justify-content:center; background:linear-gradient(135deg, #b45309, #92400e); border-color:#f59e0b; color:#fff; font-weight:800; padding:8px 12px; font-size:0.86rem; box-shadow:0 2px 8px rgba(0,0,0,0.5);">💣 ${isEn ? 'Open Aircraft Mat / Execute Bombing Run' : 'Abrir Tablero de Hidroavión / Ejecutar Bombardeo'}</button>`;
+          }
+        }
+        if (c2Title) c2Title.innerText = isEn ? "2. Special Mission Operation [Rule 7.0]" : "2. Operación de Misión Especial [Regla 7.0]";
+        if (c2Help) c2Help.innerText = isEn ? "Dedicated tactical module active. Table [A3] is not used in this box." : "Módulo táctico dedicado activo. La Tabla [A3] no se utiliza en esta casilla.";
+      } else {
+        if (a3Wrapper) a3Wrapper.style.display = 'block';
+        if (portWrapper) portWrapper.style.display = 'none';
+        if (specWrapper) specWrapper.style.display = 'none';
+        if (a3MainContainer) a3MainContainer.style.display = 'block';
+
+        if (isSpecBoxCheck && (specKeyCheck === 'transport' || specKeyCheck === 'minelaying' || specKeyCheck === 'passenger' || specKeyCheck === 'evacuation' || specKeyCheck === 'shore_bombardment' || specKeyCheck === 'yanagi')) {
+          campaignState.workflow.useA3SpecialMissionColumn = true;
+          if (c2Title) c2Title.innerText = isEn ? "2. Special Mission Detection Check [Chart A3]" : "2. Comprobación en Columna Misión Especial [Tabla A3]";
+          if (c2Help) c2Help.innerText = isEn ? "Roll 2d6 in Special Mission column (4-11: Clear/Objective Accomplished):" : "Lanza 2d6 en la columna de Misión Especial (4-11: Despejado/Objetivo Cumplido):";
+        } else {
+          campaignState.workflow.useA3SpecialMissionColumn = false;
+          if (c2Title) c2Title.innerText = isEn ? "2. Encounter Roll on Chart [A3]" : "2. Tirada de Encuentros en Tabla [A3]";
+          if (c2Help) c2Help.innerText = isEn ? "Roll 2d6 in each patrol station or transit box:" : "Lanza 2d6 en cada casilla de estación o tránsito:";
+        }
+      }
       if (btnBack) {
         btnBack.disabled = false;
         btnBack.style.opacity = '1';
@@ -588,13 +674,10 @@ function recalculatePatrolTrack() {
                 <button type="button" onclick="triggerSpecialMissionAction()" class="action-btn" style="background:${isDone ? '#15803d' : '#0284c7'}; color:#fff; font-size:0.78rem; padding:5px 12px; font-weight:bold; flex:1; justify-content:center; border:none; cursor:pointer;">
                   ${isDone ? (isEn ? '✓ Mission Completed [Rule 7.13]' : '✓ Misión Completada [Regla 7.13]') : (isEn ? '🎯 Resolve Special Mission ➔' : '🎯 Resolver Misión Especial ➔')}
                 </button>
-                <button type="button" onclick="switchTab('special-missions')" class="action-btn" style="border-color:#38bdf8; background:rgba(2,132,199,0.2); color:#7dd3fc; font-size:0.75rem; padding:4px 8px; cursor:pointer;" title="${isEn ? 'Open Special Missions Center' : 'Abrir Centro de Misiones Especiales'}">
-                  📋 ${isEn ? 'Tab 8' : 'Pestaña 8'}
+                <button type="button" onclick="setWorkflowPhase('special-missions')" class="action-btn" style="border-color:#38bdf8; background:rgba(2,132,199,0.2); color:#7dd3fc; font-size:0.75rem; padding:4px 10px; cursor:pointer; font-weight:bold;" title="${isEn ? 'Open Special Missions Center' : 'Abrir Centro de Misiones Especiales'}">
+                  🎯 ${isEn ? 'Missions' : 'Misiones'}
                 </button>
               </div>
-            </div>
-            <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:8px 10px; border-radius:6px; font-size:0.78rem; color:#fde047;">
-              <strong>${isEn ? 'Rule 8.1.8:' : 'Regla 8.1.8:'}</strong> ${isEn ? 'A natural 12 triggers a <em>Random Event [Chart B11]</em> (max 1 per patrol).' : 'Un 12 natural activa un <em>Suceso Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).'}
             </div>
           `;
         } else {
@@ -606,9 +689,6 @@ function recalculatePatrolTrack() {
               <li id="p2-mission-kaiten">${isEn ? 'Kaiten Launch (Maps K2-K3)' : 'Lanzamiento Kaiten (Mapas K2-K3)'}</li>
               <li id="p2-mission-mine">${isEn ? 'Mining or Tokyo Express Transport' : 'Minado o Transporte Tokio Express'}</li>
             </ul>
-            <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:8px 10px; border-radius:6px; font-size:0.78rem; color:#fde047;">
-              <strong>${isEn ? 'Rule 8.1.8:' : 'Regla 8.1.8:'}</strong> ${isEn ? 'A natural 12 triggers a <em>Random Event [Chart B11]</em> (max 1 per patrol).' : 'Un 12 natural activa un <em>Suceso Aleatorio [Tabla B11]</em> (máximo 1 por patrulla).'}
-            </div>
           `;
         }
       }
@@ -676,6 +756,13 @@ function recalculatePatrolTrack() {
       const boxName = list[idx] || "Patrulla";
       const isTransit = boxName.includes("Transit") || boxName.includes("Tránsito") || boxName.includes("Return") || boxName.includes("Retorno");
       const isSpecialBox = boxName.includes("Mission") || boxName.includes("Misión");
+
+      const specKeyRoll = getAssignedSpecialMissionKeySafe();
+      const noA3NeededRoll = isSpecialBox && (specKeyRoll === 'recon' || specKeyRoll === 'midget' || specKeyRoll === 'bombing' || specKeyRoll === 'kaiten');
+      if (noA3NeededRoll) {
+        showToast(isEn ? "Table [A3] is not used in this box. Please resolve the dedicated tactical mission above." : "En esta casilla no aplica la Tabla [A3]. Resuelve la misión táctica arriba.");
+        return;
+      }
       
       const assignedArea = campaignState.workflow.assignedArea || "Pearl Harbor";
       const mappedAreaZone = (typeof mapA1ToA3Zone === 'function') ? mapA1ToA3Zone(assignedArea) : "Pearl Harbor";
@@ -1839,7 +1926,10 @@ function recalculatePatrolTrack() {
           showToast(isEn ? "Opening Ko-Hyoteki Midget Submarine Module [Charts M5, M6, M7]" : "Abriendo Módulo de Mini-Submarinos Ko-Hyoteki [Tablas M5, M6, M7]");
         }
       } else if (isRecon) {
-        if (typeof switchTab === 'function') {
+        if (typeof openAircraftDisplayMatModal === 'function') {
+          openAircraftDisplayMatModal();
+          showToast(isEn ? "Opening Aircraft Display Mat [Chart P / Rule 7.17]" : "Abriendo Tablero de Hidroavión [Chart P / Regla 7.17]");
+        } else if (typeof switchTab === 'function') {
           switchTab('special-missions');
           setTimeout(() => {
             if (typeof openSpecialMissionResolver === 'function') openSpecialMissionResolver('recon7');

@@ -39,8 +39,18 @@ def main():
     target_dirs = ['chits', 'tokens', 'submarines_profiles', 'tracks', 'branding', 'commanders', 'maps', 'submarines_chits', 'submarines_cards']
     asset_dict = {}
 
+    cache_file = os.path.join('scratch', '.asset_webp_cache.json')
+    cache = {}
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as cf:
+                cache = json.load(cf)
+        except Exception:
+            cache = {}
+
     orig_size = 0
     webp_size = 0
+    new_cache = {}
 
     for td in target_dirs:
         dp = os.path.join('app', 'assets', td)
@@ -49,16 +59,29 @@ def main():
         for fname in os.listdir(dp):
             fp = os.path.join(dp, fname)
             if os.path.isfile(fp):
-                orig_size += os.path.getsize(fp)
+                fsize = os.path.getsize(fp)
+                fmtime = os.path.getmtime(fp)
+                orig_size += fsize
                 key = f"assets/{td}/{fname}"
+
+                # Check cache
+                cached = cache.get(key)
+                if cached and cached.get('mtime') == fmtime and cached.get('fsize') == fsize and 'data' in cached:
+                    asset_dict[key] = cached['data']
+                    webp_size += cached.get('webp_len', len(cached['data']))
+                    new_cache[key] = cached
+                    continue
+
                 try:
                     img = Image.open(fp)
                     buf = io.BytesIO()
-                    img.save(buf, format='WEBP', quality=80, method=6)
+                    img.save(buf, format='WEBP', quality=80, method=4)
                     data = buf.getvalue()
                     webp_size += len(data)
                     b64 = base64.b64encode(data).decode('ascii')
-                    asset_dict[key] = f"data:image/webp;base64,{b64}"
+                    val = f"data:image/webp;base64,{b64}"
+                    asset_dict[key] = val
+                    new_cache[key] = {'mtime': fmtime, 'fsize': fsize, 'data': val, 'webp_len': len(data)}
                 except Exception as e:
                     with open(fp, 'rb') as f_raw:
                         data = f_raw.read()
@@ -66,7 +89,16 @@ def main():
                         mime, _ = mimetypes.guess_type(fp)
                         if not mime: mime = 'image/jpeg'
                         b64 = base64.b64encode(data).decode('ascii')
-                        asset_dict[key] = f"data:{mime};base64,{b64}"
+                        val = f"data:{mime};base64,{b64}"
+                        asset_dict[key] = val
+                        new_cache[key] = {'mtime': fmtime, 'fsize': fsize, 'data': val, 'webp_len': len(data)}
+
+    try:
+        os.makedirs('scratch', exist_ok=True)
+        with open(cache_file, 'w', encoding='utf-8') as cf:
+            json.dump(new_cache, cf)
+    except Exception:
+        pass
 
     print(f"Asset compression: {orig_size/(1024*1024):.2f} MB -> {webp_size/(1024*1024):.2f} MB ({(1 - webp_size/orig_size)*100:.1f}% reduction)")
 

@@ -3,7 +3,7 @@
 // Interactive 2-Layer Board: Full Card + 3D Double-Layer Overlay + Active Tokens
 // =========================================================================
 
-let canonicalSlotsData = (typeof CANONICAL_SLOTS_DATA !== 'undefined') ? CANONICAL_SLOTS_DATA : null;
+let canonicalSlotsData = (typeof CANONICAL_SLOTS_DATA !== 'undefined') ? CANONICAL_SLOTS_DATA : ((typeof window !== 'undefined' && window.CANONICAL_SLOTS_DATA) ? window.CANONICAL_SLOTS_DATA : null);
 let currentBoardSubKey = null;
 let boardDisplayMode = "paper"; // "paper" or "3d"
 
@@ -59,6 +59,7 @@ let subBoardState = {
   aaGunDamaged: false,
   ammo: 5,
   aircraftDamaged: false,
+  aircraftDamaged2: false,
   events: {
     1: false,
     2: false
@@ -273,6 +274,7 @@ function applySubmarineRepair(payload = {}) {
       reports.push(isEn ? '✅ AA Guns: Repaired (Operational)' : '✅ Antiaéreo: Reparado (Operativo)');
     } else if (sys === 'hangar' || sys === 'crane') {
       subBoardState.aircraftDamaged = false;
+      subBoardState.aircraftDamaged2 = false;
       if (subBoardState.systems) subBoardState.systems[sys] = false;
       reports.push(isEn ? '✅ Hangar/Crane: Repaired' : '✅ Hangar/Grúa: Reparado');
     } else {
@@ -845,8 +847,8 @@ function initSubBoard() {
   if (typeof window !== 'undefined') window.currentBoardSubKey = currentBoardSubKey;
   populateBoardSubSelect();
 
-  if (typeof CANONICAL_SLOTS_DATA !== 'undefined' && !canonicalSlotsData) {
-    canonicalSlotsData = CANONICAL_SLOTS_DATA;
+  if (!canonicalSlotsData) {
+    canonicalSlotsData = (typeof CANONICAL_SLOTS_DATA !== 'undefined') ? CANONICAL_SLOTS_DATA : ((typeof window !== 'undefined' && window.CANONICAL_SLOTS_DATA) ? window.CANONICAL_SLOTS_DATA : null);
   }
 
   if (typeof recalculatePatrolTrack === 'function') recalculatePatrolTrack();
@@ -939,6 +941,13 @@ function changeBoardSubmarine(subKey) {
   const maxPatrolBoxes = getSubmarinePatrolBoxCount(currentBoardSubKey);
   if (subBoardState.patrolIndex >= maxPatrolBoxes) {
     subBoardState.patrolIndex = Math.max(-1, maxPatrolBoxes - 1);
+  }
+
+  // Ensure aircraftDamaged2 is strictly reset if submarine does not have 2+ aircraft
+  const airArmCfg = (typeof getSubmarineArmamentConfig === 'function') ? getSubmarineArmamentConfig(currentBoardSubKey) : null;
+  const currentAirCount = airArmCfg ? ((typeof airArmCfg.aircraftCount === 'number') ? airArmCfg.aircraftCount : (airArmCfg.hasAircraft ? 1 : 0)) : 0;
+  if (currentAirCount < 2 && subBoardState.aircraftDamaged2) {
+    subBoardState.aircraftDamaged2 = false;
   }
 
   // Ensure tubes and reloads exist (initialize fresh ONLY if sub changed or uninitialized)
@@ -1138,8 +1147,16 @@ function renderInteractiveSlots() {
     subBoardState.patrolIndex = Math.max(-1, maxPatrolBoxes - 1);
   }
 
+  // Ensure aircraftDamaged2 is strictly reset if submarine does not have 2+ aircraft
+  const airArmCfg = (typeof getSubmarineArmamentConfig === 'function') ? getSubmarineArmamentConfig(currentBoardSubKey) : null;
+  const currentAirCount = airArmCfg ? ((typeof airArmCfg.aircraftCount === 'number') ? airArmCfg.aircraftCount : (airArmCfg.hasAircraft ? 1 : 0)) : 0;
+  if (currentAirCount < 2 && subBoardState.aircraftDamaged2) {
+    subBoardState.aircraftDamaged2 = false;
+  }
+
   // If canonical slots data is loaded, render each slot into a DocumentFragment
   // to avoid dozens of separate DOM layout recalculations
+  if (!canonicalSlotsData && typeof window !== 'undefined' && window.CANONICAL_SLOTS_DATA) canonicalSlotsData = window.CANONICAL_SLOTS_DATA;
   if (canonicalSlotsData && canonicalSlotsData.slots) {
     const sw = canonicalSlotsData.slot_w_pct;
     const sh = canonicalSlotsData.slot_h_pct;
@@ -1171,34 +1188,34 @@ function renderInteractiveSlots() {
 }
 
 const CARD_ARMAMENT_CFG = {
-  "Kaidai_KD3_Class": { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false },
-  "Kaidai_KD4_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false },
-  "Kaidai_KD5_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false },
-  "Kaidai_KD6_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false },
-  "Kaidai_KD7_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false },
-  "Kirai_Sen_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 8, hasAircraft: false },
-  "Junsen_J_IM_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true },
-  "Junsen_J2_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 9, hasAircraft: true },
-  "Junsen_J3_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 15, hasAircraft: true },
-  "Type_A_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true },
-  "Type_B_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 11, hasAircraft: true },
-  "Type_B_3_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: true },
-  "Type_C_Class": { fwdTubes: 8, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: false },
-  "Type_A_Modified": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true },
-  "Sen_Toku_Class": { fwdTubes: 8, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true },
-  "Sen_Taka_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false },
-  "Type_C3_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false },
-  "Type_A_Midget_Submarine___Ko_Hyoteki": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false },
-  "Type_B2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 11, hasAircraft: true },
-  "Type_C2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false },
-  "Type_A2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: true },
-  "Type_D1_Class": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false },
-  "Kaichu_VII_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false },
-  "Junsen_J1_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 14, hasAircraft: false }
+  "Kaidai_KD3_Class": { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false, aircraftCount: 0 },
+  "Kaidai_KD4_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Kaidai_KD5_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Kaidai_KD6_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Kaidai_KD7_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Kirai_Sen_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 8, hasAircraft: false, aircraftCount: 0 },
+  "Junsen_J_IM_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true, aircraftCount: 1 },
+  "Junsen_J2_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 9, hasAircraft: true, aircraftCount: 1 },
+  "Junsen_J3_Class": { fwdTubes: 4, aftTubes: 2, aftReloads: 2, fwdReloads: 15, hasAircraft: true, aircraftCount: 1 },
+  "Type_A_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true, aircraftCount: 1 },
+  "Type_B_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 11, hasAircraft: true, aircraftCount: 1 },
+  "Type_B_3_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: true, aircraftCount: 1 },
+  "Type_C_Class": { fwdTubes: 8, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: false, aircraftCount: 0 },
+  "Type_A_Modified": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true, aircraftCount: 2 },
+  "Sen_Toku_Class": { fwdTubes: 8, aftTubes: 0, aftReloads: 0, fwdReloads: 12, hasAircraft: true, aircraftCount: 3 },
+  "Sen_Taka_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Type_C3_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false, aircraftCount: 0 },
+  "Type_A_Midget_Submarine___Ko_Hyoteki": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false, aircraftCount: 0 },
+  "Type_B2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 11, hasAircraft: true, aircraftCount: 1 },
+  "Type_C2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 13, hasAircraft: false, aircraftCount: 0 },
+  "Type_A2_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: true, aircraftCount: 2 },
+  "Type_D1_Class": { fwdTubes: 2, aftTubes: 0, aftReloads: 0, fwdReloads: 0, hasAircraft: false, aircraftCount: 0 },
+  "Kaichu_VII_Class": { fwdTubes: 4, aftTubes: 0, aftReloads: 0, fwdReloads: 6, hasAircraft: false, aircraftCount: 0 },
+  "Junsen_J1_Class": { fwdTubes: 6, aftTubes: 0, aftReloads: 0, fwdReloads: 14, hasAircraft: false, aircraftCount: 0 }
 };
 
 function getSubmarineArmamentConfig(subKey) {
-  if (!subKey) return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false };
+  if (!subKey) return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false, aircraftCount: 0 };
   const subData = (typeof SUB_DB !== 'undefined' && SUB_DB.submarines) ? SUB_DB.submarines[subKey] : null;
   if (subData) {
     const fwdTubes = subData.torpedo_tubes ? (typeof subData.torpedo_tubes.fwd === 'number' ? subData.torpedo_tubes.fwd : (subData.torpedo_tubes.bow || 0)) : (CARD_ARMAMENT_CFG[subKey]?.fwdTubes || 6);
@@ -1206,12 +1223,14 @@ function getSubmarineArmamentConfig(subKey) {
     const fwdReloads = (typeof subData.reload_capacity === 'number') ? subData.reload_capacity : ((subData.torpedo_tubes && typeof subData.torpedo_tubes.reloads_fwd === 'number') ? subData.torpedo_tubes.reloads_fwd : (CARD_ARMAMENT_CFG[subKey]?.fwdReloads || 0));
     const aftReloads = (subData.torpedo_tubes && typeof subData.torpedo_tubes.reloads_aft === 'number') ? subData.torpedo_tubes.reloads_aft : (CARD_ARMAMENT_CFG[subKey]?.aftReloads || (aftTubes > 0 ? 2 : 0));
     const hasAircraft = (typeof subData.has_aircraft === 'boolean') ? subData.has_aircraft : !!(CARD_ARMAMENT_CFG[subKey]?.hasAircraft);
-    return { fwdTubes, aftTubes, aftReloads, fwdReloads, hasAircraft };
+    const aircraftCount = (typeof subData.aircraft_count === 'number') ? subData.aircraft_count : (CARD_ARMAMENT_CFG[subKey]?.aircraftCount ?? (hasAircraft ? 1 : 0));
+    return { fwdTubes, aftTubes, aftReloads, fwdReloads, hasAircraft, aircraftCount };
   }
   if (CARD_ARMAMENT_CFG[subKey]) {
-    return CARD_ARMAMENT_CFG[subKey];
+    const fallback = CARD_ARMAMENT_CFG[subKey];
+    return { ...fallback, aircraftCount: fallback.aircraftCount ?? (fallback.hasAircraft ? 1 : 0) };
   }
-  return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false };
+  return { fwdTubes: 6, aftTubes: 2, aftReloads: 2, fwdReloads: 8, hasAircraft: false, aircraftCount: 0 };
 }
 
 function getSubmarinePatrolBoxCount(subKey) {
@@ -1682,6 +1701,22 @@ function decorateAndBindSlot(el, slot) {
       el.innerHTML = '';
     }
 
+    // Dynamic tooltip for pilot / specialist
+    if (crewId === 'spec' && hasAir) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+      let pilotTitle = '';
+      if (status === 'wounded') pilotTitle = isEn ? "Floatplane Pilot: Light Wound (LW)" : "Piloto del Hidroavión: Herida Leve (LW)";
+      else if (status === 'serious') pilotTitle = isEn ? "Floatplane Pilot: Serious Wound (SW - Unfit to fly)" : "Piloto del Hidroavión: Herida Grave (SW - No apto para vuelo)";
+      else if (status === 'ill') pilotTitle = isEn ? "Floatplane Pilot: Ill (Unfit to fly)" : "Piloto del Hidroavión: Enfermo (No apto para vuelo)";
+      else if (status === 'kia') pilotTitle = isEn ? "Floatplane Pilot: K.I.A. (Casualty)" : "Piloto del Hidroavión: Baja en Combate (KIA)";
+      else pilotTitle = isEn ? "Floatplane Pilot: Healthy (Flight Ready)" : "Piloto del Hidroavión: Sano (Apto para vuelo)";
+
+      if (subBoardState.aircraftFlightStatus === 'airborne') {
+        pilotTitle += isEn ? " [IN FLIGHT ✈️]" : " [EN VUELO ✈️]";
+      }
+      el.title = pilotTitle;
+    }
+
     el.onclick = () => {
       // Cycle: active -> wounded -> serious -> ill -> kia -> active
       const cycle = ['active', 'wounded', 'serious', 'ill', 'kia'];
@@ -1689,6 +1724,20 @@ function decorateAndBindSlot(el, slot) {
       const nextStatus = cycle[(curIdx + 1) % cycle.length];
       subBoardState.crew[crewId] = nextStatus;
       
+      // Sync to aircraftState pilot if this is the floatplane pilot!
+      if (crewId === 'spec' && hasAir) {
+        if (window.campaignState && window.campaignState.aircraftState) {
+          const activeIdx = window.campaignState.aircraftState.activeSlot || 0;
+          const s = window.campaignState.aircraftState.slots[activeIdx];
+          if (s) {
+            if (nextStatus === 'wounded') s.pilot = 'lw';
+            else if (nextStatus === 'serious' || nextStatus === 'ill') s.pilot = 'sw';
+            else if (nextStatus === 'kia') s.pilot = 'kia';
+            else s.pilot = 'ok';
+          }
+        }
+      }
+
       // Also sync officer injuries to campaignState
       if (typeof campaignState !== 'undefined' && campaignState.crewInjuries) {
         if (crewId === 'capt') campaignState.crewInjuries.captain = (nextStatus === 'serious' || nextStatus === 'kia' || nextStatus === 'wounded');
@@ -2071,27 +2120,135 @@ function decorateAndBindSlot(el, slot) {
   // --- 9. AIRCRAFT & TACTICAL EVENT SLOTS ---
   else if (slot.category === 'aircraft') {
     const cfg = getSubmarineArmamentConfig(currentBoardSubKey);
-    if (!cfg.hasAircraft) {
+    const airCount = (typeof cfg.aircraftCount === 'number') ? cfg.aircraftCount : (cfg.hasAircraft ? 1 : 0);
+
+    if (!cfg.hasAircraft || airCount === 0) {
       // Inactive aircraft slot on this submarine! 100% clean, let PDF card show through!
       el.innerHTML = '';
       el.style.pointerEvents = 'none';
       return;
     }
+
+    // slot-air-2 is ONLY active if submarine carries 2 or more aircraft (e.g. Type A2 or Sen-Toku)
+    if (slot.id === 'slot-air-2' && airCount < 2) {
+      el.innerHTML = '';
+      el.style.pointerEvents = 'none';
+      return;
+    }
+
+    const isPlane2 = (slot.id === 'slot-air-2');
+    const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof window !== 'undefined' && window.currentLang === 'en');
+    
+    // Retrieve damage and flight status
+    const dmg = isPlane2 
+      ? (typeof subBoardState.aircraftDamageLevel2 === 'number' ? subBoardState.aircraftDamageLevel2 : (subBoardState.aircraftDamaged2 ? 1 : 0))
+      : (typeof subBoardState.aircraftDamageLevel === 'number' ? subBoardState.aircraftDamageLevel : (subBoardState.aircraftDamaged ? 1 : 0));
+    const flightStatus = isPlane2 ? subBoardState.aircraftFlightStatus2 : subBoardState.aircraftFlightStatus;
+    const isAirborne = (flightStatus === 'airborne');
+    const isLost = (flightStatus === 'lost' || flightStatus === 'crashed' || dmg >= 3);
+
     el.style.pointerEvents = 'auto';
-    if (subBoardState.aircraftDamaged) {
-      el.innerHTML = `
-        <div class="slot-badge-overlay badge-aircraft-damaged" title="Hidroavión Averiado">
-          <img src="assets/chits/Damage - Aircraft.jpg" alt="Aircraft Damage" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+
+    let overlayHtml = '';
+    let titleStr = '';
+
+    if (isLost) {
+      titleStr = isPlane2 
+        ? (isEn ? "Floatplane #2: DESTROYED / LOST (Click to cycle / Shift-click for Chart P)" : "Hidroavión #2: DESTRUIDO / PERDIDO (Clic para alternar / Shift+clic para Chart P)")
+        : (isEn ? "Floatplane: DESTROYED / LOST (Click to cycle / Shift-click for Chart P)" : "Hidroavión: DESTRUIDO / PERDIDO (Clic para alternar / Shift+clic para Chart P)");
+      overlayHtml = `
+        <div class="slot-badge-overlay badge-aircraft-damaged" style="position:relative; width:100%; height:100%;">
+          <img src="assets/chits/Damage - Aircraft.jpg" alt="Destroyed" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+          <span style="position:absolute; bottom:1px; right:1px; background:#ef4444; color:#fff; font-size:0.55rem; font-weight:900; padding:1px 3px; border-radius:2px; border:1px solid #7f1d1d; line-height:1;">KIA</span>
+        </div>
+      `;
+    } else if (dmg === 2) {
+      titleStr = isPlane2 
+        ? (isEn ? "Floatplane #2: HEAVY DAMAGE (Abort) (Click to cycle / Shift-click for Chart P)" : "Hidroavión #2: DAÑO GRAVE (Abortar) (Clic para alternar / Shift+clic para Chart P)")
+        : (isEn ? "Floatplane: HEAVY DAMAGE (Abort) (Click to cycle / Shift-click for Chart P)" : "Hidroavión: DAÑO GRAVE (Abortar) (Clic para alternar / Shift+clic para Chart P)");
+      overlayHtml = `
+        <div class="slot-badge-overlay badge-aircraft-damaged" style="position:relative; width:100%; height:100%;">
+          <img src="assets/chits/Damage - Aircraft.jpg" alt="Damage 2" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+          <span style="position:absolute; bottom:1px; right:1px; background:#f97316; color:#fff; font-size:0.55rem; font-weight:900; padding:1px 3px; border-radius:2px; border:1px solid #9a3412; line-height:1;">2</span>
+        </div>
+      `;
+    } else if (dmg === 1) {
+      titleStr = isPlane2 
+        ? (isEn ? "Floatplane #2: LIGHT DAMAGE (Click to cycle / Shift-click for Chart P)" : "Hidroavión #2: DAÑO LEVE (Clic para alternar / Shift+clic para Chart P)")
+        : (isEn ? "Floatplane: LIGHT DAMAGE (Click to cycle / Shift-click for Chart P)" : "Hidroavión: DAÑO LEVE (Clic para alternar / Shift+clic para Chart P)");
+      overlayHtml = `
+        <div class="slot-badge-overlay badge-aircraft-damaged" style="position:relative; width:100%; height:100%;">
+          <img src="assets/chits/Damage - Aircraft.jpg" alt="Damage 1" style="width:100%; height:100%; object-fit:cover; border-radius:3px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.85));">
+          <span style="position:absolute; bottom:1px; right:1px; background:#eab308; color:#000; font-size:0.55rem; font-weight:900; padding:1px 3px; border-radius:2px; border:1px solid #854d0e; line-height:1;">1</span>
+        </div>
+      `;
+    } else if (isAirborne) {
+      const planeChit = (typeof getActiveAircraftChit === 'function') ? getActiveAircraftChit() : 'assets/chits/aircraft_yokosuka_e14y_glen.jpg';
+      titleStr = isPlane2 
+        ? (isEn ? "Floatplane #2: IN FLIGHT (Airborne)" : "Hidroavión #2: EN VUELO")
+        : (isEn ? "Floatplane: IN FLIGHT (Airborne)" : "Hidroavión: EN VUELO");
+      overlayHtml = `
+        <div class="slot-badge-overlay" style="position:relative; width:100%; height:100%;">
+          <img src="${planeChit}" alt="Airborne" style="width:100%; height:100%; object-fit:cover; border-radius:3px; border:2px solid #38bdf8; box-shadow:0 0 8px rgba(56,189,248,0.9);">
+          <span style="position:absolute; top:-3px; right:-3px; background:#0284c7; color:#fff; font-size:0.55rem; font-weight:bold; border-radius:50%; width:14px; height:14px; display:flex; align-items:center; justify-content:center; border:1px solid #fff;">✈</span>
         </div>
       `;
     } else {
-      el.innerHTML = ''; // Operational: shows underlying PDF aircraft art!
+      titleStr = isPlane2 
+        ? (isEn ? "Floatplane #2: OPERATIONAL (In Hangar - Click to cycle / Shift-click for Chart P)" : "Hidroavión #2: OPERATIVO (En Hangar - Clic para alternar / Shift+clic para Chart P)")
+        : (isEn ? "Floatplane: OPERATIONAL (In Hangar - Click to cycle / Shift-click for Chart P)" : "Hidroavión: OPERATIVO (En Hangar - Clic para alternar / Shift+clic para Chart P)");
+      overlayHtml = ''; // Shows underlying pristine card graphic!
     }
-    el.onclick = () => {
-      subBoardState.aircraftDamaged = !subBoardState.aircraftDamaged;
+
+    el.innerHTML = overlayHtml;
+    el.title = titleStr;
+
+    el.onclick = (e) => {
+      // If user holds Shift, open the full Aircraft Display Mat directly
+      if (e && e.shiftKey) {
+        if (typeof openAircraftDisplayMatModal === 'function') {
+          openAircraftDisplayMatModal();
+          return;
+        }
+      }
+
+      // Cycle damage: 0 -> 1 -> 2 -> 3 -> 0
+      const nextDmg = (dmg >= 3) ? 0 : (dmg + 1);
+      if (isPlane2) {
+        subBoardState.aircraftDamageLevel2 = nextDmg;
+        subBoardState.aircraftDamaged2 = (nextDmg > 0);
+        if (nextDmg === 0 && subBoardState.aircraftFlightStatus2 === 'lost') {
+          subBoardState.aircraftFlightStatus2 = null;
+        }
+      } else {
+        subBoardState.aircraftDamageLevel = nextDmg;
+        subBoardState.aircraftDamaged = (nextDmg > 0);
+        if (nextDmg === 0 && subBoardState.aircraftFlightStatus === 'lost') {
+          subBoardState.aircraftFlightStatus = null;
+        }
+      }
+
+      // Sync to aircraftState if loaded
+      if (window.campaignState && window.campaignState.aircraftState) {
+        const targetSlotIdx = isPlane2 ? 1 : (window.campaignState.aircraftState.activeSlot || 0);
+        const s = window.campaignState.aircraftState.slots[targetSlotIdx];
+        if (s) {
+          s.damage = nextDmg;
+          if (nextDmg === 3) s.launchStatus = 'crashed';
+          else if (nextDmg === 0 && (s.launchStatus === 'crashed' || s.launchStatus === 'lost')) s.launchStatus = null;
+        }
+      }
+
       saveSubBoardState();
       renderInteractiveSlots();
-      showToast(`Hidroavión: ${subBoardState.aircraftDamaged ? "AVERIADO" : "OPERATIVO"}`);
+
+      const dmgMsg = (nextDmg === 0) 
+        ? (isEn ? "OPERATIONAL (0 Damage)" : "OPERATIVO (0 Daños)")
+        : (nextDmg === 1) ? (isEn ? "LIGHT DAMAGE (1/3)" : "DAÑO LEVE (1/3)")
+        : (nextDmg === 2) ? (isEn ? "HEAVY DAMAGE (2/3 - Abort)" : "DAÑO GRAVE (2/3 - Abortar)")
+        : (isEn ? "DESTROYED / LOST (3/3)" : "DESTRUIDO / PERDIDO (3/3)");
+      const planeLabel = isPlane2 ? (isEn ? "Floatplane #2" : "Hidroavión #2") : (isEn ? "Floatplane" : "Hidroavión");
+      showToast(`${planeLabel}: ${dmgMsg}`);
     };
   }
   if (typeof syncPhase3TorpedoOptions === 'function') {
@@ -2917,6 +3074,7 @@ function resetSubBoardToEmpty() {
   subBoardState.aaGunDamaged = false;
   subBoardState.ammo = 5;
   subBoardState.aircraftDamaged = false;
+  subBoardState.aircraftDamaged2 = false;
   subBoardState.events = { 1: false, 2: false };
 
   try {
@@ -2951,6 +3109,7 @@ function resetBoardCounters() {
   subBoardState.aaGunDamaged = false;
   subBoardState.ammo = 5;
   subBoardState.aircraftDamaged = false;
+  subBoardState.aircraftDamaged2 = false;
   subBoardState.events = { 1: false, 2: false };
 
   // Reset dropdowns to their default state

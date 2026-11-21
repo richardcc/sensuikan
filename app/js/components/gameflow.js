@@ -145,7 +145,8 @@ campaignState.school = campaignState.school || {
       f2TorpEarned: false,
       f2CommsEarned: false,
       f2NetEarned: false,
-      f3Skills: ["Weapons Expert", "Flawless Maintenance"]
+      f3Skills: [],
+      pilotSkills: { 0: [], 1: [], 2: [] }
     };
 
 

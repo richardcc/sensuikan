@@ -75,7 +75,7 @@ function renderMajorEventsGrid() {
   } else {
     if (activeMsgEl) {
       activeMsgEl.innerHTML = isEn
-        ? `Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. En la fecha <strong>${currentMonth}</strong> aplican órdenes de patrulla estándar.`
+        ? `Check whether your sortie month and year match any of the designated events. On date <strong>${currentMonth}</strong>, standard patrol orders apply.`
         : `Comprueba si el mes y año de tu salida coincide con alguno de los eventos señalados. En la fecha <strong>${currentMonth}</strong> aplican órdenes de patrulla estándar.`;
     }
   }
@@ -102,7 +102,7 @@ function renderMajorEventsGrid() {
       return `
         <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.75rem; padding:3px 6px; border-radius:3px; margin-bottom:2px; background:${isAssigned ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.03)'}; border-left:3px solid ${isAssigned ? '#22c55e' : '#475569'};">
           <span style="color:${isAssigned ? '#86efac' : '#cbd5e1'}; font-weight:${isAssigned ? 'bold' : 'normal'};">
-            ${idx + 1}.ª ${mLine}
+            ${idx + 1}${isEn ? "." : ".ª"} ${mLine}
           </span>
           ${isAssigned ? `<span style="color:#86efac; font-size:0.70rem; font-weight:bold;">★ ${isEn ? 'ASSIGNED' : 'ASIGNADA'}</span>` : ''}
         </div>
@@ -121,21 +121,19 @@ function renderMajorEventsGrid() {
             </div>
             
             <div style="overflow:hidden;">
-              <h4 style="margin:0 0 2px 0; color:#f8fafc; font-size:1.0rem; font-family:'Cinzel', serif; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
-                ${c.redTitle}
-              </h4>
+              <h4 style="margin:0 0 2px 0; color:#f8fafc; font-size:1.0rem; font-family:'Cinzel', serif; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${isEn ? (c.title_en || c.redTitle) : (c.title_es || c.redTitle)}</h4>
               <div style="font-size:0.76rem; color:var(--gold-400); font-weight:bold; margin-bottom:2px;">
                 📅 ${c.redDate}
               </div>
               <div style="font-size:0.72rem; color:#94a3b8;">
-                🗺️ ${c.redTitle}
+                🗺️ ${isEn ? (c.title_en || c.redTitle) : (c.title_es || c.redTitle)}
               </div>
             </div>
           </div>
 
           <!-- Description -->
           <p style="font-size:0.77rem; color:#cbd5e1; line-height:1.35; margin:0 0 10px 0; min-height:42px;">
-            ${c.desc || ''}
+            ${isEn ? (c.desc_en || c.desc || '') : (c.desc_es || c.desc || '')}
           </p>
 
           <!-- Rule 7.14 Priority Mission Order -->

@@ -325,7 +325,25 @@
                   <button type="button" id="f3-btn-roll" class="btn-dice" onclick="rollRandomF3Skills()" style="padding:2px 8px; font-size:0.84rem;">
                     🎲 Tirar al Azar (2 Opciones)
                   </button>
+                  <button type="button" id="f3-btn-roll-all" class="btn-dice" onclick="rollAllPilotsF3Skills()" style="display:none; padding:2px 8px; font-size:0.84rem; background:linear-gradient(135deg, #0284c7, #0369a1); border-color:#38bdf8;">
+                    🎲 Tirar Todos los Pilotos
+                  </button>
                   <span id="f3-avail-badge" style="font-size:0.84rem; font-weight:bold; background:#334155; color:#94a3b8; padding:2px 8px; border-radius:4px;">Sin Hidroavión</span>
+                </div>
+              </div>
+
+              <!-- Multi-pilot Selector Container [Rule 7.17 / Rule 4.8.3] -->
+              <div id="f3-multi-pilot-container" style="display:none; margin-bottom:12px; background:rgba(2, 132, 199, 0.12); border:1px solid #0284c7; border-radius:6px; padding:8px 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                  <div style="font-size:0.78rem; font-weight:bold; color:#7dd3fc; display:flex; align-items:center; gap:6px;">
+                    <span>👨‍✈️</span> <span id="f3-pilot-heading">Submarino Multiavión [Regla Oficial 7.17]:</span>
+                  </div>
+                  <div id="f3-pilot-tabs" style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <!-- Dynamic Pilot Buttons -->
+                  </div>
+                </div>
+                <div id="f3-pilot-rule-note" style="font-size:0.72rem; color:#93c5fd; margin-top:5px; line-height:1.35;">
+                  Los submarinos clase Tipo A (Mod) y Tipo A2 realizan la Escuela F3 dos veces (2 pilotos); los clase Sen-Toku la realizan tres veces (3 pilotos). Cada piloto adquiere hasta 2 habilidades independientes.
                 </div>
               </div>
               <div id="f3-options-container" style="font-size:0.76rem; line-height:1.45; color:#f8fafc; transition:opacity 0.2s ease;">

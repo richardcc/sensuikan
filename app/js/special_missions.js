@@ -572,6 +572,11 @@ function renderSpecialMissionsGrid() {
                 🎯 ${isEn ? 'Set as Current' : 'Asignar como Actual'}
               </button>
             ` : ''}
+            ${(m.key === 'recon' || m.key === 'bombing') ? `
+              <button type="button" class="action-btn" onclick="openAircraftDisplayMatModal()" style="font-size:0.75rem; padding:4px 8px; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.18);">
+                ✈️ ${isEn ? 'Mat P' : 'Tablero P'}
+              </button>
+            ` : ''}
             <button type="button" class="action-btn" onclick="openSpecialMissionResolver('${m.key}')" style="font-size:0.78rem; padding:5px 12px; margin-left:auto; border-color:${isCompat ? 'var(--gold-500)' : '#64748b'}; color:${isCompat ? 'var(--gold-300)' : '#94a3b8'}; background:${isCompat ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'};">
               🎲 ${isEn ? 'Rules & Resolver ➔' : 'Ver Reglas y Resolver ➔'}
             </button>
@@ -633,6 +638,21 @@ function openSpecialMissionResolver(missionKey) {
     document.getElementById('spec-res-output').innerHTML = isEn 
       ? 'Under Rule 7.2, no separate dice roll is rolled here. The mission is carried out during patrol in Phase 2 & Phase 3. If you engaged a warship, click the button above to confirm and claim credit for 2 successful patrols.' 
       : 'Bajo la Regla 7.2, no se tira un dado aislado aquí. La misión se cumple durante la patrulla en la Fase 2 y Fase 3. Si entablaste combate con un buque de guerra, pulsa el botón superior para confirmar y reclamar las 2 patrullas exitosas.';
+  } else if (m.key === 'recon' || m.key === 'bombing') {
+    controlsEl.innerHTML = `
+      <button type="button" class="btn-dice" onclick="openAircraftDisplayMatModal()" style="width:100%; padding:10px; font-size:0.92rem; font-weight:bold; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow:0 0 15px rgba(2,132,199,0.4);">
+        ✈️ ${isEn ? 'Open Aircraft Display Mat [Chart P / Rule 7.17]' : 'Abrir Tablero de Hidroavión [Chart P / Regla 7.17]'}
+      </button>
+      <button type="button" class="action-btn" onclick="executeSpecialMissionRoll('${m.key}')" style="width:100%; margin-top:6px; padding:6px; font-size:0.78rem; border-color:#38bdf8; color:#7dd3fc; text-align:center;">
+        🎲 ${isEn ? 'Alternative: Quick Dice Roll' : 'Alternativa: Tirada Rápida de Misión'}
+      </button>
+      <div style="font-size:0.75rem; color:#94a3b8; text-align:center; margin-top:4px;">
+        ${isEn ? 'Interactive aircraft mat: Catapult Launch (P1), Encounters (P3-P5), Bombing (P6), and Recovery (P2).' : 'Tablero interactivo: Despegue (P1), Encuentros (P3-P5), Bombardeo (P6) y Amerizaje (P2).'}
+      </div>
+    `;
+    document.getElementById('spec-res-output').innerHTML = isEn 
+      ? 'Resort to the Aircraft Module [Rule 7.17]. Use the button above to launch your floatplane, check for catapult mishaps, fly through approach circles, and execute recovery with the submarine crane.' 
+      : 'Acude al Módulo de Hidroavión [Regla Oficial 7.17]. Pulsa el botón superior para despegar el hidroavión en catapulta, comprobar percances en P1, explorar los círculos de aproximación y ejecutar la recuperación con la grúa.';
   } else {
     controlsEl.innerHTML = `
       <button type="button" class="btn-dice" onclick="executeSpecialMissionRoll('${m.key}')" style="width:100%; padding:10px; font-size:0.92rem; font-weight:bold;">
@@ -647,6 +667,77 @@ function openSpecialMissionResolver(missionKey) {
       : 'Listo para ejecutar la tirada de misión. Pulsa el botón superior.';
   }
   document.getElementById('spec-res-reward-box').style.display = 'none';
+
+  // Render tactical mission map if applicable
+  const mapContainer = document.getElementById('spec-res-map-container');
+  const mapImg = document.getElementById('spec-res-map-img');
+  const mapTitle = document.getElementById('spec-res-map-title');
+  const mapLbl = document.getElementById('spec-res-map-lbl');
+  const mapZoomHint = document.getElementById('spec-res-map-zoom-hint');
+
+  if (mapLbl) mapLbl.innerText = isEn ? "🗺️ ASSOCIATED TACTICAL CHART" : "🗺️ CARTA TÁCTICA ASOCIADA";
+  if (mapZoomHint) mapZoomHint.innerText = isEn ? "🔍 Click to enlarge" : "🔍 Clic para ampliar";
+
+  const area = (window.campaignState?.workflow?.assignedArea || '').toLowerCase();
+  const dest = (window.campaignState?.workflow?.assignedDestination || '').toLowerCase();
+  const targetStr = area + ' ' + dest;
+
+  let chosenMap = null;
+  let chosenTitle = null;
+
+  if (m.key === 'recon') {
+    if (targetStr.includes('sydney') || targetStr.includes('australia')) {
+      chosenMap = 'map_p8_sydney_harbor.jpg';
+      chosenTitle = isEn ? 'Map P8: Sydney Harbor (Recon)' : 'Mapa P8: Sydney Harbor (Reconocimiento)';
+    } else if (targetStr.includes('diego') || targetStr.includes('suarez') || targetStr.includes('madagascar')) {
+      chosenMap = 'map_p9_diego_suarez.jpg';
+      chosenTitle = isEn ? 'Map P9: Diego Suarez (Recon)' : 'Mapa P9: Diego Suarez (Reconocimiento)';
+    } else if (targetStr.includes('aleutian') || targetStr.includes('aleutianas') || targetStr.includes('malaya') || targetStr.includes('malasia')) {
+      chosenMap = 'map_p12_aleutians.jpg';
+      chosenTitle = isEn ? 'Map P12: Aleutians / Malaya (Recon)' : 'Mapa P12: Aleutianas / Malaya (Reconocimiento)';
+    } else {
+      chosenMap = 'map_p7_pearl_harbor.jpg';
+      chosenTitle = isEn ? 'Map P7: Pearl Harbor (Recon)' : 'Mapa P7: Pearl Harbor (Reconocimiento)';
+    }
+  } else if (m.key === 'bombing') {
+    if (targetStr.includes('panama') || targetStr.includes('panamá')) {
+      chosenMap = 'map_p11_panama_canal.jpg';
+      chosenTitle = isEn ? 'Map P11: Panama Canal (Bombing)' : 'Mapa P11: Canal de Panamá (Bombardeo)';
+    } else {
+      chosenMap = 'map_p10_oregon.jpg';
+      chosenTitle = isEn ? 'Map P10: Oregon (Bombing)' : 'Mapa P10: Oregón (Bombardeo)';
+    }
+  } else if (m.key === 'midget') {
+    if (targetStr.includes('sydney') || targetStr.includes('australia')) {
+      chosenMap = 'map_m2_sydney_harbor.jpg';
+      chosenTitle = isEn ? 'Map M2: Sydney Harbor (Divine Turtle 2)' : 'Mapa M2: Sydney Harbor (Tortuga Divina 2)';
+    } else if (targetStr.includes('diego') || targetStr.includes('suarez') || targetStr.includes('madagascar')) {
+      chosenMap = 'map_m3_diego_suarez.jpg';
+      chosenTitle = isEn ? 'Map M3: Diego Suarez (Divine Dragon 2)' : 'Mapa M3: Diego Suarez (Dragón Divino 2)';
+    } else if (targetStr.includes('guadalcanal') || targetStr.includes('solomon')) {
+      chosenMap = 'map_m4_guadalcanal.jpg';
+      chosenTitle = isEn ? 'Map M4: Guadalcanal (Divine Dragon 2)' : 'Mapa M4: Guadalcanal (Dragón Divino 2)';
+    } else {
+      chosenMap = 'map_m1_pearl_harbor.jpg';
+      chosenTitle = isEn ? 'Map M1: Pearl Harbor (Divine Turtle)' : 'Mapa M1: Pearl Harbor (Tortuga Divina)';
+    }
+  } else if (m.key === 'kaiten') {
+    if (targetStr.includes('iwo') || targetStr.includes('okinawa') || targetStr.includes('open')) {
+      chosenMap = 'map_k3_open_water.jpg';
+      chosenTitle = isEn ? 'Map K3: Open Water (Iwo Jima / Okinawa)' : 'Mapa K3: Mar Abierto (Iwo Jima / Okinawa)';
+    } else {
+      chosenMap = 'map_k2_ulithi_atoll.jpg';
+      chosenTitle = isEn ? 'Map K2: Ulithi Atoll (Kikusui / Tembu)' : 'Mapa K2: Atolón de Ulithi (Kikusui / Tembu)';
+    }
+  }
+
+  if (chosenMap && mapContainer && mapImg) {
+    mapContainer.style.display = 'block';
+    mapImg.src = (typeof resolveAsset === 'function' ? resolveAsset('assets/maps/' + chosenMap) : 'assets/maps/' + chosenMap);
+    if (mapTitle) mapTitle.innerText = chosenTitle || '';
+  } else if (mapContainer) {
+    mapContainer.style.display = 'none';
+  }
 
   panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }

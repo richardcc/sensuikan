@@ -5,7 +5,7 @@
     <!-- ====================================================================
          MODAL: SUBMARINE UPGRADE & REPLACEMENT [RULES 9.2 & 9.3]
          ==================================================================== -->
-    <div id="modal-sub-upgrade" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
+    <div id="modal-sub-upgrade" onclick="if(event.target===this)this.style.display='none';" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(5px);">
       <div style="background:var(--navy-900, #071220); border:2px solid var(--gold-500, #c5a059); border-radius:12px; max-width:760px; width:100%; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.9); color:#f1f5f9; overflow:hidden;">
         
         <!-- HEADER -->
@@ -530,6 +530,594 @@
           </div>
           <button id="modal-ship-ack-btn" type="button" onclick="closeShipEncounterWorkflowModal()" class="action-btn" style="padding:6px 18px; font-size:0.86rem; background:#10b981; border-color:#059669; color:#064e3b; font-weight:bold;">
             <span>✓</span> <span id="modal-ship-ack-lbl" data-i18n="modalBtnAck">Entendido (Cerrar)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: AIRCRAFT DISPLAY MAT (CHART P & REGLA 7.17)
+         Tablero Oficial de Hidroavión Embarcado, Catapulta, Vuelo y Recuperación
+         ==================================================================== -->
+    <div id="modal-aircraft-display-mat" onclick="if(event.target===this)closeAircraftDisplayMatModal();" style="display:none; position:fixed; inset:0; background:rgba(2,6,23,0.88); z-index:99999; justify-content:center; align-items:center; padding:10px; backdrop-filter:blur(8px);">
+      <div id="air-mat-modal-card" style="background:linear-gradient(180deg, #0b1329 0%, #070d1d 100%); border:2px solid #0284c7; box-shadow:0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(2,132,199,0.35); border-radius:12px; width:98vw; max-width:1720px; height:auto; max-height:95vh; display:flex; flex-direction:column; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif; margin:auto;">
+        
+        <!-- HEADER -->
+        <div style="background:linear-gradient(90deg, #0284c7 0%, #0369a1 40%, #0f172a 100%); padding:10px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0284c7; flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.4rem;">✈️</span>
+              <h3 id="air-mat-header-title" style="margin:0; color:#f8fafc; font-family:'Cinzel', serif; font-size:1.15rem; letter-spacing:1px; text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+                CHART P: AIRCRAFT DISPLAY MAT
+              </h3>
+              <span id="air-mat-header-badge" style="background:rgba(234,179,8,0.25); border:1px solid var(--gold-400); color:var(--gold-300); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">
+                REGLA OFICIAL 7.17 • MÓDULO AERONAVAL
+              </span>
+            </div>
+            <div id="air-mat-header-sub" style="font-size:0.80rem; color:#bae6fd; margin-top:2px;">
+              Gestión táctica de hidroaviones de reconocimiento y ataque • Despegue (P1), Vuelo (P3-P5), Bombardeo (P6) y Amerizaje (P2)
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button id="air-btn-help-guide" type="button" onclick="window.openAirModuleGuideModal()" class="action-btn" style="padding:4px 12px; font-size:0.80rem; font-weight:bold; border-color:var(--gold-400); color:var(--gold-300); background:rgba(234,179,8,0.15); display:inline-flex; align-items:center; gap:6px;">
+              <span>📖</span> <span id="lbl-air-btn-guide">Guía Regla 7.17</span>
+            </button>
+            <button id="air-mat-btn-close-top" type="button" onclick="closeAircraftDisplayMatModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">
+              <span>✕ Cerrar (Esc)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TOP BAR: SUBMARINO ACTIVO, SLOTS DE AERONAVES Y ACCIONES RÁPIDAS -->
+        <div style="background:rgba(15,23,42,0.85); border-bottom:1px solid #1e293b; padding:8px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.80rem; color:#94a3b8; font-weight:bold;">⚓ SUBMARINO NODRIZA:</span>
+              <span id="air-mat-active-sub" style="font-size:0.86rem; color:var(--gold-300); font-weight:bold; background:rgba(0,0,0,0.4); padding:3px 10px; border-radius:4px; border:1px solid #334155;">Junsen J. 1M Class</span>
+            </div>
+
+            <!-- Selector de Aeronaves -->
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:0.78rem; color:#94a3b8; font-weight:bold;">AERONAVE:</span>
+              <div id="air-slots-pills" style="display:flex; gap:6px; flex-wrap:wrap;">
+                <!-- Generado dinámicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN SCROLLABLE CONTENT: NUEVA REPRESENTACIÓN TÁCTICA EXPANDIDA -->
+        <div id="air-mat-modal-body" style="flex:1; min-height:0; overflow:hidden; padding:8px 14px; display:flex; gap:12px; align-items:stretch;">
+          
+          <!-- COLUMNA IZQUIERDA: REPRESENTACIÓN DE LA AERONAVE & SLOTS PARA COUNTERS -->
+          <div id="air-mat-col-inspector" style="width:320px; min-width:290px; max-width:340px; flex-shrink:0; display:flex; flex-direction:column; gap:10px; overflow-y:auto; height:100%; box-sizing:border-box; transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);">
+            
+            <!-- TARJETA PRINCIPAL: ILUSTRACIÓN GENERADA Y ESTADO -->
+            <div style="background:rgba(15,23,42,0.95); border:1px solid #0284c7; border-radius:10px; padding:12px; box-shadow:0 8px 24px rgba(0,0,0,0.6);">
+              
+              <!-- Encabezado de la Aeronave -->
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid #1e293b; padding-bottom:8px; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <div id="air-inspector-jp" style="font-size:0.78rem; color:var(--gold-400); font-weight:bold; letter-spacing:1px; font-family:'Cinzel', serif;">零式小型水上偵察機 (E14Y1)</div>
+                  <h4 id="air-inspector-title" style="margin:2px 0 0 0; font-family:'Cinzel', serif; font-size:1.15rem; color:#38bdf8; letter-spacing:0.5px;">YOKOSUKA E14Y1 "GLEN" (TIPO 0 MODELO 11)</h4>
+                  <div id="air-inspector-role" style="font-size:0.75rem; color:#94a3b8; font-style:italic; margin-top:1px;">Hidroavión biplaza de reconocimiento naval embarcado.</div>
+                </div>
+                <div id="air-inspector-status-badge" style="font-size:0.76rem; font-weight:bold; padding:4px 10px; border-radius:5px; border:1px solid #10b981; color:#4ade80; background:rgba(16,185,129,0.15); box-shadow:0 2px 6px rgba(0,0,0,0.4);">
+                  ESTADO: INTACTO • SIN BOMBAS
+                </div>
+              </div>
+
+              <!-- Ilustración Técnica Generada de la Aeronave -->
+              <div style="position:relative; width:100%; border-radius:8px; overflow:hidden; border:2px solid #0284c7; background:radial-gradient(circle at center, #1e293b 0%, #070d1d 100%); text-align:center; padding:6px; box-shadow:inset 0 0 20px rgba(0,0,0,0.8);">
+                <img id="air-ai-art-image" src="assets/chits/aircraft_yokosuka_e14y_glen.jpg" alt="Generated Technical Floatplane Artwork" style="max-height:165px; width:auto; max-width:100%; object-fit:contain; filter:drop-shadow(0 8px 16px rgba(0,0,0,0.9)); margin:0 auto; display:block;" />
+              </div>
+
+              <!-- ZONA DE ESPACIOS PARA CONTADORES Y FICHAS (CHITS) -->
+              <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+                
+                <!-- FILA 1: SISTEMAS DE CUBIERTA & CARGA BÉLICA -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                  
+                  <!-- Slot: Hangar de Cubierta -->
+                  <div onclick="window.handleAirSlotClick('hangar')" class="air-tactical-counter-slot" id="slot-air-hangar" style="cursor:pointer; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 4px; text-align:center; transition:all 0.2s ease;">
+                    <div id="lbl-air-slot-hangar" style="font-size:0.68rem; color:#94a3b8; font-weight:bold; margin-bottom:3px; text-transform:uppercase;">Hangar de Cubierta</div>
+                    <div id="slot-air-hangar-box" style="height:40px; display:flex; align-items:center; justify-content:center; border:1px dashed #475569; border-radius:4px; background:rgba(0,0,0,0.3);">
+                      <!-- Inyectado por JS -->
+                    </div>
+                    <div id="slot-air-hangar-status" style="font-size:0.66rem; color:#4ade80; font-weight:bold; margin-top:3px;">Operativo</div>
+                  </div>
+
+                  <!-- Slot: Grúa de Recuperación -->
+                  <div onclick="window.handleAirSlotClick('crane')" class="air-tactical-counter-slot" id="slot-air-crane" style="cursor:pointer; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 4px; text-align:center; transition:all 0.2s ease;">
+                    <div id="lbl-air-slot-crane" style="font-size:0.68rem; color:#94a3b8; font-weight:bold; margin-bottom:3px; text-transform:uppercase;">Grúa de Popa</div>
+                    <div id="slot-air-crane-box" style="height:40px; display:flex; align-items:center; justify-content:center; border:1px dashed #475569; border-radius:4px; background:rgba(0,0,0,0.3);">
+                      <!-- Inyectado por JS -->
+                    </div>
+                    <div id="slot-air-crane-status" style="font-size:0.66rem; color:#4ade80; font-weight:bold; margin-top:3px;">Operativa</div>
+                  </div>
+
+                  <!-- Slot: Carga de Bombas -->
+                  <div onclick="window.handleAirSlotClick('bombs')" class="air-tactical-counter-slot" id="slot-air-bombs" style="cursor:pointer; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 4px; text-align:center; transition:all 0.2s ease;">
+                    <div id="lbl-air-slot-bombs" style="font-size:0.68rem; color:#94a3b8; font-weight:bold; margin-bottom:3px; text-transform:uppercase;">Carga de Bombas</div>
+                    <div id="slot-air-bombs-box" style="height:40px; display:flex; align-items:center; justify-content:center; border:1px dashed #475569; border-radius:4px; background:rgba(0,0,0,0.3);">
+                      <!-- Inyectado por JS -->
+                    </div>
+                    <div id="slot-air-bombs-status" style="font-size:0.66rem; color:#94a3b8; font-weight:bold; margin-top:3px;">Sin Bombas</div>
+                  </div>
+
+                </div>
+
+                <!-- FILA 2: REGISTRO DE DAÑOS DEL HIDROAVIÓN (3 CASILLAS) -->
+                <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span id="air-dmg-track-title" style="font-size:0.70rem; color:var(--gold-300); font-weight:bold; text-transform:uppercase;">REGISTRO DE DAÑOS [REGLA 7.17]</span>
+                    <span id="air-dmg-track-hint" style="font-size:0.65rem; color:#94a3b8;">Clic en casilla para fijar o quitar daño</span>
+                  </div>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px;">
+                    
+                    <!-- Casilla Daño 1 -->
+                    <div onclick="window.handleAirDamageClick(1)" id="air-dmg-box-1" style="cursor:pointer; border:1px solid #eab308; border-radius:4px; background:rgba(234,179,8,0.08); padding:3px; text-align:center; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <span id="lbl-air-dmg-1" style="font-size:0.68rem; font-weight:bold; color:#fde047; margin-bottom:2px;">1: Daño Leve</span>
+                      <div id="air-dmg-chit-1" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                        <!-- Chit Daño 1 -->
+                      </div>
+                    </div>
+
+                    <!-- Casilla Daño 2 -->
+                    <div onclick="window.handleAirDamageClick(2)" id="air-dmg-box-2" style="cursor:pointer; border:1px solid #f97316; border-radius:4px; background:rgba(249,115,22,0.08); padding:3px; text-align:center; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <span id="lbl-air-dmg-2" style="font-size:0.68rem; font-weight:bold; color:#fdba74; margin-bottom:2px;">2: Grave (Abortar)</span>
+                      <div id="air-dmg-chit-2" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                        <!-- Chit Daño 2 -->
+                      </div>
+                    </div>
+
+                    <!-- Casilla Daño 3 -->
+                    <div onclick="window.handleAirDamageClick(3)" id="air-dmg-box-3" style="cursor:pointer; border:1px solid #ef4444; border-radius:4px; background:rgba(239,68,68,0.08); padding:3px; text-align:center; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <span id="lbl-air-dmg-3" style="font-size:0.68rem; font-weight:bold; color:#fca5a5; margin-bottom:2px;">3: Destruido (KIA)</span>
+                      <div id="air-dmg-chit-3" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                        <!-- Chit Daño 3 -->
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- FILA 3: ESTADO DE LA TRIPULACIÓN (PILOTO Y ARTILLERO/OBSERVADOR) -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                  
+                  <!-- Piloto -->
+                  <div onclick="window.handleAirCrewClick('pilot')" id="slot-air-pilot" style="cursor:pointer; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 8px; display:flex; align-items:center; gap:8px; transition:all 0.2s ease;">
+                    <div id="slot-air-pilot-box" style="width:38px; height:38px; flex-shrink:0; border:1px dashed #475569; border-radius:4px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3);">
+                      <!-- Chit de herida o OK -->
+                    </div>
+                    <div style="flex:1;">
+                      <div id="lbl-air-crew-pilot" style="font-size:0.70rem; color:#94a3b8; font-weight:bold; text-transform:uppercase;">Piloto Oficial</div>
+                      <div id="slot-air-pilot-status" style="font-size:0.72rem; color:#4ade80; font-weight:bold; margin-top:2px;">Sano (OK)</div>
+                    </div>
+                  </div>
+
+                  <!-- Artillero / Observador -->
+                  <div onclick="window.handleAirCrewClick('gunner')" id="slot-air-gunner" style="cursor:pointer; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 8px; display:flex; align-items:center; gap:8px; transition:all 0.2s ease;">
+                    <div id="slot-air-gunner-box" style="width:38px; height:38px; flex-shrink:0; border:1px dashed #475569; border-radius:4px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3);">
+                      <!-- Chit de herida o OK -->
+                    </div>
+                    <div style="flex:1;">
+                      <div id="lbl-air-crew-gunner" style="font-size:0.70rem; color:#94a3b8; font-weight:bold; text-transform:uppercase;">Artillero / Obs.</div>
+                      <div id="slot-air-gunner-status" style="font-size:0.72rem; color:#4ade80; font-weight:bold; margin-top:2px;">Sano (OK)</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- FILA 4: HABILIDADES DE DOTACIÓN AÉREA (ESCUELA F3) -->
+                <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:6px 8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span id="air-skills-title" style="font-size:0.70rem; color:var(--gold-300); font-weight:bold; text-transform:uppercase;">HABILIDADES [ESCUELA F3]</span>
+                    <span id="air-skills-sub" style="font-size:0.65rem; color:#94a3b8;">Activas para esta aeronave</span>
+                  </div>
+                  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px;">
+                    
+                    <!-- Weapons Expert -->
+                    <div onclick="window.handleAirSkillClick('weapons')" id="air-skill-weapons" style="cursor:pointer; border:1px solid #334155; border-radius:4px; padding:4px 2px; text-align:center; min-height:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <div id="air-skill-token-weapons" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center;"></div>
+                      <span id="lbl-air-sk-wep" style="font-size:0.63rem; color:#cbd5e1; font-weight:600; margin-top:2px;">Weapons Exp.</span>
+                    </div>
+
+                    <!-- Aircraft Maint -->
+                    <div onclick="window.handleAirSkillClick('maintenance')" id="air-skill-maintenance" style="cursor:pointer; border:1px solid #334155; border-radius:4px; padding:4px 2px; text-align:center; min-height:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <div id="air-skill-token-maintenance" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center;"></div>
+                      <span id="lbl-air-sk-mnt" style="font-size:0.63rem; color:#cbd5e1; font-weight:600; margin-top:2px;">Aircraft Maint.</span>
+                    </div>
+
+                    <!-- A.C.M. -->
+                    <div onclick="window.handleAirSkillClick('acm')" id="air-skill-acm" style="cursor:pointer; border:1px solid #334155; border-radius:4px; padding:4px 2px; text-align:center; min-height:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <div id="air-skill-token-acm" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center;"></div>
+                      <span id="lbl-air-sk-acm" style="font-size:0.63rem; color:#cbd5e1; font-weight:600; margin-top:2px;">A.C.M.</span>
+                    </div>
+
+                    <!-- Aerial Nav -->
+                    <div onclick="window.handleAirSkillClick('nav')" id="air-skill-nav" style="cursor:pointer; border:1px solid #334155; border-radius:4px; padding:4px 2px; text-align:center; min-height:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.2s ease;">
+                      <div id="air-skill-token-nav" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center;"></div>
+                      <span id="lbl-air-sk-nav" style="font-size:0.63rem; color:#cbd5e1; font-weight:600; margin-top:2px;">Aerial Nav.</span>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Especificaciones Técnicas y Resumen Histórico -->
+              <div id="air-inspector-specs" style="margin-top:10px; border-top:1px solid #1e293b; padding-top:8px;">
+                <!-- Inyectado dinámicamente -->
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- COLUMNA DERECHA: SUITE TÁCTICA DE VUELO CON MAPAS OPERATIVOS Y COUNTERS -->
+          <div id="air-mat-col-suite" style="flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; overflow:hidden; height:100%; box-sizing:border-box;">
+            
+            <!-- NAVEGACIÓN DE FASES DE VUELO (PESTAÑAS) -->
+            <div style="display:flex; gap:8px; border-bottom:2px solid #0284c7; padding-bottom:6px; flex-shrink:0;">
+              <button id="air-tab-btn-takeoff" type="button" onclick="window.switchAirPhaseTab('takeoff')" class="action-btn" style="flex:1; padding:6px 8px; font-size:0.80rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                <span>🛫</span> <span id="lbl-tab-takeoff">1. Despegue (P1)</span>
+              </button>
+              <button id="air-tab-btn-map" type="button" onclick="window.switchAirPhaseTab('map')" class="action-btn" style="flex:1.4; padding:6px 8px; font-size:0.82rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                <span>🗺️</span> <span id="lbl-tab-map">2. Mapa Táctico de Vuelo (P3-P6)</span>
+              </button>
+              <button id="air-tab-btn-recovery" type="button" onclick="window.switchAirPhaseTab('recovery')" class="action-btn" style="flex:1; padding:6px 8px; font-size:0.80rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                <span>⚓</span> <span id="lbl-tab-recovery">3. Amerizaje (P2)</span>
+              </button>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- PANEL 1: CHART P1 DESPEGUE DE CATAPULTA (TABLA OCR) -->
+            <!-- ======================================================== -->
+            <div id="air-tab-panel-takeoff" style="display:none; background:rgba(15,23,42,0.95); border:1px solid #0284c7; border-radius:10px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.6);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #0369a1; padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:1.1rem;">🛫</span>
+                  <div>
+                    <strong id="air-p1-title" style="color:#38bdf8; font-size:0.90rem; font-family:'Cinzel', serif;">CHART P1: DESPEGUE DE CATAPULTA Y PERCANCES</strong>
+                    <div id="air-p1-desc" style="font-size:0.72rem; color:#94a3b8;">Tirada con 2d6 • Percance o avería con 2 o 12</div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div id="air-p1-dice-badge" class="air-dice-badge" style="display:inline-flex;">
+                    <span>🎲</span>
+                    <span id="air-p1-dice-val" class="die-val">--</span>
+                    <span id="air-p1-dice-summary" style="color:#7dd3fc; font-size:0.75rem;">Sin Tirada</span>
+                  </div>
+                  <button id="air-p1-flawless-btn" type="button" onclick="window.rerollLaunchWithFlawlessMaint()" class="action-btn" style="display:none; padding:4px 8px; font-size:0.74rem; font-weight:bold; border-color:var(--gold-500); color:var(--gold-300); background:rgba(234,179,8,0.2);">
+                    🔧 Repetir (Flawless Maint.)
+                  </button>
+                  <button id="air-p1-roll-btn" type="button" class="btn-dice" onclick="window.rollAircraftCatapultLaunch()" style="padding:4px 12px; font-size:0.82rem;">
+                    🎲 Despegar (2d6)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tabla OCR P1 -->
+              <table class="ocr-tactical-table" style="width:100%; border-collapse:collapse; font-size:0.76rem; border:1px solid #334155; border-radius:4px; overflow:hidden;">
+                <thead>
+                  <tr style="background:#0369a1; color:#f8fafc;">
+                    <th id="th-p1-dice" style="padding:6px; width:45px; text-align:center; border:1px solid #0284c7;">2d6</th>
+                    <th id="th-p1-res" style="padding:6px; width:140px; text-align:left; border:1px solid #0284c7;">Resultado</th>
+                    <th id="th-p1-eff" style="padding:6px; text-align:left; border:1px solid #0284c7;">Efecto Reglamentario Oficial</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="air-p1-row-2" onclick="window.selectP1LaunchOutcome(2)" class="air-selectable-row" style="border-bottom:1px solid #334155;" title="Clic para fijar: Fallo Crítico de Motor">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#ef4444; border-right:1px solid #334155;">2</td>
+                    <td id="p1-res-2" style="padding:6px; font-weight:bold; color:#fca5a5; border-right:1px solid #334155;">Fallo Crítico de Motor<br><small style="color:#94a3b8;">(Engine Misses)</small></td>
+                    <td id="p1-desc-2" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">Tira 2d6: con 10+ el motor se gripa y el avión se estrella en el mar (Destruido). Tira herida de dotación (1d6: 1-3 LW, 4-5 SW, 6 KIA). Si &lt;10: el motor ratea pero despega.</td>
+                  </tr>
+                  <tr id="air-p1-row-3" onclick="window.selectP1LaunchOutcome(3)" class="air-selectable-row" style="border-bottom:1px solid #334155;" title="Clic para fijar: Problema de Montaje">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#f97316; border-right:1px solid #334155;">3</td>
+                    <td id="p1-res-3" style="padding:6px; font-weight:bold; color:#fdba74; border-right:1px solid #334155;">Problema de Montaje<br><small style="color:#94a3b8;">(Assembly Problem)</small></td>
+                    <td id="p1-desc-3" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">Desajuste al ensamblar alas en cubierta. Abortar misión O tirar 1 ronda adicional de combate marítimo antes de reintentar despegue [Regla 7.17.2].</td>
+                  </tr>
+                  <tr id="air-p1-row-norm" onclick="window.selectP1LaunchOutcome(7)" class="air-selectable-row" style="border-bottom:1px solid #334155;" title="Clic para fijar: Despegue Nominal">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#22c55e; border-right:1px solid #334155;">4 – 11</td>
+                    <td id="p1-res-norm" style="padding:6px; font-weight:bold; color:#86efac; border-right:1px solid #334155;">Despegue Nominal<br><small style="color:#94a3b8;">(Clean Takeoff)</small></td>
+                    <td id="p1-desc-norm" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">Aceleración de catapulta impecable. El hidroavión despega e inicia su vuelo de crucero sin contratiempos.</td>
+                  </tr>
+                  <tr id="air-p1-row-12" onclick="window.selectP1LaunchOutcome(12)" class="air-selectable-row" title="Clic para fijar: Radio Inoperativa">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#eab308; border-right:1px solid #334155;">12</td>
+                    <td id="p1-res-12" style="padding:6px; font-weight:bold; color:#fde047; border-right:1px solid #334155;">Radio Inoperativa<br><small style="color:#94a3b8;">(Radio INOP)</small></td>
+                    <td id="p1-desc-12" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">Fallo eléctrico o rotura de antena. Despega con éxito, pero sufre <strong>-1 DRM</strong> a la tirada de Recuperación [Tabla P2].</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div id="air-p1-result-box" style="margin-top:10px; min-height:34px; background:rgba(30,41,59,0.5); border:1px dashed #0284c7; border-radius:4px; padding:8px 10px; font-size:0.80rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <span id="air-p1-default-hint" style="color:#94a3b8; font-style:italic;">Haz clic en «🎲 Despegar (2d6)» o selecciona una fila superior para fijar el resultado manualmente.</span>
+                <button id="air-p1-proceed-map-btn" type="button" class="btn-dice" onclick="window.switchAirPhaseTab('map')" style="display:none; padding:4px 12px; font-size:0.78rem;">
+                  🗺️ Proceder al Mapa Táctico (Círculo 1) ➔
+                </button>
+              </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- PANEL 2: MAPA TÁCTICO DE VUELO OPERATIVO (MAPAS P7-P12 & COUNTERS) -->
+            <!-- ======================================================== -->
+            <div id="air-tab-panel-map" style="display:flex; flex-direction:column; gap:8px; flex:1; min-height:0; height:100%; overflow:hidden;">
+              
+              <!-- Barra Superior de Control de Mapa y Herramientas -->
+              <div style="background:rgba(15,23,42,0.95); border:1px solid #0284c7; border-radius:8px; padding:4px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; flex-shrink:0;">
+                
+                <!-- Selector de Mapa y Breadcrumb de Círculos -->
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="font-size:0.75rem; color:var(--gold-400); font-weight:bold;" id="lbl-air-map-select">MAPA:</span>
+                    <select id="air-map-selector" onchange="window.selectAircraftMap(this.value)" style="background:#0f172a; border:1px solid #0284c7; color:#f8fafc; border-radius:4px; font-size:0.78rem; padding:4px 8px; font-weight:bold;">
+                      <option value="map_p7_pearl_harbor.jpg">Map P7: Pearl Harbor (Recon/Strike)</option>
+                      <option value="map_p8_sydney_harbor.jpg">Map P8: Sydney Harbor (Recon)</option>
+                      <option value="map_p9_diego_suarez.jpg">Map P9: Diego Suarez (Recon)</option>
+                      <option value="map_p10_oregon.jpg">Map P10: Oregon (Bombing)</option>
+                      <option value="map_p11_panama_canal.jpg">Map P11: Panama Canal (Bombing)</option>
+                      <option value="map_p12_aleutians.jpg">Map P12: Aleutians / Malaya (Recon)</option>
+                    </select>
+                  </div>
+
+                  <!-- Status Pill del Círculo Activo -->
+                  <div id="air-map-circle-pill" style="background:rgba(2,132,199,0.25); border:1px solid #38bdf8; border-radius:5px; padding:4px 10px; font-size:0.78rem; font-weight:bold; color:#7dd3fc; display:flex; align-items:center; gap:6px; box-shadow:0 0 10px rgba(56,189,248,0.3);">
+                    <span>📍</span>
+                    <span id="air-map-circle-text">Círculo 1: Tránsito (Transit)</span>
+                  </div>
+
+                  <!-- Stepper Rápido de Círculos (Pills interactivos) -->
+                  <div id="air-map-stepper-pills" style="display:flex; align-items:center; gap:4px;">
+                    <!-- Generado dinámicamente: [1] [2] [3] [4] -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- WORKSPACE TÁCTICO: MAPA GIGANTE A LA IZQUIERDA + CONSOLA OPERATIVA A LA DERECHA -->
+              <div id="air-map-tactical-workspace" style="display:grid; grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.95fr); gap:12px; align-items:center; flex:1; min-height:0; box-sizing:border-box;">
+                
+                <!-- ÁREA 1: ESCENARIO DEL MAPA TÁCTICO A MÁXIMA RESOLUCIÓN SIN SCROLL -->
+                <div id="air-map-stage" style="display:flex; justify-content:center; align-items:center; width:100%; height:100%; position:relative; box-sizing:border-box;">
+                  <div id="air-map-wrapper" style="position:relative; display:inline-block; border:2px solid #0284c7; border-radius:8px; box-shadow:0 8px 28px rgba(0,0,0,0.85), 0 0 25px rgba(2,132,199,0.35); line-height:0; background:#050b18; transition:transform 0.2s ease; transform-origin:center center; max-width:100%;">
+                    <img id="air-tactical-map-img" src="assets/maps/map_p7_pearl_harbor.jpg" alt="Tactical Flight Map" style="max-height:calc(92vh - 190px); max-width:100%; width:auto; height:auto; display:block; margin:0 auto; border-radius:6px;" />
+                    
+                    <!-- Capa Interactiva con los Círculos y el Counter de la Aeronave -->
+                    <div id="air-map-interactive-overlay" style="position:absolute; inset:0; pointer-events:auto; line-height:normal;">
+                      <!-- Inyectado dinámicamente por renderTacticalMapWithChits() -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ÁREA 2: CONSOLA DE OPERACIONES Y RESOLUCIÓN TÁCTICA -->
+                <div id="air-map-ops-console" style="background:rgba(15,23,42,0.95); border:1px solid #334155; border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:8px; max-height:calc(92vh - 190px); overflow-y:auto; box-sizing:border-box;">
+                  
+                  <!-- Cabecera de la Consola: Nivel de Amenaza y Estado Rápido -->
+                  <div style="background:#070d1d; border:1px solid #1e293b; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div>
+                      <span id="lbl-air-console-title" style="font-size:0.75rem; color:var(--gold-400); font-weight:bold; letter-spacing:0.5px;">📡 CONSOLA TÁCTICA DE VUELO</span>
+                      <div id="air-console-quick-health" style="font-size:0.72rem; color:#94a3b8; margin-top:2px;">
+                        <!-- Inyectado: Daño, dotación, carga -->
+                      </div>
+                    </div>
+                    <div id="air-console-threat-badge" style="font-size:0.74rem; font-weight:bold; padding:3px 8px; border-radius:4px; border:1px solid #10b981; color:#4ade80; background:rgba(16,185,129,0.15);">
+                      🟢 Amenaza Baja (Tránsito)
+                    </div>
+                  </div>
+
+                  <!-- Botonera Principal de Acciones Tácticas -->
+                  <div style="background:rgba(2,6,23,0.6); border:1px solid #0369a1; border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <span id="lbl-air-actions-title" style="font-size:0.74rem; color:#38bdf8; font-weight:bold;">⚡ ACCIONES OPERATIVAS EN CÍRCULO</span>
+                      <span style="font-size:0.68rem; color:#94a3b8;">[Regla Oficial 7.17.3]</span>
+                    </div>
+
+                    <!-- Botón Principal: Tirar Encuentro -->
+                    <button id="air-btn-roll-encounter" type="button" class="btn-dice" onclick="window.rollAirCircleEncounter()" style="width:100%; padding:10px 14px; font-size:0.86rem; font-weight:bold; background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow:0 0 15px rgba(2,132,199,0.4);">
+                      🎲 <span id="lbl-air-roll-encounter">Tirar Encuentro (2d6)</span>
+                    </button>
+
+                    <!-- Navegación Entre Círculos -->
+                    <div style="display:flex; gap:8px;">
+                      <button id="air-btn-prev-circle" type="button" onclick="window.prevFlightCircle()" class="action-btn" style="flex:1; padding:7px 10px; font-size:0.78rem; font-weight:bold; border-color:#64748b; color:#cbd5e1;">
+                        ⬅ <span id="lbl-air-prev-circle">Anterior</span>
+                      </button>
+                      <button id="air-btn-next-circle" type="button" onclick="window.nextFlightCircle()" class="action-btn" style="flex:1.2; padding:7px 10px; font-size:0.78rem; font-weight:bold; border-color:#38bdf8; color:#38bdf8; background:rgba(2,132,199,0.15);">
+                        <span id="lbl-air-next-circle">Avanzar Círculo</span> ➔
+                      </button>
+                    </div>
+
+                    <!-- Botón Condicional: Bombardeo de Objetivo -->
+                    <button id="air-btn-bomb-target" type="button" onclick="window.rollAirBombing()" class="btn-dice" style="display:none; width:100%; padding:8px 14px; font-size:0.84rem; font-weight:bold; background:linear-gradient(135deg, #eab308 0%, #b45309 100%); box-shadow:0 0 14px rgba(234,179,8,0.4);">
+                      💣 <span id="lbl-air-bomb-target">Bombardear Objetivo (1d6)</span>
+                    </button>
+
+                    <!-- Botón Condicional: Finalizar y Amerizar -->
+                    <button id="air-btn-finish-flight" type="button" onclick="window.switchAirPhaseTab('recovery')" class="action-btn" style="display:none; width:100%; padding:8px 14px; font-size:0.82rem; font-weight:bold; border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.2);">
+                      ⚓ <span id="lbl-air-finish-flight">Amerizar en Submarino (Tabla P2) ➔</span>
+                    </button>
+                  </div>
+
+                  <!-- Botonera Rápida a Tablas P3, P4, P5, P6 -->
+                  <div style="background:#070d1d; border:1px solid #1e293b; border-radius:6px; padding:8px 10px;">
+                    <div style="font-size:0.70rem; color:#94a3b8; font-weight:bold; margin-bottom:6px; text-transform:uppercase;" id="lbl-air-quicktables-title">Tablas de Resolución Rápida:</div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                      <button type="button" class="action-btn" onclick="openModalViewer('Tabla P3: Encuentros del Hidroavión', '', 'P3')" style="padding:6px; font-size:0.75rem; border-color:#38bdf8; color:#7dd3fc; background:rgba(2,132,199,0.15); text-align:left;">
+                        🔭 <strong>P3:</strong> <span id="lbl-p3-btn">Encuentros</span>
+                      </button>
+                      <button type="button" class="action-btn" onclick="openModalViewer('Tabla P4: Combate Aéreo y Ametralladora', '', 'P4')" style="padding:6px; font-size:0.75rem; border-color:#f43f5e; color:#fda4af; background:rgba(244,63,94,0.15); text-align:left;">
+                        ⚔️ <strong>P4:</strong> <span id="lbl-p4-btn">Combate</span>
+                      </button>
+                      <button type="button" class="action-btn" onclick="openModalViewer('Tabla P5: Fuego Antiaéreo (Flak)', '', 'P5')" style="padding:6px; font-size:0.75rem; border-color:#f97316; color:#fdba74; background:rgba(249,115,22,0.15); text-align:left;">
+                        💥 <strong>P5:</strong> <span id="lbl-p5-btn">Antiaéreo</span>
+                      </button>
+                      <button type="button" class="action-btn" onclick="openModalViewer('Tabla P6: Bombardeo Aéreo', '', 'P6')" style="padding:6px; font-size:0.75rem; border-color:#eab308; color:#fde047; background:rgba(234,179,8,0.15); text-align:left;">
+                        💣 <strong>P6:</strong> <span id="lbl-p6-btn">Bombardeo</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Cuaderno Táctico de Bitácora de Vuelo (Chronicle) -->
+                  <div style="flex:1; min-height:160px; display:flex; flex-direction:column; background:#0b1329; border:1px solid #1e293b; border-radius:6px; padding:8px 10px; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
+                      <span id="lbl-air-log-title" style="font-size:0.72rem; color:var(--gold-400); font-weight:bold; letter-spacing:0.5px;">📝 BITÁCORA TÁCTICA DE VUELO</span>
+                      <button type="button" onclick="window.clearAirFlightLog()" style="background:transparent; border:none; color:#64748b; font-size:0.68rem; cursor:pointer;" title="Limpiar bitácora">Limpiar</button>
+                    </div>
+                    <div id="air-flight-log-box" style="flex:1; overflow-y:auto; font-size:0.76rem; color:#cbd5e1; font-family:'Segoe UI', sans-serif;">
+                      <span style="color:#64748b; font-style:italic;" id="air-flight-log-empty">El hidroavión está listo para iniciar la navegación. Selecciona un círculo en el mapa o pulsa «🎲 Tirar Encuentro».</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- PANEL 3: CHART P2 AMERIZAJE Y RECUPERACIÓN CON GRÚA -->
+            <!-- ======================================================== -->
+            <div id="air-tab-panel-recovery" style="display:none; background:rgba(15,23,42,0.95); border:1px solid #10b981; border-radius:10px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.6);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #059669; padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:1.1rem;">⚓</span>
+                  <div>
+                    <strong id="air-p2-title" style="color:#34d399; font-size:0.90rem; font-family:'Cinzel', serif;">CHART P2: AMERIZAJE Y RECUPERACIÓN CON GRÚA</strong>
+                    <div id="air-p2-desc" style="font-size:0.72rem; color:#94a3b8;">Tirada 1d6 (Aplica DRMs) • 1-2 Perdido, 3-6 Recuperado</div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div id="air-p2-dice-badge" class="air-dice-badge" style="display:inline-flex; border-color:#059669;">
+                    <span>🎲</span>
+                    <span id="air-p2-dice-val" class="die-val" style="color:#34d399;">--</span>
+                    <span id="air-p2-dice-summary" style="color:#a7f3d0; font-size:0.75rem;">Sin Tirada</span>
+                  </div>
+                  <button id="air-p2-roll-btn" type="button" class="btn-dice" onclick="window.rollAircraftRecovery()" style="padding:4px 12px; font-size:0.82rem; background:linear-gradient(135deg, #059669 0%, #047857 100%);">
+                    ⚓ Amerizar (1d6)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tabla OCR P2 -->
+              <table class="ocr-tactical-table" style="width:100%; border-collapse:collapse; font-size:0.76rem; border:1px solid #334155; border-radius:4px; overflow:hidden;">
+                <thead>
+                  <tr style="background:#059669; color:#f8fafc;">
+                    <th id="th-p2-dice" style="padding:6px; width:55px; text-align:center; border:1px solid #10b981;">1d6 mod.</th>
+                    <th id="th-p2-res" style="padding:6px; width:140px; text-align:left; border:1px solid #10b981;">Resultado</th>
+                    <th id="th-p2-eff" style="padding:6px; text-align:left; border:1px solid #10b981;">Consecuencia Oficial [Regla 7.17.4]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="air-p2-row-lost" onclick="window.selectP2RecoveryOutcome(1)" class="air-selectable-row" style="border-bottom:1px solid #334155;" title="Clic para fijar: Avión y Dotación Perdidos">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#ef4444; border-right:1px solid #334155;">1 – 2</td>
+                    <td id="p2-res-lost" style="padding:6px; font-weight:bold; color:#fca5a5; border-right:1px solid #334155;">💀 Avión y Dotación Perdidos<br><small style="color:#94a3b8;">(Plane &amp; Crew Lost)</small></td>
+                    <td id="p2-desc-lost" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">El hidroavión capota por fuerte oleaje o agota el combustible sin hallar al buque nodriza. Declarados MIA/KIA.</td>
+                  </tr>
+                  <tr id="air-p2-row-rec" onclick="window.selectP2RecoveryOutcome(4)" class="air-selectable-row" title="Clic para fijar: Recuperado con Éxito">
+                    <td style="padding:6px; text-align:center; font-weight:800; color:#22c55e; border-right:1px solid #334155;">3 – 6</td>
+                    <td id="p2-res-rec" style="padding:6px; font-weight:bold; color:#86efac; border-right:1px solid #334155;">🎉 Recuperado con Éxito<br><small style="color:#94a3b8;">(Aircraft Recovered)</small></td>
+                    <td id="p2-desc-rec" style="padding:6px; font-size:0.72rem; color:#cbd5e1;">Amerizaje suave junto a la aleta del submarino. La grúa de cubierta iza el aparato y se desmonta para estiba.*</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Nota reglamentaria y DRMs -->
+              <div style="margin-top:6px; font-size:0.70rem; color:#94a3b8; line-height:1.35; border-top:1px solid #1e293b; padding-top:4px;">
+                <span id="p2-note-crane" style="color:#fdba74;">* Si la Grúa de cubierta está averiada [Inop]: la dotación es rescatada pero el hidroavión debe ser barrenado/hundido.</span><br>
+                <span id="p2-note-drms">DRMs: <strong>-1</strong> Radio Avión INOP • <strong>-1</strong> Radio Submarino INOP • <strong>+1</strong> Comunicaciones Superiores (F2)</span>
+              </div>
+
+              <div id="air-p2-result-box" style="margin-top:10px; min-height:34px; background:rgba(30,41,59,0.5); border:1px dashed #10b981; border-radius:4px; padding:8px 10px; font-size:0.80rem;">
+                <span id="air-p2-default-hint" style="color:#94a3b8; font-style:italic;">Haz clic en «⚓ Amerizar (1d6)» o selecciona una fila para fijar el resultado manualmente.</span>
+              </div>
+            </div>
+
+            <!-- RECLAMAR ÉXITO DE MISIÓN ESPECIAL -->
+            <div style="text-align:center; margin-top:4px;">
+              <button id="air-claim-reward-btn" type="button" class="btn-dice" onclick="window.claimAirSpecialMissionReward()" style="display:none; width:100%; padding:10px; font-size:0.90rem; font-weight:bold; background:linear-gradient(135deg, #c5a059 0%, #b45309 100%); box-shadow:0 0 15px rgba(197,160,89,0.4);">
+                ⭐ RECLAMAR ÉXITO DE MISIÓN ESPECIAL (+2 PATRULLAS REGLA 7.13)
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div style="background:rgba(15,23,42,0.95); padding:10px 18px; border-top:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="font-size:0.75rem; color:#94a3b8;">
+            <span>ℹ️</span> <span id="air-mat-footer-note">Reglas Oficiales 7.1 (Reconocimiento), 7.7 (Bombardeo), 7.15 (Lanzamiento/Recuperación) y 7.17 (Módulo Aéreo).</span>
+          </div>
+          <div>
+            <button type="button" onclick="window.openAirModuleGuideModal()" class="action-btn" style="padding:4px 12px; font-size:0.75rem; border-color:var(--gold-400); color:var(--gold-300); background:rgba(234,179,8,0.12); display:inline-flex; align-items:center; gap:5px; font-weight:bold;">
+              <span>📖</span> <span id="lbl-air-footer-guide-btn">Guía y Manual Operativo (Regla 7.17)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: GUÍA OFICIAL DEL MÓDULO AERONAVAL (REGLA 7.17 & TABLAS P1-P6)
+         ==================================================================== -->
+    <div id="modal-aircraft-guide" onclick="if(event.target===this)window.closeAirModuleGuideModal();" style="display:none; position:fixed; inset:0; background:rgba(2,6,23,0.88); z-index:100020; justify-content:center; align-items:center; padding:12px; backdrop-filter:blur(8px);">
+      <div id="air-guide-modal-card" style="background:linear-gradient(180deg, #0b1329 0%, #070d1d 100%); border:2px solid var(--gold-400); box-shadow:0 25px 60px rgba(0,0,0,0.95), 0 0 35px rgba(234,179,8,0.35); border-radius:12px; width:95vw; max-width:980px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif;">
+        
+        <!-- HEADER -->
+        <div style="background:linear-gradient(90deg, #854d0e 0%, #a16207 40%, #0f172a 100%); padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold-400); flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.4rem;">📖</span>
+              <h3 id="air-guide-header-title" style="margin:0; color:#f8fafc; font-family:'Cinzel', serif; font-size:1.15rem; letter-spacing:1px; text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+                MANUAL OPERATIVO: MÓDULO DE AERONAVES (REGLA 7.17)
+              </h3>
+              <span style="background:rgba(234,179,8,0.25); border:1px solid var(--gold-400); color:var(--gold-300); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">
+                REGLAS OFICIALES SENSUiKAN
+              </span>
+            </div>
+            <div id="air-guide-header-sub" style="font-size:0.80rem; color:#fef08a; margin-top:2px;">
+              Guía táctica paso a paso para lanzamiento de catapulta, navegación aérea, combate y amerizaje con grúa
+            </div>
+          </div>
+          <button type="button" onclick="window.closeAirModuleGuideModal()" class="action-btn" style="padding:4px 12px; font-weight:bold; border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.2);">
+            <span>✕ Cerrar (Esc)</span>
+          </button>
+        </div>
+
+        <!-- TABS BAR -->
+        <div style="background:rgba(15,23,42,0.9); border-bottom:1px solid #334155; padding:8px 16px; display:flex; gap:8px; overflow-x:auto;">
+          <button id="air-guide-tab-btn-overview" type="button" onclick="window.switchAirGuideTab('overview')" class="action-btn" style="padding:6px 12px; font-size:0.78rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; gap:6px;">
+            <span>📖</span> <span id="lbl-guide-tab-overview">1. Visión General &amp; Requisitos</span>
+          </button>
+          <button id="air-guide-tab-btn-takeoff" type="button" onclick="window.switchAirGuideTab('takeoff')" class="action-btn" style="padding:6px 12px; font-size:0.78rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; gap:6px;">
+            <span>🛫</span> <span id="lbl-guide-tab-takeoff">2. Despegue (Catapulta P1)</span>
+          </button>
+          <button id="air-guide-tab-btn-flight" type="button" onclick="window.switchAirGuideTab('flight')" class="action-btn" style="padding:6px 12px; font-size:0.78rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; gap:6px;">
+            <span>🗺️</span> <span id="lbl-guide-tab-flight">3. Navegación &amp; Tablas P3-P6</span>
+          </button>
+          <button id="air-guide-tab-btn-recovery" type="button" onclick="window.switchAirGuideTab('recovery')" class="action-btn" style="padding:6px 12px; font-size:0.78rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; gap:6px;">
+            <span>⚓</span> <span id="lbl-guide-tab-recovery">4. Amerizaje &amp; Grúa (P2)</span>
+          </button>
+          <button id="air-guide-tab-btn-faq" type="button" onclick="window.switchAirGuideTab('faq')" class="action-btn" style="padding:6px 12px; font-size:0.78rem; font-weight:bold; border-radius:6px; display:flex; align-items:center; gap:6px;">
+            <span>⭐</span> <span id="lbl-guide-tab-faq">5. Recompensas &amp; FAQ</span>
+          </button>
+        </div>
+
+        <!-- CONTENT BODY (SCROLLABLE) -->
+        <div id="air-guide-modal-body" style="flex:1; overflow-y:auto; padding:16px 20px; font-size:0.86rem; line-height:1.6; color:#cbd5e1;">
+          <!-- Inyectado dinámicamente con soporte 100% bilingüe ES / EN -->
+        </div>
+
+        <!-- FOOTER -->
+        <div style="background:rgba(15,23,42,0.95); padding:10px 18px; border-top:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="font-size:0.75rem; color:#94a3b8;" id="air-guide-footer-text">
+            Sensuikan: Japanese Fleet Submarines in WWII • Módulo Oficial 7.17 (Aircraft Display Mat)
+          </div>
+          <button type="button" onclick="window.closeAirModuleGuideModal()" class="action-btn" style="padding:4px 16px; font-size:0.80rem; font-weight:bold; border-color:#64748b; color:#cbd5e1;">
+            <span id="lbl-air-guide-close-btn">Entendido / Volver al Módulo</span>
           </button>
         </div>
 

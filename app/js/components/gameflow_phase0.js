@@ -216,8 +216,40 @@
       return null;
     }
 
+    let f3ActivePilotIndex = 0;
+
+    function getSubmarineAircraftCount(subKey) {
+      if (!subKey) return 0;
+      if (subKey === 'Sen_Toku_Class') return 3;
+      if (subKey === 'Type_A_Modified' || subKey === 'Type_A2_Class' || subKey === 'Type_AM_Class') return 2;
+      if (['Junsen_J_IM_Class', 'Junsen_J2_Class', 'Junsen_J3_Class', 'Type_A_Class', 'Type_B_Class', 'Type_B_3_Class', 'Type_B2_Class'].includes(subKey)) return 1;
+      const sub = getActiveSubmarine();
+      if (sub && (sub.aircraft_count !== undefined || sub.aircraftCount !== undefined || sub.aircraft !== undefined)) {
+        return sub.aircraft_count || sub.aircraftCount || sub.aircraft || (sub.has_aircraft ? 1 : 0);
+      }
+      return (sub && sub.has_aircraft) ? 1 : 0;
+    }
+
+    function getPilotAircraftName(subKey, pIdx) {
+      if (subKey === 'Sen_Toku_Class') return `Aichi M6A1 Seiran #${pIdx + 1}`;
+      if (subKey === 'Type_A_Modified') return `Yokosuka E14Y1 Glen #${pIdx + 1}`;
+      if (subKey === 'Type_A2_Class' || subKey === 'Type_AM_Class') return `Aichi M6A1 Seiran #${pIdx + 1}`;
+      if (subKey === 'Junsen_J2_Class') return 'Watanabe E9W1 Slim';
+      return 'Yokosuka E14Y1 Glen';
+    }
+
+    function selectF3PilotTab(pIdx) {
+      f3ActivePilotIndex = pIdx;
+      updateSchoolEquipDisplay();
+    }
+    window.selectF3PilotTab = selectF3PilotTab;
+
     function checkSubAircraft(sub) {
       if (!sub) return false;
+      const key = campaignState && campaignState.activeSubKey;
+      if (['Sen_Toku_Class', 'Type_A_Modified', 'Type_A2_Class', 'Type_AM_Class', 'Type_A_Class', 'Type_B_Class', 'Type_B_3_Class', 'Type_B2_Class', 'Junsen_J_IM_Class', 'Junsen_J2_Class', 'Junsen_J3_Class'].includes(key)) {
+        return true;
+      }
       return Boolean(sub.has_aircraft === true || sub.aircraft_type || sub.plane === 1 || (sub.aircraft && sub.aircraft > 0));
     }
 
@@ -231,6 +263,30 @@
       const chkMaint = document.getElementById('chk-f3-maint');
       const chkAcm = document.getElementById('chk-f3-acm');
       const chkNav = document.getElementById('chk-f3-nav');
+
+      const skills = [];
+      if (chkWeap && chkWeap.checked) skills.push("Weapons Expert");
+      if (chkMaint && chkMaint.checked) skills.push("Flawless Maintenance");
+      if (chkAcm && chkAcm.checked) skills.push("Air Combat Maneuvering");
+      if (chkNav && chkNav.checked) skills.push("Aerial Navigation");
+
+      if (window.campaignState) {
+        window.campaignState.school = window.campaignState.school || {};
+        window.campaignState.school.pilotSkills = window.campaignState.school.pilotSkills || { 0: [], 1: [], 2: [] };
+        window.campaignState.school.pilotSkills[f3ActivePilotIndex] = [...skills];
+        if (f3ActivePilotIndex === 0) {
+          window.campaignState.school.f3Skills = [...skills];
+        }
+        if (window.campaignState.aircraftState && window.campaignState.aircraftState.skills) {
+          window.campaignState.aircraftState.skills = {
+            weapons: skills.includes("Weapons Expert"),
+            maintenance: skills.includes("Flawless Maintenance"),
+            acm: skills.includes("Air Combat Maneuvering"),
+            nav: skills.includes("Aerial Navigation")
+          };
+        }
+      }
+
       if (typeof setK1Token === 'function') {
         setK1Token('air1-weap', Boolean(chkWeap && chkWeap.checked));
         setK1Token('air1-maint', Boolean(chkMaint && chkMaint.checked));
@@ -238,6 +294,12 @@
         setK1Token('air1-nav', Boolean(chkNav && chkNav.checked));
       }
       if (typeof renderTokens === 'function') renderTokens();
+      if (typeof syncSchoolSkillsToAircraftState === 'function') {
+        syncSchoolSkillsToAircraftState();
+      }
+      if (typeof renderAircraftMatUI === 'function') {
+        renderAircraftMatUI();
+      }
     }
 
     function validateF3Checkboxes(el) {
@@ -251,7 +313,7 @@
       let checkedCount = chks.filter(c => c && c.checked).length;
       if (checkedCount > 2) {
         if (el) el.checked = false;
-        showToast(isEn ? "⚠️ You can choose at most 2 skills for the air crew (Rule 4.8.3)." : "⚠️ Solo puedes elegir un máximo de 2 habilidades para la dotación aérea (Regla 4.8.3).");
+        showToast(isEn ? `⚠️ You can choose at most 2 skills for Pilot #${f3ActivePilotIndex + 1} (Rule 4.8.3).` : `⚠️ Solo puedes elegir un máximo de 2 habilidades para el Piloto #${f3ActivePilotIndex + 1} (Regla 4.8.3).`);
       }
       syncF3ToK1();
       saveState();
@@ -272,9 +334,38 @@
         if (el) el.checked = true;
       });
       syncF3ToK1();
-      showToast(isEn ? "🎲 2 Air crew skills selected at random!" : "🎲 ¡2 Habilidades de dotación aérea seleccionadas al azar!");
+      const subKey = (window.campaignState && window.campaignState.activeSubKey) || '';
+      const airCount = getSubmarineAircraftCount(subKey);
+      const pilotMsg = (airCount > 1) ? (isEn ? ` for Pilot #${f3ActivePilotIndex + 1}` : ` para el Piloto #${f3ActivePilotIndex + 1}`) : '';
+      showToast(isEn ? `🎲 2 Air crew skills selected at random${pilotMsg}!` : `🎲 ¡2 Habilidades aéreas seleccionadas al azar${pilotMsg}!`);
       saveState();
     }
+    window.rollRandomF3Skills = rollRandomF3Skills;
+
+    function rollAllPilotsF3Skills() {
+      const isEn = (window.currentLang === 'en');
+      const subKey = (window.campaignState && window.campaignState.activeSubKey) || '';
+      const airCount = Math.max(1, getSubmarineAircraftCount(subKey));
+      const allSkillNames = ["Weapons Expert", "Flawless Maintenance", "Air Combat Maneuvering", "Aerial Navigation"];
+      
+      window.campaignState = window.campaignState || {};
+      window.campaignState.school = window.campaignState.school || {};
+      window.campaignState.school.pilotSkills = window.campaignState.school.pilotSkills || { 0: [], 1: [], 2: [] };
+
+      for (let p = 0; p < airCount; p++) {
+        const shuffled = [...allSkillNames].sort(() => 0.5 - Math.random());
+        window.campaignState.school.pilotSkills[p] = shuffled.slice(0, 2);
+      }
+      if (window.campaignState.school.pilotSkills[0]) {
+        window.campaignState.school.f3Skills = [...window.campaignState.school.pilotSkills[0]];
+      }
+      updateSchoolEquipDisplay();
+      if (typeof syncSchoolSkillsToAircraftState === 'function') syncSchoolSkillsToAircraftState();
+      if (typeof renderAircraftMatUI === 'function') renderAircraftMatUI();
+      showToast(isEn ? `🎲 Flight School completed for all ${airCount} pilots [Rule 7.17]!` : `🎲 ¡Escuela F3 completada para los ${airCount} pilotos del submarino [Regla 7.17]!`);
+      saveState();
+    }
+    window.rollAllPilotsF3Skills = rollAllPilotsF3Skills;
 
     function updateSchoolEquipDisplay() {
       const isEn = (window.currentLang === 'en');
@@ -310,10 +401,81 @@
           f3OptsContainer.style.opacity = "1";
           f3OptsContainer.style.pointerEvents = "auto";
         }
+        const subKey = (window.campaignState && window.campaignState.activeSubKey) || '';
+        const airCount = getSubmarineAircraftCount(subKey);
+
+        // Ensure pilotSkills object exists
+        window.campaignState = window.campaignState || {};
+        window.campaignState.school = window.campaignState.school || {};
+        window.campaignState.school.pilotSkills = window.campaignState.school.pilotSkills || { 0: [], 1: [], 2: [] };
+        if ((!window.campaignState.school.pilotSkills[0] || window.campaignState.school.pilotSkills[0].length === 0) &&
+            (window.campaignState.school.f3Skills && window.campaignState.school.f3Skills.length > 0)) {
+          window.campaignState.school.pilotSkills[0] = [...window.campaignState.school.f3Skills];
+        }
+
+        const pilotContainer = document.getElementById('f3-multi-pilot-container');
+        const pilotTabs = document.getElementById('f3-pilot-tabs');
+        const btnRollAll = document.getElementById('f3-btn-roll-all');
+        const pilotHeading = document.getElementById('f3-pilot-heading');
+        const pilotNote = document.getElementById('f3-pilot-rule-note');
+
+        if (hasPlane && airCount > 1) {
+          if (pilotContainer) pilotContainer.style.display = 'block';
+          if (btnRollAll) btnRollAll.style.display = 'inline-block';
+          if (pilotHeading) {
+            pilotHeading.innerText = isEn ? `Multi-Aircraft Submarine (${airCount} Pilots) [Rule 7.17]:` : `Submarino Multiavión (${airCount} Pilotos) [Regla Oficial 7.17]:`;
+          }
+          if (pilotNote) {
+            pilotNote.innerText = isEn 
+              ? `Submarines with multiple aircraft conduct Flight School separately for each pilot (${airCount} pilots total). Each pilot receives up to 2 distinct skills.`
+              : `Los submarinos con múltiples aeronaves realizan la Escuela F3 independientemente para cada piloto (${airCount} pilotos en total). Cada piloto adquiere hasta 2 habilidades independientes.`;
+          }
+          if (pilotTabs) {
+            let tabsHtml = '';
+            for (let p = 0; p < airCount; p++) {
+              const isSelected = (p === f3ActivePilotIndex);
+              const pSkills = (window.campaignState.school.pilotSkills && window.campaignState.school.pilotSkills[p]) || [];
+              const pCount = pSkills.length;
+              const countBadge = (pCount === 2) ? '🟢 2/2' : (pCount === 1 ? '🟡 1/2' : '⚪ 0/2');
+              tabsHtml += `
+                <button type="button" onclick="window.selectF3PilotTab(${p})" style="padding:4px 10px; font-size:0.75rem; font-weight:bold; border-radius:4px; border:1.5px solid ${isSelected ? '#38bdf8' : '#334155'}; background:${isSelected ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : '#1e293b'}; color:${isSelected ? '#ffffff' : '#94a3b8'}; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:${isSelected ? '0 0 10px rgba(56,189,248,0.5)' : 'none'}; transition:all 0.2s ease;">
+                  <span>✈️ ${isEn ? 'Pilot' : 'Piloto'} #${p + 1} (${countBadge})</span>
+                </button>
+              `;
+            }
+            pilotTabs.innerHTML = tabsHtml;
+          }
+        } else {
+          if (pilotContainer) pilotContainer.style.display = 'none';
+          if (btnRollAll) btnRollAll.style.display = 'none';
+          f3ActivePilotIndex = 0;
+        }
+
+        const chooseText = document.getElementById('f3-choose-text');
+        if (chooseText) {
+          if (airCount > 1) {
+            const pName = getPilotAircraftName(subKey, f3ActivePilotIndex);
+            chooseText.innerHTML = isEn 
+              ? `Choose up to 2 skills for <strong style="color:var(--gold-300);">Pilot #${f3ActivePilotIndex + 1} (${pName})</strong>:`
+              : `Elige hasta 2 habilidades para el <strong style="color:var(--gold-300);">Piloto #${f3ActivePilotIndex + 1} (${pName})</strong>:`;
+          } else {
+            chooseText.innerText = isEn ? "Choose exactly 2 skills for your air crew:" : "Elige exactamente 2 habilidades para tu dotación aérea:";
+          }
+        }
+
         ['chk-f3-weap', 'chk-f3-maint', 'chk-f3-acm', 'chk-f3-nav'].forEach(id => {
           const chk = document.getElementById(id);
           if (chk) chk.disabled = false;
         });
+        const currentSkills = (window.campaignState && window.campaignState.school && window.campaignState.school.pilotSkills && window.campaignState.school.pilotSkills[f3ActivePilotIndex]) || (window.campaignState && window.campaignState.school && window.campaignState.school.f3Skills) || [];
+        const chkWeap = document.getElementById('chk-f3-weap');
+        const chkMaint = document.getElementById('chk-f3-maint');
+        const chkAcm = document.getElementById('chk-f3-acm');
+        const chkNav = document.getElementById('chk-f3-nav');
+        if (chkWeap) chkWeap.checked = currentSkills.some(s => s.toLowerCase().includes('weapon'));
+        if (chkMaint) chkMaint.checked = currentSkills.some(s => s.toLowerCase().includes('maint'));
+        if (chkAcm) chkAcm.checked = currentSkills.some(s => s.toLowerCase().includes('acm') || s.toLowerCase().includes('maneuver'));
+        if (chkNav) chkNav.checked = currentSkills.some(s => s.toLowerCase().includes('nav'));
       }
 
       // Chart F2: Ko-hyoteki Midget Sub Status

@@ -113,6 +113,26 @@
                 </button>
               </div>
 
+                            <!-- Dedicated Special Module View (Shown when in a Special Mission box that uses its own module and doesn't require Table A3) -->
+              <div id="p2-spec-module-controls-wrapper" style="display:none; background:rgba(15,23,42,0.85); border:1px solid #38bdf8; border-radius:6px; padding:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <span id="p2-spec-module-icon" style="font-size:1.4rem;">🎯</span>
+                  <div>
+                    <div id="p2-spec-module-title" style="font-weight:800; color:#38bdf8; font-size:0.95rem;">MISIÓN ESPECIAL TÁCTICA ACTIVA</div>
+                    <div id="p2-spec-module-sub" style="font-size:0.75rem; color:#94a3b8;">Módulo táctico dedicado • No se utiliza la Tabla [A3] en esta casilla</div>
+                  </div>
+                </div>
+                <div id="p2-spec-module-desc" style="font-size:0.80rem; color:var(--slate-300); line-height:1.45; margin-bottom:12px;">
+                  En esta casilla se ejecuta la operación de Misión Especial dedicada mediante su propio módulo.
+                </div>
+                <div id="p2-spec-module-btn-container" style="display:flex; flex-direction:column; gap:8px;">
+                  <!-- Botón dinámico al módulo táctico -->
+                </div>
+                <div style="margin-top:10px; font-size:0.74rem; color:#94a3b8; border-top:1px dashed #334155; padding-top:8px;">
+                  ℹ️ <span id="p2-spec-module-footer-note">Una vez resuelta la misión táctica, pulsa <strong>Avanzar Casilla ▶</strong> para continuar hacia las estaciones de patrulla ordinarias donde sí se aplicará la Tabla [A3].</span>
+                </div>
+              </div>
+
               <!-- Hidden container for backwards-compatibility -->
               <div id="btn-engage-combat" style="display:none;"></div>
             </div>
@@ -128,6 +148,9 @@
                   <li id="p2-mission-kaiten">Lanzamiento Kaiten (Mapas K2-K3)</li>
                   <li id="p2-mission-mine">Minado o Transporte Tokio Express</li>
                 </ul>
+                <button id="p2-btn-open-air-mat" type="button" class="action-btn" onclick="openAircraftDisplayMatModal()" style="margin-top:8px; width:100%; padding:6px 12px; font-size:0.82rem; font-weight:bold; border-color:#38bdf8; color:#e0f2fe; background:linear-gradient(135deg, rgba(2,132,199,0.3) 0%, rgba(3,105,161,0.2) 100%); display:flex; align-items:center; justify-content:center; gap:8px;">
+                  <span>✈️</span> <span id="btn-open-air-mat-p2">Abrir Tablero de Hidroavión [Chart P]</span>
+                </button>
               </div>
 
               <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.4); padding:10px; border-radius:6px; font-size:0.86rem; color:#fde047;">
